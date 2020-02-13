@@ -1,5 +1,3 @@
-# pl2020-plplb
-
 ## Liste des itérations
 
 ### Itération 1:
