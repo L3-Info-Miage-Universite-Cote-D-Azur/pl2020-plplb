@@ -5,6 +5,9 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class
 Server
 {
@@ -36,7 +39,14 @@ Server
 			onConnect (SocketIOClient client) 
 			{
 				Debug.log("New client connected: " + client.getRemoteAddress());
-				client.sendEvent("Hello Client");
+				JSONObject msg = new JSONObject();
+				try {
+					msg.put("username", "client1");
+					msg.append("message", "Hello client");
+					client.sendEvent(msg.toString());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -53,9 +63,9 @@ Server
 			}
 			catch (InterruptedException e) 
 			{
-                e.printStackTrace();
-                Debug.error("Client Waiter Error");
-            }
+				e.printStackTrace();
+				Debug.error("Client Waiter Error");
+			}
 		}
 		this.socket.stop();
 	}
