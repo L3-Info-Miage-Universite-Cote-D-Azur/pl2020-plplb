@@ -12,15 +12,104 @@
 
 	<artifactId>serveur</artifactId>
 	<version>1.0</version>
-	
 
 	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>  <!-- éventuellement à changer : localisation des fichiers sources -->
+		<!--  <testSourceDirectory>src/test</testSourceDirectory> éventuellement à changer : localisation des fichiers sources des tests -->
 		<plugins>
-			<!-- les plugins spécifiques à ce module -->
+
+
+			<!-- pour que maven lance les tests junit 5 -->
+
+
+
+			<!-- la génération de la  javadoc s'utilise avec "mvn site" -->
+
+
+			<plugin>
+
+
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<show>package</show>
+					<nohelp>true</nohelp>
+					<encoding>utf-8</encoding> <!-- éventuellement à changer : encodage de vos fichiers -->
+					<charset>utf-8</charset> <!-- éventuellement à changer : encodage de vos fichiers -->
+					<docencoding>utf-8</docencoding>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>javadoc</id>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+						<phase>site</phase>
+						<configuration>
+							<!-- <overview>${basedir}/src/main/java/jeu421/overview.html</overview> --><!-- à changer : selon que vous avez des descriptions du projet et des packages -->
+							<!-- endroit où seront les fichiers html générés ! attention au .gitignore ! -->
+							<!-- ici, c'est dans src/main/apidocs -->
+							<outputDirectory>${basedir}/src/main/</outputDirectory>
+							<reportOutputDirectory>${basedir}/src/main/</reportOutputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-javadoc</id>
+						<goals>
+							<goal>test-javadoc</goal>
+						</goals>
+						<phase>site</phase>
+						<configuration>
+							<!-- endroit où seront les fichiers html générés ! attention au .gitignore ! -->
+							<!-- ici, c'est dans src/test/apidocs -->
+							<reportOutputDirectory>${basedir}/src/test/</reportOutputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+
+			</plugin>
+
+
+
+
+
+
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version> <!-- à ne pas changer : c'est la version du plugin (et pas de java) -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>serveur.App
+					</mainClass>  <!-- à changer : classe avec point d'entrée pour votre projet -->
+					<!-- argument de la commande java (en plus du nom de la classe et du classpath -->
+
+
+					<!--
+                        <systemProperties>
+                                <systemProperty>
+                                    <key>myproperty</key>
+                                    <value>myvalue</value>
+                                </systemProperty>
+                        </systemProperties>
+                     -->
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
+
+
 
 	<dependencies>
 		<dependency>
@@ -29,18 +118,23 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.corundumstudio.socketio</groupId>
 			<artifactId>netty-socketio</artifactId>
-			<version>1.7.1</version>
+			<version>1.7.17</version>
 		</dependency>
-		
 		<dependency>
-			<groupId>serveuretcommun</groupId>
-			<artifactId>commun</artifactId>
-			<version>1.0</version>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-transport</artifactId>
+			<version>4.1.32.Final</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+
+
 	</dependencies>
 </project>
