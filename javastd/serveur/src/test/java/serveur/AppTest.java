@@ -1,4 +1,4 @@
-package etu.plplb.maven.server_plplb;
+package serveur;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
