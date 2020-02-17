@@ -10,13 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
-import com.github.nkzawa.emitter.Emitter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +31,26 @@ public class MessageCreation extends AppCompatActivity {
 
     private Socket mSocket;
 
+    /**
+     * Set a listener on the server to receive messages
+     */
+
+    Emitter.Listener onNewMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            MessageCreation.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String receivedMessage = (String) args[0];
+
+                    // add the message to view todo
+                    //just show the message in a toast
+                    Toast.makeText(getApplicationContext(),"Server sent you a message: "+ receivedMessage,Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    };
+
 
 
     @Override
@@ -41,16 +61,6 @@ public class MessageCreation extends AppCompatActivity {
         textView = findViewById(R.id.plain_text_input);
         validate = findViewById(R.id.Validate);
         validate.setText("Send");
-
-
-        try {
-            mSocket = IO.socket("http://10.0.2.2:10101");
-            System.out.println("########### SOCKET CONNECTED ############");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        mSocket.connect();
 
         /**
          * Send a message to the server
@@ -63,38 +73,29 @@ public class MessageCreation extends AppCompatActivity {
                     return;
                 }
                 textView.setText("");
-                mSocket.emit("new message", message);
+                //mSocket.emit("new message", message);
                 Toast.makeText(getApplicationContext(),"Message sent",Toast.LENGTH_LONG).show();
             }
         });
 
 
-        /**
-         * Set a listener on the server to receive messages
-         */
+        try {
+            mSocket = IO.socket("http://10.1.113.159:10101");
+            System.out.println("MSOCKET: " + mSocket);
+            System.out.println("########### SOCKET CONNECTED ############");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
-        Emitter.Listener onNewMessage = new Emitter.Listener() {
+        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
-            public void call(final Object... args) {
-                MessageCreation.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        JSONObject data = (JSONObject) args[0];
-                        String username;
-                        String message;
-                        try {
-                            username = data.getString("username");
-                            message = data.getString("message");
-                        } catch (JSONException e) {
-                            return;
-                        }
+            public void call(Object... args) {
+                mSocket.emit("clientMessage", "hi");
+            }})
+        .on("serverMessage",onNewMessage);
 
-                        // add the message to view
-                        Toast.makeText(getApplicationContext(),username +" sent you a message: "+ message,Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        };
+
+        mSocket.connect();
 
     }
 
