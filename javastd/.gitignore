@@ -1,0 +1,7 @@
+**/out/
+**/target/
+**/build/
+**/bin/
+
+**/*.iml
+**/.idea/
