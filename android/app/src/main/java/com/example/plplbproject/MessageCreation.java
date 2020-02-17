@@ -21,6 +21,8 @@ import java.net.URISyntaxException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static constantes.NET.*;
+
 
 public class MessageCreation extends AppCompatActivity {
 
@@ -73,26 +75,27 @@ public class MessageCreation extends AppCompatActivity {
                     return;
                 }
                 textView.setText("");
-                //mSocket.emit("new message", message);
-                Toast.makeText(getApplicationContext(),"Message sent",Toast.LENGTH_LONG).show();
+                mSocket.emit(SENDMESSAGE, message);
+                Toast.makeText(getApplicationContext(),"message send",Toast.LENGTH_LONG).show();
             }
         });
 
 
         try {
-            mSocket = IO.socket("http://10.0.2.2:10111");
+            mSocket = IO.socket("http://10.0.2.2:10101");
             System.out.println("MSOCKET: " + mSocket);
             System.out.println("########### SOCKET CONNECTED ############");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
+
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                mSocket.emit("clientMessage", "TEST");
+                mSocket.emit(CONNEXION, "I am the client");
             }})
-        .on("serverMessage",onNewMessage);
+        .on(SENDMESSAGE,onNewMessage);
 
 
         mSocket.connect();

@@ -39,20 +39,28 @@ public class Serveur {
                 clientConnect(socketIOClient, id);
             }
         });
-        Debug.log("Server listening.");
+
+        this.server.addEventListener(SENDMESSAGE, String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
+                System.out.println("client send : "+ s);
+            }
+        });
+
 
     }
 
     protected void clientConnect(SocketIOClient socketIOClient, UserID id) {
         // map.put(id, socketIOClient);
         Debug.log("New client connected : "+id);
-        socketIOClient.sendEvent(SERVMESSAGE ,"Hello client");
+        socketIOClient.sendEvent(SENDMESSAGE ,"Hello client");
     }
 
 
     protected void startServer() {
 
         server.start();
+        Debug.log("Server listening.");
     }
 
 

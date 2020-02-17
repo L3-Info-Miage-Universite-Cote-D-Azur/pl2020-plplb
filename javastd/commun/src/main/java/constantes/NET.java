@@ -6,5 +6,5 @@ package constantes;
 public class NET {
 
     public static final String CONNEXION = "je me connecte";
-    public static final String SERVMESSAGE = "send message";
+    public static final String SENDMESSAGE = "send message";
 }

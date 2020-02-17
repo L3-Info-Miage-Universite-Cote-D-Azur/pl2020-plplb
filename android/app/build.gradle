@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        // ajout de la partie commune // le chemin dépend de l’organisation du repository
+        main.java.srcDirs += '../../javastd/commun/src/main/java'
+        // test.java.srcDirs += '../../../javastd/commun/src/test/java'
+    }
 }
 
 dependencies {
