@@ -11,8 +11,6 @@
 	</parent>
 
 	<artifactId>serveur</artifactId>
-	<version>1.0</version>
-
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>  <!-- éventuellement à changer : localisation des fichiers sources -->
 		<!--  <testSourceDirectory>src/test</testSourceDirectory> éventuellement à changer : localisation des fichiers sources des tests -->
@@ -118,16 +116,15 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>com.corundumstudio.socketio</groupId>
-			<artifactId>netty-socketio</artifactId>
-			<version>1.7.17</version>
-		</dependency>
 		<dependency>
 			<groupId>io.netty</groupId>
-			<artifactId>netty-transport</artifactId>
+			<artifactId>netty-all</artifactId>
 			<version>4.1.32.Final</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.socket</groupId>
+		    <artifactId>socket.io-client</artifactId>
+		    <version>0.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
