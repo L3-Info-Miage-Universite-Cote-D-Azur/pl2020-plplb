@@ -10,7 +10,7 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>serveur</artifactId> <!-- et le nom du projet -->
+    <artifactId>commun</artifactId> <!-- et le nom du projet -->
     <version>1.0</version>
 
 
@@ -79,69 +79,11 @@
 
 
 
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version> <!-- à ne pas changer : c'est la version du plugin (et pas de java) -->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>serveur.App
-                    </mainClass>  <!-- à changer : classe avec point d'entrée pour votre projet -->
-                    <!-- argument de la commande java (en plus du nom de la classe et du classpath -->
-
-                    <!-- arguments récupérés dans le main -->
-
-                    <arguments>
-                        <argument>3</argument>
-                        <argument>partie</argument>
-                    </arguments>
-
-
-                    <!-- arguments de configuration système -->
-                    <!--
-                        <systemProperties>
-                                <systemProperty>
-                                    <key>myproperty</key>
-                                    <value>myvalue</value>
-                                </systemProperty>
-                        </systemProperties>
-                     -->
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 
 
     <dependencies>
-		<dependency>
-            <groupId>PLPLB</groupId>
-            <artifactId>commun</artifactId>
-            <version>1.0</version>
-        </dependency>
-	
-        <dependency>
-            <groupId>com.corundumstudio.socketio</groupId>
-            <artifactId>netty-socketio</artifactId>
-            <version>1.7.17</version>
-        </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-transport</artifactId>
-            <version>4.1.32.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
-        </dependency>
 
     </dependencies>
 

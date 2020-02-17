@@ -1,14 +1,17 @@
 package serveur;
 
-public class 
-App 
-{
-    public static void 
-    main (String[] args)
-    {
-    	Debug.verbose = true;
-        Server serv = new Server("127.0.0.1", 10111);
-        serv.run();
-        Debug.log("Serveur en cours d\'execution");
+
+public class App {
+
+
+    public static final void main(String[] args) {
+
+        String ip = "127.0.0.1";
+        int port = 10101;
+
+
+        Serveur server = new Serveur(ip, port);
+        server.startServer();
+
     }
 }

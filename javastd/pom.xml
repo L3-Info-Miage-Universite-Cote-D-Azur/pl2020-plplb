@@ -3,60 +3,94 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-  
-	<groupId>PLPLB</groupId>
-	<artifactId>serveuretcommun</artifactId>
 
-	<version>1.0</version>
+    <groupId>PLPLB</groupId> <!-- à changer par le nom du groupe -->
+    <artifactId>coteServeur</artifactId> <!-- et le nom du projet -->
+    <version>1.0</version>
 
 	<modules>
+		<module>commun</module>
 		<module>serveur</module>
 	</modules>
-
+	
 	<packaging>pom</packaging>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<compiler.source>13</compiler.source>
-		<compiler.target>1.8</compiler.target>
-	</properties>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
-			</plugin>
+	
 
 
-			<!-- la génération de la  javadoc s'utilise avec "mvn site" -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<source>8</source> <!-- éventuellement à changer : version de java -->
-					<target>8</target> <!-- éventuellement à changer : version de java -->
-				</configuration>
-			</plugin><!-- par exemple compilation, java doc, etc. -->
-		</plugins>
-	</build>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- éventuellement à changer : encodage de vos fichiers -->
+        <compiler.source>1.8</compiler.source> <!-- éventuellement à changer : version de java (sdk) utilisée pour le développement -->
+        <compiler.target>1.8</compiler.target> <!-- éventuellement à changer : version de java pour l'utilisateur -->
 
-	<dependencies>
-		<!-- par exemple junit, mokito, etc. -->
+
+    </properties>
+
+    <build>
+
+        <plugins>
+
+
+            <!-- pour que maven lance les tests junit 5 -->
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+
+
+            <!-- la génération de la  javadoc s'utilise avec "mvn site" -->
+
+
+            
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>8</source> <!-- éventuellement à changer : version de java -->
+                    <target>8</target> <!-- éventuellement à changer : version de java -->
+                </configuration>
+            </plugin>
+
+           
+
+
+
+        </plugins>
+    </build>
+
+
+    <dependencies>
+
+
+
+
+        <!-- intégration de JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.5.2</version>
+            <scope>test</scope>
+        </dependency>
+
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.corundumstudio.socketio</groupId>
-			<artifactId>netty-socketio</artifactId>
-			<version>1.7.1</version>
-		</dependency>
-		
-	</dependencies>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20190722</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+	
+</dependencies>
+
+
 </project>
