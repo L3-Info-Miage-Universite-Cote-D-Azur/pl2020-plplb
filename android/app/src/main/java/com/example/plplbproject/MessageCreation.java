@@ -80,7 +80,7 @@ public class MessageCreation extends AppCompatActivity {
 
 
         try {
-            mSocket = IO.socket("http://10.1.113.159:10101");
+            mSocket = IO.socket("http://10.0.2.2:10111");
             System.out.println("MSOCKET: " + mSocket);
             System.out.println("########### SOCKET CONNECTED ############");
         } catch (URISyntaxException e) {
@@ -90,7 +90,7 @@ public class MessageCreation extends AppCompatActivity {
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                mSocket.emit("clientMessage", "hi");
+                mSocket.emit("clientMessage", "TEST");
             }})
         .on("serverMessage",onNewMessage);
 

@@ -7,8 +7,8 @@ App
     main (String[] args)
     {
     	Debug.verbose = true;
-        Server serv = new Server("192.168.56.1", 10110);
+        Server serv = new Server("127.0.0.1", 10111);
         serv.run();
-        Debug.log("Fin du serveur");
+        Debug.log("Serveur en cours d\'execution");
     }
 }
