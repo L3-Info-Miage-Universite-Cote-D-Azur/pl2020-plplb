@@ -31,7 +31,7 @@ public class Serveur {
 
         // creation du serveur
         this.server = new SocketIOServer(config);
-        Debug.log("Serveur created.");
+        Debug.log("Server created.");
 
         this.server.addEventListener(CONNEXION, UserID.class, new DataListener<UserID>() {
             @Override
@@ -39,13 +39,13 @@ public class Serveur {
                 clientConnect(socketIOClient, id);
             }
         });
-        Debug.log("Serveur listening.");
+        Debug.log("Server listening.");
 
     }
 
     protected void clientConnect(SocketIOClient socketIOClient, UserID id) {
         // map.put(id, socketIOClient);
-        System.out.println("new client connected : "+id);
+        Debug.log("New client connected : "+id);
         socketIOClient.sendEvent(SERVMESSAGE ,"Hello client");
     }
 
