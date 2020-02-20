@@ -27,6 +27,27 @@ public class UeDisplayAdapter extends ArrayAdapter<Ue> {
         super(context, 0, objects);
     }
 
+    public class MyUEClickListener implements View.OnClickListener{
+
+        private Ue ue;
+        private CheckBox checkBox;
+
+        public MyUEClickListener(CheckBox checkBox, Ue ue) {
+            this.ue = ue;
+            this.checkBox = checkBox;
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(checkBox.isChecked()){
+                ue.setChecked(true);
+            }
+            else{
+                ue.setChecked(false);
+            }
+        }
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -44,7 +65,13 @@ public class UeDisplayAdapter extends ArrayAdapter<Ue> {
 
         ueName.setText(ue.getUeName());
         ueCode.setText(ue.getUeCode());
-        // TODO ajouter le fait de cocher ou non la checkBox
+        // get back the previous checked Ue of the user
+        if(ue.getChecked()){
+            checkBox.setChecked(true);
+        }
+
+        //########################## Add checkbox Listener ###############################
+        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue));
 
         return convertView;
     }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Ue> ueList;
 
     private ListView ueListView;
+    private CheckBox checkBox;
 
     private Socket mSocket;
 
@@ -79,8 +81,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void call(Object... args) {
                 mSocket.emit(CONNEXION, "I am the client");
-            }})
-                .on(SENDMESSAGE,onNewMessage);
+            }
+        })
+                .on(SENDMESSAGE, onNewMessage);
 
 
         mSocket.connect();
@@ -90,13 +93,14 @@ public class MainActivity extends AppCompatActivity {
         //TODO: for now we only have one Ue to display, instancied here. In reality we need to get it from the server
 
         ueList = new ArrayList<Ue>();
-        ueList.add(new Ue("Projet","(6666)"));
-        ueList.add(new Ue("Algo","(1234)"));
+        ueList.add(new Ue("Projet", "(6666)"));
+        ueList.add(new Ue("Algo", "(1234)"));
 
         ueListView = (ListView) findViewById(R.id.ueListView);
 
-        UeDisplayAdapter ueDisplayAdapter= new UeDisplayAdapter(this,ueList);
+        UeDisplayAdapter ueDisplayAdapter = new UeDisplayAdapter(this, ueList);
         ueListView.setAdapter(ueDisplayAdapter);
+
     }
 
     @Override
