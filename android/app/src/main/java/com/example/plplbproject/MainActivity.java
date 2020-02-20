@@ -19,13 +19,14 @@ import java.util.ArrayList;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import metier.UE;
 
 import static constantes.NET.CONNEXION;
 import static constantes.NET.SENDMESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Ue> ueList;
+    private ArrayList<UE> ueList;
 
     private ListView ueListView;
 
@@ -83,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: for now we only have one Ue to display, instancied here. In reality we need to get it from the server
 
-        ueList = new ArrayList<Ue>();
-        ueList.add(new Ue("Projet", "(6666)"));
-        ueList.add(new Ue("Algo", "(1234)"));
+        ueList = new ArrayList<UE>();
+        ueList.add(new UE("Projet", "(6666)"));
+        ueList.add(new UE("Algo", "(1234)"));
 
         ueListView = (ListView) findViewById(R.id.ueListView);
 

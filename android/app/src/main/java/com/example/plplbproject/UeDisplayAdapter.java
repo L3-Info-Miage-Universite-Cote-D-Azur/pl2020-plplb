@@ -14,24 +14,26 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class UeDisplayAdapter extends ArrayAdapter<Ue> {
+import metier.UE;
+
+public class UeDisplayAdapter extends ArrayAdapter<UE> {
 
     private TextView ueName;
     private TextView ueCode;
     private CheckBox checkBox;
 
 
-    public UeDisplayAdapter(@NonNull Context context,@NonNull List<Ue> objects) {
+    public UeDisplayAdapter(@NonNull Context context,@NonNull List<UE> objects) {
         //ressource
         super(context, 0, objects);
     }
 
     public class MyUEClickListener implements View.OnClickListener{
 
-        private Ue ue;
+        private UE ue;
         private CheckBox checkBox;
 
-        public MyUEClickListener(CheckBox checkBox, Ue ue) {
+        public MyUEClickListener(CheckBox checkBox, UE ue) {
             this.ue = ue;
             this.checkBox = checkBox;
         }
@@ -51,7 +53,7 @@ public class UeDisplayAdapter extends ArrayAdapter<Ue> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // get data from list view
-        Ue ue = getItem(position);
+        UE ue = getItem(position);
         // The old view to reuse, if possible. Note: You should check that this view is non-null and of an appropriate type before using.
         if (convertView == null){
             // Layoutinflater: Instantiates a layout XML file into its corresponding View objects.

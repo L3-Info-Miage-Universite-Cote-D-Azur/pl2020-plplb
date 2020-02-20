@@ -1,23 +1,24 @@
-package com.example.plplbproject;
+package metier;
 
-public class Ue {
+import org.json.JSONObject;
 
-    private String ueName;
-    private String ueCode;
+public class UE implements ToJSON{
+    private String name;
+    private String code;
     private Boolean checked;
 
-    public Ue(String ueName, String ueCode) {
-        this.ueName = ueName;
-        this.ueCode = ueCode;
+    public UE(String name, String code) {
+        this.name = name;
+        this.code = code;
         this.checked = false;
     }
 
     public String getUeName() {
-        return ueName;
+        return name;
     }
 
     public String getUeCode() {
-        return ueCode;
+        return code;
     }
 
     public Boolean getChecked() {
