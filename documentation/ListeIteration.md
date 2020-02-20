@@ -1,5 +1,7 @@
 ## Liste des itérations
 
+![Model](https://github.com/L3-Info-Miage-Universite-Cote-D-Azur/pl2020-plplb/blob/master/documentation/modelisation.png)
+
 ### Itération 1:
 	-Developpement du squelette basique du système client-serveur avec SocketIO sur 1 client
 	-Affichage au client d'un message de bienvenue lorsqu'il se connecte. 
