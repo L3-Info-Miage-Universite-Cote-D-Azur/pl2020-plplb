@@ -1,27 +1,20 @@
 package com.example.plplbproject;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.text.TextUtils;
-import android.view.View;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -35,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Ue> ueList;
 
     private ListView ueListView;
-    private CheckBox checkBox;
 
     private Socket mSocket;
 
@@ -62,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("coucouDebud");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
             public void call(Object... args) {
                 mSocket.emit(CONNEXION, "I am the client");
             }
-        })
-                .on(SENDMESSAGE, onNewMessage);
+        });
+        mSocket.on(SENDMESSAGE, onNewMessage);
 
 
         mSocket.connect();

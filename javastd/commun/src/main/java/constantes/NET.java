@@ -5,6 +5,6 @@ package constantes;
  */
 public class NET {
 
-    public static final String CONNEXION = "je me connecte";
+    public static final String CONNEXION = "connexion";
     public static final String SENDMESSAGE = "send message";
 }
