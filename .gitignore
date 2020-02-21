@@ -1,0 +1,7 @@
+
+*.prefs
+javastd/.project
+javastd/commun/.classpath
+javastd/commun/.project
+javastd/serveur/.classpath
+javastd/serveur/.project
