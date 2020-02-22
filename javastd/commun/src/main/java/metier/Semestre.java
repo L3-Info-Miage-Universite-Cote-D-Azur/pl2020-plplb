@@ -1,11 +1,8 @@
 package metier;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
-public class Semestre implements ToJSON{
+public class Semestre{
     private int number;
     private ArrayList<UE> listUE;
 
@@ -26,15 +23,4 @@ public class Semestre implements ToJSON{
         this.listUE = listUE;
     }
 
-    /*JSON*/
-    @Override
-    public JSONObject toJSON() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put("name", getNumber());
-            json.put("code", getListUE());
-        } catch (JSONException e) {
-            e.printStackTrace();}
-        return json;
-    }
 }

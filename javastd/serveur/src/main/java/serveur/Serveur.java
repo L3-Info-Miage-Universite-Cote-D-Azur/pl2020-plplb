@@ -5,7 +5,9 @@ import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
-import metier.UserID;
+import metier.Etudiant;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.net.Inet6Address;
 
@@ -13,6 +15,7 @@ import static constantes.NET.*;
 
 
 public class Serveur {
+    private final Gson gson = new GsonBuilder().create();
 
 
     private final SocketIOServer server;
@@ -33,24 +36,18 @@ public class Serveur {
         this.server = new SocketIOServer(config);
         Debug.log("Server created.");
 
-        this.server.addEventListener(CONNEXION, UserID.class, new DataListener<UserID>() {
+        this.server.addEventListener(CONNEXION, String.class, new DataListener<String>() {
             @Override
-            public void onData(SocketIOClient socketIOClient, UserID id, AckRequest ackRequest) throws Exception {
-                clientConnect(socketIOClient, id);
-            }
-        });
-
-        this.server.addEventListener(SENDMESSAGE, String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
-                System.out.println("client send : "+ s);
+            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                Etudiant etu = gson.fromJson(json,Etudiant.class);
+                clientConnect(socketIOClient, etu);
             }
         });
 
 
     }
 
-    protected void clientConnect(SocketIOClient socketIOClient, UserID id) {
+    protected void clientConnect(SocketIOClient socketIOClient, Etudiant id) {
         // map.put(id, socketIOClient);
         Debug.log("New client connected : "+id);
         socketIOClient.sendEvent(SENDMESSAGE ,"Hello client");

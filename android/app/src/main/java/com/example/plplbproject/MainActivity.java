@@ -13,12 +13,17 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import metier.Etudiant;
+import metier.Semestre;
 import metier.UE;
 
 import static constantes.NET.CONNEXION;
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView ueListView;
 
     private Socket mSocket;
+    private final Gson gson = new GsonBuilder().create();
 
     /**
      * Set a listener on the server to receive messages
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         // ####################### SOCKET STUFF ####################################
 
         try {
@@ -72,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                mSocket.emit(CONNEXION, "I am the client");
+                Etudiant etu = new Etudiant("Etudiant 1");
+                mSocket.emit(CONNEXION, gson.toJson(etu));
             }
         });
         mSocket.on(SENDMESSAGE, onNewMessage);

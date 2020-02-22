@@ -17,12 +17,12 @@ SemestersSample
 	/**
 	 * Represente le Semestre S1 par defaut sous un JSONObject
 	 */
-	public static final JSONObject S1 = new JSONObject(
+	/*public static final JSONObject S1 = new JSONObject(
 											new Semestre(
 												1,
 												new ArrayList<UE>(
 													new UE("Introduction à l\'informatique par le web", "SPUF11"))));
-	
+	*/
 	/**
 	 * Class non instanciable, c'est une class utilitaire
 	 */

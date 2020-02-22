@@ -2,6 +2,10 @@ package serveur;
 
 import java.io.*;
 
+import metier.Etudiant;
+import metier.Semestre;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.json.*;
 
 /**
@@ -124,9 +128,15 @@ DBManager
 	save (Semestre semestre)
 	{
 		if (!this.file.getFile().exists())
-		{this.file.getFile().createNewFile();}
-		
-		this.file.write("{\"parcoursDefaut\":" + semestre.toJSON().toString() + "}");
+		{
+			try {
+				this.file.getFile().createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		final Gson gson = new GsonBuilder().create();
+		this.file.write("{\"parcoursDefaut\":" + gson.toJson(semestre)+ "}");
 	}
 	
 	/**
@@ -137,8 +147,8 @@ DBManager
 	public JSONObject
 	load ()
 	{
-		if (!this.file.getFile().exists())
-			return SemestersSample.S1;
+		if (!this.file.getFile().exists());
+			//return SemestersSample.S1;
 		return new JSONObject(this.file.getFileContent());
 	}
 	
