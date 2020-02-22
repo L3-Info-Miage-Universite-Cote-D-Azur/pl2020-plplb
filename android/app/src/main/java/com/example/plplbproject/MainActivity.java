@@ -27,6 +27,7 @@ import metier.Semestre;
 import metier.UE;
 
 import static constantes.NET.CONNEXION;
+import static constantes.NET.SENDDATACONNEXION;
 import static constantes.NET.SENDMESSAGE;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
 
     private Socket mSocket;
     private final Gson gson = new GsonBuilder().create();
+
+    private Semestre semestre = defaultSemester();
+
+
+    private Semestre defaultSemester(){
+        UE ue = new UE("En attente du serveur","...");
+        ArrayList<UE> a = new ArrayList<UE>();
+        a.add(ue);
+        return new Semestre(-1,a);
+    }
 
     /**
      * Set a listener on the server to receive messages
@@ -85,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
         });
         mSocket.on(SENDMESSAGE, onNewMessage);
 
+        mSocket.on(SENDDATACONNEXION,new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                semestre = gson.fromJson((String) args[0],Semestre.class);
+                System.out.println("data receive from server");
+            }
+        });
+
 
         mSocket.connect();
 
@@ -92,9 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: for now we only have one Ue to display, instancied here. In reality we need to get it from the server
 
-        ueList = new ArrayList<UE>();
-        ueList.add(new UE("Projet", "(6666)"));
-        ueList.add(new UE("Algo", "(1234)"));
+        ueList = semestre.getListUE();
+
 
         ueListView = (ListView) findViewById(R.id.ueListView);
 

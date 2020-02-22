@@ -2,6 +2,10 @@ package serveur;
 
 import java.util.ArrayList;
 
+import metier.Semestre;
+import metier.UE;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.json.*;
 
 /**
@@ -14,15 +18,14 @@ import org.json.*;
 public class 
 SemestersSample 
 {
-	/**
-	 * Represente le Semestre S1 par defaut sous un JSONObject
-	 */
-	/*public static final JSONObject S1 = new JSONObject(
-											new Semestre(
-												1,
-												new ArrayList<UE>(
-													new UE("Introduction à l\'informatique par le web", "SPUF11"))));
-	*/
+	static final Gson gson = new GsonBuilder().create();
+
+	public static String s1(){
+		UE ue = new UE("Introduction à l\'informatique par le web", "SPUF11");
+		ArrayList<UE> a = new ArrayList<UE>();
+		a.add(ue);
+		return gson.toJson(new Semestre(1,a));
+	}
 	/**
 	 * Class non instanciable, c'est une class utilitaire
 	 */

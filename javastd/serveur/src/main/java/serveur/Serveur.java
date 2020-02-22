@@ -41,6 +41,7 @@ public class Serveur {
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Etudiant etu = gson.fromJson(json,Etudiant.class);
                 clientConnect(socketIOClient, etu);
+                clientConnectData(socketIOClient, etu);
             }
         });
 
@@ -51,6 +52,17 @@ public class Serveur {
         // map.put(id, socketIOClient);
         Debug.log("New client connected : "+id);
         socketIOClient.sendEvent(SENDMESSAGE ,"Hello client");
+    }
+
+    protected void clientConnectData(SocketIOClient socketIOClient, Etudiant etu){
+        DBManager dbManager = new DBManager(etu.toString());
+        if(dbManager.getFile().exists()){
+            Debug.log("Send data to : "+etu);
+        }
+        else{
+            Debug.log("Create data for : "+etu);
+        }
+        socketIOClient.sendEvent(SENDDATACONNEXION,dbManager.load());
     }
 
 
