@@ -136,7 +136,7 @@ DBManager
 			}
 		}
 		final Gson gson = new GsonBuilder().create();
-		this.file.write("{\"parcoursDefaut\":" + gson.toJson(semestre)+ "}");
+		this.file.write(gson.toJson(semestre));
 	}
 	
 	/**

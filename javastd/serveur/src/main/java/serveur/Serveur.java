@@ -8,6 +8,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import metier.Etudiant;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import metier.Semestre;
 
 import java.net.Inet6Address;
 
@@ -19,7 +20,8 @@ public class Serveur {
 
 
     private final SocketIOServer server;
-
+    private DBManager dbManager;
+    private Etudiant etudiant;
 
     public Serveur(String ip, int port) {
 
@@ -45,17 +47,28 @@ public class Serveur {
             }
         });
 
+        this.server.addEventListener(SENDCLIENTSAVE, String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                Semestre data = gson.fromJson(json, Semestre.class);
+                dbManager.save(data);
+                //TODO : envoyer un liste contenant le semestre et l'etudiant si ce n'est pas un thread.
+                Debug.log("Save data for "+etudiant.getNom());
+            }
+        });
+
 
     }
 
     protected void clientConnect(SocketIOClient socketIOClient, Etudiant id) {
         // map.put(id, socketIOClient);
+        etudiant = id;
         Debug.log("New client connected : "+id);
         socketIOClient.sendEvent(SENDMESSAGE ,"Hello client");
     }
 
     protected void clientConnectData(SocketIOClient socketIOClient, Etudiant etu){
-        DBManager dbManager = new DBManager(etu.toString());
+        dbManager = new DBManager(etu.toString());
         if(dbManager.getFile().exists()){
             Debug.log("Send data to : "+etu);
         }
