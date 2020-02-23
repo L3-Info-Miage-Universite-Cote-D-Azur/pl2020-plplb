@@ -144,20 +144,20 @@ DBManager
 	 * si le client n a pas de sauvegarde, on revoie le premier semestre
 	 * @return JSONObject
 	 */
-	public JSONObject
+	public String
 	load ()
 	{
-		if (!this.file.getFile().exists());
-			//return SemestersSample.S1;
-		return new JSONObject(this.file.getFileContent());
+		if (!this.file.getFile().exists())
+			return SemestersSample.s1();
+		return this.file.getFileContent();
 	}
-	
+
+	/*
 	/**
 	 * Permet de charger le parcours du client courant sous un JSONObject, 
 	 * si le parcours ou le fichier n existe pas, on renvoie null
 	 * @param key La String representant le nom du parcours
 	 * @return JSONObject
-	 */
 	public JSONObject
 	loadCourse (String key)
 	{
@@ -170,4 +170,5 @@ DBManager
 			return null;
 		return new JSONObject(this.load().getJSONObject(key));
 	}
+	*/
 }

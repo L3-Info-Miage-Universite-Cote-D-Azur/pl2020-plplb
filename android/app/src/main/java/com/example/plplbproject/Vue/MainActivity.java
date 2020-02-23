@@ -1,4 +1,4 @@
-package com.example.plplbproject;
+package com.example.plplbproject.Vue;
 
 
 import android.os.Bundle;
@@ -13,28 +13,29 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.plplbproject.R;
+import com.example.plplbproject.model.MainModele;
+import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import io.socket.client.IO;
+
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import metier.Etudiant;
-import metier.Semestre;
+
 import metier.UE;
 
-import static constantes.NET.CONNEXION;
-import static constantes.NET.SENDMESSAGE;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Vue {
 
     private ArrayList<UE> ueList;
 
     private ListView ueListView;
+    private MainModele modele;
 
+    private Connexion socket;
     private Socket mSocket;
     private final Gson gson = new GsonBuilder().create();
 
@@ -65,28 +66,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        this.modele = new MainModele();
+        socket= new Connexion(this,modele);
+        socket.setup("192.168.1.46","10101");
+        socket.connect();
 
-        // ####################### SOCKET STUFF ####################################
-
-        try {
-            mSocket = IO.socket("http://10.0.2.2:10101");
-            System.out.println("MSOCKET: " + mSocket);
-            System.out.println("########### SOCKET CONNECTED ############");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                Etudiant etu = new Etudiant("Etudiant 1");
-                mSocket.emit(CONNEXION, gson.toJson(etu));
-            }
-        });
-        mSocket.on(SENDMESSAGE, onNewMessage);
-
-
-        mSocket.connect();
 
         //###################### Adapt the list of Ue to display #####################
 
@@ -100,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         UeDisplayAdapter ueDisplayAdapter = new UeDisplayAdapter(this, ueList);
         ueListView.setAdapter(ueDisplayAdapter);
+
 
     }
 
@@ -123,5 +108,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void toastMessage(final String msg) {
+        MainActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String receivedMessage = msg;
+
+                // add the message to view todo
+                //just show the message in a toast
+                Toast.makeText(getApplicationContext(),"Server sent you a message: "+ receivedMessage,Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }
