@@ -22,9 +22,6 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
-
 import metier.UE;
 
 
@@ -33,31 +30,12 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private ArrayList<UE> ueList;
 
     private ListView ueListView;
-    private MainModele modele;
 
+
+    private MainModele modele;
     private Connexion socket;
-    private Socket mSocket;
     private final Gson gson = new GsonBuilder().create();
 
-    /**
-     * Set a listener on the server to receive messages
-     *
-    */
-    Emitter.Listener onNewMessage = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    String receivedMessage = (String) args[0];
-
-                    // add the message to view todo
-                    //just show the message in a toast
-                    Toast.makeText(getApplicationContext(),"Server sent you a message: "+ receivedMessage,Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,23 +45,22 @@ public class MainActivity extends AppCompatActivity implements Vue {
         setSupportActionBar(toolbar);
 
         this.modele = new MainModele();
+
+        //###################### Adapt the list of Ue to display #####################
+        UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(this, modele.getAllUE());
+        ueListView = (ListView) findViewById(R.id.ueListView);
+        ueListView.setAdapter(ueListViewAdaptateur);
+
+
+        //###################### Server connection #####################
         socket= new Connexion(this,modele);
-        socket.setup("192.168.1.46","10101");
+        socket.setup("10.0.2.2","10101");
         socket.connect();
 
 
-        //###################### Adapt the list of Ue to display #####################
 
-        //TODO: for now we only have one Ue to display, instancied here. In reality we need to get it from the server
 
-        ueList = new ArrayList<UE>();
-        ueList.add(new UE("Projet", "(6666)"));
-        ueList.add(new UE("Algo", "(1234)"));
 
-        ueListView = (ListView) findViewById(R.id.ueListView);
-
-        UeDisplayAdapter ueDisplayAdapter = new UeDisplayAdapter(this, ueList);
-        ueListView.setAdapter(ueDisplayAdapter);
 
 
     }
@@ -110,6 +87,16 @@ public class MainActivity extends AppCompatActivity implements Vue {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void notifyUeListView(){
+        MainActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                UeDisplayAdapter adapter = (UeDisplayAdapter)ueListView.getAdapter();
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     @Override
     public void toastMessage(final String msg) {
@@ -125,4 +112,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
         });
 
     }
+
+
 }
