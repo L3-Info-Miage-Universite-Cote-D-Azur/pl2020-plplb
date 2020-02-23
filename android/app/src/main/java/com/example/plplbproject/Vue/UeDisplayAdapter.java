@@ -23,21 +23,26 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
     private TextView ueName;
     private TextView ueCode;
     private CheckBox checkBox;
+    private Vue vue;
 
 
     public UeDisplayAdapter(@NonNull Context context,@NonNull List<UE> objects) {
         //ressource
         super(context, 0, objects);
+        this.vue = (Vue)context;
     }
 
     public class MyUEClickListener implements View.OnClickListener{
 
         private UE ue;
         private CheckBox checkBox;
+        private Vue vue;
 
-        public MyUEClickListener(CheckBox checkBox, UE ue) {
+        public MyUEClickListener(CheckBox checkBox, UE ue,Vue vue) {
             this.ue = ue;
             this.checkBox = checkBox;
+            this.vue = vue;
+
         }
 
         @Override
@@ -48,6 +53,8 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
             else{
                 ue.setChecked(false);
             }
+            vue.needSave(true);
+
         }
     }
 
@@ -74,7 +81,7 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
         }
 
         //########################## Add checkbox Listener ###############################
-        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue));
+        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue,vue));
 
         return convertView;
     }

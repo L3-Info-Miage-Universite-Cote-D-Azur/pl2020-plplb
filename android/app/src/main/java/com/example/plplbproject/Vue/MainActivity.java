@@ -10,10 +10,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.controleur.UserController;
 import com.example.plplbproject.model.MainModele;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
@@ -30,11 +33,11 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private ArrayList<UE> ueList;
 
     private ListView ueListView;
+    private Button save;
 
-
+    private UserController userController;
     private MainModele modele;
     private Connexion socket;
-    private final Gson gson = new GsonBuilder().create();
 
 
     @Override
@@ -46,9 +49,10 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         this.modele = new MainModele();
 
+
         //###################### Adapt the list of Ue to display #####################
         UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(this, modele.getAllUE());
-        ueListView = (ListView) findViewById(R.id.ueListView);
+        ueListView = findViewById(R.id.ueListView);
         ueListView.setAdapter(ueListViewAdaptateur);
 
 
@@ -58,9 +62,11 @@ public class MainActivity extends AppCompatActivity implements Vue {
         socket.connect();
 
 
+        userController = new UserController((Vue)this,socket,modele);
 
-
-
+        save = findViewById(R.id.save);
+        save.setOnClickListener(userController.saveButton());
+        needSave(false); //button non disponnible avant d'avoir fait une modification
 
 
     }
@@ -99,6 +105,12 @@ public class MainActivity extends AppCompatActivity implements Vue {
     }
 
     @Override
+    public void needSave(Boolean needSave) {
+        if(needSave) save.setVisibility(View.VISIBLE);
+        else save.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void toastMessage(final String msg) {
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
@@ -110,8 +122,9 @@ public class MainActivity extends AppCompatActivity implements Vue {
                 Toast.makeText(getApplicationContext(),"Server sent you a message: "+ receivedMessage,Toast.LENGTH_LONG).show();
             }
         });
-
     }
+
+
 
 
 }
