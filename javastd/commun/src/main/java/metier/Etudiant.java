@@ -1,9 +1,14 @@
 package metier;
 
+/**
+ * Etudiant represente le client qui se connecte au serveur.
+ */
 public class Etudiant{
 
-    private  String nom;
+    /* FIELDS */
+    private  String nom; //le nom de l'etudiant
 
+    /* CONSTRUCTOR */
     public Etudiant() {
         this("nom par défaut");
     }
@@ -17,7 +22,6 @@ public class Etudiant{
     /*GETTERS/SETTERS*/
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
-
 
     public String toString() {
         return this.getNom();
