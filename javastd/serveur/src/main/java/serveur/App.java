@@ -1,6 +1,8 @@
 package serveur;
 
-
+/**
+ * Classe principale du serveur
+ */
 public class App {
 
 

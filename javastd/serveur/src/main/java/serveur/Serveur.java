@@ -10,19 +10,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import metier.Semestre;
 
-import java.net.Inet6Address;
 
 import static constantes.NET.*;
 
-
+/**
+ * classe du serveur, gere les differentes connexion et event venant de celle-ci.
+ */
 public class Serveur {
-    private final Gson gson = new GsonBuilder().create();
 
+    /*FIELDS*/
+    private final Gson gson = new GsonBuilder().create();
 
     private final SocketIOServer server;
     private DBManager dbManager;
     private Etudiant etudiant;
 
+    /*CONSTRUCTOR*/
     public Serveur(String ip, int port) {
 
         Debug.log("Creating server..");
@@ -60,13 +63,23 @@ public class Serveur {
 
     }
 
-    protected void clientConnect(SocketIOClient socketIOClient, Etudiant id) {
+    /**
+     * Gestion de la connexion d'un client
+     * @param socketIOClient le socketIO du client
+     * @param etu L'etudiant qui ce connecte.
+     */
+    protected void clientConnect(SocketIOClient socketIOClient, Etudiant etu) {
         // map.put(id, socketIOClient);
-        etudiant = id;
-        Debug.log("New client connected : "+id);
+        etudiant = etu;
+        Debug.log("New client connected : "+etu);
         socketIOClient.sendEvent(SENDMESSAGE ,"Hello client");
     }
 
+    /**
+     * Gestion des donner du client qui vient de se connecter
+     * @param socketIOClient le socketIO du client
+     * @param etu L'etudiant qui ce connecte.
+     */
     protected void clientConnectData(SocketIOClient socketIOClient, Etudiant etu){
         dbManager = new DBManager(etu.toString());
         if(dbManager.getFile().exists()){
@@ -79,6 +92,9 @@ public class Serveur {
     }
 
 
+    /**
+     * demarage du serveur
+     */
     protected void startServer() {
 
         server.start();
