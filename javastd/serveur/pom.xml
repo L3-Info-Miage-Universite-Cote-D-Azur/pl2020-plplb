@@ -17,7 +17,7 @@
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>  <!-- éventuellement à changer : localisation des fichiers sources -->
-        <!--  <testSourceDirectory>src/test</testSourceDirectory> éventuellement à changer : localisation des fichiers sources des tests -->
+        <testSourceDirectory>src/test/java</testSourceDirectory> <!-- éventuellement à changer : localisation des fichiers sources des tests -->
         <plugins>
 
 
@@ -97,11 +97,11 @@
                     <!-- argument de la commande java (en plus du nom de la classe et du classpath -->
 
                     <!-- arguments récupérés dans le main -->
-
+                    <!--
                     <arguments>
-                        <argument>3</argument>
-                        <argument>partie</argument>
+                        <argument>arg</argument>
                     </arguments>
+                    -->
 
 
                     <!-- arguments de configuration système -->
