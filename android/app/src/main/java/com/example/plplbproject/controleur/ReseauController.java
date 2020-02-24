@@ -29,7 +29,7 @@ public class ReseauController{
     }
 
 
-    public Emitter.Listener connexion(){
+    public Emitter.Listener receiveMessage(){
         return new EmitterListener(vue,connexion,modele) {
             @Override
             public void call(Object... args) {
@@ -43,7 +43,7 @@ public class ReseauController{
         return new EmitterListener(vue,connexion,modele) {
             @Override
             public void call(Object... args) {
-                Etudiant etu = new Etudiant("Etudiant 1");
+                Etudiant etu = modele.getEtudiant();
                 connexion.send(CONNEXION, gson.toJson(etu));
             }
         };

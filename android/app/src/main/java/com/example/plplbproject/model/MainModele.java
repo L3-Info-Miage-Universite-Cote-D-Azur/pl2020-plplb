@@ -13,7 +13,7 @@ public class MainModele {
 
     public MainModele(){
         allUE = new ArrayList<>();
-        this.etudiant = new Etudiant();
+        this.etudiant = new Etudiant("Etudiant 1");
     }
 
     public void setAllUE(ArrayList<UE> allUE) {
