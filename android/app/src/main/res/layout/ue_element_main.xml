@@ -23,12 +23,11 @@
             android:id="@+id/ueName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ueName"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:textSize="32dp"
-            android:textStyle="bold"
-            />
+            android:text="ueName"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkboxUe"
@@ -41,14 +40,13 @@
 
         <TextView
             android:id="@+id/codeUe"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="26dp"
             android:text="codeUe"
-            />
+            android:textSize="20dp" />
 
 
     </RelativeLayout>
