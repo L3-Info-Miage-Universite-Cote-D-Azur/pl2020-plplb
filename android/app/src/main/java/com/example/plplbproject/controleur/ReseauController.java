@@ -14,13 +14,18 @@ import metier.Semestre;
 
 import static constantes.NET.*;
 
+/**
+ * Controlleur de tout les evenement venant du reseau
+ */
 public class ReseauController{
 
+    /*FIELDS*/
     private Vue vue;
     private Connexion connexion;
     private MainModele modele;
     private final Gson gson = new GsonBuilder().create();
 
+    /*CONSTRUCTOR*/
     public ReseauController(Vue vue, Connexion connexion, MainModele modele){
 
         this.vue = vue;
@@ -28,7 +33,10 @@ public class ReseauController{
         this.modele = modele;
     }
 
-
+    /**
+     * gere la reception des message(textuel) du serveur
+     * @return traitement a effectuer (sur le modele et la vue)
+     */
     public Emitter.Listener receiveMessage(){
         return new EmitterListener(vue,connexion,modele) {
             @Override
@@ -38,7 +46,10 @@ public class ReseauController{
         };
     }
 
-
+    /**
+     * gere la connexion au serveur
+     * @return traitement a effectuer (sur le modele et la vue)
+     */
     public Emitter.Listener connexionEvent(){
         return new EmitterListener(vue,connexion,modele) {
             @Override
@@ -48,6 +59,11 @@ public class ReseauController{
             }
         };
     }
+
+    /**
+     * gere la reception de la liste des ue et la sauvegarde envoyer par le serveur
+     * @return traitement a effectuer (sur le modele et la vue)
+     */
     public Emitter.Listener dataConnexion() {
         return new EmitterListener(vue,connexion,modele) {
             @Override
