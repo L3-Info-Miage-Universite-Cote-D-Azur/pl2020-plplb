@@ -30,10 +30,11 @@ import metier.UE;
 
 public class MainActivity extends AppCompatActivity implements Vue {
 
+    /* FIELDS */
     private ArrayList<UE> ueList;
 
     private ListView ueListView;
-    private Button save;
+    private Button save; //Le bouton de sauvegarde
 
     private UserController userController;
     private MainModele modele;
@@ -62,11 +63,12 @@ public class MainActivity extends AppCompatActivity implements Vue {
         socket.connect();
 
 
+        //##################### Controller for the user #####################
         userController = new UserController((Vue)this,socket,modele);
 
-        save = findViewById(R.id.save);
+        save = findViewById(R.id.save);// Boutton de sauvegarde
         save.setOnClickListener(userController.saveButton());
-        needSave(false); //button non disponnible avant d'avoir fait une modification
+        needSave(false); //boutton non disponible avant d'avoir fait une modification
 
 
     }
@@ -93,23 +95,34 @@ public class MainActivity extends AppCompatActivity implements Vue {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Envoie a la liste des Ues un changement et change la vue en consequence.
+     */
     @Override
     public void notifyUeListView(){
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                UeDisplayAdapter adapter = (UeDisplayAdapter)ueListView.getAdapter();
+                UeDisplayAdapter adapter = (UeDisplayAdapter) ueListView.getAdapter();
                 adapter.notifyDataSetChanged();
             }
         });
     }
 
+    /**
+     * needSave rend visible ou invisible le bouton de sauvegarde des donnees.
+     * @param needSave vaut true si un changement doit etre sauvegarder
+     */
     @Override
     public void needSave(Boolean needSave) {
         if(needSave) save.setVisibility(View.VISIBLE);
         else save.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Affiche un message dans un toast sur la vue actuelle.
+     * @param msg message a afficher.
+     */
     @Override
     public void toastMessage(final String msg) {
         MainActivity.this.runOnUiThread(new Runnable() {

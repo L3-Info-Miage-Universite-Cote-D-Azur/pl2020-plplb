@@ -20,18 +20,20 @@ import metier.UE;
 
 public class UeDisplayAdapter extends ArrayAdapter<UE> {
 
+    /* FIELDS */
     private TextView ueName;
     private TextView ueCode;
     private CheckBox checkBox;
     private Vue vue;
 
-
+    /* CONSTRUCTOR */
     public UeDisplayAdapter(@NonNull Context context,@NonNull List<UE> objects) {
         //ressource
         super(context, 0, objects);
         this.vue = (Vue)context;
     }
 
+    /* SOUS CLASSE CONTROLLEUR */
     public class MyUEClickListener implements View.OnClickListener{
 
         private UE ue;
@@ -47,21 +49,23 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
 
         @Override
         public void onClick(View view) {
-            if(checkBox.isChecked()){
+            if(checkBox.isChecked()){ //Change le check de l'ue en consequence.
                 ue.setChecked(true);
             }
             else{
                 ue.setChecked(false);
             }
+            //Un changement a eu lieu.
             vue.needSave(true);
 
         }
     }
 
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        // get data from list view
+        //Recupere les elements de la listeView.
         UE ue = getItem(position);
         // The old view to reuse, if possible. Note: You should check that this view is non-null and of an appropriate type before using.
         if (convertView == null){
@@ -73,9 +77,11 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
         ueCode = (TextView) convertView.findViewById(R.id.codeUe);
         checkBox = (CheckBox) convertView.findViewById(R.id.checkboxUe);
 
+        //Mise a jour du texte
         ueName.setText(ue.getUeName());
         ueCode.setText(ue.getUeCode());
-        // get back the previous checked Ue of the user
+
+        //Mise a jour de la case coche ou non.
         if(ue.getChecked()){
             checkBox.setChecked(true);
         }

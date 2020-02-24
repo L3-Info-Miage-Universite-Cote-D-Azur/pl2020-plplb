@@ -14,10 +14,12 @@ import static constantes.NET.*;
 
 public class Connexion {
 
+    /* FIELDS */
     private Socket mSocket;
     private Vue vue;
     private MainModele modele;
 
+    /* CONSTRUCTOR */
     public Connexion(Vue vue, MainModele modele) {
 
         setVue(vue);
@@ -25,6 +27,20 @@ public class Connexion {
 
     }
 
+    public void setVue(Vue vue) {
+        this.vue = vue;
+    }
+
+    public Vue getVue() {
+        return vue;
+    }
+
+    /**
+     * setup permet de preparer la connection au serveur avec l'ip et le port.
+     * Met en place la reception des events.
+     * @param ip : l'ip du serveur.
+     * @param port : le port du serveur.
+     */
     public void setup(String ip,String port) {
         ReseauController controller=new ReseauController(vue,this,modele);
         try {
@@ -40,23 +56,26 @@ public class Connexion {
         mSocket.on(SENDDATACONNEXION,controller.dataConnexion());
     }
 
+    /**
+     * connect permet de se connecter au serveur.
+     */
     public void connect() {
         mSocket.connect();
 
     }
 
-    public void setVue(Vue vue) {
-        this.vue = vue;
-    }
-
-    public Vue getVue() {
-        return vue;
-    }
-
+    /**
+     * disconnect permet de se deconnecter du serveur.
+     */
     public void disconnect() {
         if (mSocket != null) mSocket.disconnect();
     }
 
+    /**
+     * send envoie un message au serveur.
+     * @param event le nom de l'evenement.s
+     * @param json le json a envoye.
+     */
     public void send(String event, String json){
         mSocket.emit(event,json);
     }
