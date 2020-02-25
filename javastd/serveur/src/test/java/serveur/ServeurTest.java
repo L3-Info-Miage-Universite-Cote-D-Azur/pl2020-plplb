@@ -31,10 +31,10 @@ public class ServeurTest {
 
     @BeforeEach
     public void init(){
+        Debug.verbose = false;
         serveur = new Serveur("127.0.0.1",10113);
         client = Mockito.mock(SocketIOClient.class);
         etudiant = Mockito.spy(new Etudiant("test"));
-        Debug.verbose = false;
 
     }
     @Test
