@@ -103,20 +103,6 @@ DBManager
 	/* METHODS */
 	/**
 	 * Permet de d'ecraser la sauvegarde courante du client 
-	 * TODO:
-	 * Checker si j est bien un JSONObject representant tous nos parcours
-	 * par sa nouvelle sauvegarde dans le fichier db/file.getName().txt
-	 * @param j Le JSONObject representant sa sauvegarde
-	 */
-	public void
-	save (JSONObject j)
-	{
-		
-		this.file.write(j.toString());
-	}
-	
-	/**
-	 * Permet de d'ecraser la sauvegarde courante du client 
 	 * par sa nouvelle sauvegarde dans le fichier db/file.getName().txt pour son seul parcours
 	 * TODO:
 	 * Porter cette fonction a quelque chose de plus general, par exemple avec une class
@@ -127,8 +113,7 @@ DBManager
 	public void
 	save (Semestre semestre)
 	{
-		if (!this.file.getFile().exists())
-		{
+		if (!this.file.getFile().exists()) {
 			try {
 				this.file.getFile().createNewFile();
 			} catch (IOException e) {
