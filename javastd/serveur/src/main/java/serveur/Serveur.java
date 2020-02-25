@@ -40,7 +40,14 @@ public class Serveur {
         // creation du serveur
         this.server = new SocketIOServer(config);
         Debug.log("Server created.");
+        initEventListener();
 
+    }
+
+    /**
+     * Initialisation des Event Listener
+     */
+    protected void initEventListener(){
         this.server.addEventListener(CONNEXION, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
@@ -59,9 +66,35 @@ public class Serveur {
                 Debug.log("Save data for "+etudiant.getNom());
             }
         });
-
-
     }
+
+
+
+    /**
+     * demarage du serveur
+     */
+    protected void startServer() {
+
+        server.start();
+        Debug.log("Server listening.");
+    }
+
+    /**
+     * Arret de l'ecoute du serveur
+     */
+    protected void stopServeur(){
+        server.stop();
+        Debug.log("Server shutdown.");
+    }
+
+    /**
+     * get etudiant
+     * @return etudiant
+     */
+    public Etudiant getEtudiant(){
+        return etudiant;
+    }
+
 
     /**
      * Gestion de la connexion d'un client
@@ -69,6 +102,8 @@ public class Serveur {
      * @param etu L'etudiant qui ce connecte.
      */
     protected void clientConnect(SocketIOClient socketIOClient, Etudiant etu) {
+        //TODO Liaison entre le socket et l'etudiant avec une hashmap pour avoir plusier etudiant
+
         // map.put(id, socketIOClient);
         etudiant = etu;
         Debug.log("New client connected : "+etu);
@@ -81,6 +116,8 @@ public class Serveur {
      * @param etu L'etudiant qui ce connecte.
      */
     protected void clientConnectData(SocketIOClient socketIOClient, Etudiant etu){
+        //TODO enlevement du parametre etu recuperer dans la future hashmap
+
         dbManager = new DBManager(etu.toString());
         if(dbManager.getFile().exists()){
             Debug.log("Send data to : "+etu);
@@ -89,16 +126,6 @@ public class Serveur {
             Debug.log("Create data for : "+etu);
         }
         socketIOClient.sendEvent(SENDDATACONNEXION,dbManager.load());
-    }
-
-
-    /**
-     * demarage du serveur
-     */
-    protected void startServer() {
-
-        server.start();
-        Debug.log("Server listening.");
     }
 
 
