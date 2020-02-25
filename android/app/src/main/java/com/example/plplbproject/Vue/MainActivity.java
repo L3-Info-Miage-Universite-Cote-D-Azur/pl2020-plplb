@@ -41,6 +41,12 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private Connexion socket;
 
 
+    public static final String AUTOCONNECT = "AUTOCONNECT";
+    private boolean autoconnect =  true;
+    private String ip = "10.0.2.2";
+    private String port = "10101";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,29 +54,24 @@ public class MainActivity extends AppCompatActivity implements Vue {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.modele = new MainModele();
 
 
-        //###################### Adapt the list of Ue to display #####################
-        UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(this, modele.getAllUE());
-        ueListView = findViewById(R.id.ueListView);
-        ueListView.setAdapter(ueListViewAdaptateur);
+    }
 
+    /**
+     * Set connexion
+     * @param connexion new connexion
+     */
+    protected void setConnexion(Connexion connexion){
+        this.socket = connexion;
+        socket.setup(ip,port);
 
-        //###################### Server connection #####################
-        socket= new Connexion(this,modele);
-        socket.setup("10.0.2.2","10101");
-        socket.connect();
+    }
 
-
-        //##################### Controller for the user #####################
-        userController = new UserController((Vue)this,socket,modele);
-
-        save = findViewById(R.id.save);// Boutton de sauvegarde
-        save.setOnClickListener(userController.saveButton());
-        needSave(false); //boutton non disponible avant d'avoir fait une modification
-
-
+    protected MainModele getModele(){
+        return modele;
     }
 
     @Override
@@ -95,6 +96,49 @@ public class MainActivity extends AppCompatActivity implements Vue {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (socket != null) socket.disconnect();
+    }
+
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (autoconnect) setConnexion(new Connexion((Vue)this,modele));
+
+        userController = new UserController((Vue)this,socket,modele);
+        save = findViewById(R.id.save);// Boutton de sauvegarde
+        ueListView = findViewById(R.id.ueListView);
+        if(autoconnect) initVue();
+
+    }
+
+    /**
+     * Initialisation de le vue
+     */
+    protected void initVue(){
+        //###################### Adapt the list of Ue to display #####################
+        UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(this, modele.getAllUE());
+        ueListView.setAdapter(ueListViewAdaptateur);
+
+
+        //###################### Server connection #####################
+        socket.connect();
+
+
+        //##################### Controller for the user #####################
+        save.setOnClickListener(userController.saveButton());
+        needSave(false); //boutton non disponible avant d'avoir fait une modification
+
+
+    }
+
+
     /**
      * Envoie a la liste des Ues un changement et change la vue en consequence.
      */
@@ -105,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
             public void run() {
                 UeDisplayAdapter adapter = (UeDisplayAdapter) ueListView.getAdapter();
                 adapter.notifyDataSetChanged();
+
             }
         });
     }
