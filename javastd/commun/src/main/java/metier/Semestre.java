@@ -3,29 +3,29 @@ package metier;
 import java.util.ArrayList;
 
 /**
- * Semestre represente un semestre du parcours de licence. Un semestre contient des UEs.
+ * Semestre represente un semestre du parcours de licence. Un semestre contient des matieres qui contiennent des UEs.
  */
 public class Semestre{
     /* FIELDS */
     private int number; //le numero du semestre
-    private ArrayList<UE> listUE; // la liste des UEs
+    private ArrayList<Matiere> listMatiere; // la liste des matieres.
 
     /* CONSTRUCTOR */
-    public Semestre(int number, ArrayList<UE> listUE){
+    public Semestre(int number, ArrayList<Matiere> listUE){
         this.number = number;
-        this.listUE = listUE;
+        this.listMatiere = listMatiere;
     }
 
     public int getNumber() {
         return number;
     }
 
-    public ArrayList<UE> getListUE() {
-        return listUE;
+    public ArrayList<Matiere> getListUE() {
+        return listMatiere;
     }
 
-    public void setListUE(ArrayList<UE> listUE) {
-        this.listUE = listUE;
+    public void setListUE(ArrayList<Matiere> listMatiere) {
+        this.listMatiere = listMatiere;
     }
 
 }
