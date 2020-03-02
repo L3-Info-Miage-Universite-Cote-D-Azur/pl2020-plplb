@@ -17,25 +17,28 @@
 	-Le serveur redonne automatiquement au client ses choix "brouillon" lors de sa nouvelle connexion.
 
 ### Itération 3:
-	-Ajout des UEs des L1 au S1.
+	-Ajout des UEs du S1.
 	-IHM : Menu deroulant pour les UEs.
 	-Separation des UEs par matieres/categories. 
 	-Choix des 3 UEs libres + choix de l'UE l'obligatoire par les L1 au S1 (+ autres obligatoires)
-	-Conditions de choix pour les UEs libres du s1:
+	-Mise en place des conditions de choix pour les UEs libres du s1:
 		-1 UE par matière
 		-Le client ne peut pas prendre une UE deja choisie.
 	
 ### Itération 4:
-	-Ajout de toutes les UEs. 
+	-Ajout des UEs du s2. 
+	-Ajout du s2.
 	-Code couleur des UE (gris pour disponible, rouge pour indisponible, bleu pour choisie). 
 	-IHM : Menu deroulant pour chaque semestre et chaque matiere. 
 	-Developpement pour le S2 jusqu'au S4: 4 UE à choisir
-	-Conditions de choix pour les UEs libres:
+	-Mise en place des conditions de choix pour les UEs libres:
 		-le S2 aura 2 UEs libres possibles par matière, 
 		-le S3 en aura 3,
 		-le S4 en aura 4.
 
 ### Itération 5:
+	-Ajout des UEs du s3.
+	-Ajout du s3.
 	-Nom, prénom, et l'INE de l'étudiant caractérisera le client, il devra le fournir au login.
 	-Le login est stocké de base dans un fichier et est chargé au lancement du serveur.
 	-Le serveur reconnais un étudiant déjà dans le fichier et charge ses sauvegardes.
@@ -43,6 +46,8 @@
 	
 
 ### Itération 6:
+	-Ajout des UEs du s4.
+	-Ajout du s4.
 	-Le client peut choisir de sauvegarder ses choix, de les charger et de les modifier
 	-Les choix de parcours sont enregistrés sur le serveur, le client peut sauvegarder/charger ses choix de parcours
 	-Avancements sur l'IHM:
@@ -64,7 +69,8 @@
 	
 
 ### Itération 8:
-	-Implémentation des parcours automatisés, le serveur propose au client des parcours préconçu (modele type de cursus) si celui-ci le demande
+	-Implémentation des parcours automatisés, le serveur propose au client des parcours préconçu (modele type de cursus) si celui-ci 	le demande
+	- Mise en place d'une liste de parcours préconcu en fonction des matières.
 	- Le client peut voir le parcours des autres utilisateurs.
 
 ### Itération 9:
