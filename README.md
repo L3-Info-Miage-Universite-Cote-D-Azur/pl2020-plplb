@@ -24,7 +24,6 @@
 	-Conditions de choix pour les UEs libres du s1:
 		-1 UE par matière
 		-Le client ne peut pas prendre une UE deja choisie.
-	-Le client est un L1 au S1 et ses choix sont enregistrés par le serveur.
 	
 ### Itération 4:
 	-Ajout de toutes les UEs. 
@@ -41,10 +40,15 @@
 	-Le login est stocké de base dans un fichier et est chargé au lancement du serveur.
 	-Le serveur reconnais un étudiant déjà dans le fichier et charge ses sauvegardes.
 	-IHM : page de login a l'ouverture de l'application.
-	-Choix des UE facultative et UE speciale d'enseignement et professionalisante. 
+	
 
 ### Itération 6:
-	-Explication de l'indisponibilité d'une UE en rouge. 
+	-Le client peut choisir de sauvegarder ses choix, de les charger et de les modifier
+	-Les choix de parcours sont enregistrés sur le serveur, le client peut sauvegarder/charger ses choix de parcours
+	-Avancements sur l'IHM:
+		-Toolbar pour les choix:
+			-Charger ses parcours
+			-Voir ses parcours
 	-Avancements sur l'IHM:
 		-Toolbar pour les choix:
 			-Gestion des semestres
@@ -54,20 +58,18 @@
 			-Voir l'ensemble des UE disponibles au semestre courant
 
 ### Itération 7:
-	-Gestion des UEs: UEs "impossibles" grisées en fonction des choix, le client doit décocher son choix d'UE pour la matière pour rendre les autres disponible
-	-Le client peut choisir de sauvegarder ses choix, de les charger et de les modifier
-	-Les choix de parcours sont enregistrés sur le serveur, le client peut sauvegarder/charger ses choix de parcours
-	-Avancements sur l'IHM:
-		-Toolbar pour les choix:
-			-Charger ses parcours
-			-Voir ses parcours
+	-Gestion des UEs: UEs "impossibles" grisées en fonction des choix, le client doit décocher son choix d'UE pour la matière pour 		rendre les autres disponible
+	-Explication de l'indisponibilité d'une UE en rouge. 
+	-Choix des UE facultative et UE speciale d'enseignement et professionalisante. 
+	
 
 ### Itération 8:
 	-Implémentation des parcours automatisés, le serveur propose au client des parcours préconçu (modele type de cursus) si celui-ci le demande
+	- Le client peut voir le parcours des autres utilisateurs.
 
 ### Itération 9:
 	-Résolution de conflits: 
-		-le client ne pas modifier les semestres antérieurs au semestre courant
+		-le client ne peut pas modifier les semestres antérieurs au semestre courant
 		-nombre limite de parcours possibles "sauvegardables"
 		-il est impossible d'avoir 1 client connecté en même temps à partir de plusieurs machines (: impossibilité de lire 1 fichier par 2 threads ?)
 
