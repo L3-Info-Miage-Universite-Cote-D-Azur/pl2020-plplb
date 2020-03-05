@@ -39,6 +39,8 @@ public class MainModele {
     }
 
     public void setSemestre(Semestre semestre){
-        this.semestre = semestre;
+        this.semestre.setNumber(semestre.getNumber());
+        this.semestre.getListCategorie().clear();
+        this.semestre.getListCategorie().addAll(semestre.getListCategorie());
     }
 }

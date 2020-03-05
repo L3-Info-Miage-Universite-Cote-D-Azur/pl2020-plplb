@@ -41,6 +41,7 @@ public class Semestre{
     public int getNumber() {
         return number;
     }
+    public void setNumber(int number){this.number = number;}
 
     public ArrayList<Categorie> getListCategorie() {
         return listCategorie;
@@ -64,7 +65,6 @@ public class Semestre{
         //not find
         return null;
     }
-
 
     public int getNumberUENeedChoose(){ return numberUENeedChoose; }
 
