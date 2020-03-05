@@ -101,8 +101,13 @@ SemestersSample
 
 		listCategorie.add(new Categorie("FABLAB",listUE));
 
+		//RULE
+		//obligatoire au choix:
+		ArrayList<String> listObligatoire = new ArrayList<String>();
+		listObligatoire.add("SPUM11");
+		listObligatoire.add("SPUM12");
 		//AJOUT AU SEMESTRE 1;
-		Semestre S1 = new Semestre(1,listCategorie);
+		Semestre S1 = new Semestre(1,listCategorie,listObligatoire);
 		return gson.toJson(S1);
 	}
 

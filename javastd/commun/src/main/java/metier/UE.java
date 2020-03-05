@@ -8,13 +8,12 @@ public class UE{
     /*FIELDS*/
     private String name;
     private String code;
-    private Boolean checked;
+    private String categorie; //categorie de l'ue
 
     /*CONSTRUCTOR*/
     public UE(String name, String code) {
         this.name = name;
         this.code = code;
-        this.checked = false;
     }
 
     public String getUeName() {
@@ -25,11 +24,8 @@ public class UE{
         return code;
     }
 
-    public Boolean getChecked() {
-        return checked;
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
     }
-
-    public void setChecked(Boolean checked) {
-        this.checked = checked;
-    }
+    public String getCategorie(){ return categorie;}
 }

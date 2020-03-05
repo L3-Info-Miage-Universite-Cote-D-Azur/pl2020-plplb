@@ -27,4 +27,17 @@ public class Categorie {
     public void setListUE(ArrayList<UE> listUE) {
         this.listUE = listUE;
     }
+
+    /**
+     * Cherche une UE a l'aide de sont code
+     * @param codeUE le code de l'ue rechercher
+     * @return l'ue si elle est trouver
+     */
+    public UE findUE(String codeUE){
+        for(UE ue: listUE){
+            if(ue.getUeCode().equals(codeUE)) return ue;
+        }
+        //not find
+        return null;
+    }
 }
