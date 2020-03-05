@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.model.MainModele;
 
 import java.util.List;
 
