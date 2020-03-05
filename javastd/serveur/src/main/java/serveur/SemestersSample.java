@@ -52,7 +52,7 @@ SemestersSample
 		Categorie sv = new Categorie("SCIENCES DE LA VIE");
 		sv.addUe(new UE("Genetique. evolution. origine vie & biodiversite","SPUV101"));
 		sv.addUe(new UE("Org et mecan. moleculaires - cellules eucaryotes","SPUV100"));
-		sv.addUe(new UE("Structure microscopique de la Categorie","SPUC10"));
+		sv.addUe(new UE("Structure microscopique de la matiere","SPUC10"));
 		listCategorie.add(sv);
 
 		//ELECTRONIQUE
