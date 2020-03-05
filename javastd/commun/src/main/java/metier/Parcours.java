@@ -29,7 +29,10 @@ public class Parcours {
             UE current = semestre.findUE(codeUE);
             if(current != null){
                 parcoursSelect.put(codeUE,current);
-                numberOfSelectUECategori.put(current.getCategorie(),numberOfSelectUECategori.getOrDefault(current.getCategorie(),0) + 1);
+                if(semestre.isObligatoryUE(current)) numberOfObligatoryUE+=1;
+                if(!semestre.isObligatoryUE(current) || (semestre.isObligatoryUE(current) && numberOfObligatoryUE>=1)){
+                        numberOfSelectUECategori.put(current.getCategorie(),numberOfSelectUECategori.getOrDefault(current.getCategorie(),0) + 1);
+                }
                 numberOfUEChoose +=1;
             }
         }
@@ -74,8 +77,9 @@ public class Parcours {
         //Si on a deja la max d'ue dans le smestre on ne peut plus rien choisir
         if(numberOfUEChoose >= semestre.getNumberUENeedChoose()) return false;
 
+        if(!semestre.isObligatoryUE(ue) && numberOfObligatoryUE<1 && numberOfUEChoose >= semestre.getNumberUENeedChoose()-1) return false;
         //Si on a deja trop d'ue dans cette categorie on ne peut pas selectionner les UE
-        if(numberOfSelectUECategori.getOrDefault(ue.getCategorie(),0) >= semestre.getMaxNumberByCategorie()) return false;
+        if(!semestre.isObligatoryUE(ue) && numberOfSelectUECategori.getOrDefault(ue.getCategorie(),0) >= semestre.getMaxNumberByCategorie()) return false;
 
         //dans tout les autre cas il est possible de selectionner l'ue
         return true;
@@ -116,8 +120,6 @@ public class Parcours {
                 //TODO faire une exception
                 numberOfUEChoose = 0;
             }
-            //si c'etait une ue obligatoire on la retire
-            if(semestre.isObligatoryUE(ue)) numberOfObligatoryUE-=1;
 
             //si ce n'est pas une ue obligatoir ou ce n'est pas la premiere ue obligatoire on la compte normalement
             if(!semestre.isObligatoryUE(ue) ||(semestre.isObligatoryUE(ue) && numberOfObligatoryUE>1)){
@@ -130,6 +132,8 @@ public class Parcours {
                     numberOfSelectUECategori.put(ue.getCategorie(),0);
                 }
             }
+            //si c'etait une ue obligatoire on la retire
+            if(semestre.isObligatoryUE(ue)) numberOfObligatoryUE-=1;
             parcoursSelect.remove(ue.getUeCode());
         }
     }
@@ -156,7 +160,7 @@ public class Parcours {
     }
 
     public String toString(){
-        String str = "numberOfUEChoose: "+ numberOfUEChoose+" numberOfObligatoryUE: " + numberOfObligatoryUE +" table: " +createListCodeUE().toString();
+        String str = "numberOfUEChoose: "+ numberOfUEChoose+" numberOfObligatoryUE: " + numberOfObligatoryUE +" table: " +createListCodeUE().toString()+";"+this.numberOfSelectUECategori.toString();
         return str;
     }
 
