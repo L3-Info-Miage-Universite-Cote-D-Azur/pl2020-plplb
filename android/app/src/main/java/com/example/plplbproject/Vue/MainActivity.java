@@ -8,12 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.plplbproject.R;
@@ -38,16 +40,23 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     private ListView categoryListView;
     private Button save; //Le bouton de sauvegarde
+    private Button extendButton;
 
     private UserController userController;
     private MainModele modele;
     private Connexion socket;
+
+    private CategoryAdapter categoryAdapter;
 
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
     private String ip = "0.0.0.0";
     private String port = "10101";
+
+
+    ArrayList<UE> arr1= new ArrayList<UE>();
+    ArrayList<UE> arr2= new ArrayList<UE>();
 
 
     @Override
@@ -59,28 +68,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.modele = new MainModele();
-
-        // Pour tester en local, à enlever! TODO
-        // Il faut mettre à jour les méthodes des classes contenues dans controlleur
-        UE ue1 = new UE("Maths","0000");
-        UE ue2 = new UE("Anglais","0001");
-        UE ue3 = new UE("Francais","0002");
-        UE ue4 = new UE("Algo","0003");
-        UE ue5 = new UE("OFI","0004");
-        UE ue6 = new UE("POO","0005");
-
-        ArrayList<UE> arr1= new ArrayList<UE>();
-        ArrayList<UE> arr2= new ArrayList<UE>();
-
-        arr1.add(ue1);arr1.add(ue2);arr1.add(ue3);
-        arr2.add(ue4);arr2.add(ue5);arr2.add(ue6);
-
-        Categorie generalCat = new Categorie("general",arr1);
-        Categorie infoCat = new Categorie("info",arr2);
-
-        categoryList = new ArrayList<>();
-        categoryList.add(generalCat);categoryList.add(infoCat);
-
     }
 
     /**
@@ -138,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
         save = findViewById(R.id.save);// Boutton de sauvegarde
         categoryListView = findViewById(R.id.catList);
         if(autoconnect) initVue();
-
     }
 
     /**
@@ -146,10 +132,34 @@ public class MainActivity extends AppCompatActivity implements Vue {
      */
     protected void initVue(){
 
+        // Pour tester en local, à enlever! TODO
+        // Il faut mettre à jour les méthodes des classes contenues dans controlleur
+        UE ue1 = new UE("Maths","0000");
+        UE ue2 = new UE("Anglais","0001");
+        UE ue3 = new UE("Francais","0002");
+        UE ue4 = new UE("Algo","0003");
+        UE ue5 = new UE("OFI","0004");
+        UE ue6 = new UE("POO","0005");
+
+        ArrayList<UE> arr1= new ArrayList<UE>();
+        ArrayList<UE> arr2= new ArrayList<UE>();
+
+        arr1.add(ue1);arr1.add(ue2);arr1.add(ue3);
+        arr2.add(ue4);arr2.add(ue5);arr2.add(ue6);
+
+        Categorie generalCat = new Categorie("general",arr1);
+        Categorie infoCat = new Categorie("info",arr2);
+
+        categoryList = new ArrayList<>();
+        categoryList.add(generalCat);categoryList.add(infoCat);
+
+
         //###################### First adapt the list of categories ##################
 
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this,categoryList);
+        categoryAdapter = new CategoryAdapter(this,categoryList,modele);
         categoryListView.setAdapter(categoryAdapter);
+
+        //categoryAdapter.notifyDataSetChanged();
 
         //###################### Server connection #####################
         socket.connect();

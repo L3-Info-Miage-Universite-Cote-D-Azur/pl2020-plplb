@@ -50,10 +50,10 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
         @Override
         public void onClick(View view) {
             if(checkBox.isChecked()){ //Change le check de l'ue en consequence.
-                ue.setChecked(true);
+                //ue.setChecked(true);
             }
             else{
-                ue.setChecked(false);
+                //ue.setChecked(false);
             }
             //Un changement a eu lieu.
             vue.needSave(true);
@@ -82,9 +82,9 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
         ueCode.setText(ue.getUeCode());
 
         //Mise a jour de la case coche ou non.
-        if(ue.getChecked()){
-            checkBox.setChecked(true);
-        }
+        //if(ue.getChecked()){
+        //    checkBox.setChecked(true);
+        //}
 
         //########################## Add checkbox Listener ###############################
         checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue,vue));

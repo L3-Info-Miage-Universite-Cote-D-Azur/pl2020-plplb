@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -12,20 +13,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.model.MainModele;
 
 import java.util.List;
 
 import metier.Categorie;
+import metier.UE;
 
 public class CategoryAdapter extends ArrayAdapter<Categorie> {
 
     private Context context;
-
     private TextView categoryName;
     private ListView ueList;
+    private MainModele modele;
 
-    public CategoryAdapter(@NonNull Context context, @NonNull List<Categorie> objects){
+    public CategoryAdapter(@NonNull Context context, @NonNull List<Categorie> objects, MainModele modele){
         super(context, 0, objects);
+        this.modele = modele;
         this.context = context;
     }
 
@@ -41,13 +45,24 @@ public class CategoryAdapter extends ArrayAdapter<Categorie> {
         }
 
         categoryName = convertView.findViewById(R.id.catName);
-        ueList = convertView.findViewById(R.id.catList);
+        ueList = convertView.findViewById(R.id.ueList);
 
         categoryName.setText(categorie.getName());
 
         //###################### Adapt the list of Ue to display #####################
         UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(getContext(), categorie.getListUE());
         ueList.setAdapter(ueListViewAdaptateur);
+
+
+        // TODO findView.id renvoie toujours null (pour le bouton et textView, divider etc..): pourquoi??
+        Button extendButton = convertView.findViewById(R.id.extendIcon);
+        extendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ueList.setVisibility(View.INVISIBLE);
+            }
+        });
+
         return convertView;
 
     }
