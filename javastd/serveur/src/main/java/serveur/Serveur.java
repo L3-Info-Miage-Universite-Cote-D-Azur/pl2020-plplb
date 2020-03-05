@@ -133,7 +133,7 @@ public class Serveur {
         else{
             Debug.log("Create data for : "+etu);
         }
-        socketIOClient.sendEvent(SENDCLIENTSAVE,dbManager.load());
+        socketIOClient.sendEvent(SENDCLIENTSAVE,gson.toJson(dbManager.load().createListCodeUE()));
     }
 
 
