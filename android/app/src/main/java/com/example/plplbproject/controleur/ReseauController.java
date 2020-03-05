@@ -7,9 +7,12 @@ import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
+
 import io.socket.emitter.Emitter;
 import metier.Etudiant;
 import metier.MainModele;
+import metier.Parcours;
 import metier.Semestre;
 
 import static constantes.NET.*;
@@ -61,7 +64,7 @@ public class ReseauController{
     }
 
     /**
-     * gere la reception de la liste des ue et la sauvegarde envoyer par le serveur
+     * gere la reception de la liste des ue
      * @return traitement a effectuer (sur le modele et la vue)
      */
     public Emitter.Listener dataConnexion() {
@@ -72,6 +75,23 @@ public class ReseauController{
                 System.out.println("data receive from server");
                 //TODO Modifier le modele pour un meillieur traitement
                 modele.setSemestre(semestre);
+                vue.resetAdaptateurModele();
+            }
+        };
+    }
+
+    /**
+     * gere la reception de la la sauvegarde envoyer par le serveur
+     * @return traitement a effectuer (sur le modele et la vue)
+     */
+    public Emitter.Listener receiveSave() {
+        return new EmitterListener(vue,connexion,modele) {
+            @Override
+            public void call(Object... args) {
+                ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
+                System.out.println("save receive from server");
+                //TODO Modifier le modele pour un meillieur traitement
+                modele.setParcours(new Parcours(modele.getSemestre(),ueCode));
                 vue.resetAdaptateurModele();
             }
         };

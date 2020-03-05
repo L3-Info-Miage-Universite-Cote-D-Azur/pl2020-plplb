@@ -53,6 +53,7 @@ public class Connexion {
         mSocket.on(Socket.EVENT_CONNECT, controller.connexionEvent());
         mSocket.on(SENDMESSAGE, controller.receiveMessage());
         mSocket.on(SENDDATACONNEXION,controller.dataConnexion());
+        mSocket.on(SENDCLIENTSAVE,controller.receiveSave());
     }
 
     /**
