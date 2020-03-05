@@ -43,6 +43,7 @@ DBChecker
 	public boolean
 	checkSave ()
 	{
+		String oldcode = null;
 		/* Check si on a bien une UE obligatoire de categories Mathematiques */
 		boolean hasObligatory = false;
 		for (String code : this.codes)
@@ -54,6 +55,7 @@ DBChecker
 			{
 				/* On le remove pour nos futurs checks */
 				this.codes.remove(code);
+				oldcode = code;
 				hasObligatory = true;
 				break;
 			}
@@ -87,6 +89,7 @@ DBChecker
 				/* On ajoute 1 occurence */
 				hm.put(key, 1);
 		}
+		this.codes.add(oldcode);
 		return true;
 	}
 }
