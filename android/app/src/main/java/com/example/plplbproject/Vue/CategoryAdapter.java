@@ -16,6 +16,7 @@ import com.example.plplbproject.R;
 import java.util.List;
 
 import metier.Categorie;
+import metier.Parcours;
 
 public class CategoryAdapter extends ArrayAdapter<Categorie> {
 
@@ -23,10 +24,12 @@ public class CategoryAdapter extends ArrayAdapter<Categorie> {
 
     private TextView categoryName;
     private ListView ueList;
+    private Parcours parcours;
 
-    public CategoryAdapter(@NonNull Context context, @NonNull List<Categorie> objects){
+    public CategoryAdapter(@NonNull Context context, @NonNull List<Categorie> objects, Parcours parcours){
         super(context, 0, objects);
         this.context = context;
+        this.parcours = parcours;
     }
 
     @NonNull
@@ -46,7 +49,7 @@ public class CategoryAdapter extends ArrayAdapter<Categorie> {
         categoryName.setText(categorie.getName());
 
         //###################### Adapt the list of Ue to display #####################
-        UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(getContext(), categorie.getListUE());
+        UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(getContext(), categorie.getListUE(), parcours);
         ueList.setAdapter(ueListViewAdaptateur);
         return convertView;
 

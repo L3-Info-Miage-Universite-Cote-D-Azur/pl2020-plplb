@@ -16,6 +16,7 @@ import com.example.plplbproject.R;
 
 import java.util.List;
 
+import metier.Parcours;
 import metier.UE;
 
 public class UeDisplayAdapter extends ArrayAdapter<UE> {
@@ -24,13 +25,15 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
     private TextView ueName;
     private TextView ueCode;
     private CheckBox checkBox;
+    private Parcours parcours;//Le parcours courant.
     private Vue vue;
 
     /* CONSTRUCTOR */
-    public UeDisplayAdapter(@NonNull Context context,@NonNull List<UE> objects) {
+    public UeDisplayAdapter(@NonNull Context context,@NonNull List<UE> objects, @NonNull Parcours parcours) {
         //ressource
         super(context, 0, objects);
         this.vue = (Vue)context;
+        this.parcours = parcours;
     }
 
     /* SOUS CLASSE CONTROLLEUR */
@@ -39,21 +42,23 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
         private UE ue;
         private CheckBox checkBox;
         private Vue vue;
+        private Parcours parcours;
 
-        public MyUEClickListener(CheckBox checkBox, UE ue,Vue vue) {
+        public MyUEClickListener(CheckBox checkBox, UE ue,Parcours parcours,Vue vue) {
             this.ue = ue;
             this.checkBox = checkBox;
             this.vue = vue;
+            this.parcours = parcours;
 
         }
 
         @Override
         public void onClick(View view) {
             if(checkBox.isChecked()){ //Change le check de l'ue en consequence.
-                ue.setChecked(true);
+                parcours.addUEParcours(ue);
             }
             else{
-                ue.setChecked(false);
+                parcours.delUEParcours(ue);
             }
             //Un changement a eu lieu.
             vue.needSave(true);
@@ -82,12 +87,12 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
         ueCode.setText(ue.getUeCode());
 
         //Mise a jour de la case coche ou non.
-        if(ue.getChecked()){
+        if(parcours.isChecked(ue)){
             checkBox.setChecked(true);
         }
 
         //########################## Add checkbox Listener ###############################
-        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue,vue));
+        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue,parcours,vue));
 
         return convertView;
     }
