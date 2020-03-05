@@ -14,7 +14,7 @@ public class MainModele {
     public MainModele(){
         this.etudiant = new Etudiant("Etudiant 1");
         this.semestre = new Semestre(-1);
-        this.parcours = new Parcours(semestre,null);
+        this.parcours = new Parcours(semestre);
     }
 
     /* GETTERS AND SETTERS */
