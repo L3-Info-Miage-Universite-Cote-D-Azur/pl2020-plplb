@@ -41,6 +41,19 @@ FileManager
 	{this.write("");}
 	
 	/**
+	 * Permet de creer le fichier
+	 */
+	public void
+	create ()
+	{
+		try {
+			this.file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Permet de savoir si le fichier existe ou non
 	 * @return Un boolean
 	 */
@@ -68,11 +81,9 @@ FileManager
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 				Debug.error("File " + this.file.getName() + " does not exist !");
-				System.exit(2);
 			}
 		} else {
 			Debug.error(this.file.getName() + " isn\'t writable !");
-			System.exit(2);
 		}
 
 	}
@@ -108,7 +119,6 @@ FileManager
 			}
 		} else {
 			Debug.error(this.file.getName() + " isn\'t readable !");
-			System.exit(2);
 		}
 		return "";
 	}

@@ -19,18 +19,20 @@ import java.util.List;
 
 import metier.Categorie;
 import metier.UE;
+import metier.Parcours;
 
 public class CategoryAdapter extends ArrayAdapter<Categorie> {
 
     private Context context;
     private TextView categoryName;
     private ListView ueList;
-    private MainModele modele;
+    private Parcours parcours;
 
-    public CategoryAdapter(@NonNull Context context, @NonNull List<Categorie> objects, MainModele modele){
+    public CategoryAdapter(@NonNull Context context, @NonNull List<Categorie> objects, Parcours parcours){
         super(context, 0, objects);
-        this.modele = modele;
+        this.parcours = parcours;
         this.context = context;
+        this.parcours = parcours;
     }
 
     @NonNull
@@ -50,7 +52,7 @@ public class CategoryAdapter extends ArrayAdapter<Categorie> {
         categoryName.setText(categorie.getName());
 
         //###################### Adapt the list of Ue to display #####################
-        UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(getContext(), categorie.getListUE());
+        UeDisplayAdapter ueListViewAdaptateur = new UeDisplayAdapter(getContext(), categorie.getListUE(), parcours);
         ueList.setAdapter(ueListViewAdaptateur);
 
 

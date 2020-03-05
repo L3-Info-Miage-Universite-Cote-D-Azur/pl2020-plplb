@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,24 +19,19 @@ import android.widget.Toast;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.controleur.UserController;
-import com.example.plplbproject.model.MainModele;
 import com.example.plplbproject.reseau.Connexion;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
 
 import metier.Categorie;
+import metier.MainModele;
 import metier.UE;
 
 
 public class MainActivity extends AppCompatActivity implements Vue {
 
     /* FIELDS */
-    private ArrayList<UE> ueList;
-    private ArrayList<Categorie> categoryList;
-
     private ListView categoryListView;
     private Button save; //Le bouton de sauvegarde
     private Button extendButton;
@@ -68,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.modele = new MainModele();
+
     }
 
     /**
@@ -158,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         categoryAdapter = new CategoryAdapter(this,categoryList,modele);
         categoryListView.setAdapter(categoryAdapter);
+        resetAdaptateurModele();
 
         //categoryAdapter.notifyDataSetChanged();
 
@@ -217,6 +213,16 @@ public class MainActivity extends AppCompatActivity implements Vue {
                 Toast.makeText(getApplicationContext(),"Server sent you a message: "+ receivedMessage,Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    /**
+     * recharge les adaptateur en fonction du modele
+     */
+    @Override
+    public void resetAdaptateurModele(){
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this,modele.getSemestre().getListCategorie(),modele.getParcours());
+        categoryListView.setAdapter(categoryAdapter);
+
     }
 
 

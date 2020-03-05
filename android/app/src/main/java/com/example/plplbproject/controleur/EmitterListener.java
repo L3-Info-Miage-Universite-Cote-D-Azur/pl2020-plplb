@@ -1,10 +1,10 @@
 package com.example.plplbproject.controleur;
 
 import com.example.plplbproject.Vue.Vue;
-import com.example.plplbproject.model.MainModele;
 import com.example.plplbproject.reseau.Connexion;
 
 import io.socket.emitter.Emitter;
+import metier.MainModele;
 
 /**
  * Listener d'event du serveur

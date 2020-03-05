@@ -14,6 +14,7 @@ public class Parcours {
     private HashMap<String,UE> parcoursSelect;
     private HashMap<String,Integer> numberOfSelectUECategori; //TODO deviens une liste de hashmap a l'ajout des semestre suivant
     private int numberOfUEChoose = 0; //TODO deviens une liste a l'ajout des semestre suivant
+    private int numberOfObligatoryUE = 0;
 
     /**
      * constructeur avec une liste valide d'ue (utiliser pour charger les donnée)
@@ -72,39 +73,6 @@ public class Parcours {
         //Si on a deja trop d'ue dans cette categorie on ne peut pas selectionner les UE
         if(numberOfSelectUECategori.getOrDefault(ue.getCategorie(),0) >= semestre.getMaxNumberByCategorie()) return false;
 
-        //choix de une UE obligatoire parmis la list des code UE obligatoire
-        List<String> listObligatory = semestre.getListObligatory();
-
-        //cas pas d'UE obligatoire
-        if(listObligatory==null) return true;
-
-        //le nombre maximume d'ue que l'on peut choisir par semestre
-        int maxNumberUEChoose = semestre.getNumberUENeedChoose();
-
-        Boolean ueObligatoryIsSelected = false;
-        Boolean ueIsObligatory = false;
-
-        for(String currentCodeUE: listObligatory) {
-
-            // on regarde si l'une des ue obligatoire est deja selectionner
-            if (parcoursSelect.getOrDefault(currentCodeUE, null) != null) ueObligatoryIsSelected = true;
-
-            // on regarde si l'ue courrante fait parti de la liste des ue obligatoire
-            if (currentCodeUE.equals(ue.getUeCode())) ueIsObligatory = true;
-        }
-
-
-        //on a pas selectionner une des UE obligatoire
-        if(!ueObligatoryIsSelected){
-            //l'ue fait parti de la liste des ue obligatoire on la rajoute
-            if(ueIsObligatory) return true;
-
-            //on reserve une place
-            if(numberOfUEChoose >= maxNumberUEChoose - 1) return false;
-        }
-        //si on a deja une des UE obligatoire et que notre UE courrante est aussi obligatoire on peut pas la rajouter
-        else if(!ueIsObligatory) return false;
-
         //dans tout les autre cas il est possible de selectionner l'ue
         return true;
     }
@@ -117,7 +85,11 @@ public class Parcours {
         //il faut que ca respecte les regle
         if(canBeCheckedUE(ue)){
             numberOfUEChoose += 1;
-            if(!semestre.isObligatoryUE(ue)){
+            //si c'etait une ue obligatoire on la retire
+            if(semestre.isObligatoryUE(ue)) numberOfObligatoryUE += 1;
+
+            //si ce n'est pas une ue obligatoir ou ce n'est pas la premiere ue obligatoir on la compte normalement
+            if(!semestre.isObligatoryUE(ue) || (semestre.isObligatoryUE(ue) && numberOfObligatoryUE>1)){
                 //si ce n'est pas une ue obligatoire on la compte dans ca categorie
                 numberOfSelectUECategori.put(ue.getCategorie(),numberOfSelectUECategori.getOrDefault(ue.getCategorie(),0)+1);
             }
@@ -140,8 +112,11 @@ public class Parcours {
                 //TODO faire une exception
                 numberOfUEChoose = 0;
             }
+            //si c'etait une ue obligatoire on la retire
+            if(semestre.isObligatoryUE(ue)) numberOfObligatoryUE-=1;
 
-            if(!semestre.isObligatoryUE(ue)){
+            //si ce n'est pas une ue obligatoir ou ce n'est pas la premiere ue obligatoire on la compte normalement
+            if(!semestre.isObligatoryUE(ue) ||(semestre.isObligatoryUE(ue) && numberOfObligatoryUE>1)){
                 //si ce n'est pas une ue obligatoire on la l'enleve du nombre d'ue de la categorie.
                 numberOfSelectUECategori.put(ue.getCategorie(),numberOfSelectUECategori.getOrDefault(ue.getCategorie(),0)-1);
 

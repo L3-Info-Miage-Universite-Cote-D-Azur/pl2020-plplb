@@ -14,10 +14,10 @@ public class Semestre{
     // RULE of semestre
     private int numberUENeedChoose; //nombre d'ue necessaire de selectionner pour valider une semestre
     private int maxNumberByCategorie; //nombre maximum d'ue par categorie
-    private List<String> listObligatory; //liste des ue obligatoire du semestre
+    private ArrayList<String> listObligatory; //liste des ue obligatoire du semestre
 
     /* CONSTRUCTOR */
-    public Semestre(int number, ArrayList<Categorie> listCategorie,List<String> listObligatory){
+    public Semestre(int number, ArrayList<Categorie> listCategorie,ArrayList<String> listObligatory){
         this.number = number;
         this.listCategorie = new ArrayList<Categorie>(listCategorie);
 
@@ -29,6 +29,14 @@ public class Semestre{
         maxNumberByCategorie = 1;
 
     }
+
+    public Semestre(int number){
+        this.number = number;
+        this.listCategorie = new ArrayList<Categorie>();
+        this.listObligatory = new ArrayList<String>();
+    }
+
+    /* Methods */
 
     public int getNumber() {
         return number;

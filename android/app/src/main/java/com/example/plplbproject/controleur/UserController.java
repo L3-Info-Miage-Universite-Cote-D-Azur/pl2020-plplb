@@ -4,11 +4,12 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.example.plplbproject.Vue.Vue;
-import com.example.plplbproject.model.MainModele;
 import com.example.plplbproject.reseau.Connexion;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import metier.MainModele;
 import metier.Semestre;
 
 import static constantes.NET.*;

@@ -2,13 +2,12 @@ package com.example.plplbproject.reseau;
 
 import com.example.plplbproject.Vue.Vue;
 import com.example.plplbproject.controleur.ReseauController;
-import com.example.plplbproject.model.MainModele;
-
 
 import java.net.URISyntaxException;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import metier.MainModele;
 
 import static constantes.NET.*;
 

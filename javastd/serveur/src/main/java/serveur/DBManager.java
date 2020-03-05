@@ -1,11 +1,15 @@
 package serveur;
 
 import java.io.*;
+import java.util.*;
 
 import metier.Etudiant;
+import metier.Parcours;
 import metier.Semestre;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 import org.json.*;
 
 /**
@@ -103,57 +107,48 @@ DBManager
 	/* METHODS */
 	/**
 	 * Permet de d'ecraser la sauvegarde courante du client 
-	 * par sa nouvelle sauvegarde dans le fichier db/file.getName().txt pour son seul parcours
-	 * TODO:
-	 * Porter cette fonction a quelque chose de plus general, par exemple avec une class
- 	 * Client qui contient une liste de Parcours, qui contiennent chacun 4 semestres de
-	 * type Semestre, qui contiennent chacun une liste d'UE
-	 * @param semestre le Semestre courant
+	 * par sa nouvelle sauvegarde dans le fichier db/fileName.txt
+	 * <br>
+	 * Le fichier se sauvegarde contient la liste des codes des UEs choisies par l'utilisateur
+	 * <br><br>
+	 * <strong>Exemple de contenu de fichier:</strong>
+	 * <pre>{"SLZ51", "SLZI5C", "SLZI8B"}</pre>
+	 * @param als La liste de string qui represente les codes des UEs
 	 */
 	public void
-	save (Semestre semestre)
+	save (ArrayList<String> als)
 	{
-		if (!this.file.getFile().exists()) {
-			try {
-				this.file.getFile().createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		if (!this.file.exists())
+			this.file.create();
 		final Gson gson = new GsonBuilder().create();
-		this.file.write(gson.toJson(semestre));
+		this.file.write(gson.toJson(als));
 	}
 	
 	/**
-	 * Permet de charger le fichier courant sous un JSONObject, 
-	 * si le client n a pas de sauvegarde, on revoie le premier semestre
-	 * @return JSONObject
+	 * Permet de charger le fichier de l'utilisateur sous un Parcours.
+	 * Si le client n a pas de sauvegarde, on revoie <strong>null</strong>
+	 * @return Parcours de l'utilisateur au premier semestre
 	 */
-	public String
+	public Parcours
 	load ()
 	{
-		if (!this.file.getFile().exists())
-			return SemestersSample.s1();
-		return this.file.getFileContent();
-	}
-
-	/*
-	/**
-	 * Permet de charger le parcours du client courant sous un JSONObject, 
-	 * si le parcours ou le fichier n existe pas, on renvoie null
-	 * @param key La String representant le nom du parcours
-	 * @return JSONObject
-	public JSONObject
-	loadCourse (String key)
-	{
-		// Check si le fichier existe
-		if (!this.file.getFile().exists())
+		if (!this.file.exists())
 			return null;
-		JSONObject json = new JSONObject(this.file.getFileContent());
-		// Check si la clef key existe dans notre fichier
-		if (!json.has(key))
-			return null;
-		return new JSONObject(this.load().getJSONObject(key));
+		// Represente le contenu du fichier
+		String fcontent = this.file.getFileContent();
+		
+		/*
+		 * Transformation d'une String sous format JSON vers une List<String>
+		 * qui contient les keys (ici les codes)
+		 */
+		final Gson gson = new GsonBuilder().create();
+		ArrayList<String> lCodes = gson.fromJson(fcontent, ArrayList.class);
+		/**
+		 * TODO:
+		 * Pour l'instant on gere uniquement le premier semestre.
+		 * Il faudra gerer quand on aura plusieurs semestres
+		 */
+		Semestre seum = SemestersSample.S1();
+		return new Parcours(seum, lCodes);
 	}
-	*/
 }
