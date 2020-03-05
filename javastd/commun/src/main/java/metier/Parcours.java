@@ -14,14 +14,15 @@ public class Parcours {
     private HashMap<String,UE> parcoursSelect;
     private HashMap<String,Integer> numberOfSelectUECategori; //TODO deviens une liste de hashmap a l'ajout des semestre suivant
     private int numberOfUEChoose = 0; //TODO deviens une liste a l'ajout des semestre suivant
-    private int numberOfObligatoryUE = 0;
+    private int numberOfObligatoryUE = 0;//obligatoire a choix
+
 
     /**
      * constructeur avec une liste valide d'ue (utiliser pour charger les donnée)
      * @param semestre tout les semestre du parcours
      * @param allCodeUESelected une liste valide d'ue
      */
-    public Parcours(Semestre semestre,List<String> allCodeUESelected){
+    public Parcours(Semestre semestre,List<String> allCodeUESelected ){
         this.semestre = semestre;
         parcoursSelect = new HashMap<String,UE>();
         numberOfSelectUECategori = new HashMap<String,Integer>();
@@ -52,6 +53,15 @@ public class Parcours {
         this.semestre = semestre;
     }
 
+    /**
+     * Regarde si il est possible de decocher l'ue
+     * @param ue l'ue que l'on veut cocher
+     * @return tru:e il est possible de cocher; false: il n'est pas possible
+     */
+    public boolean canBeUncheckedUE(UE ue){
+        if(semestre.isUeAutomaticCheck(ue)) return false;
+        return true;
+    }
 
     /**
      * Regarde a l'aide de toutes les fonction intermediaire si il est possible de cocher l'ue
@@ -59,7 +69,6 @@ public class Parcours {
      * @return tru:e il est possible de cocher; false: il n'est pas possible
      */
     public boolean canBeCheckedUE(UE ue){
-
 
         Boolean semestreCheck = checkObligatorySemestreRule(ue);
         //TODO iteration 4 verification des prerequis (graphe?)
@@ -144,6 +153,7 @@ public class Parcours {
      * @return true : l'ue est selectionner; false: l'ue ne l'est pas
      */
     public boolean isChecked(UE ue){
+        if(semestre.isUeAutomaticCheck(ue)) return true;
         return parcoursSelect.containsKey(ue.getUeCode());
     }
 
@@ -154,9 +164,14 @@ public class Parcours {
     public ArrayList<String> createListCodeUE(){
         ArrayList<String> codeUEToList = new ArrayList<String>();
         for(UE ueCode: parcoursSelect.values()){
-            codeUEToList.add(ueCode.getUeCode());
+            if(!semestre.isUeAutomaticCheck(ueCode)) codeUEToList.add(ueCode.getUeCode());
         }
         return codeUEToList;
+    }
+
+    public boolean isAccepted(){
+        if(numberOfUEChoose==semestre.getNumberUENeedChoose()) return true;
+        return false;
     }
 
     public String toString(){

@@ -59,9 +59,12 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
                 parcours.addUEParcours(ue);
                 checkBox.setChecked(true);
             }
-            else{
+            else if(parcours.canBeUncheckedUE(ue)){
                 parcours.delUEParcours(ue);
                 checkBox.setChecked(false);
+            }
+            else{
+                checkBox.setChecked(true);
             }
             //Un changement a eu lieu.
             vue.needSave(true);

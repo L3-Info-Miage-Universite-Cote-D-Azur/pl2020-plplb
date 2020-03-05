@@ -15,15 +15,17 @@ public class Semestre{
     //TODO adapter la champs suivant en fonction des parametre pour le moment fonctionne uniquement pour le S1
     private int numberUENeedChoose = 5; //nombre d'ue necessaire de selectionner pour valider une semestre
     private int maxNumberByCategorie = 1; //nombre maximum d'ue par categorie
-    private ArrayList<String> listObligatory; //liste des ue obligatoire du semestre
+    private ArrayList<String> listObligatory; //liste des ue obligatoire du semestre (ue a choix ) //TODO rename
+    private ArrayList<String> ueAutomaticCheck; //liste des ue automatiquement check  TODO rename
 
     /* CONSTRUCTOR */
-    public Semestre(int number, ArrayList<Categorie> listCategorie,ArrayList<String> listObligatory){
+    public Semestre(int number, ArrayList<Categorie> listCategorie,ArrayList<String> listObligatory,ArrayList<String> listUeAutomaticCheck){
         this.number = number;
         this.listCategorie = new ArrayList<Categorie>(listCategorie);
 
         //For RULE
         this.listObligatory = listObligatory;
+        this.ueAutomaticCheck = listUeAutomaticCheck;
 
 
     }
@@ -32,6 +34,7 @@ public class Semestre{
         this.number = number;
         this.listCategorie = new ArrayList<Categorie>();
         this.listObligatory = new ArrayList<String>();
+        this.ueAutomaticCheck = new ArrayList<String>();
     }
 
     /* Methods */
@@ -69,9 +72,11 @@ public class Semestre{
     public int getMaxNumberByCategorie(){ return maxNumberByCategorie; }
 
     public List<String> getListObligatory(){ return listObligatory; }
+    public List<String> getUeAutomaticCheck(){ return ueAutomaticCheck; }
+
 
     /**
-     * Verification si une UE fait partie des ue obligatoire du semestre
+     * Verification si une UE fait partie des ue obligatoire du semestre (ue a choix)
      * @param ue L'ue que l'on verifie
      * @return true: est une ue obligatoire;
      */
@@ -79,6 +84,21 @@ public class Semestre{
         if(listObligatory == null) return false;
         for(String currentCodeUE: listObligatory) {
             if (currentCodeUE.equals(ue.getUeCode())) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Verification si une UE fait partie des ue qui son commun pour tout les etudiant et obligatoire
+     * @param ue L'ue que l'on verifie
+     * @return true: est une ue est non modifiable et obligatoire;
+     */
+    public boolean isUeAutomaticCheck(UE ue){
+        if(ueAutomaticCheck == null) return false;
+        for(String currentCodeUE: ueAutomaticCheck) {
+            if (currentCodeUE.equals(ue.getUeCode())){
+                return true;
+            }
         }
         return false;
     }
