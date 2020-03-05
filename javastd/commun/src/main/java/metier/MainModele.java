@@ -41,6 +41,7 @@ public class MainModele {
     public void setSemestre(Semestre semestre){
 
         this.semestre = semestre;
+        parcours.setSemestre(semestre);
 
     }
 }

@@ -21,7 +21,7 @@ public class Parcours {
      * @param semestre tout les semestre du parcours
      * @param allCodeUESelected une liste valide d'ue
      */
-    Parcours(Semestre semestre,List<String> allCodeUESelected){
+    public Parcours(Semestre semestre,List<String> allCodeUESelected){
         this.semestre = semestre;
         parcoursSelect = new HashMap<String,UE>();
         numberOfSelectUECategori = new HashMap<String,Integer>();
@@ -39,10 +39,14 @@ public class Parcours {
      * Constructeur pour un nouveau parcours
      * @param semestre tout les semestre du parcours
      */
-    Parcours(Semestre semestre){
+    public Parcours(Semestre semestre){
         this.semestre = semestre;
         parcoursSelect = new HashMap<String,UE>();
         numberOfSelectUECategori = new HashMap<String,Integer>();
+    }
+
+    public void setSemestre(Semestre semestre){
+        this.semestre = semestre;
     }
 
 
@@ -149,6 +153,11 @@ public class Parcours {
             codeUEToList.add(ueCode.getUeCode());
         }
         return codeUEToList;
+    }
+
+    public String toString(){
+        String str = "numberOfUEChoose: "+ numberOfUEChoose+" numberOfObligatoryUE: " + numberOfObligatoryUE +" table: " +createListCodeUE().toString();
+        return str;
     }
 
 
