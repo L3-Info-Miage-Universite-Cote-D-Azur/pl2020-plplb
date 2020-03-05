@@ -3,13 +3,13 @@ package com.example.plplbproject.controleur;
 
 
 import com.example.plplbproject.Vue.Vue;
-import com.example.plplbproject.model.MainModele;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import io.socket.emitter.Emitter;
 import metier.Etudiant;
+import metier.MainModele;
 import metier.Semestre;
 
 import static constantes.NET.*;

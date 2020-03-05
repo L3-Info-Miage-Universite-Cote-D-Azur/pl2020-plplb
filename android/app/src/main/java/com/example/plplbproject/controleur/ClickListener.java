@@ -3,8 +3,9 @@ package com.example.plplbproject.controleur;
 import android.view.View;
 
 import com.example.plplbproject.Vue.Vue;
-import com.example.plplbproject.model.MainModele;
 import com.example.plplbproject.reseau.Connexion;
+
+import metier.MainModele;
 
 /**
  * Classe de gestion d'event de click
