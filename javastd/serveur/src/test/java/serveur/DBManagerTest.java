@@ -148,7 +148,7 @@ public class DBManagerTest {
         ArrayList<Categorie> b = new ArrayList<Categorie>();
         b.add(categorie);
 
-        Semestre semestre = new Semestre(1,b,als);
+        Semestre semestre = new Semestre(1,b,als,null);
 
         dbManager = new DBManager("monFichierTest");
 
@@ -179,7 +179,7 @@ public class DBManagerTest {
         Categorie categorie2 = new Categorie("Autre categorie test",a);
         b.add(categorie2);
 
-        semestre = new Semestre(2,b,als);
+        semestre = new Semestre(2,b,als,null);
 
         dbManager.save(semestre, als);
 
@@ -201,7 +201,7 @@ public class DBManagerTest {
         ArrayList<Categorie> b = new ArrayList<Categorie>();
         b.add(categorie);
         
-        Semestre semestre = new Semestre(1, b, als);
+        Semestre semestre = new Semestre(1, b, als,null);
 
         dbManager = new DBManager("monFichierTest");
 
