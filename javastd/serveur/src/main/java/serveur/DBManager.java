@@ -118,6 +118,12 @@ DBManager
 	public void
 	save (ArrayList<String> als)
 	{
+		DBChecker checker = new DBChecker(SemestersSample.S1(), als);
+		if (!checker.checkSave())
+		{
+			Debug.error("checker.checkSave() a retourne une erreur.. Sauvegarde non ecrasee");
+			return;
+		}
 		if (!this.file.exists())
 			this.file.create();
 		final Gson gson = new GsonBuilder().create();
