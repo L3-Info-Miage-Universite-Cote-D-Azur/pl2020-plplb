@@ -42,8 +42,18 @@ public class Semestre{
         this.listCategorie = listCategorie;
     }
 
+    /**
+     * Cherche une UE a l'aide de sont code
+     * @param codeUE le code de l'ue rechercher
+     * @return l'ue si elle est trouver
+     */
     public UE findUE(String codeUE){
-        //TODO
+        UE ue;
+        for(Categorie categorie: listCategorie){
+            ue = categorie.findUE(codeUE);
+            if(ue!= null) return ue;
+        }
+        //not find
         return null;
     }
 
