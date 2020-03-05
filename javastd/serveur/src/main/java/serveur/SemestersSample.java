@@ -27,79 +27,68 @@ SemestersSample
 	public static Semestre S1(){
 		/*TODO : Ajouter les bonus sport et autres..*/
 		ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
-		ArrayList<UE> listUE = new ArrayList<UE>();
 
 		//GEOGRAPHIE
-		listUE.add(new UE("Decouverte 1","SPUGDE10"));
-		listUE.add(new UE("Decouverte 2","SPUGDC10"));
-		listUE.add(new UE("Decouverte 1","SPUGDI10"));
-
-		listCategorie.add(new Categorie("GEOGRAPHIE",listUE));
+		Categorie geo = new Categorie("GEOGRAPHIE");
+		geo.addUe(new UE("Decouverte 1","SPUGDE10"));
+		geo.addUe(new UE("Decouverte 2","SPUGDC10"));
+		geo.addUe(new UE("Decouverte 1","SPUGDI10"));
+		listCategorie.add(geo);
 
 		//INFORMATIQUE
-		listUE.clear();
-		listUE.add(new UE("Bases de l'informatique","SPUF10"));
-		listUE.add(new UE("Introduction a l'informatique par le web","SPUF11"));
-
-		listCategorie.add(new Categorie("INFORMATIQUE",listUE));
+		Categorie info = new Categorie("INFORMATIQUE");
+		info.addUe(new UE("Bases de l'informatique","SPUF10"));
+		info.addUe(new UE("Introduction a l'informatique par le web","SPUF11"));
+		listCategorie.add(info);
 
 		//MATHEMATIQUES (pas toutes dispo selon le choix en math obligatoire)
-		listUE.clear();
-		listUE.add(new UE("Fondements 1","SPUM11"));
-		listUE.add(new UE("Complements 1","SPUM13"));
-		listUE.add(new UE("Methodes - approche continue","SPUM12"));
-
-		listCategorie.add(new Categorie("MATHEMATIQUES",listUE));
+		Categorie math = new Categorie("MATHEMATIQUES");
+		math.addUe(new UE("Fondements 1","SPUM11"));
+		math.addUe(new UE("Complements 1","SPUM13"));
+		math.addUe(new UE("Methodes - approche continue","SPUM12"));
+		listCategorie.add(math);
 
 		//SCIENCES DE LA VIE
-		listUE.clear();
-		listUE.add(new UE("Genetique. evolution. origine vie & biodiversite","SPUV101"));
-		listUE.add(new UE("Org et mecan. moleculaires - cellules eucaryotes","SPUV100"));
-		listUE.add(new UE("Structure microscopique de la Categorie","SPUC10"));
-
-		listCategorie.add(new Categorie("SCIENCES DE LA VIE",listUE));
+		Categorie sv = new Categorie("SCIENCES DE LA VIE");
+		sv.addUe(new UE("Genetique. evolution. origine vie & biodiversite","SPUV101"));
+		sv.addUe(new UE("Org et mecan. moleculaires - cellules eucaryotes","SPUV100"));
+		sv.addUe(new UE("Structure microscopique de la Categorie","SPUC10"));
+		listCategorie.add(sv);
 
 		//ELECTRONIQUE
-		listUE.clear();
-		listUE.add(new UE("Electronique numerique - Bases","SPUE10"));
-
-		listCategorie.add(new Categorie("ELECTRONIQUE",listUE));
+		Categorie elect = new Categorie("ELECTRONIQUE");
+		elect.addUe(new UE("Electronique numerique - Bases","SPUE10"));
+		listCategorie.add(elect);
 
 		//ECONOMIE - GESTION (choix dans les ecues a voir plus tard)
-		listUE.clear();
-		listUE.add(new UE("Economie-gestion","SPUA10"));
-
-		listCategorie.add(new Categorie("ECONOMIE - GESTION",listUE));
+		Categorie eco = new Categorie("ECONOMIE - GESTION");
+		eco.addUe(new UE("Economie-gestion","SPUA10"));
+		listCategorie.add(eco);
 
 		//PHYSIQUE
-		listUE.clear();
-		listUE.add(new UE("Mecanique 1","SPUP10"));
-
-		listCategorie.add(new Categorie("PHYSIQUE",listUE));
+		Categorie phy = new Categorie("PHYSIQUE");
+		phy.addUe(new UE("Mecanique 1","SPUP10"));
+		listCategorie.add(phy);
 
 		//SCIENCES DE LA TERRE
-		listUE.clear();
-		listUE.add(new UE("Decouverte des sciences de la terre","SPUT10"));
-
-		listCategorie.add(new Categorie("SCIENCES DE LA TERRE",listUE));
+		Categorie st = new Categorie("SCIENCES DE LA TERRE");
+		st.addUe(new UE("Decouverte des sciences de la terre","SPUT10"));
+		listCategorie.add(st);
 
 		//MATH ENJEUX (obligatoire)
-		listUE.clear();
-		listUE.add(new UE("Math enjeux 1","SPUS10"));
-
-		listCategorie.add(new Categorie("MATH ENJEUX",listUE));
+		Categorie enjeux = new Categorie("MATH ENJEUX");
+		enjeux.addUe(new UE("Math enjeux 1","SPUS10"));
+		listCategorie.add(enjeux);
 
 		//COMPETENCES TRANSVERSALE (obligatoire)
-		listUE.clear();
-		listUE.add(new UE("Competences transversales","KCTTS1"));
-
-		listCategorie.add(new Categorie("COMPETENCES TRANSVERSALE",listUE));
+		Categorie comp = new Categorie("COMPETENCES TRANSVERSALES");
+		comp.addUe(new UE("Competences transversales","KCTTS1"));
+		listCategorie.add(comp);
 
 		//FABLAB (facultatif)
-		listUE.clear();
-		listUE.add(new UE("Fablab S1","SPUSF100"));
-
-		listCategorie.add(new Categorie("FABLAB",listUE));
+		Categorie fablab = new Categorie("FABLAB");
+		fablab.addUe(new UE("Fablab S1","SPUSF100"));
+		listCategorie.add(fablab);
 
 		//RULE
 		//obligatoire au choix:

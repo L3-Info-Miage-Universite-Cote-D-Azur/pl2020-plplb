@@ -15,6 +15,11 @@ public class Categorie {
         this.listUE = new ArrayList<UE>(UES);
     }
 
+    public Categorie(String name){
+        this.name = name;
+        this.listUE = new ArrayList<UE>();
+    }
+
     /* GETTERS AND SETTERS */
     public String getName() {
         return name;
@@ -40,4 +45,14 @@ public class Categorie {
         //not find
         return null;
     }
+
+    /**
+     * Ajout une UE a la liste d'ue et rattache la categorie a l'ue.
+     * @param ue : l'ue a ajouter.
+     */
+    public void addUe(UE ue){
+        ue.setCategorie(this.name);
+        this.listUE.add(ue);
+    }
+
 }
