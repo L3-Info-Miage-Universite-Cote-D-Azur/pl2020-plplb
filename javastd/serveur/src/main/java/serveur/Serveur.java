@@ -131,6 +131,7 @@ public class Serveur {
             Debug.log("Send data to : " + etu);
             socketIOClient.sendEvent(SENDCLIENTSAVE, gson.toJson(dbManager.load().createListCodeUE()));
         }
+
     }
 
 

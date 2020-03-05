@@ -13,6 +13,8 @@ public class Categorie {
     public Categorie(String name, ArrayList<UE> UES){
         this.name = name;
         this.listUE = new ArrayList<UE>(UES);
+        for (UE ue : UES)
+        	ue.setCategorie(name);
     }
 
     public Categorie(String name){
