@@ -24,7 +24,7 @@ SemestersSample
 	 * s1 contient tout les Categories du semestre 1 de licence 1.s
 	 * @return le semestre 1 sous forme de json.
 	 */
-	public static String s1(){
+	public static Semestre S1(){
 		/*TODO : Ajouter les bonus sport et autres..*/
 		ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
 		ArrayList<UE> listUE = new ArrayList<UE>();
@@ -108,8 +108,10 @@ SemestersSample
 		listObligatoire.add("SPUM12");
 		//AJOUT AU SEMESTRE 1;
 		Semestre S1 = new Semestre(1,listCategorie,listObligatoire);
-		return gson.toJson(S1);
+		return S1;
 	}
+	
+	public static String S1Jsoned = SemestersSample.gson.toJson(SemestersSample.S1());
 
 	/**
 	 * Class non instanciable, c'est une class utilitaire
