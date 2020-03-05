@@ -71,7 +71,6 @@ DBChecker
 			{				
 				if (this.semestre.findUE(code).getCategorie().equals(k.getName()))
 				{
-					System.out.println(code + " " + this.semestre.findUE(code).getCategorie());
 					key = k;
 					break;
 				}
