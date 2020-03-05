@@ -8,7 +8,7 @@ public class SemestersSampleTest {
 
     @Test
     public void s1Test(){
-        String res = SemestersSample.s1();
+        String res = SemestersSample.S1Jsoned;
         String expected = "{\"number\":1,\"listCategorie\":[{\"name\":\"GEOGRAPHIE\"," +
                 "\"listUE\":[{\"name\":\"Decouverte 1\",\"code\":\"SPUGDE10\",\"checked\":false}," +
                 "{\"name\":\"Decouverte 2\",\"code\":\"SPUGDC10\",\"checked\":false}," +
