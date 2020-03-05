@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 import metier.Categorie;
 import metier.MainModele;
+import metier.Semestre;
 import metier.UE;
 
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "192.168.1.46";
+    private String ip = "10.0.2.2";
     private String port = "10101";
 
 
@@ -152,13 +153,11 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     @Override
     public void notifyUeListView(){
+
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                //UeDisplayAdapter adapter = (UeDisplayAdapter) ueListView.getAdapter();
-                //adapter.notifyDataSetChanged();
-
+                categoryAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -196,8 +195,14 @@ public class MainActivity extends AppCompatActivity implements Vue {
      */
     @Override
     public void resetAdaptateurModele(){
-        //CategoryAdapter categoryAdapter = new CategoryAdapter(this,modele.getSemestre().getListCategorie(),modele.getParcours());
-        //categoryListView.setAdapter(categoryAdapter);
+        MainActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                categoryAdapter.clear();
+                categoryAdapter.addAll(modele.getSemestre().getListCategorie());
+                categoryAdapter.notifyDataSetChanged();
+            }
+        });
 
     }
 

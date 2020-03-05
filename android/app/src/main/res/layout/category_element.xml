@@ -36,8 +36,6 @@
     <ListView
         android:id="@+id/ueList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    </ListView>
+        android:layout_height="500dp"></ListView>
 
 </LinearLayout>

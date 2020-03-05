@@ -54,11 +54,14 @@ public class UeDisplayAdapter extends ArrayAdapter<UE> {
 
         @Override
         public void onClick(View view) {
-            if(checkBox.isChecked()){ //Change le check de l'ue en consequence.
+
+            if(!parcours.isChecked(ue) && parcours.canBeCheckedUE(ue)){ //Change le check de l'ue en consequence.
                 parcours.addUEParcours(ue);
+                checkBox.setChecked(true);
             }
             else{
                 parcours.delUEParcours(ue);
+                checkBox.setChecked(false);
             }
             //Un changement a eu lieu.
             vue.needSave(true);

@@ -71,8 +71,8 @@ public class ReseauController{
                 Semestre semestre = gson.fromJson((String) args[0], Semestre.class);
                 System.out.println("data receive from server");
                 //TODO Modifier le modele pour un meillieur traitement
-                //modele.setAllUE(semestre.getListCategorie();
-                vue.notifyUeListView();
+                modele.setSemestre(semestre);
+                vue.resetAdaptateurModele();
             }
         };
     }

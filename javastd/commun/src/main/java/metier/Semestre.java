@@ -12,8 +12,9 @@ public class Semestre{
     private ArrayList<Categorie> listCategorie; // la liste des categorie.
 
     // RULE of semestre
-    private int numberUENeedChoose; //nombre d'ue necessaire de selectionner pour valider une semestre
-    private int maxNumberByCategorie; //nombre maximum d'ue par categorie
+    //TODO adapter la champs suivant en fonction des parametre pour le moment fonctionne uniquement pour le S1
+    private int numberUENeedChoose = 5; //nombre d'ue necessaire de selectionner pour valider une semestre
+    private int maxNumberByCategorie = 1; //nombre maximum d'ue par categorie
     private ArrayList<String> listObligatory; //liste des ue obligatoire du semestre
 
     /* CONSTRUCTOR */
@@ -24,9 +25,6 @@ public class Semestre{
         //For RULE
         this.listObligatory = listObligatory;
 
-        //TODO adapter la champs suivant en fonction des parametre pour le moment fonctionne uniquement pour le S1
-        numberUENeedChoose = 6;
-        maxNumberByCategorie = 1;
 
     }
 
