@@ -148,7 +148,7 @@ public class DBManagerTest {
         ArrayList<Categorie> b = new ArrayList<Categorie>();
         b.add(categorie);
 
-        Semestre semestre = new Semestre(1,b,null);
+        Semestre semestre = new Semestre(1,b,als);
 
         dbManager = new DBManager("monFichierTest");
 
@@ -161,8 +161,9 @@ public class DBManagerTest {
         //Le fichier est vide
         assertEquals(null,dbManager.getFile().getFileContent());
 
-        dbManager.save(als);
+        dbManager.save(semestre, als);
         //Le fichier contient maintenant le semestre.
+        System.out.println(":" + dbManager.getFile().getFileContent());
         assertEquals(expected,dbManager.getFile().getFileContent());
 
 
@@ -178,9 +179,9 @@ public class DBManagerTest {
         Categorie categorie2 = new Categorie("Autre categorie test",a);
         b.add(categorie2);
 
-        semestre = new Semestre(2,b,null);
+        semestre = new Semestre(2,b,als);
 
-        dbManager.save(als);
+        dbManager.save(semestre, als);
 
         //Le fichier contient l'autre semestre.
         assertEquals(expected,dbManager.getFile().getFileContent());
@@ -199,6 +200,8 @@ public class DBManagerTest {
         Categorie categorie = new Categorie("Categorie test",a);
         ArrayList<Categorie> b = new ArrayList<Categorie>();
         b.add(categorie);
+        
+        Semestre semestre = new Semestre(1, b, als);
 
         dbManager = new DBManager("monFichierTest");
 
@@ -206,7 +209,7 @@ public class DBManagerTest {
         assertEquals("db\\monFichierTest",dbManager.getFile().getFile().toString());
         assertEquals(false,dbManager.getFile().exists());
 
-        dbManager.save(als);
+        dbManager.save(semestre, als);
 
         //Le fichier existe et contient le semestre
         assertEquals(true,dbManager.getFile().exists());
