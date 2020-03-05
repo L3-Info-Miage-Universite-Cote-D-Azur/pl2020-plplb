@@ -197,7 +197,6 @@ DBCheckerTest
 		this.codes.add("STRANGE");
 		
 		this.db = new DBChecker(this.sem, this.codes);
-		System.out.println("zzzzzzzzzzzzzzzz");
 		
 		assertEquals(false, this.db.checkSave());
 	}
