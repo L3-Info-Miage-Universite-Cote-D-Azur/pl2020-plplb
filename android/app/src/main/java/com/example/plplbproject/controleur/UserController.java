@@ -40,7 +40,7 @@ public class UserController {
         return new ClickListener(vue,connexion,modele) {
             @Override
             public void onClick(View view) {
-                //connexion.send(SENDCLIENTSAVE,gson.toJson(new Semestre(1,modele.getAllUE())));
+                connexion.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours()));
                 //TODO verification que le serveur a bien recus la sauvegarde
                 vue.needSave(false);
             }

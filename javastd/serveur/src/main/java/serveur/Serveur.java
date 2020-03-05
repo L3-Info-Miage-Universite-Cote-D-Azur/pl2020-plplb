@@ -127,13 +127,10 @@ public class Serveur {
         //TODO enlevement du parametre etu recuperer dans la future hashmap
 
         dbManager = new DBManager(etu.toString());
-        if(dbManager.getFile().exists()){
-            Debug.log("Send data to : "+etu);
+        if(dbManager.getFile().exists()) {
+            Debug.log("Send data to : " + etu);
+            socketIOClient.sendEvent(SENDCLIENTSAVE, gson.toJson(dbManager.load().createListCodeUE()));
         }
-        else{
-            Debug.log("Create data for : "+etu);
-        }
-        socketIOClient.sendEvent(SENDCLIENTSAVE,dbManager.load());
     }
 
 

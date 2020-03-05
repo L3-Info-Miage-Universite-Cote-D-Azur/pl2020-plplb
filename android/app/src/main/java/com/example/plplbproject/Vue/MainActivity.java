@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         //###################### First adapt the list of categories ##################
 
-        categoryAdapter = new CategoryAdapter(this,modele.getSemestre().getListCategorie(),modele.getParcours());
+        categoryAdapter = new CategoryAdapter(this,modele.getSemestre().getListCategorie(),modele);
         categoryListView.setAdapter(categoryAdapter);
 
         //###################### Server connection #####################
