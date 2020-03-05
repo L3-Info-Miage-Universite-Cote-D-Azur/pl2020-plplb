@@ -2,7 +2,7 @@ package serveur;
 
 import java.util.ArrayList;
 
-import metier.Matiere;
+import metier.Categorie;
 import metier.Semestre;
 import metier.UE;
 import com.google.gson.Gson;
@@ -21,11 +21,12 @@ SemestersSample
 	static final Gson gson = new GsonBuilder().create();
 
 	/**
-	 * s1 contient tout les matieres du semestre 1 de licence 1.s
+	 * s1 contient tout les Categories du semestre 1 de licence 1.s
 	 * @return le semestre 1 sous forme de json.
 	 */
 	public static String s1(){
-		ArrayList<Matiere> listMatiere = new ArrayList<Matiere>();
+		/*TODO : Ajouter les bonus sport et autres..*/
+		ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
 		ArrayList<UE> listUE = new ArrayList<UE>();
 
 		//GEOGRAPHIE
@@ -33,14 +34,14 @@ SemestersSample
 		listUE.add(new UE("Decouverte 2","SPUGDC10"));
 		listUE.add(new UE("Decouverte 1","SPUGDI10"));
 
-		listMatiere.add(new Matiere("GEOGRAPHIE",listUE));
+		listCategorie.add(new Categorie("GEOGRAPHIE",listUE));
 
 		//INFORMATIQUE
 		listUE.clear();
 		listUE.add(new UE("Bases de l'informatique","SPUF10"));
 		listUE.add(new UE("Introduction a l'informatique par le web","SPUF11"));
 
-		listMatiere.add(new Matiere("INFORMATIQUE",listUE));
+		listCategorie.add(new Categorie("INFORMATIQUE",listUE));
 
 		//MATHEMATIQUES (pas toutes dispo selon le choix en math obligatoire)
 		listUE.clear();
@@ -48,60 +49,60 @@ SemestersSample
 		listUE.add(new UE("Complements 1","SPUM13"));
 		listUE.add(new UE("Methodes - approche continue","SPUM12"));
 
-		listMatiere.add(new Matiere("MATHEMATIQUES",listUE));
+		listCategorie.add(new Categorie("MATHEMATIQUES",listUE));
 
 		//SCIENCES DE LA VIE
 		listUE.clear();
 		listUE.add(new UE("Genetique. evolution. origine vie & biodiversite","SPUV101"));
 		listUE.add(new UE("Org et mecan. moleculaires - cellules eucaryotes","SPUV100"));
-		listUE.add(new UE("Structure microscopique de la matiere","SPUC10"));
+		listUE.add(new UE("Structure microscopique de la Categorie","SPUC10"));
 
-		listMatiere.add(new Matiere("SCIENCES DE LA VIE",listUE));
+		listCategorie.add(new Categorie("SCIENCES DE LA VIE",listUE));
 
 		//ELECTRONIQUE
 		listUE.clear();
 		listUE.add(new UE("Electronique numerique - Bases","SPUE10"));
 
-		listMatiere.add(new Matiere("ELECTRONIQUE",listUE));
+		listCategorie.add(new Categorie("ELECTRONIQUE",listUE));
 
 		//ECONOMIE - GESTION (choix dans les ecues a voir plus tard)
 		listUE.clear();
 		listUE.add(new UE("Economie-gestion","SPUA10"));
 
-		listMatiere.add(new Matiere("ECONOMIE - GESTION",listUE));
+		listCategorie.add(new Categorie("ECONOMIE - GESTION",listUE));
 
 		//PHYSIQUE
 		listUE.clear();
 		listUE.add(new UE("Mecanique 1","SPUP10"));
 
-		listMatiere.add(new Matiere("PHYSIQUE",listUE));
+		listCategorie.add(new Categorie("PHYSIQUE",listUE));
 
 		//SCIENCES DE LA TERRE
 		listUE.clear();
 		listUE.add(new UE("Decouverte des sciences de la terre","SPUT10"));
 
-		listMatiere.add(new Matiere("SCIENCES DE LA TERRE",listUE));
+		listCategorie.add(new Categorie("SCIENCES DE LA TERRE",listUE));
 
 		//MATH ENJEUX (obligatoire)
 		listUE.clear();
 		listUE.add(new UE("Math enjeux 1","SPUS10"));
 
-		listMatiere.add(new Matiere("MATH ENJEUX",listUE));
+		listCategorie.add(new Categorie("MATH ENJEUX",listUE));
 
 		//COMPETENCES TRANSVERSALE (obligatoire)
 		listUE.clear();
 		listUE.add(new UE("Competences transversales","KCTTS1"));
 
-		listMatiere.add(new Matiere("COMPETENCES TRANSVERSALE",listUE));
+		listCategorie.add(new Categorie("COMPETENCES TRANSVERSALE",listUE));
 
 		//FABLAB (facultatif)
 		listUE.clear();
 		listUE.add(new UE("Fablab S1","SPUSF100"));
 
-		listMatiere.add(new Matiere("FABLAB",listUE));
+		listCategorie.add(new Categorie("FABLAB",listUE));
 
 		//AJOUT AU SEMESTRE 1;
-		Semestre S1 = new Semestre(1,listMatiere);
+		Semestre S1 = new Semestre(1,listCategorie);
 		return gson.toJson(S1);
 	}
 

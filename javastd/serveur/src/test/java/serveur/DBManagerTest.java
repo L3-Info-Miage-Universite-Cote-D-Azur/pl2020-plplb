@@ -1,5 +1,6 @@
 package serveur;
 
+import metier.Categorie;
 import metier.Semestre;
 import metier.UE;
 import org.json.JSONObject;
@@ -135,12 +136,18 @@ public class DBManagerTest {
 
     @Test
     public void saveTestSemestreExistingFile() throws IOException {
-        String expected = "{\"number\":1,\"listUE\":[{\"name\":\"MonTestName\",\"code\":\"MonTestCode\",\"checked\":false}]}";
+        String expected = "{\"number\":1,\"listCategorie\":[{\"name\":\"Categorie test\"," +
+                "\"listUE\":[{\"name\":\"MonTestName\",\"code\":\"MonTestCode\",\"checked\":false}]}]}";
 
         UE ue = new UE("MonTestName","MonTestCode");
         ArrayList<UE> a = new ArrayList<UE>();
         a.add(ue);
-        Semestre semestre = new Semestre(1,a);
+
+        Categorie categorie = new Categorie("Categorie test",a);
+        ArrayList<Categorie> b = new ArrayList<Categorie>();
+        b.add(categorie);
+
+        Semestre semestre = new Semestre(1,b);
 
         dbManager = new DBManager("monFichierTest");
 
@@ -164,10 +171,19 @@ public class DBManagerTest {
 
 
         //AUTRE TEXTE
-        expected = "{\"number\":2,\"listUE\":[{\"name\":\"MonTestName\",\"code\":\"MonTestCode\",\"checked\":false},{\"name\":\"MonAutreTestName\",\"code\":\"MonAutreTestCode\",\"checked\":false}]}";
+        expected = "{\"number\":2,\"listCategorie\":[{\"name\":\"Categorie test\"," +
+                "\"listUE\":[{\"name\":\"MonTestName\",\"code\":\"MonTestCode\",\"checked" +
+                "\":false}]},{\"name\":\"Autre categorie test\",\"listUE\":[{\"name\":\"MonAutreTestName\"," +
+                "\"code\":\"MonAutreTestCode\",\"checked\":false}]}]}";
+
         UE ue2 = new UE("MonAutreTestName","MonAutreTestCode");
+        a.clear();
         a.add(ue2);
-        semestre = new Semestre(2,a);
+
+        Categorie categorie2 = new Categorie("Autre categorie test",a);
+        b.add(categorie2);
+
+        semestre = new Semestre(2,b);
 
         dbManager.save(semestre);
 
@@ -177,12 +193,18 @@ public class DBManagerTest {
 
     @Test
     public void saveTestSemestreWithNoFile() throws IOException {
-        String expected = "{\"number\":1,\"listUE\":[{\"name\":\"MonTestName\",\"code\":\"MonTestCode\",\"checked\":false}]}";
+        String expected = "{\"number\":1,\"listCategorie\":[{\"name\":\"Categorie test\"," +
+                "\"listUE\":[{\"name\":\"MonTestName\",\"code\":\"MonTestCode\",\"checked\":false}]}]}";
 
         UE ue = new UE("MonTestName","MonTestCode");
         ArrayList<UE> a = new ArrayList<UE>();
         a.add(ue);
-        Semestre semestre = new Semestre(1,a);
+
+        Categorie categorie = new Categorie("Categorie test",a);
+        ArrayList<Categorie> b = new ArrayList<Categorie>();
+        b.add(categorie);
+
+        Semestre semestre = new Semestre(1,b);
 
         dbManager = new DBManager("monFichierTest");
 
@@ -206,9 +228,30 @@ public class DBManagerTest {
         assertEquals(false,dbManager.getFile().exists());
 
         String res = dbManager.load();
+        String expected = "{\"number\":1,\"listCategorie\":[{\"name\":\"GEOGRAPHIE\"," +
+                "\"listUE\":[{\"name\":\"Decouverte 1\",\"code\":\"SPUGDE10\",\"checked\":false}," +
+                "{\"name\":\"Decouverte 2\",\"code\":\"SPUGDC10\",\"checked\":false}," +
+                "{\"name\":\"Decouverte 1\",\"code\":\"SPUGDI10\",\"checked\":false}]}," +
+                "{\"name\":\"INFORMATIQUE\",\"listUE\":[{\"name\":\"Bases de l\\u0027informatique\"," +
+                "\"code\":\"SPUF10\",\"checked\":false},{\"name\":\"Introduction a l\\u0027informatique par le web\"," +
+                "\"code\":\"SPUF11\",\"checked\":false}]},{\"name\":\"MATHEMATIQUES\",\"listUE\":[{\"name\":\"Fondements 1\"," +
+                "\"code\":\"SPUM11\",\"checked\":false},{\"name\":\"Complements 1\",\"code\":\"SPUM13\",\"checked\":false}," +
+                "{\"name\":\"Methodes - approche continue\",\"code\":\"SPUM12\",\"checked\":false}]}," +
+                "{\"name\":\"SCIENCES DE LA VIE\",\"listUE\":[{\"name\":\"Genetique. evolution. origine vie \\u0026 biodiversite\"," +
+                "\"code\":\"SPUV101\",\"checked\":false},{\"name\":\"Org et mecan. moleculaires - cellules eucaryotes\"," +
+                "\"code\":\"SPUV100\",\"checked\":false},{\"name\":\"Structure microscopique de la Categorie\"," +
+                "\"code\":\"SPUC10\",\"checked\":false}]},{\"name\":\"ELECTRONIQUE\"," +
+                "\"listUE\":[{\"name\":\"Electronique numerique - Bases\",\"code\":\"SPUE10\",\"checked\":false}]}," +
+                "{\"name\":\"ECONOMIE - GESTION\",\"listUE\":[{\"name\":\"Economie-gestion\",\"code\":\"SPUA10\",\"checked\":false}]}," +
+                "{\"name\":\"PHYSIQUE\",\"listUE\":[{\"name\":\"Mecanique 1\",\"code\":\"SPUP10\",\"checked\":false}]}," +
+                "{\"name\":\"SCIENCES DE LA TERRE\",\"listUE\":[{\"name\":\"Decouverte des sciences de la terre\"," +
+                "\"code\":\"SPUT10\",\"checked\":false}]},{\"name\":\"MATH ENJEUX\",\"listUE\":[{\"name\":\"Math enjeux 1\"," +
+                "\"code\":\"SPUS10\",\"checked\":false}]},{\"name\":\"COMPETENCES TRANSVERSALE\"," +
+                "\"listUE\":[{\"name\":\"Competences transversales\",\"code\":\"KCTTS1\",\"checked\":false}]}," +
+                "{\"name\":\"FABLAB\",\"listUE\":[{\"name\":\"Fablab S1\",\"code\":\"SPUSF100\",\"checked\":false}]}]}";
 
         //On recupere s1 de semestreSample;
-        assertEquals(res,"{\"number\":1,\"listUE\":[{\"name\":\"Introduction à l\\u0027informatique par le web\",\"code\":\"SPUF11\",\"checked\":false}]}");
+        assertEquals(res,expected);
 
         //ON CREER LE FICHIER QUI CONTIENT QUELQUE CHOSE.
         try {

@@ -3,16 +3,16 @@ package metier;
 import java.util.ArrayList;
 
 /**
- * Matiere represente une matiere dans le cursus, elle se rapporte a un semestre et contient des UEs.
+ * Categorie represente une categorie dans le cursus, elle se rapporte a un semestre et contient des UEs.
  */
-public class Matiere {
-    private String name;//Nom de la matiere.
-    private ArrayList<UE> listUE; // la liste des Ues de la matiere.
+public class Categorie {
+    private String name;//Nom de la categorie.
+    private ArrayList<UE> listUE; // la liste des Ues de la categorie.
 
     /* CONSTRUCTOR */
-    public Matiere(String name, ArrayList<UE> UES){
+    public Categorie(String name, ArrayList<UE> UES){
         this.name = name;
-        this.listUE = UES;
+        this.listUE = new ArrayList<UE>(UES);
     }
 
     /* GETTERS AND SETTERS */
