@@ -55,6 +55,7 @@ public class Serveur {
                 Etudiant etu = gson.fromJson(json,Etudiant.class);
                 clientConnect(socketIOClient, etu);
                 clientConnectData(socketIOClient, etu);
+                clientSendData(socketIOClient,etu);
             }
         });
 
@@ -118,6 +119,12 @@ public class Serveur {
      */
     protected void clientConnectData(SocketIOClient socketIOClient, Etudiant etu){
         //TODO enlevement du parametre etu recuperer dans la future hashmap
+        Debug.log("Send Semesters to : "+etu);
+        socketIOClient.sendEvent(SENDDATACONNEXION,SemestersSample.S1Jsoned);
+    }
+
+    protected void clientSendData(SocketIOClient socketIOClient, Etudiant etu){
+        //TODO enlevement du parametre etu recuperer dans la future hashmap
 
         dbManager = new DBManager(etu.toString());
         if(dbManager.getFile().exists()){
@@ -126,7 +133,7 @@ public class Serveur {
         else{
             Debug.log("Create data for : "+etu);
         }
-        socketIOClient.sendEvent(SENDDATACONNEXION,dbManager.load());
+        socketIOClient.sendEvent(SENDCLIENTSAVE,dbManager.load());
     }
 
 
