@@ -29,7 +29,7 @@
 ### Itération 4:
 	-Ajout des UEs du s2. 
 	-Ajout du s2.
-	-Code couleur des UE (gris pour disponible, rouge pour indisponible, bleu pour choisie). 
+	-Code couleur des UE (vert pour disponible, rouge pour indisponible, bleu pour choisie). 
 	-Le passage d'un semestre à l'autre se fait par Intent (une activité par semestre)
 	-Developpement pour le S2 jusqu'au S4: 4 UE à choisir
 	-Mise en place des conditions de choix pour les UEs libres:
