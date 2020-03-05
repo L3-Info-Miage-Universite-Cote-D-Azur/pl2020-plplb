@@ -17,11 +17,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ueListView"
+        app:layout_constraintTop_toTopOf="@+id/catList"
         app:layout_constraintVertical_bias="0.95" />
 
     <ListView
-        android:id="@+id/ueListView"
+        android:id="@+id/catList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
