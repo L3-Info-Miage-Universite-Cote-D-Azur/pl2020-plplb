@@ -6,9 +6,10 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
 import metier.Etudiant;
+import metier.Parcours;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import metier.Semestre;
 
 
 import static constantes.NET.*;
@@ -60,8 +61,8 @@ public class Serveur {
         this.server.addEventListener(SENDCLIENTSAVE, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Semestre data = gson.fromJson(json, Semestre.class);
-                dbManager.save(data);
+                Parcours data = gson.fromJson(json, Parcours.class);
+                dbManager.save(data.createListCodeUE());
                 //TODO : envoyer un liste contenant le semestre et l'etudiant si ce n'est pas un thread.
                 Debug.log("Save data for "+etudiant.getNom());
             }
