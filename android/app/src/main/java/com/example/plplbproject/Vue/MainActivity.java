@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private Connexion socket;
 
     private CategoryAdapter categoryAdapter;
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
 
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private String ip = "10.0.2.2";
     private String port = "10101";
 
-
+    private ArrayList<Categorie> categoryList;
     ArrayList<UE> arr1= new ArrayList<UE>();
     ArrayList<UE> arr2= new ArrayList<UE>();
 
@@ -129,10 +132,41 @@ public class MainActivity extends AppCompatActivity implements Vue {
     protected void initVue(){
 
 
+        // Pour tester en local, à enlever! TODO
+        // Il faut mettre à jour les méthodes des classes contenues dans controlleur
+        UE ue1 = new UE("Maths","0000");
+        UE ue2 = new UE("Anglais","0001");
+        UE ue3 = new UE("Francais","0002");
+        UE ue4 = new UE("Algo","0003");
+        UE ue5 = new UE("OFI","0004");
+        UE ue6 = new UE("POO","0005");
+
+        ArrayList<UE> arr1= new ArrayList<UE>();
+        ArrayList<UE> arr2= new ArrayList<UE>();
+
+        arr1.add(ue1);arr1.add(ue2);arr1.add(ue3);
+        arr2.add(ue4);arr2.add(ue5);arr2.add(ue6);
+
+        Categorie generalCat = new Categorie("general",arr1);
+        Categorie infoCat = new Categorie("info",arr2);
+
+        categoryList = new ArrayList<>();
+        categoryList.add(generalCat);categoryList.add(infoCat);
+
+        expListView = (ExpandableListView) findViewById(R.id.catList);
+
+        listAdapter = new ExpandableListAdapter(this, categoryList);
+        expListView.setAdapter(listAdapter);
+
+
+        /*
+
         //###################### First adapt the list of categories ##################
 
         categoryAdapter = new CategoryAdapter(this,modele.getSemestre().getListCategorie(),modele);
         categoryListView.setAdapter(categoryAdapter);
+
+         */
 
         //###################### Server connection #####################
         socket.connect();

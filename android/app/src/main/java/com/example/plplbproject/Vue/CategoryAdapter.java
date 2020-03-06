@@ -46,7 +46,7 @@ public class CategoryAdapter extends ArrayAdapter<Categorie> {
         }
 
         categoryName = convertView.findViewById(R.id.catName);
-        ueList = convertView.findViewById(R.id.ueList);
+        //ueList = convertView.findViewById(R.id.ueList);
 
         categoryName.setText(categorie.getName());
 
@@ -56,14 +56,14 @@ public class CategoryAdapter extends ArrayAdapter<Categorie> {
 
 
         // TODO findView.id renvoie toujours null (pour le bouton et textView, divider etc..): pourquoi??
-        Button extendButton = convertView.findViewById(R.id.extendIcon);
+       /* Button extendButton = convertView.findViewById(R.id.extendIcon);
         extendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //ueList.setVisibility(View.INVISIBLE);
             }
         });
-
+*/
         return convertView;
 
     }

@@ -8,14 +8,6 @@
         android:layout_height="wrap_content"
         >
 
-        <Button
-            android:id="@+id/extendIcon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_vertical_align_center_24px"
-            />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,9 +25,5 @@
         android:layout_height="11dp"
         android:background="?android:attr/listDivider" />
 
-    <ListView
-        android:id="@+id/ueList"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"></ListView>
 
 </LinearLayout>
