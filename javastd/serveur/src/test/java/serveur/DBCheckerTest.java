@@ -62,7 +62,7 @@ DBCheckerTest
 		this.cats.add(new Categorie("CAT4", this.uesOpt));
 		
 		// Creation du semestre
-		this.sem = new Semestre(1, this.cats, this.oblig);
+		this.sem = new Semestre(1, this.cats, this.oblig,null);
 	}
 	
 	@Test

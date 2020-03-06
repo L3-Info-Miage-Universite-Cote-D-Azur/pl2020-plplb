@@ -34,7 +34,7 @@ public class SemestersSampleTest {
                 "Competences transversales\",\"code\":\"KCTTS1\",\"categorie\":\"COMPETENCES TRANSVERSALES\"}]}," +
                 "{\"name\":\"FABLAB\",\"listUE\":[{\"name\":\"Fablab S1\",\"code\":\"SPUSF100\",\"categorie\":" +
                 "\"FABLAB\"}]}],\"numberUENeedChoose\":5,\"maxNumberByCategorie\":1,\"listObligatory\":[\"SPUM11\"," +
-                "\"SPUM12\"]}";
+                "\"SPUM12\"],\"ueAutomaticCheck\":[\"KCTTS1\",\"SPUS10\"]}";
 
 
         assertEquals(expected,res);

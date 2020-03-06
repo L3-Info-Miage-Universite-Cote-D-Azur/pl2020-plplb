@@ -95,8 +95,14 @@ SemestersSample
 		ArrayList<String> listObligatoire = new ArrayList<String>();
 		listObligatoire.add("SPUM11");
 		listObligatoire.add("SPUM12");
+
+		//ue check automatiquement et non modifiable
+		ArrayList<String> listUeAutoCheck = new ArrayList<String>();
+		listUeAutoCheck.add("KCTTS1");
+		listUeAutoCheck.add("SPUS10");
+
 		//AJOUT AU SEMESTRE 1;
-		Semestre S1 = new Semestre(1,listCategorie,listObligatoire);
+		Semestre S1 = new Semestre(1,listCategorie,listObligatoire,listUeAutoCheck);
 		return S1;
 	}
 	

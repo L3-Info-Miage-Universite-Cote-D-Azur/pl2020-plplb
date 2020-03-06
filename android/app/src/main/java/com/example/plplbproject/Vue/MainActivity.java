@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "10.0.2.2";
+    private String ip = "192.168.1.46";
     private String port = "10101";
 
     private ArrayList<Categorie> categoryList;
@@ -202,7 +202,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
      */
     @Override
     public void needSave(Boolean needSave) {
-        if(needSave) save.setVisibility(View.VISIBLE);
+        //preverification du client
+        if(needSave && modele.getParcours().isAccepted()) save.setVisibility(View.VISIBLE);
         else save.setVisibility(View.INVISIBLE);
     }
 

@@ -113,6 +113,32 @@ DBManager
 	 * <br><br>
 	 * <strong>Exemple de contenu de fichier:</strong>
 	 * <pre>{"SLZ51", "SLZI5C", "SLZI8B"}</pre>
+	 * @param sem Le semestre voulu
+	 * @param als La liste de string qui represente les codes des UEs
+	 */
+	public void
+	save (Semestre sem, ArrayList<String> als)
+	{
+		DBChecker checker = new DBChecker(sem, als);
+		if (!checker.checkSave())
+		{
+			Debug.error("checker.checkSave() a retourne une erreur.. Sauvegarde non ecrasee");
+			return;
+		}
+		if (!this.file.exists())
+			this.file.create();
+		final Gson gson = new GsonBuilder().create();
+		this.file.write(gson.toJson(als));
+	}
+	
+	/**
+	 * Permet de d'ecraser la sauvegarde courante du client 
+	 * par sa nouvelle sauvegarde dans le fichier db/fileName.txt
+	 * <br>
+	 * Le fichier se sauvegarde contient la liste des codes des UEs choisies par l'utilisateur
+	 * <br><br>
+	 * <strong>Exemple de contenu de fichier:</strong>
+	 * <pre>{"SLZ51", "SLZI5C", "SLZI8B"}</pre>
 	 * @param als La liste de string qui represente les codes des UEs
 	 */
 	public void
