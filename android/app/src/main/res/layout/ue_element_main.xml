@@ -5,25 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="150dp">
 
-    <View
-        android:id="@+id/rectangleUe"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/rectangle"
-        />
-
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="50dp"
-        >
+        android:layout_height="150dp">
+
+        <View
+            android:id="@+id/rectangleUe"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectangle" />
 
         <TextView
             android:id="@+id/ueName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="1dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="0dp"
+            android:layout_toEndOf="@+id/rectangleUe"
             android:gravity="center_horizontal"
             android:text="ueName"
             android:textSize="24sp"
@@ -31,27 +32,24 @@
 
         <CheckBox
             android:id="@+id/checkboxUe"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp" />
 
         <TextView
             android:id="@+id/codeUe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="55dp"
             android:layout_marginBottom="26dp"
             android:text="codeUe"
             android:textSize="20dp" />
 
 
     </RelativeLayout>
-
-
 
 
 </RelativeLayout>

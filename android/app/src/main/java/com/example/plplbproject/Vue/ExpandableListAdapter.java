@@ -14,29 +14,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import metier.Categorie;
+import metier.MainModele;
 import metier.UE;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
+    private MainModele mainModele;
+    //private int semestre;
     private ArrayList<Categorie> categorieArrayList;
-    private HashMap<Categorie , ArrayList<UE>> ueMap;
 
-    public ExpandableListAdapter(Context context, ArrayList<Categorie> catList) {
+    public ExpandableListAdapter(Context context, MainModele mainModele) {
         this.context = context;
-        this.categorieArrayList = catList; // listDataHeader
-        this.ueMap = new HashMap(); // listChildData
-
-        for (Categorie c: categorieArrayList
-             ) {
-            ArrayList<UE> uelist = new ArrayList<>();
-            for (UE ue: c.getListUE()
-                 ) {
-                uelist.add(ue);
-            }
-            ueMap.put(c,uelist);
-        }
-
+        this.mainModele = mainModele;
+        this.categorieArrayList = mainModele.getSemestre().getListCategorie(); // listDataHeader
     }
 
     @Override
@@ -46,7 +37,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return ueMap.get(this.categorieArrayList.get(groupPosition)).size();
+        return categorieArrayList.get(groupPosition).getListUE().size();
     }
 
     @Override
@@ -56,7 +47,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int i, int i1) {
-        return ueMap.get(this.categorieArrayList.get(i)).get(i1);
+        return categorieArrayList.get(i).getListUE().get(i1);
     }
 
     @Override
@@ -120,5 +111,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true;
+    }
+
+    @Override
+    public void notifyDataSetChanged(){
+        categorieArrayList = this.mainModele.getSemestre().getListCategorie();
+        super.notifyDataSetChanged();
     }
 }

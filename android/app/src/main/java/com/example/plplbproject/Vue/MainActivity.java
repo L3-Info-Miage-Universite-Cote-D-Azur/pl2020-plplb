@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "192.168.1.46";
+    private String ip = "10.0.2.2";
     private String port = "10101";
 
     private ArrayList<Categorie> categoryList;
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
      */
     protected void initVue(){
 
-
+        /*
         // Pour tester en local, à enlever! TODO
         // Il faut mettre à jour les méthodes des classes contenues dans controlleur
         UE ue1 = new UE("Maths","0000");
@@ -153,9 +153,11 @@ public class MainActivity extends AppCompatActivity implements Vue {
         categoryList = new ArrayList<>();
         categoryList.add(generalCat);categoryList.add(infoCat);
 
+
+         */
         expListView = (ExpandableListView) findViewById(R.id.catList);
 
-        listAdapter = new ExpandableListAdapter(this, categoryList);
+        listAdapter = new ExpandableListAdapter(this, modele);
         expListView.setAdapter(listAdapter);
 
 
@@ -191,7 +193,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                categoryAdapter.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
+                //categoryAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -233,9 +236,10 @@ public class MainActivity extends AppCompatActivity implements Vue {
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                categoryAdapter.clear();
-                categoryAdapter.addAll(modele.getSemestre().getListCategorie());
-                categoryAdapter.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
+                //categoryAdapter.clear();
+                //categoryAdapter.addAll(modele.getSemestre().getListCategorie());
+                //categoryAdapter.notifyDataSetChanged();
             }
         });
 
