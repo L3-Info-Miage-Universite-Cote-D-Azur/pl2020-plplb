@@ -8,27 +8,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
-import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.controleur.UserController;
 import com.example.plplbproject.reseau.Connexion;
 
-import java.util.ArrayList;
 
-
-import metier.Categorie;
 import metier.MainModele;
-import metier.Semestre;
-import metier.UE;
 
 
 public class MainActivity extends AppCompatActivity implements Vue {
@@ -197,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
     @Override
     public void needSave(Boolean needSave) {
         //preverification du client
-        if(needSave && modele.getParcours().isAccepted()) save.setVisibility(View.VISIBLE);
+        if(needSave && modele.getParcours().verifiParcours()) save.setVisibility(View.VISIBLE);
         else save.setVisibility(View.INVISIBLE);
     }
 

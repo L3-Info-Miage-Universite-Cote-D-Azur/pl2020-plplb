@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import metier.MainModele;
-import metier.Semestre;
 
 import static constantes.NET.*;
 

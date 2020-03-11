@@ -6,10 +6,10 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
 import metier.Etudiant;
-import metier.Parcours;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import metier.parcours.Parcours;
 import metier.semestre.Semestre;
 
 

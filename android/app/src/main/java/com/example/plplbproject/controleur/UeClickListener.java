@@ -5,8 +5,8 @@ import android.widget.CheckBox;
 
 import com.example.plplbproject.Vue.Vue;
 
-import metier.Parcours;
 import metier.UE;
+import metier.parcours.Parcours;
 
 public class UeClickListener implements View.OnClickListener{
 
@@ -26,11 +26,11 @@ public class UeClickListener implements View.OnClickListener{
     public void onClick(View view) {
 
          if(!parcours.isChecked(ue) && parcours.canBeCheckedUE(ue)){ //Change le check de l'ue en consequence.
-             parcours.addUEParcours(ue);
+             parcours.checkUE(ue);
              checkBox.setChecked(true);
          }
          else if(parcours.canBeUncheckedUE(ue)){
-             parcours.delUEParcours(ue);
+             parcours.uncheckUE(ue);
              checkBox.setChecked(false);
          }
          else{

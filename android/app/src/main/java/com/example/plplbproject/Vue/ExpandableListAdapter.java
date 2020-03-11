@@ -16,9 +16,8 @@ import java.util.HashMap;
 
 import metier.Categorie;
 import metier.MainModele;
-import metier.Parcours;
-import metier.Semestre;
 import metier.UE;
+import metier.parcours.Parcours;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -47,11 +46,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         public void onClick(View view) {
 
             if(!parcours.isChecked(ue) && parcours.canBeCheckedUE(ue)){ //Change le check de l'ue en consequence.
-                parcours.addUEParcours(ue);
+                parcours.checkUE(ue);
                 checkBox.setChecked(true);
             }
             else if(parcours.canBeUncheckedUE(ue)){
-                parcours.delUEParcours(ue);
+                parcours.uncheckUE(ue);
                 checkBox.setChecked(false);
             }
             else{

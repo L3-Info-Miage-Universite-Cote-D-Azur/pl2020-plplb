@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import io.socket.emitter.Emitter;
 import metier.Etudiant;
 import metier.MainModele;
-import metier.Parcours;
-import metier.Semestre;
+import metier.parcours.Parcours;
+import metier.semestre.Semestre;
 
 import static constantes.NET.*;
 
@@ -95,7 +95,7 @@ public class ReseauController{
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
                 System.out.println("save receive from server");
                 //TODO Modifier parcours
-                modele.setParcours(new Parcours(modele.getSemestre(semestreCourant),ueCode));
+                modele.setParcours(new Parcours(modele,ueCode));
                 vue.resetAdaptateurModele();
             }
         };
