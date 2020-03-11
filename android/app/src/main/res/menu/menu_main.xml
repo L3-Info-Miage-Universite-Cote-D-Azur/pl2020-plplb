@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.plplbproject.Vue.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/semestre1"
+        android:title="Semestre 1"
+        <!-- app:showAsAction="never" --> />
+    <item
+        android:id="@+id/semestre2"
+        android:title="Semestre 2"
+        />
 </menu>
