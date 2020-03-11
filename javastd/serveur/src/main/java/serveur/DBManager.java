@@ -177,10 +177,11 @@ DBManager
 		ArrayList<String> lCodes = gson.fromJson(fcontent, ArrayList.class);
 		/**
 		 * TODO:
-		 * Pour l'instant on gere uniquement le premier semestre.
-		 * Il faudra gerer quand on aura plusieurs semestres
+		 * Gestion des 2 semestres
 		 */
-		Semestre seum = SemestersSample.S1();
-		return new Parcours(seum, lCodes);
+		ArrayList<Semestre> semestres = new ArrayList<Semestre>();
+		semestres.add(SemestersSample.S1());
+		semestres.add(SemestersSample.S2());
+		return new Parcours(semestres, lCodes);
 	}
 }
