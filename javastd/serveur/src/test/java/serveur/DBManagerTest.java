@@ -1,9 +1,9 @@
 package serveur;
 
 import metier.Categorie;
-import metier.Parcours;
-import metier.Semestre;
 import metier.UE;
+import metier.parcours.Parcours;
+import metier.semestre.Semestre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

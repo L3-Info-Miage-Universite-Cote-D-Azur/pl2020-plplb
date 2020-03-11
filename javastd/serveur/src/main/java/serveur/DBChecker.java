@@ -3,8 +3,7 @@ package serveur;
 import java.util.*;
 
 import metier.Categorie;
-import metier.Parcours;
-import metier.Semestre;
+import metier.semestre.Semestre;
 
 /**
  * DBChecker permet de verifier les sauvegardes

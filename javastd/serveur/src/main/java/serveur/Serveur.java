@@ -10,7 +10,7 @@ import metier.Parcours;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import metier.Semestre;
+import metier.semestre.Semestre;
 
 
 import java.util.ArrayList;

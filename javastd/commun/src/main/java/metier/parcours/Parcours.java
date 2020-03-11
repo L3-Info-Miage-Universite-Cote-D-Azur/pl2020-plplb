@@ -8,7 +8,6 @@ import metier.MainModele;
 import metier.UE;
 import metier.semestre.Semestre;
 import metier.semestre.manager.ParcoursSemestreManager;
-import org.graalvm.compiler.api.replacements.Snippet;
 
 /**
  * Classe qui s'occupe de la gestion du parcours et des regle a respecter.
@@ -35,13 +34,12 @@ public class Parcours {
 
     /**
      * Constructeur pour un nouveau parcours
-     * @param semestre tout les semestre du parcours
+     * @param modele le modele
      */
-    public Parcours(Semestre semestre){
-        this.semestre = semestre;
-        semestreManager = semestre.getRules().createManager();
+    public Parcours(MainModele modele){
+        this.modele = modele;
         parcoursSelect = new HashMap<String,UE>();
-
+        initParcoursSemestresManager();
     }
 
 
@@ -56,8 +54,10 @@ public class Parcours {
     }
 
     private void initParcoursSemestresManager(){
-        //recup arraylist semestre
-        //for de 0 a la fin avec getrules.createSemestreManager
+        semestresManager = new ArrayList<ParcoursSemestreManager>();
+        for(Semestre semestre: modele.getSemestres()){
+            semestresManager.add(semestre.getRules().createManager());
+        }
     }
 
 
@@ -68,7 +68,7 @@ public class Parcours {
      * @return tru:e il est possible de cocher; false: il n'est pas possible
      */
     public boolean canBeCheckedUE(UE ue){
-        Boolean semestreCheck = modele.getSemestre().get(ue.getSemestre()).canBeCheck(ue);
+        Boolean semestreCheck = semestresManager.get(ue.getSemestreNumber()).canBeCheck(ue);
         //iteration ? verification des prerequis (graphe?)
         //Boolean uePrerequisCheck = ...
 
@@ -81,7 +81,7 @@ public class Parcours {
      * @return tru:e il est possible de decocher; false: il n'est pas possible
      */
     public boolean canBeUncheckedUE(UE ue){
-        Boolean semestreUncheck = modele.getSemestre().get(ue.getSemestre()).canBeUncheck(ue);
+        Boolean semestreUncheck = semestresManager.get(ue.getSemestreNumber()).canBeUncheck(ue);
         //TODO iteration 4 verification des prerequis (graphe?)
         //Boolean uePrerequisCheck = ...
 
@@ -97,7 +97,7 @@ public class Parcours {
         //il faut que ca respecte les regle
         if(canBeCheckedUE(ue)){
             parcoursSelect.put(ue.getUeCode(),ue);
-            semestresManager.get(ue.getSemestre()).check(ue);
+            semestresManager.get(ue.getSemestreNumber()).check(ue);
         }
     }
 
@@ -107,7 +107,7 @@ public class Parcours {
      */
     public void checkUENoVerif(UE ue){
         parcoursSelect.put(ue.getUeCode(),ue);
-        semestresManager.get(ue.getSemestre()).check(ue);
+        semestresManager.get(ue.getSemestreNumber()).check(ue);
     }
 
 
@@ -120,7 +120,7 @@ public class Parcours {
         //si elle fait parti de la liste des ue selectionner et qu'elle peut etre uncheck
         if(parcoursSelect.containsKey(ue.getUeCode()) && canBeUncheckedUE(ue)) {
             parcoursSelect.remove(ue.getUeCode());
-            semestresManager.get(ue.getSemestre()).uncheck(ue);
+            semestresManager.get(ue.getSemestreNumber()).uncheck(ue);
         }
     }
 
@@ -146,7 +146,9 @@ public class Parcours {
     }
 
     public boolean verifiParcours(){
-        //TODO a implementer
+        for(ParcoursSemestreManager manager: semestresManager){
+            if(!manager.verifCompleteParcours()) return false;
+        }
         return true;
     }
 

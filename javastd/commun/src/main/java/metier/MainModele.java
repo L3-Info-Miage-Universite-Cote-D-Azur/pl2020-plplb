@@ -1,5 +1,8 @@
 package metier;
 
+import metier.parcours.Parcours;
+import metier.semestre.Semestre;
+
 import java.util.ArrayList;
 
 /**
@@ -17,7 +20,7 @@ public class MainModele {
     public MainModele(){
         this.etudiant = new Etudiant("Etudiant 1");
         this.semestres = new ArrayList<Semestre>();
-        this.parcours = new Parcours(semestres);
+        this.parcours = new Parcours(this);
         this.semestreCourant = 0; // On pense en terme d'index de liste
     }
 
@@ -80,5 +83,19 @@ public class MainModele {
 
     public void setSemestre(Semestre semestre){
         this.semestres.add(semestre);
+    }
+
+    /**
+     * Recherche d'une ue parmis l'ensemble des ue
+     * @param codeUE le code de l'ue
+     * @return l'ue si elle est trouver.
+     */
+    public UE findUE(String codeUE){
+        UE ue;
+        for(Semestre semestre: semestres){
+            ue = semestre.findUE(codeUE);
+            if(ue != null) return ue;
+        }
+        return null;
     }
 }

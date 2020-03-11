@@ -22,7 +22,9 @@ public class Semestre {
     /* CONSTRUCTOR */
     public Semestre(int number, ArrayList<Categorie> listCategorie, SemestreRules rules) {
         this.number = number;
-        this.listCategorie = new ArrayList<Categorie>(listCategorie);
+
+        this.listCategorie = new ArrayList<Categorie>();
+        this.setListCategorie(listCategorie); //Pour rattacher le semestre au Ues.
         //For RULE
         this.rules = rules;
 
@@ -31,12 +33,12 @@ public class Semestre {
     public Semestre() {
         this.number = -1;
         this.listCategorie = new ArrayList<Categorie>();
-
         //For RULE
         this.rules = new BasicSemestreRules(-1, -1, null);
     }
 
     /* Methods */
+
 
 
     public SemestreRules getRules() {
@@ -56,9 +58,13 @@ public class Semestre {
     }
 
     public void setListCategorie(ArrayList<Categorie> listCategorie) {
+        for(Categorie c : listCategorie) {
+            for (UE ue : c.getListUE()) {
+                ue.setSemestreNumber(this.number);
+            }
+        }
         this.listCategorie = listCategorie;
     }
-
 
     /**
      * Cherche une UE a l'aide de sont code

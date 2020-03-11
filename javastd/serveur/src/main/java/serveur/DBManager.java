@@ -3,14 +3,10 @@ package serveur;
 import java.io.*;
 import java.util.*;
 
-import metier.Etudiant;
-import metier.Parcours;
-import metier.Semestre;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-
-import org.json.*;
+import metier.parcours.Parcours;
+import metier.semestre.Semestre;
 
 /**
  * DBManager permet de gerer le systeme de base 

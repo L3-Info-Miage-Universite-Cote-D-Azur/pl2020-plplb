@@ -3,11 +3,14 @@ package serveur;
 import java.util.ArrayList;
 
 import metier.Categorie;
-import metier.Semestre;
 import metier.UE;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.json.*;
+import metier.semestre.Semestre;
+import metier.semestre.manager.BasicSemestreManager;
+import metier.semestre.rules.BasicSemestreRules;
+import metier.semestre.rules.SemestreRules;
+import metier.semestre.rules.SemestreRulesWithChoose;
 
 /**
  * Class utilitaire, elle contient les differents semestres avec la liste de leur UEs par defaut
@@ -96,17 +99,19 @@ SemestersSample
 
 		//RULE
 		//obligatoire au choix:
-		ArrayList<String> listObligatoire = new ArrayList<String>();
-		listObligatoire.add("SPUM11");
-		listObligatoire.add("SPUM12");
+		ArrayList<String> listChoixUE = new ArrayList<String>();
+		listChoixUE.add("SPUM11");
+		listChoixUE.add("SPUM12");
 
 		//ue check automatiquement et non modifiable
-		ArrayList<String> listUeAutoCheck = new ArrayList<String>();
-		listUeAutoCheck.add("KCTTS1");
-		listUeAutoCheck.add("SPUS10");
+		ArrayList<String> listObligatoire = new ArrayList<String>();
+		listObligatoire.add("KCTTS1");
+		listObligatoire.add("SPUS10");
+
+		SemestreRules rules = new SemestreRulesWithChoose(3,1,listObligatoire,listChoixUE,1);
 
 		//AJOUT AU SEMESTRE 1;
-		Semestre S1 = new Semestre(1,listCategorie,listObligatoire,listUeAutoCheck);
+		Semestre S1 = new Semestre(1,listCategorie,rules);
 		return S1;
 	}
 
@@ -189,18 +194,20 @@ SemestersSample
 		listCategorie.add(fablab);
 
 		//RULE
-		//obligatoire au choix:
-		ArrayList<String> listObligatoire = new ArrayList<String>();
-		listObligatoire.add("SPUM21");
-		listObligatoire.add("SPUM22");
+		//ue au choix:
+		ArrayList<String> listChoixUE = new ArrayList<String>();
+		listChoixUE.add("SPUM21");
+		listChoixUE.add("SPUM22");
 
-		//ue check automatiquement et non modifiable
-		ArrayList<String> listUeAutoCheck = new ArrayList<String>();
-		listUeAutoCheck.add("KCTTS2");
-		listUeAutoCheck.add("SPUS20");
+		//ue obligatoire
+		ArrayList<String> listObligatoire = new ArrayList<String>();
+		listObligatoire.add("KCTTS2");
+		listObligatoire.add("SPUS20");
+
+		SemestreRules rule = new SemestreRulesWithChoose(4,2,listObligatoire,listChoixUE,1);
 
 		//AJOUT AU SEMESTRE 1;
-		Semestre S2 = new Semestre(2,listCategorie,listObligatoire,listUeAutoCheck);
+		Semestre S2 = new Semestre(2,listCategorie,rule);
 		return S2;
 	}
 
