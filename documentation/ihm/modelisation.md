@@ -19,3 +19,16 @@ nouvelle activité s'affiche avec les catégories du semestre choisies (non dér
     - Verte : l'ue est disponible.
     - Rouge : l'ue ne peux être choisies (pas encore d'explication)
     - Bleu : l'ue est selectionnée.
+
+### Itération 5 :
+- L'utilisateur arrive sur la page de login (1) où il doit rentrer son INE (Identification Nationale des Etudiants)
+puis valider avec le bouton "Connexion", un message d'erreur apparaît si l'INE est mauvais (2) et peut réessayer.
+- L'utilisateur passe ensuite de la page de login (1 ou 2) à la page du parcours (3) si son INE est valide.
+
+### Itération 6:
+- Maintenant l'utilisateur passe à un menu contenant ses parcours (4) après s'être identifié (1 ou 2).
+- Sur le menu, l'utilisateur créer un nouveau parcours sur la case du même nom, qui va le mener à l'image 3.
+- S'il appuie sur une case parcours déja créé, il va arriver sur une page de visualisation de celui-ci (5).
+- Avec les flèches il peut dérouler les UEs choisies pour les semestres correspondants.
+- Il peut modifier son parcours en appuyant sur l'icône du stylo, ce qui l'amène à l'image 3.
+- S'il appuie sur l'icône poubelle, il va supprimer son parcours et revenir au menu (4).
