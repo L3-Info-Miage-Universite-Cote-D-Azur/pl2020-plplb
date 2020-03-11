@@ -24,7 +24,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private MainModele mainModele;
     private int semestreCourant;  // Pour lisibilité
-    private ArrayList<Categorie> categorieArrayList;
+    private ArrayList<Categorie> categorieArrayList = new ArrayList<Categorie>();
 
 
     /* SOUS CLASSE CONTROLLEUR */
@@ -73,7 +73,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.context = context;
         this.mainModele = mainModele;
         this.semestreCourant = mainModele.getSemestreCourant();
-        this.categorieArrayList = mainModele.getSemestres().get(semestreCourant).getListCategorie(); // listDataHeader
+        if(mainModele.getSemestres().size() > 0){
+            this.categorieArrayList = mainModele.getSemestres().get(semestreCourant).getListCategorie(); // listDataHeader
+        }
     }
 
     @Override

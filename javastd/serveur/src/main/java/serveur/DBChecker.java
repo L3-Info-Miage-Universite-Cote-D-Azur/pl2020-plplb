@@ -50,14 +50,16 @@ DBChecker
 			/* Check si le code existe */
 			if (this.semestre.findUE(code) == null)
 				return false;
+			/*
 			if (this.semestre.isObligatoryUE(this.semestre.findUE(code)))
 			{
-				/* On le remove pour nos futurs checks */
+				/* On le remove pour nos futurs checks
 				this.codes.remove(code);
 				oldcode = code;
 				hasObligatory = true;
 				break;
 			}
+			*/
 		}
 		if (!hasObligatory) return false;
 		/* Check si les 3 autres UE ont une categorie differente */

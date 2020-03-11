@@ -5,7 +5,7 @@
     <item
         android:id="@+id/semestre1"
         android:title="Semestre 1"
-        <!-- app:showAsAction="never" --> />
+        />
     <item
         android:id="@+id/semestre2"
         android:title="Semestre 2"
