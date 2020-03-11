@@ -163,7 +163,6 @@ public class DBManagerTest {
 
         dbManager.save(semestre, als);
         //Le fichier contient maintenant le semestre.
-        System.out.println(":" + dbManager.getFile().getFileContent());
         assertEquals(expected,dbManager.getFile().getFileContent());
 
 

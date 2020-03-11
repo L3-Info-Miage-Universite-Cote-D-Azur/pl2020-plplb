@@ -10,7 +10,10 @@ import metier.Parcours;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import metier.Semestre;
 
+
+import java.util.ArrayList;
 
 import static constantes.NET.*;
 
@@ -120,7 +123,12 @@ public class Serveur {
     protected void clientConnectData(SocketIOClient socketIOClient, Etudiant etu){
         //TODO enlevement du parametre etu recuperer dans la future hashmap
         Debug.log("Send Semesters to : "+etu);
-        socketIOClient.sendEvent(SENDDATACONNEXION,SemestersSample.S1Jsoned);
+
+        ArrayList<Semestre> semestres = new ArrayList<Semestre>();
+        semestres.add(SemestersSample.S1());
+        semestres.add(SemestersSample.S2());
+
+        socketIOClient.sendEvent(SENDDATACONNEXION,semestres);
     }
 
     protected void clientSendData(SocketIOClient socketIOClient, Etudiant etu){
