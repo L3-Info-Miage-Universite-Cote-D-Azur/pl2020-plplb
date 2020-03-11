@@ -157,7 +157,7 @@ DBManager
 	 * Si le client n a pas de sauvegarde, on revoie <strong>null</strong>
 	 * @return Parcours de l'utilisateur au premier semestre
 	 */
-	public Parcours
+	public ArrayList<String>
 	load ()
 	{
 		if (!this.file.exists())
@@ -171,13 +171,17 @@ DBManager
 		 */
 		final Gson gson = new GsonBuilder().create();
 		ArrayList<String> lCodes = gson.fromJson(fcontent, ArrayList.class);
+
+		return lCodes;//On renvoie les ues selectionnee de la sauvegarde.
+		/*
+
 		/**
 		 * TODO:
 		 * Gestion des 2 semestres
-		 */
 		ArrayList<Semestre> semestres = new ArrayList<Semestre>();
 		semestres.add(SemestersSample.S1());
 		semestres.add(SemestersSample.S2());
 		return new Parcours(semestres, lCodes);
+		*/
 	}
 }

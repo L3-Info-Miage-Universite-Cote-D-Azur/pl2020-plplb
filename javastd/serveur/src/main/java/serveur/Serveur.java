@@ -137,7 +137,7 @@ public class Serveur {
         dbManager = new DBManager(etu.toString());
         if(dbManager.getFile().exists()) {
             Debug.log("Send data to : " + etu);
-            socketIOClient.sendEvent(SENDCLIENTSAVE, gson.toJson(dbManager.load().createListCodeUE()));
+            socketIOClient.sendEvent(SENDCLIENTSAVE, gson.toJson(dbManager.load()));
         }
 
     }
