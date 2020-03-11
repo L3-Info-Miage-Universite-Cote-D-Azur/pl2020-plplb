@@ -71,12 +71,11 @@ public class ReseauController{
         return new EmitterListener(vue,connexion,modele) {
             @Override
             public void call(Object... args) {
-                ArrayList<Semestre> semestres = gson.fromJson((String) args[0], ArrayList.class);
+                ArrayList<String> semestres = gson.fromJson((String) args[0], ArrayList.class);
                 System.out.println("data receive from server");
                 //TODO Modifier le modele pour un meillieur traitement
-                for (Semestre s: semestres
-                     ) {
-                    modele.setSemestre(s);
+                for (String s: semestres) {
+                    modele.addSemestre(gson.fromJson(s,Semestre.class));
                 }
                 vue.resetAdaptateurModele();
             }

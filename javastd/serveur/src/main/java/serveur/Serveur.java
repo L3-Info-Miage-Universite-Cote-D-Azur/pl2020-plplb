@@ -124,11 +124,11 @@ public class Serveur {
         //TODO enlevement du parametre etu recuperer dans la future hashmap
         Debug.log("Send Semesters to : "+etu);
 
-        ArrayList<Semestre> semestres = new ArrayList<Semestre>();
-        semestres.add(SemestersSample.S1());
-        semestres.add(SemestersSample.S2());
+        ArrayList<String> semestresJsonned = new ArrayList<String>();
+        semestresJsonned.add(SemestersSample.S1Jsoned);
+        semestresJsonned.add(SemestersSample.S2Jsoned);
 
-        socketIOClient.sendEvent(SENDDATACONNEXION,semestres);
+        socketIOClient.sendEvent(SENDDATACONNEXION,semestresJsonned);
     }
 
     protected void clientSendData(SocketIOClient socketIOClient, Etudiant etu){

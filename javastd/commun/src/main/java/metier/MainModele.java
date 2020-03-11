@@ -81,7 +81,7 @@ public class MainModele {
         this.semestreCourant = index;
     }
 
-    public void setSemestre(Semestre semestre){
+    public void addSemestre(Semestre semestre){
         this.semestres.add(semestre);
     }
 
