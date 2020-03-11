@@ -34,7 +34,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         private Vue vue;
         private Parcours parcours;
 
-        public MyUEClickListener(CheckBox checkBox, UE ue,Parcours parcours) {
+        public MyUEClickListener(CheckBox checkBox, UE ue,Parcours parcours,Vue vue) {
             this.ue = ue;
             this.checkBox = checkBox;
             this.vue = vue;
@@ -57,6 +57,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
             //Un changement a eu lieu.
             //vue.needSave(true);
+            vue.notifyUeListView();
 
         }
     }
@@ -142,12 +143,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView ueName = (TextView) convertView.findViewById(R.id.ueName);
         TextView ueCode = (TextView) convertView.findViewById(R.id.codeUe);
         CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkboxUe);
+        View ueRect = (View) convertView.findViewById(R.id.rectangleUe);
 
         //Mise a jour du texte
         ueName.setText(ue.getUeName());
         ueCode.setText(ue.getUeCode());
 
-        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue,mainModele.getParcours()));
+
+        if(mainModele.getParcours().isChecked(ue)) ueRect.setBackgroundColor(0xff51C5C4);//bleu
+        else if(!mainModele.getParcours().canBeCheckedUE(ue)) ueRect.setBackgroundColor(0xffD54F34);//rouge
+        else ueRect.setBackgroundColor(0xff62C65B);//vert
+
+
+
+        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue,mainModele.getParcours(),(Vue) context));
 
 
         //Mise a jour de la case coche ou non.
