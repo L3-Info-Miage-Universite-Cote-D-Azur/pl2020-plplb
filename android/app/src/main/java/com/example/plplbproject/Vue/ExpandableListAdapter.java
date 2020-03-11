@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.controleur.UeClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,56 +17,27 @@ import java.util.HashMap;
 import metier.Categorie;
 import metier.MainModele;
 import metier.Parcours;
+import metier.Semestre;
 import metier.UE;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private MainModele mainModele;
-    //private int semestre;
+    private int semestreCourant;  // Pour lisibilité
     private ArrayList<Categorie> categorieArrayList;
 
-
-    /* SOUS CLASSE CONTROLLEUR */
-    public class MyUEClickListener implements View.OnClickListener{
-
-        private UE ue;
-        private CheckBox checkBox;
-        private Vue vue;
-        private Parcours parcours;
-
-        public MyUEClickListener(CheckBox checkBox, UE ue,Parcours parcours) {
-            this.ue = ue;
-            this.checkBox = checkBox;
-            this.vue = vue;
-            this.parcours = parcours;
-        }
-
-        @Override
-        public void onClick(View view) {
-
-            if(!parcours.isChecked(ue) && parcours.canBeCheckedUE(ue)){ //Change le check de l'ue en consequence.
-                parcours.addUEParcours(ue);
-                checkBox.setChecked(true);
-            }
-            else if(parcours.canBeUncheckedUE(ue)){
-                parcours.delUEParcours(ue);
-                checkBox.setChecked(false);
-            }
-            else{
-                checkBox.setChecked(true);
-            }
-            //Un changement a eu lieu.
-            //vue.needSave(true);
-
-        }
-    }
-
+    /**
+     * L'adapteur doit savoir quel est le semestre qu'il doit adapter
+     * @param context
+     * @param mainModele
+     */
 
     public ExpandableListAdapter(Context context, MainModele mainModele) {
         this.context = context;
         this.mainModele = mainModele;
-        this.categorieArrayList = mainModele.getSemestre().getListCategorie(); // listDataHeader
+        this.semestreCourant = mainModele.getSemestreCourant();
+        this.categorieArrayList = mainModele.getSemestres().get(semestreCourant).getListCategorie(); // listDataHeader
     }
 
     @Override
@@ -147,7 +119,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         ueName.setText(ue.getUeName());
         ueCode.setText(ue.getUeCode());
 
-        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue,mainModele.getParcours()));
+        checkBox.setOnClickListener(new UeClickListener(checkBox,ue,mainModele.getParcours()));
 
 
         //Mise a jour de la case coche ou non.
@@ -165,7 +137,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public void notifyDataSetChanged(){
-        categorieArrayList = this.mainModele.getSemestre().getListCategorie();
+        mainModele.getSemestres().get(semestreCourant).getListCategorie();
         super.notifyDataSetChanged();
     }
 }
