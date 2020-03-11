@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.controleur.UeClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,13 +17,14 @@ import java.util.HashMap;
 import metier.Categorie;
 import metier.MainModele;
 import metier.Parcours;
+import metier.Semestre;
 import metier.UE;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private MainModele mainModele;
-    //private int semestre;
+    private int semestreCourant;  // Pour lisibilité
     private ArrayList<Categorie> categorieArrayList;
 
 
@@ -62,11 +64,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
     }
 
+    /**
+     * L'adapteur doit savoir quel est le semestre qu'il doit adapter
+     * @param context
+     * @param mainModele
+     */
 
     public ExpandableListAdapter(Context context, MainModele mainModele) {
         this.context = context;
         this.mainModele = mainModele;
-        this.categorieArrayList = mainModele.getSemestre().getListCategorie(); // listDataHeader
+        this.semestreCourant = mainModele.getSemestreCourant();
+        this.categorieArrayList = mainModele.getSemestres().get(semestreCourant).getListCategorie(); // listDataHeader
     }
 
     @Override
@@ -174,7 +182,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public void notifyDataSetChanged(){
-        categorieArrayList = this.mainModele.getSemestre().getListCategorie();
+        mainModele.getSemestres().get(semestreCourant).getListCategorie();
         super.notifyDataSetChanged();
     }
 }
