@@ -17,7 +17,7 @@
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>  <!-- éventuellement à changer : localisation des fichiers sources -->
-        <!--  <testSourceDirectory>src/test</testSourceDirectory> éventuellement à changer : localisation des fichiers sources des tests -->
+        <testSourceDirectory>src/test/java</testSourceDirectory> <!--  éventuellement à changer : localisation des fichiers sources des tests -->
         <plugins>
 
 
