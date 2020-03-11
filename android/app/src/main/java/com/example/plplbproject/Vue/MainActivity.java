@@ -42,20 +42,14 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private MainModele modele;
     private Connexion socket;
 
-    private CategoryAdapter categoryAdapter;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
 
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "10.0.2.2";
+    private String ip = "192.168.0.104";
     private String port = "10101";
-
-    private ArrayList<Categorie> categoryList;
-    ArrayList<UE> arr1= new ArrayList<UE>();
-    ArrayList<UE> arr2= new ArrayList<UE>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +77,11 @@ public class MainActivity extends AppCompatActivity implements Vue {
         return modele;
     }
 
+    /**
+     * Gère le menu pour passer d'un semestre à l'autre
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -97,9 +96,13 @@ public class MainActivity extends AppCompatActivity implements Vue {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case R.id.semestre1:
+                onChangeSemestre(0);
+                getSupportActionBar().setTitle("Semestre 1");
+            case R.id.semestre2:
+                onChangeSemestre(1);
+                getSupportActionBar().setTitle("Semestre 2");
         }
 
         return super.onOptionsItemSelected(item);
@@ -160,16 +163,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
         listAdapter = new ExpandableListAdapter(this, modele);
         expListView.setAdapter(listAdapter);
 
-
-        /*
-
-        //###################### First adapt the list of categories ##################
-
-        categoryAdapter = new CategoryAdapter(this,modele.getSemestre().getListCategorie(),modele);
-        categoryListView.setAdapter(categoryAdapter);
-
-         */
-
         //###################### Server connection #####################
         socket.connect();
 
@@ -186,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
      * Envoie a la liste des Ues un changement et change la vue en consequence.
      */
 
-
     @Override
     public void notifyUeListView(){
 
@@ -194,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
             @Override
             public void run() {
                 listAdapter.notifyDataSetChanged();
-                //categoryAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -229,6 +220,17 @@ public class MainActivity extends AppCompatActivity implements Vue {
     }
 
     /**
+     * Fonction à appeller lorsque l'utilisateur change de semestre
+     */
+    public void onChangeSemestre(int newSemesterIndex){
+        if (newSemesterIndex == this.modele.getSemestreCourant()){
+            return;
+        }
+        this.modele.changeSemestre(newSemesterIndex);
+        notifyUeListView();
+    }
+
+    /**
      * recharge les adaptateur en fonction du modele
      */
     @Override
@@ -237,15 +239,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
             @Override
             public void run() {
                 listAdapter.notifyDataSetChanged();
-                //categoryAdapter.clear();
-                //categoryAdapter.addAll(modele.getSemestre().getListCategorie());
-                //categoryAdapter.notifyDataSetChanged();
             }
         });
-
     }
-
-
-
 
 }
