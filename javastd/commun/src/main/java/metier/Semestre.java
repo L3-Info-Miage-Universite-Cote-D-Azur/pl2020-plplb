@@ -21,7 +21,8 @@ public class Semestre{
     /* CONSTRUCTOR */
     public Semestre(int number, ArrayList<Categorie> listCategorie,ArrayList<String> listObligatory,ArrayList<String> listUeAutomaticCheck){
         this.number = number;
-        this.listCategorie = new ArrayList<Categorie>(listCategorie);
+        this.listCategorie = new ArrayList<Categorie>();
+        this.setListCategorie(listCategorie); //Pour rattacher le semestre au Ues.
 
         //For RULE
         this.listObligatory = listObligatory;
@@ -49,6 +50,11 @@ public class Semestre{
     }
 
     public void setListCategorie(ArrayList<Categorie> listCategorie) {
+        for(Categorie c : listCategorie) {
+            for (UE ue : c.getListUE()) {
+                ue.setSemestreNumber(this.number);
+            }
+        }
         this.listCategorie = listCategorie;
     }
 
