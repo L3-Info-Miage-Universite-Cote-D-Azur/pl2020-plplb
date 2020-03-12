@@ -4,6 +4,7 @@ import metier.Categorie;
 import metier.UE;
 import metier.parcours.Parcours;
 import metier.semestre.Semestre;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,19 @@ public class DBManagerTest {
 
     @BeforeEach
     public void init(){
+        File directory = new File("db");
+        if(directory.exists()){
+            File[] files = directory.listFiles();
+
+            for(int i = 0; i < files.length; i++) {
+                files[i].delete();
+            }
+            directory.delete();
+        }
+    }
+
+    @AfterEach
+    public void init2(){
         if(directory.exists()){
             File[] files = directory.listFiles();
 

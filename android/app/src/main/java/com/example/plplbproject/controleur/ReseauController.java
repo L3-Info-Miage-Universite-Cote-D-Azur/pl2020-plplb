@@ -44,7 +44,7 @@ public class ReseauController{
         return new EmitterListener(vue,connexion,modele) {
             @Override
             public void call(Object... args) {
-                vue.toastMessage((String) args[0]);
+                vue.toastMessage("Server sent you a message: "+((String) args[0]));
             }
         };
     }
@@ -78,7 +78,7 @@ public class ReseauController{
                     modele.addSemestre(gson.fromJson(s,Semestre.class));
                 }
                 modele.getParcours().initParcoursSemestresManager();
-                vue.resetAdaptateurModele();
+                vue.notifyUeListView();
             }
         };
     }
@@ -96,7 +96,7 @@ public class ReseauController{
                 System.out.println("save receive from server");
                 //TODO Modifier parcours
                 modele.setParcours(new Parcours(modele,ueCode));
-                vue.resetAdaptateurModele();
+                vue.notifyUeListView();
             }
         };
     }

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "192.168.0.17";
+    private String ip = "192.168.1.46";
     private String port = "10101";
 
     @Override
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
                 getSupportActionBar().setTitle("Semestre 2");
                 break;
         }
+        collapseList();
 
         return super.onOptionsItemSelected(item);
     }
@@ -157,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
          */
         expListView = (ExpandableListView) findViewById(R.id.catList);
-
         listAdapter = new ExpandableListAdapter(this, modele);
         expListView.setAdapter(listAdapter);
 
@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         //##################### Controller for the user #####################
         save.setOnClickListener(userController.saveButton());
-        needSave(false); //boutton non disponible avant d'avoir fait une modification
 
 
     }
@@ -188,16 +187,13 @@ public class MainActivity extends AppCompatActivity implements Vue {
         });
     }
 
-    /**
-     * needSave rend visible ou invisible le bouton de sauvegarde des donnees.
-     * @param needSave vaut true si un changement doit etre sauvegarder
-     */
     @Override
-    public void needSave(Boolean needSave) {
-        //preverification du client
-        if(needSave && modele.getParcours().verifiParcours()) save.setVisibility(View.VISIBLE);
-        else save.setVisibility(View.INVISIBLE);
+    public void collapseList() {
+        int count =  expListView.getCount();
+        for (int i = 0; i <count ; i++)
+            expListView.collapseGroup(i);
     }
+
 
     /**
      * Affiche un message dans un toast sur la vue actuelle.
@@ -212,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
                 // add the message to view todo
                 //just show the message in a toast
-                Toast.makeText(getApplicationContext(),"Server sent you a message: "+ receivedMessage,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), receivedMessage,Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -228,17 +224,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
         notifyUeListView();
     }
 
-    /**
-     * recharge les adaptateur en fonction du modele
-     */
-    @Override
-    public void resetAdaptateurModele(){
-        MainActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                listAdapter.notifyDataSetChanged();
-            }
-        });
-    }
+
 
 }

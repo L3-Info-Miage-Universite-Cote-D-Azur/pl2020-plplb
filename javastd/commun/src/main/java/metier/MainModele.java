@@ -63,6 +63,8 @@ public class MainModele {
      * @param index
      */
     public Semestre getSemestre(int index){
+        if(semestres==null) return null;
+        if(index>=semestres.size()) return null;
         return this.semestres.get(index);
     }
 

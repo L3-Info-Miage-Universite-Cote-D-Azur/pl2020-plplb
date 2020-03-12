@@ -65,8 +65,8 @@ public class Serveur {
         this.server.addEventListener(SENDCLIENTSAVE, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Parcours data = gson.fromJson(json, Parcours.class);
-                dbManager.save(data.createListCodeUE());
+                ArrayList<String> data = gson.fromJson(json, ArrayList.class);
+                dbManager.save(data);
                 //TODO : envoyer un liste contenant le semestre et l'etudiant si ce n'est pas un thread.
                 Debug.log("Save data for "+etudiant.getNom());
             }

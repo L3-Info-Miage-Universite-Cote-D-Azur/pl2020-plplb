@@ -47,6 +47,15 @@ public class Parcours {
 
 
     /**
+     * Constructeur pour test
+     */
+    public Parcours(MainModele mainModele,ArrayList<SemestreManager> semestresManager,HashMap<String, UE> parcoursSelect){
+        this.modele = mainModele;
+        this.semestresManager = semestresManager;
+        this.parcoursSelect = parcoursSelect;
+    }
+
+    /**
      * Initialisation des ue avec une liste de code d'ue
      * @param allCodeUESelected tout les ue de la liste
      */
@@ -68,7 +77,6 @@ public class Parcours {
         for(Semestre semestre: modele.getSemestres()){
             semestresManager.add(semestre.getRules().createManager());
         }
-        initObligatoryUE();
     }
 
     /**
@@ -79,7 +87,9 @@ public class Parcours {
         for(Semestre semestres : modele.getSemestres()){
             for(String codeUE : semestres.getRules().obligatoryUEList()){
                 ue = modele.findUE(codeUE);
-                if(ue!=null) parcoursSelect.put(codeUE,ue);
+                if(ue!=null){
+                    parcoursSelect.put(codeUE,ue);
+                }
             }
         }
     }
@@ -124,7 +134,6 @@ public class Parcours {
         //il faut que ca respecte les regle
         if(canBeCheckedUE(ue)){
             parcoursSelect.put(ue.getUeCode(),ue);
-            System.out.println("==========================="+(ue.getSemestreNumber()-1)+"======================"+semestresManager.size());
             semestresManager.get(ue.getSemestreNumber()-1).check(ue);
         }
     }
@@ -178,8 +187,11 @@ public class Parcours {
      * @return l'etat de la verification
      */
     public boolean verifiParcours(){
-        for(SemestreManager manager: semestresManager){
-            if(!manager.verifCompleteParcours()) return false;
+
+        //for(SemestreManager manager: semestresManager){
+        //Pour le test
+        for(int i = 0; i< semestresManager.size(); i++){
+            if(!semestresManager.get(i).verifCompleteParcours()) return false;
         }
         return true;
     }
