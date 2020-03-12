@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "192.168.0.104";
+    private String ip = "10.0.2.2";
     private String port = "10101";
 
     @Override

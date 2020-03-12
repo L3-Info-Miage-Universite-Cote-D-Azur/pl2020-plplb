@@ -7,9 +7,7 @@ import metier.UE;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import metier.semestre.Semestre;
-import metier.semestre.manager.BasicSemestreManager;
 import metier.semestre.rules.BasicSemestreRules;
-import metier.semestre.rules.SemestreRules;
 import metier.semestre.rules.SemestreRulesWithChoose;
 
 /**
@@ -108,7 +106,7 @@ SemestersSample
 		listObligatoire.add("KCTTS1");
 		listObligatoire.add("SPUS10");
 
-		SemestreRules rules = new SemestreRulesWithChoose(3,1,listObligatoire,listChoixUE,1);
+		BasicSemestreRules rules = new SemestreRulesWithChoose(3,1,listObligatoire,listChoixUE,1);
 
 		//AJOUT AU SEMESTRE 1;
 		Semestre S1 = new Semestre(1,listCategorie,rules);
@@ -204,7 +202,7 @@ SemestersSample
 		listObligatoire.add("KCTTS2");
 		listObligatoire.add("SPUS20");
 
-		SemestreRules rule = new SemestreRulesWithChoose(4,2,listObligatoire,listChoixUE,1);
+		BasicSemestreRules rule = new SemestreRulesWithChoose(4,2,listObligatoire,listChoixUE,1);
 
 		//AJOUT AU SEMESTRE 1;
 		Semestre S2 = new Semestre(2,listCategorie,rule);

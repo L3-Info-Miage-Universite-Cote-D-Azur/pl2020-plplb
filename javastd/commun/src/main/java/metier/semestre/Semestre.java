@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import metier.Categorie;
 import metier.UE;
 import metier.semestre.rules.BasicSemestreRules;
-import metier.semestre.rules.SemestreRules;
 
 /**
  * Semestre represente un semestre du parcours de licence. Un semestre contient des categorie qui contiennent des UEs.
@@ -16,11 +15,11 @@ public class Semestre {
     private ArrayList<Categorie> listCategorie; // la liste des categorie.
 
     // RULE of semestre
-    private SemestreRules rules;
+    private BasicSemestreRules rules;
 
 
     /* CONSTRUCTOR */
-    public Semestre(int number, ArrayList<Categorie> listCategorie, SemestreRules rules) {
+    public Semestre(int number, ArrayList<Categorie> listCategorie, BasicSemestreRules rules) {
         this.number = number;
 
         this.listCategorie = new ArrayList<Categorie>();
@@ -41,7 +40,7 @@ public class Semestre {
 
 
 
-    public SemestreRules getRules() {
+    public BasicSemestreRules getRules() {
         return rules;
     }
 
