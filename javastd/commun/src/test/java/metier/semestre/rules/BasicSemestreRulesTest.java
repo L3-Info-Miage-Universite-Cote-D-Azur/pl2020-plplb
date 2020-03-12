@@ -1,8 +1,7 @@
 package metier.semestre.rules;
 
 import metier.UE;
-import metier.semestre.manager.BasicSemestreManager;
-import metier.semestre.rules.BasicSemestreRules;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 public class BasicSemestreRulesTest {
-
+    /*
     BasicSemestreRules rules;
 
     @Mock
@@ -150,5 +149,5 @@ public class BasicSemestreRulesTest {
     }
 
 
-
+    */
 }

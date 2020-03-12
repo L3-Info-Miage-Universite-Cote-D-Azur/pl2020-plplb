@@ -135,83 +135,43 @@ public class DBManagerTest {
     }
 
     @Test
-    public void saveTestSemestreExistingFile() throws IOException {
+    public void saveTest() throws IOException {
+        dbManager = new DBManager("TestFichier");
+
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add("MonTestCode");
+
         String expected = "[\"MonTestCode\"]";
 
-        UE ue = new UE("MonTestName","MonTestCode");
-        ArrayList<UE> a = new ArrayList<UE>();
-        ArrayList<String> als = new ArrayList<String>();
-        als.add("MonTestCode");
-        a.add(ue);
-
-        Categorie categorie = new Categorie("Categorie test",a);
-        ArrayList<Categorie> b = new ArrayList<Categorie>();
-        b.add(categorie);
-
-        Semestre semestre = new Semestre(1,b,als,null);
-
-        dbManager = new DBManager("monFichierTest");
-
-        dbManager.getFile().create();
-
-        //Le fichier existe
-        assertEquals("db\\monFichierTest",dbManager.getFile().getFile().toString());
-        assertEquals(true,dbManager.getFile().exists());
-
-        //Le fichier est vide
-        assertEquals(null,dbManager.getFile().getFileContent());
-
-        dbManager.save(semestre, als);
-        //Le fichier contient maintenant le semestre.
+        dbManager.save(arrayList);
+        //Le fichier contient maintenant l'ue.
         assertEquals(expected,dbManager.getFile().getFileContent());
 
 
         //AUTRE TEXTE
-        expected = "[\"MonAutreTestCode\"]";
+        arrayList.add("MonAutreTestCode");
+        dbManager.save(arrayList);
 
-        UE ue2 = new UE("MonAutreTestName","MonAutreTestCode");
-        a.clear();
-        a.add(ue2);
-        als.clear();
-        als.add("MonAutreTestCode");
+        expected = "[\"MonTestCode\",\"MonAutreTestCode\"]";
 
-        Categorie categorie2 = new Categorie("Autre categorie test",a);
-        b.add(categorie2);
-
-        semestre = new Semestre(2,b,als,null);
-
-        dbManager.save(semestre, als);
-
-        //Le fichier contient l'autre semestre.
+        //Le fichier contient auusi l'autre ue.
         assertEquals(expected,dbManager.getFile().getFileContent());
-    }
 
-    @Test
-    public void saveTestSemestreWithNoFile() throws IOException {
-        String expected = "[\"MonTestCode\"]";
 
-        UE ue = new UE("MonTestName","MonTestCode");
-        ArrayList<UE> a = new ArrayList<UE>();
-        a.add(ue);
-        ArrayList<String> als = new ArrayList<String>();
-        als.add("MonTestCode");
+        //AJOUT DE BEAUCOUP D'UE
+        arrayList.add("MonAutreTestCode2");
+        arrayList.add("MonAutreTestCode3");
+        arrayList.add("MonAutreTestCode4");
+        arrayList.add("MonAutreTestCode5");
+        arrayList.add("MonAutreTestCode6");
+        arrayList.add("MonAutreTestCode7");
+        arrayList.add("MonAutreTestCode8");
 
-        Categorie categorie = new Categorie("Categorie test",a);
-        ArrayList<Categorie> b = new ArrayList<Categorie>();
-        b.add(categorie);
-        
-        Semestre semestre = new Semestre(1, b, als,null);
-
-        dbManager = new DBManager("monFichierTest");
-
-        //Le fichier n'existe pas
-        assertEquals("db\\monFichierTest",dbManager.getFile().getFile().toString());
-        assertEquals(false,dbManager.getFile().exists());
-
-        dbManager.save(semestre, als);
-
-        //Le fichier existe et contient le semestre
-        assertEquals(true,dbManager.getFile().exists());
+        dbManager.save(arrayList);
+        expected = "[\"MonTestCode\",\"MonAutreTestCode\",\"MonAutreTestCode2\",\"MonAutreTestCode3\"," +
+                "\"MonAutreTestCode4\",\"MonAutreTestCode5\",\"MonAutreTestCode6\",\"MonAutreTestCode7\"," +
+                "\"MonAutreTestCode8\"]";
+        //Le fichier contient auusi les ue.
         assertEquals(expected,dbManager.getFile().getFileContent());
     }
 
@@ -244,9 +204,7 @@ public class DBManagerTest {
         assertEquals("db\\monFichierTest",dbManager.getFile().getFile().toString());
         assertEquals(true,dbManager.getFile().exists());
 
-        Parcours p = dbManager.load();
-        
-        ArrayList<String> res = p.createListCodeUE();
+        ArrayList<String> res = dbManager.load();
         assertEquals(res.size(), expected.size());
         for (int i = 0; i < expected.size(); i++)
         {

@@ -10,8 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.verification.Times;
 
-import static constantes.NET.SENDDATACONNEXION;
-import static constantes.NET.SENDMESSAGE;
+import static constantes.NET.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -53,6 +52,18 @@ public class ServeurTest {
         serveur.clientConnectData(client,etudiant);
         //quand un client ce connecte on lui envoie bien les donner
         Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDDATACONNEXION),any(String.class));
+    }
+
+    @Test
+    public void clientSendDataTest(){
+        serveur.clientSendData(client,etudiant);
+        //quand un client ce connecte on lui envoie bien les donner
+        Mockito.verify(client,new Times(0)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
+
+        DBManager dbManager = new DBManager(etudiant.toString());
+        dbManager.getFile().create();
+        serveur.clientSendData(client,etudiant);
+        Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
     }
 
 
