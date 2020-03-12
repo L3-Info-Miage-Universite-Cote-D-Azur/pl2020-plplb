@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "10.0.2.2";
+    private String ip = "192.168.0.17";
     private String port = "10101";
 
     @Override
@@ -95,14 +95,16 @@ public class MainActivity extends AppCompatActivity implements Vue {
             case R.id.semestre1:
                 onChangeSemestre(0);
                 getSupportActionBar().setTitle("Semestre 1");
+                //System.out.println(id);
+                break;
             case R.id.semestre2:
                 onChangeSemestre(1);
                 getSupportActionBar().setTitle("Semestre 2");
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     protected void onPause() {
@@ -118,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
         super.onResume();
         if (autoconnect) setConnexion(new Connexion((Vue)this,modele));
 
+        getSupportActionBar().setTitle("Semestre 1");
         userController = new UserController((Vue)this,socket,modele);
         save = findViewById(R.id.save);// Boutton de sauvegarde
         categoryListView = findViewById(R.id.catList);

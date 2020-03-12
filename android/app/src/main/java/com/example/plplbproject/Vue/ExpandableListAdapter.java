@@ -183,6 +183,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public void notifyDataSetChanged(){
+        this.semestreCourant = mainModele.getSemestreCourant();
         categorieArrayList= mainModele.getSemestres().get(semestreCourant).getListCategorie();
         super.notifyDataSetChanged();
     }
