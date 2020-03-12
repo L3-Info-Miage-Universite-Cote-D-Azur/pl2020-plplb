@@ -265,6 +265,9 @@ public class MainActivityTest {
 
         assertEquals(modele.getSemestreCourant(),1);
 
+        assertEquals(mActivityRule.getActivity().getSupportActionBar().getTitle(),"Semestre 2");
+
+
     }
 
 
