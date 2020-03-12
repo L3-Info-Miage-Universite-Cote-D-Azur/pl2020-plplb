@@ -7,8 +7,7 @@ import java.util.List;
 import metier.MainModele;
 import metier.UE;
 import metier.semestre.Semestre;
-import metier.semestre.manager.ParcoursSemestreManager;
-import metier.semestre.rules.BasicSemestreRules;
+import metier.semestre.SemestreManager;
 
 /**
  * Classe qui s'occupe de la gestion du parcours et des regle a respecter.
@@ -17,7 +16,7 @@ public class Parcours {
 
     private String name = "default";
     private MainModele modele;
-    private ArrayList<ParcoursSemestreManager> semestresManager;
+    private ArrayList<SemestreManager> semestresManager;
     private HashMap<String, UE> parcoursSelect; //commun a tout les semestre (permet de rajouter des condition UE necesaire, ...)
 
 
@@ -65,10 +64,11 @@ public class Parcours {
      * creation des semestre manager
      */
     public void initParcoursSemestresManager(){
-        semestresManager = new ArrayList<ParcoursSemestreManager>();
+        semestresManager = new ArrayList<SemestreManager>();
         for(Semestre semestre: modele.getSemestres()){
             semestresManager.add(semestre.getRules().createManager());
         }
+        initObligatoryUE();
     }
 
     /**
@@ -108,7 +108,7 @@ public class Parcours {
      */
     public boolean canBeUncheckedUE(UE ue){
         if(!isChecked(ue)) return false;
-        Boolean semestreUncheck = semestresManager.get(ue.getSemestreNumber()).canBeUncheck(ue);
+        Boolean semestreUncheck = semestresManager.get(ue.getSemestreNumber()-1).canBeUncheck(ue);
         //iteration ? verification des prerequis (graphe?)
         //Boolean uePrerequisCheck = ...
 
@@ -178,7 +178,7 @@ public class Parcours {
      * @return l'etat de la verification
      */
     public boolean verifiParcours(){
-        for(ParcoursSemestreManager manager: semestresManager){
+        for(SemestreManager manager: semestresManager){
             if(!manager.verifCompleteParcours()) return false;
         }
         return true;

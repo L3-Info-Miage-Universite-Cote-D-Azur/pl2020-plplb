@@ -31,13 +31,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public class MyUEClickListener implements View.OnClickListener{
 
         private UE ue;
-        private CheckBox checkBox;
         private Vue vue;
         private Parcours parcours;
 
-        public MyUEClickListener(CheckBox checkBox, UE ue,Parcours parcours,Vue vue) {
+        public MyUEClickListener(UE ue,Parcours parcours,Vue vue) {
             this.ue = ue;
-            this.checkBox = checkBox;
             this.vue = vue;
             this.parcours = parcours;
         }
@@ -47,14 +45,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
             if(!parcours.isChecked(ue) && parcours.canBeCheckedUE(ue)){ //Change le check de l'ue en consequence.
                 parcours.checkUE(ue);
-                checkBox.setChecked(true);
             }
             else if(parcours.canBeUncheckedUE(ue)){
                 parcours.uncheckUE(ue);
-                checkBox.setChecked(false);
-            }
-            else{
-                checkBox.setChecked(true);
             }
             //Un changement a eu lieu.
             //vue.needSave(true);
@@ -151,7 +144,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView ueName = (TextView) convertView.findViewById(R.id.ueName);
         TextView ueCode = (TextView) convertView.findViewById(R.id.codeUe);
-        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkboxUe);
         View ueRect = (View) convertView.findViewById(R.id.rectangleUe);
 
         //Mise a jour du texte
@@ -165,7 +157,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
 
-        checkBox.setOnClickListener(new MyUEClickListener(checkBox,ue,mainModele.getParcours(),(Vue) context));
+        convertView.setOnClickListener(new MyUEClickListener(ue,mainModele.getParcours(),(Vue) context));
 
 
         //Mise a jour de la case coche ou non.
