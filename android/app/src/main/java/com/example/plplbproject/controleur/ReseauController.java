@@ -44,7 +44,7 @@ public class ReseauController{
         return new EmitterListener(vue,connexion,modele) {
             @Override
             public void call(Object... args) {
-                vue.toastMessage((String) args[0]);
+                vue.toastMessage("Server sent you a message: "+((String) args[0]));
             }
         };
     }

@@ -178,6 +178,7 @@ public class Parcours {
      * @return l'etat de la verification
      */
     public boolean verifiParcours(){
+
         for(SemestreManager manager: semestresManager){
             if(!manager.verifCompleteParcours()) return false;
         }

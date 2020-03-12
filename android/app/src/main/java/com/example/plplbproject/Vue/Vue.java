@@ -4,6 +4,5 @@ public interface Vue {
 
     public void toastMessage(String msg);
     public void notifyUeListView();
-    public void needSave(Boolean needSave);
     public void resetAdaptateurModele();
 }

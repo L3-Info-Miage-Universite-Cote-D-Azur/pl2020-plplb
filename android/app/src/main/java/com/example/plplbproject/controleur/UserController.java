@@ -39,9 +39,9 @@ public class UserController {
         return new ClickListener(vue,connexion,modele) {
             @Override
             public void onClick(View view) {
-                connexion.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours()));
+                if(modele.getParcours().verifiParcours()) connexion.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours().createListCodeUE()));
+                else vue.toastMessage("La sauvegarde n'a pas pue etre effectuer car le parcours est incomplet (une page de renseignement serat ultérieurement mis en place)");
                 //TODO verification que le serveur a bien recus la sauvegarde
-                vue.needSave(false);
             }
         };
     }
