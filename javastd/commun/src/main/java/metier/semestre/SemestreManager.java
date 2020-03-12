@@ -7,31 +7,54 @@ import metier.UE;
 
 public class SemestreManager {
 
-    protected SemestreRules rules;
-    protected HashMap<String,Integer> countByCategori;
-    protected int ueLibreSelected = 0;
-    private int chooseUESelected = 0;
+    protected SemestreRules rules; //la regle du semestre
+    protected HashMap<String,Integer> countByCategori; //nombre d'ue par categorie
+    protected int ueLibreSelected = 0; //ue libre selectionner
+    private int chooseUESelected = 0; //nb d'ue a choix
 
 
-
+    /**
+     * Constructeur du manager
+     * @param rules la regle du semestre qu'il vas utiliser
+     */
     public SemestreManager(SemestreRules rules){
         this.rules = rules;
         countByCategori = new HashMap<String,Integer>();
     }
 
+    /**
+     * get de la hashmap du nombre d'ue par categorie
+     * @return la hashmap
+     */
     public HashMap<String, Integer> getCountByCategory() {
         return countByCategori;
     }
 
+    /**
+     * get le nombre d'ue libre selectionner
+     * @return nombre d'ue libre
+     */
     public int getUeLibreSelected() {
         return ueLibreSelected;
     }
 
+    /**
+     * get le nombre d'ue a choix selectionner
+     * @return nombre d'ue a choix
+     */
     public int getChooseUeSelected() {
         return chooseUESelected;
     }
 
+    /**
+     * Permet de check une ue
+     * @param ue l'ue que l'on check
+     */
     public void check(UE ue) {
+        //pas de traitement necessaire pour les ue obligatoire (normalement impossible)
+        if(rules.isObligatoryUE(ue.getUeCode())) return;
+
+        //traitemant classique
         Boolean isChooseUE = rules.isChooseUE(ue.getUeCode());
         System.out.println("================="+isChooseUE);
         //si ce n'est pas une ue parmis les choix ou que le nombre d'ue a choix est deja atteint on traite l'ue normalement
@@ -43,9 +66,16 @@ public class SemestreManager {
     }
 
 
-
+    /**
+     * Permet de uncheck une ue
+     * @param ue l'ue que l'on uncheck
+     */
     public void uncheck(UE ue) {
 
+        //pas de traitement necessaire pour les ue obligatoire (normalement impossible)
+        if(rules.isObligatoryUE(ue.getUeCode())) return;
+
+        //traitemant classique
         Boolean isChooseUE = rules.isChooseUE(ue.getUeCode());
         //si ce n'est pas une ue parmis les choix ou que le nombre d'ue a choix est deja atteint on traite l'ue normalement
         if(!isChooseUE ||(isChooseUE && rules.getNumberChooseUE()<chooseUESelected)){
@@ -62,15 +92,28 @@ public class SemestreManager {
     }
 
 
-
+    /**
+     * possible de check une ue?
+     * @param ue l'ue que l'on veut check
+     * @return true c'est possible; false pas possible
+     */
     public boolean canBeCheck(UE ue) {
         return rules.canBeCheck(ue,this);
     }
 
+    /**
+     * possible de uncheck une ue?
+     * @param ue l'ue que l'on veut uncheck
+     * @return true c'est possible; false pas possible
+     */
     public boolean canBeUncheck(UE ue) {
         return rules.canBeUncheck(ue,this);
     }
 
+    /**
+     * Verification du parcours renvoie si le parcours est accepter
+     * @return true parcours complet et correct; false pas complet ou incorrect
+     */
     public boolean verifCompleteParcours(){
         return rules.verifCorrectSemestre(this);
     }

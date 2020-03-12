@@ -16,6 +16,13 @@ public class SemestreRules {
     protected int numberChooseUE = 0;
 
     /*CONSTRUCTOR*/
+
+    /**
+     * Constructeur sans ue au choix
+     * @param maxUELibre nombre max d'ue libre
+     * @param maxByCategory nombre max d'ue par categorie
+     * @param obligatoryUEList Liste des ue obligatoire
+     */
     public SemestreRules(int maxUELibre, int maxByCategory, ArrayList<String> obligatoryUEList){
         this.maxUELibre = maxUELibre;
         this.maxByCategory = maxByCategory;
@@ -23,12 +30,28 @@ public class SemestreRules {
         chooseUEList = new ArrayList<String>();
     }
 
+    /**
+     * Constructeur avec ue au choix
+     * @param maxUELibre nombre max d'ue libre
+     * @param maxByCategory nombre max d'ue par categorie
+     * @param obligatoryUEList Liste des ue obligatoire
+     * @param chooseUEList List des ue au choix
+     * @param numberChooseUE nombre d'ue parmis la list au choix
+     */
     public SemestreRules(int maxUELibre, int maxByCategory, ArrayList<String> obligatoryUEList, ArrayList<String> chooseUEList, int numberChooseUE) {
         this.maxUELibre = maxUELibre;
         this.maxByCategory = maxByCategory;
         this.obligatoryUEList = obligatoryUEList;
         this.chooseUEList = chooseUEList;
         this.numberChooseUE = numberChooseUE;
+    }
+
+    /**
+     * Get le nombre d'ue a choix possible
+     * @return return le nombre d'ue a choix possible
+     */
+    public int getNumberChooseUE() {
+        return numberChooseUE;
     }
 
     /**
@@ -131,9 +154,6 @@ public class SemestreRules {
         return new ArrayList<String>(obligatoryUEList);
     }
 
-    public int getNumberChooseUE() {
-        return numberChooseUE;
-    }
 
     /**
      * Verification si une UE fait partie des ue au choix du semestre
