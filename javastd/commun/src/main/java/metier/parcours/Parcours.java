@@ -47,6 +47,15 @@ public class Parcours {
 
 
     /**
+     * Constructeur pour test
+     */
+    public Parcours(MainModele mainModele,ArrayList<SemestreManager> semestresManager,HashMap<String, UE> parcoursSelect){
+        this.modele = mainModele;
+        this.semestresManager = semestresManager;
+        this.parcoursSelect = parcoursSelect;
+    }
+
+    /**
      * Initialisation des ue avec une liste de code d'ue
      * @param allCodeUESelected tout les ue de la liste
      */
@@ -178,8 +187,10 @@ public class Parcours {
      */
     public boolean verifiParcours(){
 
-        for(SemestreManager manager: semestresManager){
-            if(!manager.verifCompleteParcours()) return false;
+        //for(SemestreManager manager: semestresManager){
+        //Pour le test
+        for(int i = 0; i< semestresManager.size(); i++){
+            if(!semestresManager.get(i).verifCompleteParcours()) return false;
         }
         return true;
     }
