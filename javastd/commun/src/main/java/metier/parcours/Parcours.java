@@ -77,7 +77,6 @@ public class Parcours {
         for(Semestre semestre: modele.getSemestres()){
             semestresManager.add(semestre.getRules().createManager());
         }
-        initObligatoryUE();
     }
 
     /**
@@ -88,7 +87,9 @@ public class Parcours {
         for(Semestre semestres : modele.getSemestres()){
             for(String codeUE : semestres.getRules().obligatoryUEList()){
                 ue = modele.findUE(codeUE);
-                if(ue!=null) parcoursSelect.put(codeUE,ue);
+                if(ue!=null){
+                    parcoursSelect.put(codeUE,ue);
+                }
             }
         }
     }
