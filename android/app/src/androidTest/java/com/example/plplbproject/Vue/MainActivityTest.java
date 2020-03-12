@@ -32,6 +32,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -61,6 +62,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -91,7 +93,7 @@ public class MainActivityTest {
     Semestre semestre1;
     Semestre semestre2;
 
-    @Mock
+    @Spy
     MainModele modele;
 
 
@@ -122,14 +124,18 @@ public class MainActivityTest {
 
 
         connexion = Mockito.mock(Connexion.class);
-        modele = Mockito.mock(MainModele.class);
+        modele = Mockito.spy(new MainModele());
+        parcours = Mockito.mock(Parcours.class);
 
         // Lazily start the Activity from the ActivityTestRule this time to inject the start Intent
         Intent startIntent = new Intent();
         startIntent.putExtra(MainActivity.AUTOCONNECT, false);
         mActivityRule.launchActivity(startIntent);
+        mActivityRule.getActivity().setModele(modele);
+        modele.setParcours(parcours);
 
         reseauController = new ReseauController(mActivityRule.getActivity(),connexion,modele);
+
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -177,10 +183,7 @@ public class MainActivityTest {
                 ArrayList<String> list = new ArrayList<>();
                 list.add(gson.toJson(semestre1)); list.add(gson.toJson(semestre2));
 
-                //reseauController.dataConnexion().call(gson.toJson(list));
-                for (String s: list) {
-                    modele.addSemestre(gson.fromJson(s,Semestre.class));
-                }
+                reseauController.dataConnexion().call(gson.toJson(list));
 
                 //de plus le serveur envoie un message helloClient qui na pas de test pour le moment TODO
 
@@ -212,7 +215,7 @@ public class MainActivityTest {
 
         ArrayList<Semestre> s = mActivityRule.getActivity().getModele().getSemestres();
 
-        assertEquals(2,s.size());
+        assertEquals(2, s.size());
     }
 
     /**
@@ -223,13 +226,21 @@ public class MainActivityTest {
 
 
         connexion.send(CONNEXION,"user");
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mActivityRule.getActivity().expListView.expandGroup(0);
+                mActivityRule.getActivity().expListView.expandGroup(1);
+            }});
 
-        onData(allOf(is(instanceOf(UE.class)),withChildName("Decouverte 1")))
-                .inAdapterView(withId(R.id.catList))
-                .check(matches(isDisplayed()))
-                .perform(click());
 
-        verify(parcours, times(1)).isChecked(modele.getSemestre(0).findUE("SPUGDE10"));
+                onData(allOf(is(instanceOf(UE.class)), withChildName("Decouverte 1")))
+                        .inAdapterView(withId(R.id.catList))
+                        .check(matches(isDisplayed()))
+                        .perform(click());
+                verify(parcours, atLeast(1)).isChecked(modele.getSemestre(0).findUE("SPUGDE10"));
+
+
     }
 
 
@@ -252,9 +263,11 @@ public class MainActivityTest {
         onView(withText("Semestre 2"))
                 .perform(click());
 
-        verify(mActivityRule, times(1)).getActivity().onChangeSemestre(1);
+        assertEquals(modele.getSemestreCourant(),1);
 
     }
+
+
 
 
     //TODO tester le bouton SAUVEGARDER
