@@ -128,7 +128,7 @@ public class Serveur {
         semestresJsonned.add(SemestersSample.S1Jsoned);
         semestresJsonned.add(SemestersSample.S2Jsoned);
 
-        socketIOClient.sendEvent(SENDDATACONNEXION,semestresJsonned);
+        socketIOClient.sendEvent(SENDDATACONNEXION,gson.toJson(semestresJsonned));
     }
 
     protected void clientSendData(SocketIOClient socketIOClient, Etudiant etu){
