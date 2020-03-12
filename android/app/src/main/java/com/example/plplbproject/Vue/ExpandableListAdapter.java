@@ -176,7 +176,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public void notifyDataSetChanged(){
         this.semestreCourant = mainModele.getSemestreCourant();
-        categorieArrayList= mainModele.getSemestres().get(semestreCourant).getListCategorie();
+
+        if(!mainModele.getSemestres().isEmpty() && mainModele.getSemestres().size() >= semestreCourant){
+            categorieArrayList= mainModele.getSemestres().get(semestreCourant).getListCategorie();
+        }
         super.notifyDataSetChanged();
     }
 }
