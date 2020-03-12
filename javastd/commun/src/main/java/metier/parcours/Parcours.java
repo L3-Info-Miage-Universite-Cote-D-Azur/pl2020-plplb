@@ -8,6 +8,7 @@ import metier.MainModele;
 import metier.UE;
 import metier.semestre.Semestre;
 import metier.semestre.manager.ParcoursSemestreManager;
+import metier.semestre.rules.BasicSemestreRules;
 
 /**
  * Classe qui s'occupe de la gestion du parcours et des regle a respecter.
@@ -30,6 +31,8 @@ public class Parcours {
         this.modele =  modele;
         initParcoursSemestresManager();
         initParcours(allCodeUESelected);
+        initObligatoryUE();
+
     }
 
     /**
@@ -40,9 +43,14 @@ public class Parcours {
         this.modele = modele;
         parcoursSelect = new HashMap<String,UE>();
         initParcoursSemestresManager();
+        initObligatoryUE();
     }
 
 
+    /**
+     * Initialisation des ue avec une liste de code d'ue
+     * @param allCodeUESelected tout les ue de la liste
+     */
     private void initParcours(List<String> allCodeUESelected){
         parcoursSelect = new HashMap<String, UE>();
 
@@ -53,12 +61,29 @@ public class Parcours {
         }
     }
 
-    private void initParcoursSemestresManager(){
+    /**
+     * creation des semestre manager
+     */
+    public void initParcoursSemestresManager(){
         semestresManager = new ArrayList<ParcoursSemestreManager>();
         for(Semestre semestre: modele.getSemestres()){
             semestresManager.add(semestre.getRules().createManager());
         }
     }
+
+    /**
+     * Ajout des ue obligatoire a la liste des ue check
+     */
+    private void initObligatoryUE(){
+        UE ue;
+        for(Semestre semestres : modele.getSemestres()){
+            for(String codeUE : semestres.getRules().obligatoryUEList()){
+                ue = modele.findUE(codeUE);
+                if(ue!=null) parcoursSelect.put(codeUE,ue);
+            }
+        }
+    }
+
 
 
 
@@ -68,11 +93,12 @@ public class Parcours {
      * @return tru:e il est possible de cocher; false: il n'est pas possible
      */
     public boolean canBeCheckedUE(UE ue){
-        Boolean semestreCheck = semestresManager.get(ue.getSemestreNumber()).canBeCheck(ue);
+        if(isChecked(ue)) return false;
+        Boolean semestreCheck = true;//semestresManager.get(ue.getSemestreNumber()-1).canBeCheck(ue);
         //iteration ? verification des prerequis (graphe?)
         //Boolean uePrerequisCheck = ...
 
-        return semestreCheck; //rajouter les condition quand definit:  && uePrerequisCheck
+        return semestreCheck;
     }
 
     /**
@@ -81,11 +107,12 @@ public class Parcours {
      * @return tru:e il est possible de decocher; false: il n'est pas possible
      */
     public boolean canBeUncheckedUE(UE ue){
+        if(!isChecked(ue)) return false;
         Boolean semestreUncheck = semestresManager.get(ue.getSemestreNumber()).canBeUncheck(ue);
-        //TODO iteration 4 verification des prerequis (graphe?)
+        //iteration ? verification des prerequis (graphe?)
         //Boolean uePrerequisCheck = ...
 
-        return semestreUncheck; //rajouter les condition quand definit:  && uePrerequisUnCheck
+        return semestreUncheck;
     }
 
 
@@ -97,7 +124,8 @@ public class Parcours {
         //il faut que ca respecte les regle
         if(canBeCheckedUE(ue)){
             parcoursSelect.put(ue.getUeCode(),ue);
-            semestresManager.get(ue.getSemestreNumber()).check(ue);
+            System.out.println("==========================="+(ue.getSemestreNumber()-1)+"======================"+semestresManager.size());
+            semestresManager.get(ue.getSemestreNumber()-1).check(ue);
         }
     }
 
@@ -107,7 +135,7 @@ public class Parcours {
      */
     public void checkUENoVerif(UE ue){
         parcoursSelect.put(ue.getUeCode(),ue);
-        semestresManager.get(ue.getSemestreNumber()).check(ue);
+        semestresManager.get(ue.getSemestreNumber()-1).check(ue);
     }
 
 
@@ -120,7 +148,7 @@ public class Parcours {
         //si elle fait parti de la liste des ue selectionner et qu'elle peut etre uncheck
         if(parcoursSelect.containsKey(ue.getUeCode()) && canBeUncheckedUE(ue)) {
             parcoursSelect.remove(ue.getUeCode());
-            semestresManager.get(ue.getSemestreNumber()).uncheck(ue);
+            semestresManager.get(ue.getSemestreNumber()-1).uncheck(ue);
         }
     }
 
@@ -145,6 +173,10 @@ public class Parcours {
         return codeUEToList;
     }
 
+    /**
+     * Verification du parcours entier
+     * @return l'etat de la verification
+     */
     public boolean verifiParcours(){
         for(ParcoursSemestreManager manager: semestresManager){
             if(!manager.verifCompleteParcours()) return false;

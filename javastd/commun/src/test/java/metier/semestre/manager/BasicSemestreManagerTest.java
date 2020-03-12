@@ -9,8 +9,8 @@ public class BasicSemestreManagerTest {
     @Spy
     BasicSemestreManager manager;
 
-    @Mock
-    SemestreRules rules;
+    //@Mock
+    //SemestreRules rules;
 
     @BeforeEach
     public void init(){
