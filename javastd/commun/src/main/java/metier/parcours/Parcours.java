@@ -124,7 +124,6 @@ public class Parcours {
         //il faut que ca respecte les regle
         if(canBeCheckedUE(ue)){
             parcoursSelect.put(ue.getUeCode(),ue);
-            System.out.println("==========================="+(ue.getSemestreNumber()-1)+"======================"+semestresManager.size());
             semestresManager.get(ue.getSemestreNumber()-1).check(ue);
         }
     }

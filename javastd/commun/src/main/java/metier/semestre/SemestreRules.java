@@ -142,7 +142,7 @@ public class SemestreRules {
         //verification super (uelibre + categorie)
         if(!verifCorrectSemestreUELibre(semestreManager)) return false;
         //verification nombre d'ue au choix
-        if(semestreManager.getChooseUeSelected()!= numberChooseUE) return false;
+        if(semestreManager.getChooseUeSelected()< numberChooseUE) return false;
         return true;
     }
 
