@@ -51,12 +51,14 @@ public class SemestreManager {
      * @param ue l'ue que l'on check
      */
     public void check(UE ue) {
+        //la verification si l'ue est deja dedans n'est pas gerer par cette classe mais par parcours
+
         //pas de traitement necessaire pour les ue obligatoire (normalement impossible)
         if(rules.isObligatoryUE(ue.getUeCode())) return;
 
         //traitemant classique
         Boolean isChooseUE = rules.isChooseUE(ue.getUeCode());
-        System.out.println("================="+isChooseUE);
+
         //si ce n'est pas une ue parmis les choix ou que le nombre d'ue a choix est deja atteint on traite l'ue normalement
         if(!isChooseUE ||(isChooseUE &&  rules.getNumberChooseUE() <= chooseUESelected)){
             countByCategori.put(ue.getCategorie(),countByCategori.getOrDefault(ue.getCategorie(),0)+1);
@@ -71,6 +73,7 @@ public class SemestreManager {
      * @param ue l'ue que l'on uncheck
      */
     public void uncheck(UE ue) {
+        //la verification si l'ue est deja dedans n'est pas gerer par cette classe mais par parcours
 
         //pas de traitement necessaire pour les ue obligatoire (normalement impossible)
         if(rules.isObligatoryUE(ue.getUeCode())) return;
@@ -80,13 +83,10 @@ public class SemestreManager {
         //si ce n'est pas une ue parmis les choix ou que le nombre d'ue a choix est deja atteint on traite l'ue normalement
         if(!isChooseUE ||(isChooseUE && rules.getNumberChooseUE()<chooseUESelected)){
             countByCategori.put(ue.getCategorie(),countByCategori.getOrDefault(ue.getCategorie(),0)-1);
-            if(countByCategori.getOrDefault(ue.getCategorie(),0)<0) System.exit(-1); //TODO replace by throws exception
             ueLibreSelected-=1;
-            if(ueLibreSelected<0) System.exit(-1);//TODO replace by throws exception
         }
         if(isChooseUE) { //si c'est une ue parmis les choix
             chooseUESelected-=1; //on retire
-            if(chooseUESelected<0) System.exit(-1);//TODO replace by throws exception
         }
 
     }

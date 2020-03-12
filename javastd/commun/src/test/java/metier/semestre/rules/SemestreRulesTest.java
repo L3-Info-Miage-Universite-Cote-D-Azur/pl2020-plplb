@@ -201,7 +201,7 @@ public class SemestreRulesTest {
 
     @Test
     public void isChooseUETest(){
-        //TEST si une ue est obligatoire
+        //TEST si une ue est au choix
         ArrayList<String> choose = new ArrayList<String>();
         choose.add("1");
         choose.add("2");
@@ -222,6 +222,6 @@ public class SemestreRulesTest {
     }
 
 
-    */
+
 }
 
