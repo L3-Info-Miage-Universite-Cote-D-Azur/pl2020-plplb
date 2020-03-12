@@ -94,7 +94,7 @@ public class Parcours {
      */
     public boolean canBeCheckedUE(UE ue){
         if(isChecked(ue)) return false;
-        Boolean semestreCheck = true;//semestresManager.get(ue.getSemestreNumber()-1).canBeCheck(ue);
+        Boolean semestreCheck = semestresManager.get(ue.getSemestreNumber()-1).canBeCheck(ue);
         //iteration ? verification des prerequis (graphe?)
         //Boolean uePrerequisCheck = ...
 

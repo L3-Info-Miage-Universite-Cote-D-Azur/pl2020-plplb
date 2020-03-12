@@ -18,7 +18,7 @@ public class BasicSemestreManager implements ParcoursSemestreManager{
 
     @Override
     public HashMap<String, Integer> getCountByCategory() {
-        return null;
+        return countByCategori;
     }
 
     @Override
