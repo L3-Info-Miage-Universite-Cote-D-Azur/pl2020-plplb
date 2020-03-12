@@ -112,7 +112,7 @@ public class Serveur {
         // map.put(id, socketIOClient);
         etudiant = etu;
         Debug.log("New client connected : "+etu);
-        socketIOClient.sendEvent(SENDMESSAGE ,"Hello client");
+        socketIOClient.sendEvent(SENDMESSAGE ,"Connected to server");
     }
 
     /**
