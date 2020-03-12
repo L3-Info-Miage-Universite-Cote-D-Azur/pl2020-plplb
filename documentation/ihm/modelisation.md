@@ -12,7 +12,8 @@ qu'elle contient (comme sur l'image).
 de l'écran. Si l'utilisateur clique, il envoie alors une sauvegarde de l'état de son parcours au serveur.
 
 ### Itération 4 :
-- La modélisation se base sur celle de l'itération 3.
+- La modélisation se base sur celle de l'itération 3 mais à présent la checkbox n'existe plus. L'utilisateur
+peut constater que son ue est selectionnée grâce au code couleur.
 - L'utilisateur peut changer de semestre en cliquant en haut à droite (voir l'image). Si il le fait, une
 nouvelle activité s'affiche avec les catégories du semestre choisies (non déroulée).
 - Les ues ont maintenant un code couleur :

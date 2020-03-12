@@ -3,6 +3,8 @@ package metier.semestre.rules;
 import metier.UE;
 import metier.semestre.SemestreManager;
 import metier.semestre.SemestreRules;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -220,6 +222,6 @@ public class SemestreRulesTest {
     }
 
 
-
+    */
 }
 

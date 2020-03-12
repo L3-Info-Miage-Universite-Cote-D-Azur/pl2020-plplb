@@ -5,7 +5,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 
 public class BasicSemestreManagerTest {
-
+    /*
     @Spy
     BasicSemestreManager manager;
 
@@ -16,4 +16,5 @@ public class BasicSemestreManagerTest {
     public void init(){
 
     }
+    */
 }
