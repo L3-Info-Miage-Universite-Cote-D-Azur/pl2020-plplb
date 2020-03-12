@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "10.0.2.2";
+    private String ip = "192.168.1.46";
     private String port = "10101";
 
     @Override
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
                 getSupportActionBar().setTitle("Semestre 2");
                 break;
         }
+        collapseList();
 
         return super.onOptionsItemSelected(item);
     }
@@ -157,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
          */
         expListView = (ExpandableListView) findViewById(R.id.catList);
-
         listAdapter = new ExpandableListAdapter(this, modele);
         expListView.setAdapter(listAdapter);
 
@@ -187,6 +187,12 @@ public class MainActivity extends AppCompatActivity implements Vue {
         });
     }
 
+    @Override
+    public void collapseList() {
+        int count =  expListView.getCount();
+        for (int i = 0; i <count ; i++)
+            expListView.collapseGroup(i);
+    }
 
 
     /**
@@ -218,17 +224,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
         notifyUeListView();
     }
 
-    /**
-     * recharge les adaptateur en fonction du modele
-     */
-    @Override
-    public void resetAdaptateurModele(){
-        MainActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                listAdapter.notifyDataSetChanged();
-            }
-        });
-    }
+
 
 }

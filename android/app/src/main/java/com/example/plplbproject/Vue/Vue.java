@@ -4,5 +4,5 @@ public interface Vue {
 
     public void toastMessage(String msg);
     public void notifyUeListView();
-    public void resetAdaptateurModele();
+    public void collapseList();
 }
