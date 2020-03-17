@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/TitleConnexion"
+        android:layout_width="372dp"
+        android:layout_height="91dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/loginWelcome"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#030000"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.257" />
+
+    <EditText
+        android:id="@+id/loginInput"
+        android:layout_width="411dp"
+        android:layout_height="66dp"
+        android:background="@drawable/inputborder"
+        android:ems="10"
+        android:hint="@string/loginText"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:textColor="#88030000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TitleConnexion"
+        app:layout_constraintVertical_bias="0.074" />
+
+    <Button
+        android:id="@+id/connexionButton"
+        android:layout_width="411dp"
+        android:layout_height="66dp"
+        android:background="#63AC63"
+        android:text="@string/loginConnexion"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginInput"
+        app:layout_constraintVertical_bias="0.068" />
+
+    <TextView
+        android:id="@+id/connexionError"
+        android:layout_width="411dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/loginError"
+        android:textAlignment="center"
+        android:textColor="#AD3535"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connexionButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
