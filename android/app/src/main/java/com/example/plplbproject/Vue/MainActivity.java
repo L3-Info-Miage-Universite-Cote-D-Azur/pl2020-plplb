@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.controleur.ReseauController;
 import com.example.plplbproject.controleur.UserController;
 import com.example.plplbproject.reseau.Connexion;
 
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     private UserController userController;
     private MainModele modele;
-    private Connexion socket;
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
-    private String ip = "10.0.2.2";
-    private String port = "10101";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +53,10 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.modele = new MainModele();
+        Connexion.CONNEXION.setup();
 
     }
 
-    /**
-     * Set connexion
-     * @param connexion new connexion
-     */
-    protected void setConnexion(Connexion connexion){
-        this.socket = connexion;
-        socket.setup(ip,port);
-
-    }
 
     protected MainModele getModele(){
         return modele;
@@ -110,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
     @Override
     protected void onPause() {
         super.onPause();
-        if (socket != null) socket.disconnect();
+        Connexion.CONNEXION.disconnect();
     }
 
 
@@ -119,12 +109,12 @@ public class MainActivity extends AppCompatActivity implements Vue {
     @Override
     protected void onResume() {
         super.onResume();
-        if (autoconnect) setConnexion(new Connexion((Vue)this,modele));
 
         getSupportActionBar().setTitle("Semestre 1");
-        userController = new UserController((Vue)this,socket,modele);
+        userController = new UserController((Vue)this,modele);
         save = findViewById(R.id.save);// Boutton de sauvegarde
         categoryListView = findViewById(R.id.catList);
+
         if(autoconnect) initVue();
     }
 
@@ -162,7 +152,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
         expListView.setAdapter(listAdapter);
 
         //###################### Server connection #####################
-        socket.connect();
+        Connexion.CONNEXION.setupEvent(new ReseauController(this,modele));
+        Connexion.CONNEXION.connect();
 
 
         //##################### Controller for the user #####################

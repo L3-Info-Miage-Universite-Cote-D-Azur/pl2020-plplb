@@ -13,13 +13,11 @@ public abstract class EmitterListener implements Emitter.Listener {
 
     /*FIELDS*/
     private final Vue vue;
-    private final Connexion connexion;
     private final MainModele model;
 
     /*CONSTRUCTOR*/
-    public EmitterListener(Vue vue, Connexion connexion, MainModele model) {
+    public EmitterListener(Vue vue, MainModele model) {
         this.vue = vue;
-        this.connexion = connexion;
         this.model = model;
     }
 

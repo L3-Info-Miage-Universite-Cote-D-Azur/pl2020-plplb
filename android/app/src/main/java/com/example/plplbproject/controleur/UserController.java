@@ -20,14 +20,12 @@ public class UserController {
 
     /*FIELDS*/
     private Vue vue;
-    private Connexion connexion;
     private MainModele modele;
     private final Gson gson = new GsonBuilder().create();
 
     /*CONSTRUCTOR*/
-    public UserController(Vue vue, Connexion connexion, MainModele modele){
+    public UserController(Vue vue, MainModele modele){
         this.vue = vue;
-        this.connexion=connexion;
         this.modele = modele;
     }
 
@@ -36,10 +34,10 @@ public class UserController {
      * @return traitement a effectuer (sur le modele et la vue)
      */
     public View.OnClickListener saveButton(){
-        return new ClickListener(vue,connexion,modele) {
+        return new ClickListener(vue,modele) {
             @Override
             public void onClick(View view) {
-                if(modele.getParcours().verifiParcours()) connexion.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours().createListCodeUE()));
+                if(modele.getParcours().verifiParcours()) Connexion.CONNEXION.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours().createListCodeUE()));
                 else vue.toastMessage("La sauvegarde n'a pas pue etre effectuer car le parcours est incomplet (une page de renseignement serat ultérieurement mis en place)");
                 //TODO verification que le serveur a bien recus la sauvegarde
             }

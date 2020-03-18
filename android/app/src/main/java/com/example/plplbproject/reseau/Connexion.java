@@ -11,37 +11,20 @@ import metier.MainModele;
 
 import static constantes.NET.*;
 
-public class Connexion {
+public enum Connexion {
+    CONNEXION;
 
     /* FIELDS */
     private Socket mSocket;
-    private Vue vue;
-    private MainModele modele;
+    private final String ip = "10.0.2.2";
+    private final String port = "10101";
 
-    /* CONSTRUCTOR */
-    public Connexion(Vue vue, MainModele modele) {
-
-        setVue(vue);
-        this.modele = modele;
-
-    }
-
-    public void setVue(Vue vue) {
-        this.vue = vue;
-    }
-
-    public Vue getVue() {
-        return vue;
-    }
 
     /**
      * setup permet de preparer la connection au serveur avec l'ip et le port.
      * Met en place la reception des events.
-     * @param ip : l'ip du serveur.
-     * @param port : le port du serveur.
      */
-    public void setup(String ip,String port) {
-        ReseauController controller=new ReseauController(vue,this,modele);
+    public void setup() {
         try {
             String url = "http://"+ip+":"+port;
             mSocket = IO.socket(url);
@@ -50,6 +33,9 @@ public class Connexion {
             e.printStackTrace();
         }
 
+    }
+
+    public void setupEvent(ReseauController controller){
         mSocket.on(Socket.EVENT_CONNECT, controller.connexionEvent());
         mSocket.on(SENDMESSAGE, controller.receiveMessage());
         mSocket.on(SENDDATACONNEXION,controller.dataConnexion());
@@ -79,5 +65,7 @@ public class Connexion {
     public void send(String event, String json){
         mSocket.emit(event,json);
     }
+
+    
 
 }

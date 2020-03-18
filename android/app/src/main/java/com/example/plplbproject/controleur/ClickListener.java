@@ -14,13 +14,11 @@ public abstract class ClickListener implements View.OnClickListener {
 
     /*FIELDS*/
     private Vue vue;
-    private Connexion connexion;
     private MainModele modele;
 
     /*CONSTRUCTOR*/
-    public ClickListener(Vue vue, Connexion connexion, MainModele modele){
+    public ClickListener(Vue vue, MainModele modele){
         this.vue = vue;
-        this.connexion=connexion;
         this.modele = modele;
     }
 
