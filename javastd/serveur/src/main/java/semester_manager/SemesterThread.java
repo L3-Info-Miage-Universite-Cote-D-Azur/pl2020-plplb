@@ -22,14 +22,15 @@ SemesterThread implements Runnable
 	public void run() 
 	{
 		try {
-			sm.updateConsts();
+			this.sm.updateConsts();
 			while (true)
 			{
 				TimeUnit.SECONDS.sleep(10);
 				if (sm.areSemestersUpdated())
 				{
 					Debug.log("Semesters updated !");
-					sm.updateConsts();
+					this.sm.updateConsts();
+					this.serv.sen
 				}
 			}
 		} catch (Exception E) {
