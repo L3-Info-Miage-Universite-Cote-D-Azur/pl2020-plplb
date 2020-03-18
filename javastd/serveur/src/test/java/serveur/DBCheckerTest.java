@@ -8,6 +8,7 @@ import metier.semestre.Semestre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import database.DBChecker;
 import metier.Categorie;
 import metier.UE;
 

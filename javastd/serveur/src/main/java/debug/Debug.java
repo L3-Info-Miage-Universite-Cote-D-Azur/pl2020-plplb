@@ -1,4 +1,4 @@
-package serveur;
+package debug;
 
 /**
  * Debug gere l'affichage des messages du serveur

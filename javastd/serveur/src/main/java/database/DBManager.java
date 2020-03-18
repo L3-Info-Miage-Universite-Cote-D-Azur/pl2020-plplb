@@ -1,10 +1,12 @@
-package serveur;
+package database;
 
 import java.io.*;
 import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import files.FileManager;
 import metier.parcours.Parcours;
 import metier.semestre.Semestre;
 

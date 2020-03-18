@@ -7,6 +7,9 @@ import metier.semestre.Semestre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import database.DBManager;
+import files.FileManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
