@@ -43,8 +43,8 @@
 	-Ajout du s3.
 	-Ajout des UEs du s4.
 	-Ajout du s4.
-	-Ajout d'une activité Login. Le nom, prénom, et l'INE de l'étudiant caractérisera le client, qu'il devra fournir au login pour 	récupérer ses UEs.
-	-Le login est stocké de base dans un fichier et est chargé au lancement du serveur.
+	-Ajout d'une activité Login. L'INE de l'étudiant caractérisera le client, qu'il devra fournir au login pour 	récupérer ses UEs.
+	-Le login est stocké de base dans un fichier.
 	-Le serveur reconnais un étudiant déjà dans le fichier et charge ses sauvegardes.
 	-IHM : page de login a l'ouverture de l'application.
 	- demande du client : intégrer des pré-requis aux Ues. (modifié donc la validation de certain parcours en conséquences)
