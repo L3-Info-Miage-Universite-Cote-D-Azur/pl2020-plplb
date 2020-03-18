@@ -22,8 +22,6 @@ public class ParcoursTest {
     Parcours parcours;
 
     @Mock
-    MainModele mainModele = Mockito.mock(MainModele.class);
-    @Mock
     ArrayList<SemestreManager> semestresManager = Mockito.mock(ArrayList.class);
     @Mock
     SemestreManager manager = Mockito.mock(SemestreManager.class);
@@ -32,7 +30,7 @@ public class ParcoursTest {
 
     @BeforeEach
     public void init(){
-        parcours = new Parcours(mainModele,semestresManager,parcoursSelect);
+        parcours = new Parcours(null,semestresManager,parcoursSelect);
     }
 
     @Test
