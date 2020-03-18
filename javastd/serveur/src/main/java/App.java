@@ -1,4 +1,4 @@
-package serveur;
+import serveur.Serveur;
 
 /**
  * Classe principale du serveur
@@ -10,10 +10,8 @@ public class App {
 
         String ip = "0.0.0.0";
         int port = 10101;
-
-
-        Serveur server = new Serveur(ip, port);
-        server.startServer();
-
+                
+        Serveur serv = new Serveur(ip, port);
+        serv.startServer();
     }
 }

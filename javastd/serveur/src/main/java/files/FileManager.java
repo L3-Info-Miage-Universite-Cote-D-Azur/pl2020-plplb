@@ -1,6 +1,8 @@
-package serveur;
+package files;
 
 import java.io.*;
+
+import debug.Debug;
 
 /**
  * Permet de gerer avec plus de facilite les fichiers de l'application
@@ -113,6 +115,41 @@ FileManager
 				
 				// On renvoie la premier ligne
 				return tmp;
+			} catch (Exception e) {
+				e.printStackTrace();
+				Debug.error(this.file.getName() + " doesn\'t exist !");
+			}
+		} else {
+			Debug.error(this.file.getName() + " isn\'t readable !");
+		}
+		return "";
+	}
+	
+	public String
+	getRaw ()
+	{
+		// Si on a les droits pour lire le fichier
+		if (this.file.canRead())
+		{
+			// On essaye de lire la premiere ligne
+			try
+			{
+				/* INITIALISATION */
+				FileReader r = new FileReader(this.file);
+				BufferedReader br = new BufferedReader(r);
+				StringBuilder sb = new StringBuilder();
+				/* GET THE CONTENT */
+				String tmp;
+				while ((tmp = br.readLine()) != null)
+				{
+					sb.append(tmp);
+				}
+				/* CLOSE FILESTREAMS */
+				br.close();
+				r.close();
+				
+				// On renvoie la premier ligne
+				return sb.toString();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Debug.error(this.file.getName() + " doesn\'t exist !");
