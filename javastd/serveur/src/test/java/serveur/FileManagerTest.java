@@ -3,6 +3,8 @@ package serveur;
 
 import org.junit.jupiter.api.*;
 
+import files.FileManager;
+
 import java.io.File;
 import java.io.IOException;
 

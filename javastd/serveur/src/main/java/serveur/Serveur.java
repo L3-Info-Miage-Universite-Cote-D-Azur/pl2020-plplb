@@ -1,5 +1,6 @@
 package serveur;
 
+
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
@@ -9,11 +10,16 @@ import metier.Etudiant;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import database.DBManager;
+import debug.Debug;
 import metier.parcours.Parcours;
 import metier.semestre.Semestre;
-
+import semester_manager.SemesterThread;
+import semester_manager.SemestersSample;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import static constantes.NET.*;
 
@@ -78,8 +84,13 @@ public class Serveur {
     /**
      * demarage du serveur
      */
-    protected void startServer() {
-
+    public void
+    startServer () 
+    {
+    	Thread daemonThread = new Thread(new SemesterThread(this));
+    	daemonThread.setDaemon(true);
+    	daemonThread.start();
+    	
         server.start();
         Debug.log("Server listening.");
     }
@@ -141,6 +152,5 @@ public class Serveur {
         }
 
     }
-
 
 }

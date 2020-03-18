@@ -3,6 +3,9 @@ package metier.semestre;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import metier.Categorie;
 import metier.UE;
 
@@ -13,6 +16,7 @@ public class Semestre implements Serializable {
     /* FIELDS */
     private int number; //le numero du semestre
     private ArrayList<Categorie> listCategorie; // la liste des categorie.
+    private Gson gson;
 
     // RULE of semestre
     private SemestreRules rules;
@@ -81,6 +85,10 @@ public class Semestre implements Serializable {
     }
 
 
-
-
+    public String
+    getJson ()
+    {
+    	this.gson = new GsonBuilder().create();
+    	return gson.toJson(this);
+    }
 }

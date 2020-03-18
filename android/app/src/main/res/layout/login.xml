@@ -7,12 +7,10 @@
     android:layout_height="match_parent">
 
 
-
-
     <TextView
         android:id="@+id/TitleConnexion"
-        android:layout_width="372dp"
-        android:layout_height="91dp"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
         android:fontFamily="sans-serif"
         android:text="@string/loginWelcome"
         android:textAlignment="center"
@@ -28,15 +26,15 @@
 
     <EditText
         android:id="@+id/loginInput"
-        android:layout_width="411dp"
-        android:layout_height="66dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="@drawable/inputborder"
         android:ems="10"
         android:hint="@string/loginText"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
         android:textColor="#88030000"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,8 +43,8 @@
 
     <Button
         android:id="@+id/connexionButton"
-        android:layout_width="411dp"
-        android:layout_height="66dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="#63AC63"
         android:text="@string/loginConnexion"
         android:textSize="18sp"
@@ -59,13 +57,13 @@
 
     <TextView
         android:id="@+id/connexionError"
-        android:layout_width="411dp"
-        android:layout_height="66dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="28dp"
         android:text="@string/loginError"
         android:textAlignment="center"
         android:textColor="#AD3535"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold|italic"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"

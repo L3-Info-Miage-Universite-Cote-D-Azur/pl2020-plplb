@@ -2,6 +2,8 @@ package serveur;
 
 import org.junit.jupiter.api.Test;
 
+import semester_manager.SemestersSample;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SemestersSampleTest {
