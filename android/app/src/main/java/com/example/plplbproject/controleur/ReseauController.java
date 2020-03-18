@@ -24,15 +24,13 @@ public class ReseauController{
 
     /*FIELDS*/
     private Vue vue;
-    private Connexion connexion;
     private MainModele modele;
     private final Gson gson = new GsonBuilder().create();
 
     /*CONSTRUCTOR*/
-    public ReseauController(Vue vue, Connexion connexion, MainModele modele){
+    public ReseauController(Vue vue, MainModele modele){
 
         this.vue = vue;
-        this.connexion = connexion;
         this.modele = modele;
     }
 
@@ -41,7 +39,7 @@ public class ReseauController{
      * @return traitement a effectuer (sur le modele et la vue)
      */
     public Emitter.Listener receiveMessage(){
-        return new EmitterListener(vue,connexion,modele) {
+        return new EmitterListener(vue,modele) {
             @Override
             public void call(Object... args) {
                 vue.toastMessage("Server sent you a message: "+((String) args[0]));
@@ -54,11 +52,11 @@ public class ReseauController{
      * @return traitement a effectuer (sur le modele et la vue)
      */
     public Emitter.Listener connexionEvent(){
-        return new EmitterListener(vue,connexion,modele) {
+        return new EmitterListener(vue,modele) {
             @Override
             public void call(Object... args) {
                 Etudiant etu = modele.getEtudiant();
-                connexion.send(CONNEXION, gson.toJson(etu));
+                Connexion.CONNEXION.send(CONNEXION, gson.toJson(etu));
             }
         };
     }
@@ -68,7 +66,7 @@ public class ReseauController{
      * @return traitement a effectuer (sur le modele et la vue)
      */
     public Emitter.Listener dataConnexion() {
-        return new EmitterListener(vue,connexion,modele) {
+        return new EmitterListener(vue,modele) {
             @Override
             public void call(Object... args) {
                 ArrayList<String> semestres = gson.fromJson((String) args[0], ArrayList.class);
@@ -88,14 +86,14 @@ public class ReseauController{
      * @return traitement a effectuer (sur le modele et la vue)
      */
     public Emitter.Listener receiveSave() {
-        return new EmitterListener(vue,connexion,modele) {
+        return new EmitterListener(vue,modele) {
             @Override
             public void call(Object... args) {
                 int semestreCourant = modele.getSemestreCourant();
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
                 System.out.println("save receive from server");
                 //TODO Modifier parcours
-                modele.setParcours(new Parcours(modele,ueCode));
+                modele.setParcours(new Parcours(modele.getSemestres(),ueCode));
                 vue.notifyUeListView();
             }
         };

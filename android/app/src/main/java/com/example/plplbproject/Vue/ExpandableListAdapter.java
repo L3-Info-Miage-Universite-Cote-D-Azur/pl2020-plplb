@@ -18,6 +18,7 @@ import metier.Categorie;
 import metier.MainModele;
 import metier.UE;
 import metier.parcours.Parcours;
+import metier.semestre.Semestre;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -67,7 +68,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.mainModele = mainModele;
         this.semestreCourant = mainModele.getSemestreCourant();
         if(mainModele.getSemestres().size() > 0){
-            this.categorieArrayList = mainModele.getSemestres().get(semestreCourant).getListCategorie(); // listDataHeader
+            this.categorieArrayList = mainModele.getSemestre(semestreCourant).getListCategorie(); // listDataHeader
         }
     }
 
@@ -176,7 +177,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public void notifyDataSetChanged(){
         this.semestreCourant = mainModele.getSemestreCourant();
-        categorieArrayList= mainModele.getSemestres().get(semestreCourant).getListCategorie();
+        Semestre tmp = mainModele.getSemestre(semestreCourant);
+        if(tmp==null) categorieArrayList = new ArrayList<Categorie>();
+        else categorieArrayList = tmp.getListCategorie();
         super.notifyDataSetChanged();
     }
 }

@@ -47,12 +47,16 @@
 	-Le login est stocké de base dans un fichier et est chargé au lancement du serveur.
 	-Le serveur reconnais un étudiant déjà dans le fichier et charge ses sauvegardes.
 	-IHM : page de login a l'ouverture de l'application.
+	- demande du client : intégrer des pré-requis aux Ues. (modifié donc la validation de certain parcours en conséquences)
+	- demande du client : pouvoir changer les données coté serveur (listes des cours, description des cours, « pré-requis », etc.), 
+	en notifier le client et ré-évaluer ses parcours et données en conséquences.
 	
 
 ### Itération 6:
 	-Le client peut choisir de sauvegarder un ou plusieurs parcours et les charger/modifier. Ces sauvegardes envoyées sont 
 	gérées par le serveur
 	-Les choix de parcours sont enregistrés sur le serveur, le client peut sauvegarder/charger ses choix de parcours
+	- ajout de l'option : filtrer / rechercher par discipline quand le client creer/modifie un parcours (coté client)
 	-Avancements sur l'IHM:
 		-Toolbar pour les choix:
 			-Charger ses parcours

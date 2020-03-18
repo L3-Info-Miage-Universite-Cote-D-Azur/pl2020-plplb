@@ -5,12 +5,15 @@ import com.corundumstudio.socketio.*;
 import database.DBManager;
 import debug.Debug;
 import metier.Etudiant;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.verification.Times;
+
+import java.io.File;
 
 import static constantes.NET.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -68,5 +71,16 @@ public class ServeurTest {
         Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
     }
 
+    @AfterEach
+    public void del(){
+        File directory = new File("db");
+        if(directory.exists()){
+            File[] files = directory.listFiles();
 
+            for(int i = 0; i < files.length; i++) {
+                files[i].delete();
+            }
+            directory.delete();
+        }
+    }
 }

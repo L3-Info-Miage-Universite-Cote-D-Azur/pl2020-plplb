@@ -1,5 +1,6 @@
 package metier.parcours;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,15 +8,16 @@ import java.util.List;
 import metier.MainModele;
 import metier.UE;
 import metier.semestre.Semestre;
+import metier.semestre.SemestreList;
 import metier.semestre.SemestreManager;
 
 /**
  * Classe qui s'occupe de la gestion du parcours et des regle a respecter.
  */
-public class Parcours {
+public class Parcours implements Serializable {
 
     private String name = "default";
-    private MainModele modele;
+    private SemestreList semestreList;
     private ArrayList<SemestreManager> semestresManager;
     private HashMap<String, UE> parcoursSelect; //commun a tout les semestre (permet de rajouter des condition UE necesaire, ...)
 
@@ -23,11 +25,11 @@ public class Parcours {
     //TODO init avec les ue automatiquement present
     /**
      * constructeur avec une liste valide d'ue (utiliser pour charger les donnée)
-     * @param modele le modele
+     * @param semestreList la liste de semestre.
      * @param allCodeUESelected une liste valide d'ue
      */
-    public Parcours(MainModele modele, List<String> allCodeUESelected ) {
-        this.modele =  modele;
+    public Parcours(SemestreList semestreList, List<String> allCodeUESelected ) {
+        this.semestreList =  semestreList;
         initParcoursSemestresManager();
         initParcours(allCodeUESelected);
         initObligatoryUE();
@@ -36,15 +38,24 @@ public class Parcours {
 
     /**
      * Constructeur pour un nouveau parcours
-     * @param modele le modele
+     * @param semestreList la liste de semestre.
      */
-    public Parcours(MainModele modele){
-        this.modele = modele;
+    public Parcours(SemestreList semestreList){
+        this.semestreList = semestreList;
         parcoursSelect = new HashMap<String,UE>();
         initParcoursSemestresManager();
         initObligatoryUE();
     }
 
+
+    /**
+     * Constructeur pour test
+     */
+    public Parcours(SemestreList semestreList,ArrayList<SemestreManager> semestresManager,HashMap<String, UE> parcoursSelect){
+        this.semestreList = semestreList;
+        this.semestresManager = semestresManager;
+        this.parcoursSelect = parcoursSelect;
+    }
 
     /**
      * Initialisation des ue avec une liste de code d'ue
@@ -55,7 +66,7 @@ public class Parcours {
 
         UE ue;
         for(String codeUE : allCodeUESelected){
-            ue = modele.findUE(codeUE);
+            ue = semestreList.findUE(codeUE);
             if(ue != null) checkUENoVerif(ue);
         }
     }
@@ -65,10 +76,9 @@ public class Parcours {
      */
     public void initParcoursSemestresManager(){
         semestresManager = new ArrayList<SemestreManager>();
-        for(Semestre semestre: modele.getSemestres()){
+        for(Semestre semestre: semestreList){
             semestresManager.add(semestre.getRules().createManager());
         }
-        initObligatoryUE();
     }
 
     /**
@@ -76,10 +86,12 @@ public class Parcours {
      */
     private void initObligatoryUE(){
         UE ue;
-        for(Semestre semestres : modele.getSemestres()){
+        for(Semestre semestres : semestreList){
             for(String codeUE : semestres.getRules().obligatoryUEList()){
-                ue = modele.findUE(codeUE);
-                if(ue!=null) parcoursSelect.put(codeUE,ue);
+                ue = semestreList.findUE(codeUE);
+                if(ue!=null){
+                    parcoursSelect.put(codeUE,ue);
+                }
             }
         }
     }
@@ -178,8 +190,10 @@ public class Parcours {
      */
     public boolean verifiParcours(){
 
-        for(SemestreManager manager: semestresManager){
-            if(!manager.verifCompleteParcours()) return false;
+        //for(SemestreManager manager: semestresManager){
+        //Pour le test
+        for(int i = 0; i< semestresManager.size(); i++){
+            if(!semestresManager.get(i).verifCompleteParcours()) return false;
         }
         return true;
     }

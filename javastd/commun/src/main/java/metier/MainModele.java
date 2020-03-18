@@ -2,25 +2,27 @@ package metier;
 
 import metier.parcours.Parcours;
 import metier.semestre.Semestre;
+import metier.semestre.SemestreList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Class main du modele java elle a pour but de gerer les different action sur les UE du client
  */
 
-public class MainModele {
+public class MainModele implements Serializable {
 
     private Etudiant etudiant; //etudiant qui est connecter a l'application
     private Parcours parcours; //Le parcours qui est charge.
-    private ArrayList<Semestre> semestres; //Le semestre affiche.
-    private int semestreCourant;
+    private SemestreList semestres;
+    private int semestreCourant = 0;
 
     /* CONSTRUCTOR */
     public MainModele(){
         this.etudiant = new Etudiant("Etudiant 1");
-        this.semestres = new ArrayList<Semestre>();
-        this.parcours = new Parcours(this);
+        this.semestres = new SemestreList();
+        this.parcours = new Parcours(semestres);
         this.semestreCourant = 0; // On pense en terme d'index de liste
     }
 
@@ -45,7 +47,7 @@ public class MainModele {
      * Renvoie l'arrayList contenant tous les semestres
      * @return
      */
-    public ArrayList<Semestre> getSemestres() {
+    public SemestreList getSemestres() {
         return semestres;
     }
 
@@ -63,6 +65,8 @@ public class MainModele {
      * @param index
      */
     public Semestre getSemestre(int index){
+        if(semestres==null) return null;
+        if(index>=semestres.size()) return null;
         return this.semestres.get(index);
     }
 
@@ -83,19 +87,5 @@ public class MainModele {
 
     public void addSemestre(Semestre semestre){
         this.semestres.add(semestre);
-    }
-
-    /**
-     * Recherche d'une ue parmis l'ensemble des ue
-     * @param codeUE le code de l'ue
-     * @return l'ue si elle est trouver.
-     */
-    public UE findUE(String codeUE){
-        UE ue;
-        for(Semestre semestre: semestres){
-            ue = semestre.findUE(codeUE);
-            if(ue != null) return ue;
-        }
-        return null;
     }
 }

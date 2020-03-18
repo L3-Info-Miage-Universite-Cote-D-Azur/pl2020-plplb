@@ -16,6 +16,9 @@ de l'écran. Si l'utilisateur clique, il envoie alors une sauvegarde de l'état 
 peut constater que son ue est selectionnée grâce au code couleur.
 - L'utilisateur peut changer de semestre en cliquant en haut à droite (voir l'image). Si il le fait, une
 nouvelle activité s'affiche avec les catégories du semestre choisies (non déroulée).
+- L'utilisateur peut appuyer sur le bouton sauvegarde en bas de l'ecran:
+	- si il a un parcours valide, la sauvegarde est envoyée et stockée par le serveur.
+	- si il est incomplet, un message d'erreur est envoyé.
 - Les ues ont maintenant un code couleur :
     - Verte : l'ue est disponible.
     - Rouge : l'ue ne peux être choisies (pas encore d'explication)

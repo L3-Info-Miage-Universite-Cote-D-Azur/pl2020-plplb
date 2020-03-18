@@ -1,9 +1,11 @@
 package metier;
 
+import java.io.Serializable;
+
 /**
  * Etudiant represente le client qui se connecte au serveur.
  */
-public class Etudiant{
+public class Etudiant implements Serializable {
 
     /* FIELDS */
     private  String nom; //le nom de l'etudiant

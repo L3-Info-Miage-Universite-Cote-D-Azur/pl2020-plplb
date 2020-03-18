@@ -60,7 +60,7 @@ public class MainModeleTest {
                 codeUE = ""+j+(i*100);
 
                 //tout les ue doivent etre trouver
-                ue = mainModele.findUE(codeUE);
+                ue = mainModele.getSemestres().findUE(codeUE);
                 assertEquals(ue != null,true);
 
                 //toutes les ue doivent avoir un code correspondant a celui rechercher:
@@ -71,7 +71,7 @@ public class MainModeleTest {
                 codeUE = ""+j+(i*200);
 
                 //tout les ue doivent etre trouver
-                ue = mainModele.findUE(codeUE);
+                ue = mainModele.getSemestres().findUE(codeUE);
                 assertEquals(ue != null,true);
 
                 //toutes les ue doivent avoir un code correspondant a celui rechercher:
