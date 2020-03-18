@@ -153,9 +153,4 @@ public class Serveur {
 
     }
 
-    public void
-    sendEvent ()
-    {
-    	this.server.addEventListener(SENDCLIENTUPDATE, String.class, listener);
-    }
 }
