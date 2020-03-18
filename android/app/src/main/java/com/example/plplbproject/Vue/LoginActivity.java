@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.controleur.LoginClickListener;
+import com.example.plplbproject.reseau.Connexion;
 
 import metier.Etudiant;
 import metier.LoginModele;
@@ -96,6 +97,9 @@ public class LoginActivity extends AppCompatActivity implements Vue {
     public void switchIntent(){
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
         intent.putExtra("etudiant",etudiant);
+
+        //On procède à la connexion.
+        Connexion.CONNEXION.setup();
 
         startActivity(intent);
     }
