@@ -95,7 +95,7 @@ public class ReseauController{
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
                 System.out.println("save receive from server");
                 //TODO Modifier parcours
-                modele.setParcours(new Parcours(modele,ueCode));
+                modele.setParcours(new Parcours(modele.getSemestres(),ueCode));
                 vue.notifyUeListView();
             }
         };
