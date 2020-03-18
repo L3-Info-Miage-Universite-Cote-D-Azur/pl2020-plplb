@@ -1,5 +1,6 @@
 package metier.parcours;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import metier.semestre.SemestreManager;
 /**
  * Classe qui s'occupe de la gestion du parcours et des regle a respecter.
  */
-public class Parcours {
+public class Parcours implements Serializable {
 
     private String name = "default";
     private SemestreList semestreList;

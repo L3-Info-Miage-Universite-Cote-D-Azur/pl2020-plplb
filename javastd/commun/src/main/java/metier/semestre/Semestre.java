@@ -1,5 +1,6 @@
 package metier.semestre;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import metier.Categorie;
@@ -8,7 +9,7 @@ import metier.UE;
 /**
  * Semestre represente un semestre du parcours de licence. Un semestre contient des categorie qui contiennent des UEs.
  */
-public class Semestre {
+public class Semestre implements Serializable {
     /* FIELDS */
     private int number; //le numero du semestre
     private ArrayList<Categorie> listCategorie; // la liste des categorie.

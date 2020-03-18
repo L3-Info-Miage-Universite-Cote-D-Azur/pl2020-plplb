@@ -1,11 +1,12 @@
 package metier.semestre;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import metier.UE;
 
 
-public class SemestreManager {
+public class SemestreManager implements Serializable {
 
     protected SemestreRules rules; //la regle du semestre
     protected HashMap<String,Integer> countByCategori; //nombre d'ue par categorie

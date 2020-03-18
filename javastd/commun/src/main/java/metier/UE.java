@@ -1,9 +1,11 @@
 package metier;
 
+import java.io.Serializable;
+
 /**
  * Representation des UE
  */
-public class UE{
+public class UE implements Serializable {
 
     /*FIELDS*/
     private String name;

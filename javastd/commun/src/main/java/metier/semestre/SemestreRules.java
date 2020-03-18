@@ -1,11 +1,12 @@
 package metier.semestre;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import metier.UE;
 
-public class SemestreRules {
+public class SemestreRules implements Serializable {
 
     /*FIELDS*/
     protected int maxUELibre; //nombre d'ue libre necessaire de selectionner pour valider une semestre

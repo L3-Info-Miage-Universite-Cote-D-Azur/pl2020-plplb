@@ -2,12 +2,13 @@ package metier.semestre;
 
 import metier.UE;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * SemestreList est une arrayList de semestre.
  */
-public class SemestreList extends ArrayList<Semestre>{
+public class SemestreList extends ArrayList<Semestre> implements Serializable {
 
     /**
      * Recherche d'une ue parmis l'ensemble des ue

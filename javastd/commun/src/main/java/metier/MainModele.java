@@ -4,18 +4,19 @@ import metier.parcours.Parcours;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Class main du modele java elle a pour but de gerer les different action sur les UE du client
  */
 
-public class MainModele {
+public class MainModele implements Serializable {
 
     private Etudiant etudiant; //etudiant qui est connecter a l'application
     private Parcours parcours; //Le parcours qui est charge.
     private SemestreList semestres;
-    private int semestreCourant;
+    private int semestreCourant = 0;
 
     /* CONSTRUCTOR */
     public MainModele(){

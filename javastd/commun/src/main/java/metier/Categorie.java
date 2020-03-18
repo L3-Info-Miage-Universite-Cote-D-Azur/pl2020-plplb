@@ -1,11 +1,12 @@
 package metier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Categorie represente une categorie dans le cursus, elle se rapporte a un semestre et contient des UEs.
  */
-public class Categorie {
+public class Categorie implements Serializable {
     private String name;//Nom de la categorie.
     private ArrayList<UE> listUE; // la liste des Ues de la categorie.
 
