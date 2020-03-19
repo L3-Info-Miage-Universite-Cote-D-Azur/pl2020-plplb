@@ -13,6 +13,7 @@ import static constantes.NET.*;
 
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.Vue.ApercuRecyclerAdapter;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

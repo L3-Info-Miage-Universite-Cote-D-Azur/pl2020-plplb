@@ -4,13 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.plplbproject.Vue.ApercuActivity;
 import com.example.plplbproject.Vue.Vue;
+import com.example.plplbproject.Vue.apercusParcour.ApercuActivity;
 import com.example.plplbproject.controleur.listener.ClickListener;
-import com.example.plplbproject.reseau.Connexion;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import metier.MainModele;
 
