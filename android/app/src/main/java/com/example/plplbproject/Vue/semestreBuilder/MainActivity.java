@@ -32,6 +32,7 @@ import metier.Etudiant;
 import metier.MainModele;
 
 import static constantes.NET.SENDCLIENTSAVE;
+import static constantes.NET.SENDDATACONNEXION;
 import static constantes.NET.SENDMESSAGE;
 
 
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
         Serializable etu = getIntent().getSerializableExtra("etudiant");
         if(etu!=null) this.modele.setEtudiant((Etudiant) getIntent().getSerializableExtra("etudiant"));
 
-        
         this.context = getApplicationContext();
 
     }
@@ -172,7 +172,10 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         //###################### Server connection #####################
         setupEventReseau();
-        if(!Connexion.CONNEXION.isConnected()) Connexion.CONNEXION.connect();
+        if(!Connexion.CONNEXION.isConnected()){
+            Connexion.CONNEXION.connect();
+        }
+        Connexion.CONNEXION.send(SENDDATACONNEXION,"");
 
 
         //##################### Controller for the user #####################
@@ -189,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
         reseauController = new ReseauController(this,modele);
         Connexion.CONNEXION.setEventListener(Socket.EVENT_CONNECT,reseauController.connexionEvent());
         Connexion.CONNEXION.setEventListener(SENDMESSAGE, reseauController.receiveMessage());
-        Connexion.CONNEXION.setEventListener(SENDMESSAGE, reseauController.receiveMessage());
+        Connexion.CONNEXION.setEventListener(SENDDATACONNEXION, reseauController.dataConnexion());
         Connexion.CONNEXION.setEventListener(SENDCLIENTSAVE,reseauController.receiveSave());
 
     }
