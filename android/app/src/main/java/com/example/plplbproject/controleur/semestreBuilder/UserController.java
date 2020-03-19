@@ -62,6 +62,9 @@ public class UserController {
                     modele.nextSemestre();
                     vue.notifySemestreChange();
                 }
+                else{
+                    saveButton().onClick(view);
+                }
             }
         };
     }
