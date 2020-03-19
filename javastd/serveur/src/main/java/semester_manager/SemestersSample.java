@@ -20,7 +20,7 @@ SemestersSample
 		SemesterManager sm = new SemesterManager();
 		SemestersSample.S1 = sm.get(SemestreConsts.filenames[0]);
 		SemestersSample.S2 = sm.get(SemestreConsts.filenames[1]);
-		SemestersSample.S3 = sm.get(SemestreConsts.filenames[3]);
+		SemestersSample.S3 = sm.get(SemestreConsts.filenames[2]);
 		
 		SemestersSample.S1Jsoned = SemestersSample.S1.getJson();
 		SemestersSample.S2Jsoned = SemestersSample.S2.getJson();
