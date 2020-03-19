@@ -8,25 +8,22 @@
     tools:context=".Vue.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sauvegarder"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/catList"
-        app:layout_constraintVertical_bias="0.95" />
-
     <ExpandableListView
         android:id="@+id/catList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-16dp">
 
+
     </ExpandableListView>
+
+    <include
+        layout="@layout/pied_page_ue"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

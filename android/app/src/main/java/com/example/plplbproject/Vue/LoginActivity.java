@@ -16,7 +16,7 @@ import com.example.plplbproject.reseau.Connexion;
 import metier.Etudiant;
 import metier.LoginModele;
 
-public class LoginActivity extends AppCompatActivity implements Vue {
+public class LoginActivity extends AppCompatActivity {
 
     private Button loginButton;//Le button pour se connecter
     private EditText loginInput;//Le champ ou l'utilisateur ecrit
@@ -47,20 +47,6 @@ public class LoginActivity extends AppCompatActivity implements Vue {
     }
 
 
-    @Override
-    public void toastMessage(String msg) {
-        return;
-    }
-
-    @Override
-    public void notifyUeListView() {
-        return;
-    }
-
-    @Override
-    public void collapseList() {
-        return;
-    }
 
     /**
      * affiche le message text dans le champ de l'erreur

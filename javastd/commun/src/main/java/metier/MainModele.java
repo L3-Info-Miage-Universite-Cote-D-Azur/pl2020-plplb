@@ -88,4 +88,49 @@ public class MainModele implements Serializable {
     public void addSemestre(Semestre semestre){
         this.semestres.add(semestre);
     }
+
+
+
+    /**
+     * le semestre courrant passe au semestre suivant (si il existe)
+     */
+    public void nextSemestre(){
+        if(hasNextSemestre()){
+            semestreCourant+=1;
+        }
+    }
+
+    /**
+     * le semestre courrant passe au semestre precedent (si il existe)
+     */
+    public void prevSemestre(){
+        if(hasPrevSemestre()){
+            semestreCourant-=1;
+        }
+    }
+
+    /**
+     * Verifie si il existe un semestre suivant
+     * @return true il en existe 1; false il en existe pas
+     */
+    public boolean hasNextSemestre(){
+        int nbSemestre = semestres.size();
+        if(semestreCourant+1<nbSemestre){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Verifie si il existe un semestre precedent
+     * @return true il en existe 1; false il en existe pas
+     */
+    public boolean hasPrevSemestre(){
+        if(semestreCourant>0){
+            return true;
+        }
+        return false;
+    }
+
 }
