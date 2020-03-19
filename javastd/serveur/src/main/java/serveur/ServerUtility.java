@@ -76,6 +76,7 @@ ServerUtility
 	    semestresJsonned.add(SemestersSample.S1Jsoned);
 	    semestresJsonned.add(SemestersSample.S2Jsoned);
 	    semestresJsonned.add(SemestersSample.S3Jsoned);
+		semestresJsonned.add(SemestersSample.S4Jsoned);
 	    return gson.toJson(semestresJsonned);
 	}
 	
