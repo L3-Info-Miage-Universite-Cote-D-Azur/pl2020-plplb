@@ -10,4 +10,5 @@ public class NET {
     public static final String SENDDATACONNEXION = "send data connexion";
     public static final String SENDCLIENTSAVE = "send client save";
     public static final String SENDCLIENTUPDATE = "UPDATE";
+    public static final String SENDETUDIANTID = "send etudiant id";
 }
