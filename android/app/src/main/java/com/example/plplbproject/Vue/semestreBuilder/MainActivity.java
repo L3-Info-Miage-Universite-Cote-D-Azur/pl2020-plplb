@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         getSupportActionBar().setTitle("Semestre 1");
         userController = new UserController((Vue)this,modele,context);
-        save = findViewById(R.id.save);// Boutton de sauvegarde
         nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
         previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
         categoryListView = findViewById(R.id.catList);
