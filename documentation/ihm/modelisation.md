@@ -36,7 +36,7 @@ de revenir au semestre précédent.
 - Lorsque l'utilisateur est sur la page du semestre 4, le bouton (7) devient "finaliser" et permet de confirmer
 notre parcours, et s'il n'y a aucune erreur, l'utilisateur passe à la page de visualisation (8) et peut sauvegarder
 son parcours avec le bouton "save".
--Si l'utilisateur sauvegarde, il repasse à la page de login (1).
+- Si l'utilisateur sauvegarde, il repasse à la page de login (1).
 
 ### Itération 6:
 - Maintenant l'utilisateur passe à un menu contenant ses parcours (4) après s'être identifié (1 ou 2).
