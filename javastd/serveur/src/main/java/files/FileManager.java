@@ -125,6 +125,11 @@ FileManager
 		return "";
 	}
 	
+	/**
+	 * Permet de renvoyer tout le contenu d'un fichier
+	 * sous forme brut
+	 * @return un String
+	 */
 	public String
 	getRaw ()
 	{

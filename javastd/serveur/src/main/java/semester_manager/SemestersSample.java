@@ -11,7 +11,9 @@ import metier.semestre.Semestre;
 public class 
 SemestersSample 
 {
-	
+	/**
+	 * Permet d'initialiser les semestres du serveur
+	 */
 	public static void
 	init ()
 	{
