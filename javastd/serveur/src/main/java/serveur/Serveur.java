@@ -73,17 +73,37 @@ Serveur
     protected void 
     initEventListener ()
     {
+        //le client viens de ce connecter
         this.server.addEventListener(CONNEXION, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                Debug.log("new connection : "+socketIOClient.toString());
             	Client c = new Client(gson.fromJson(json,Etudiant.class), socketIOClient);
             	listOfClients.add(c);
-                clientOnConnectEvent(c);
-                clientOnConnectEventSendSemesters(c);
-                clientOnConnectSendSave(c);
             }
         });
 
+        //le client envoie ces donner
+        this.server.addEventListener(SENDETUDIANTID,String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                Client c = new Client(gson.fromJson(json,Etudiant.class), socketIOClient);
+                listOfClients.add(c);
+                clientOnConnectEvent(c);
+            }
+        });
+
+        //le client demande les donner de connection
+        this.server.addEventListener(SENDDATACONNEXION,String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
+                clientOnConnectEventSendSemesters(client);
+                clientOnConnectSendSave(client);
+            }
+        });
+
+        //le client envoie une sauvegarde
         this.server.addEventListener(SENDCLIENTSAVE, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
@@ -95,7 +115,8 @@ Serveur
                 Debug.log("Save data for " + currentClient.toString());
             }
         });
-        
+
+        //le client ce deconnecte
         this.server.addDisconnectListener(new DisconnectListener() {
 			@Override
 			public void onDisconnect(SocketIOClient client) {

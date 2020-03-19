@@ -12,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
 import com.example.plplbproject.controleur.login.LoginClickListener;
+import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
 import com.example.plplbproject.reseau.Connexion;
 
+import io.socket.client.Socket;
 import metier.Etudiant;
 import metier.LoginModele;
 
@@ -51,7 +53,10 @@ public class LoginActivity extends AppCompatActivity {
 
         //On met le button sur ecoute.
         loginButton.setOnClickListener(new LoginClickListener(modele,this));
-        if(autoconnect && !Connexion.CONNEXION.isConnected()) Connexion.CONNEXION.connect();
+        if(autoconnect && !Connexion.CONNEXION.isConnected()) {
+            //TODO send event connexion to the server
+            Connexion.CONNEXION.connect();
+        }
     }
 
 
