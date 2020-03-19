@@ -28,6 +28,15 @@ nouvelle activité s'affiche avec les catégories du semestre choisies (non dér
 - L'utilisateur arrive sur la page de login (1) où il doit rentrer son INE (Identification Nationale des Etudiants)
 puis valider avec le bouton "Connexion", un message d'erreur apparaît si l'INE est mauvais (2) et peut réessayer.
 - L'utilisateur passe ensuite de la page de login (1 ou 2) à la page du parcours (3) si son INE est valide.
+- La page de parcours affiche de la même manière que la page pendant l'itération 4, toutefois elle possède
+en plus deux nouveaux boutons: le bouton (6) permet de se déconnecter et ramène à la page de login (1), et le
+bouton (7) permet de passer au semestre suivant.
+- Lorsque l'utilisateur passe sur semestre autre que le premier, le bouton (6) devient "précédent" et permet
+de revenir au semestre précédent.
+- Lorsque l'utilisateur est sur la page du semestre 4, le bouton (7) devient "finaliser" et permet de confirmer
+notre parcours, et s'il n'y a aucune erreur, l'utilisateur passe à la page de visualisation (8) et peut sauvegarder
+son parcours avec le bouton "save".
+-Si l'utilisateur sauvegarde, il repasse à la page de login (1).
 
 ### Itération 6:
 - Maintenant l'utilisateur passe à un menu contenant ses parcours (4) après s'être identifié (1 ou 2).
