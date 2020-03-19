@@ -48,6 +48,8 @@ public class ApercuActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Gson gson = new GsonBuilder().create();
+                Connexion.CONNEXION.send(SENDETUDIANTID, gson.toJson(modele.getEtudiant()));
                 Connexion.CONNEXION.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours().createListCodeUE()));
                 Toast toast = Toast.makeText(getApplicationContext(), "Parcours sauvegardé", Toast.LENGTH_SHORT);
                 toast.show();
