@@ -32,6 +32,7 @@ import java.io.Serializable;
 import io.socket.client.Socket;
 import metier.Etudiant;
 import metier.MainModele;
+import metier.semestre.Semestre;
 
 import static constantes.NET.SENDCLIENTSAVE;
 import static constantes.NET.SENDDATACONNEXION;
@@ -120,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
     @Override
     protected void onPause() {
         super.onPause();
-        Connexion.CONNEXION.disconnect();
     }
 
 
@@ -180,10 +180,9 @@ public class MainActivity extends AppCompatActivity implements Vue {
         if(!Connexion.CONNEXION.isConnected()){
             Connexion.CONNEXION.connect();
         }
-
-        Gson gson = new GsonBuilder().create();
-        Connexion.CONNEXION.send(SENDETUDIANTID, gson.toJson(modele.getEtudiant()));
-        Connexion.CONNEXION.send(SENDDATACONNEXION,"");
+        if(modele.getSemestres().size()==0){
+            Connexion.CONNEXION.send(SENDDATACONNEXION,"");
+        }
 
 
 
