@@ -58,6 +58,14 @@ public class Parcours implements Serializable {
     }
 
     /**
+     * Permet de mettre a jour le parcours (a utiliser quand on ajoute un semestre au modele)
+     */
+    public void updateSemestre(){
+        initParcoursSemestresManager();
+        initObligatoryUE();
+    }
+
+    /**
      * Initialisation des ue avec une liste de code d'ue
      * @param allCodeUESelected tout les ue de la liste
      */
