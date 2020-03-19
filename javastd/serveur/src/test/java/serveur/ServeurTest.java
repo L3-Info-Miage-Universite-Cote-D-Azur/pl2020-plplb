@@ -31,43 +31,46 @@ public class ServeurTest {
     @Mock
     SocketIOClient client;
     @Mock
+    Client c;
+    @Mock
     Etudiant etudiant;
-
+    
     @BeforeEach
     public void init(){
         Debug.verbose = false;
         serveur = new Serveur("127.0.0.1",10113);
         client = Mockito.mock(SocketIOClient.class);
         etudiant = Mockito.spy(new Etudiant("test"));
-
+        c = Mockito.spy(new Client(etudiant, client));
+        
     }
     @Test
-    public void clientConnectTest(){
-        serveur.clientConnect(client,etudiant);
+    public void clientOnConnectEventTest(){
+        serveur.clientOnConnectEvent(c);
         //quand un client ce connecte on lui envoie un message
         Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDMESSAGE),any(String.class));
         // le client est bien enregistrer sur le serveur
-        assertEquals(true,etudiant.equals(serveur.getEtudiant()));
+        assertEquals(true, etudiant.equals(ServerUtility.getStudentFromList(client, serveur.getClients())));
 
     }
 
 
     @Test
-    public void clientConnectDataTest(){
-        serveur.clientConnectData(client,etudiant);
+    public void clientOnConnectEventSendSemestersTest(){
+        serveur.clientOnConnectEventSendSemesters(c);
         //quand un client ce connecte on lui envoie bien les donner
         Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDDATACONNEXION),any(String.class));
     }
 
     @Test
-    public void clientSendDataTest(){
-        serveur.clientSendData(client,etudiant);
+    public void clientOnConnectSendSaveTest(){
+        serveur.clientOnConnectSendSave(c);
         //quand un client ce connecte on lui envoie bien les donner
         Mockito.verify(client,new Times(0)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
 
         DBManager dbManager = new DBManager(etudiant.toString());
         dbManager.getFile().create();
-        serveur.clientSendData(client,etudiant);
+        serveur.clientOnConnectSendSave(c);
         Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
     }
 

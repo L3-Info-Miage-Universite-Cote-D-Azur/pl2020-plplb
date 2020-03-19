@@ -1,14 +1,6 @@
 package semester_manager;
 
-import java.util.ArrayList;
-
-import metier.Categorie;
-import metier.UE;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import metier.semestre.Semestre;
-import metier.semestre.SemestreRules;
-
 
 /**
  * Class utilitaire, elle contient les differents semestres avec la liste de leur UEs par defaut

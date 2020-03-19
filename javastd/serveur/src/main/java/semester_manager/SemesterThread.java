@@ -30,6 +30,7 @@ SemesterThread implements Runnable
 				{
 					Debug.log("Semesters updated !");
 					this.sm.updateConsts();
+					this.serv.updateSemestersOfClients();
 				}
 			}
 		} catch (Exception E) {

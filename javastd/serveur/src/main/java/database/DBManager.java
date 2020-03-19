@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import files.FileManager;
-import metier.parcours.Parcours;
 import metier.semestre.Semestre;
 
 /**
@@ -176,6 +175,7 @@ DBManager
 		 * qui contient les keys (ici les codes)
 		 */
 		final Gson gson = new GsonBuilder().create();
+		@SuppressWarnings("unchecked")
 		ArrayList<String> lCodes = gson.fromJson(fcontent, ArrayList.class);
 
 		return lCodes;//On renvoie les ues selectionnee de la sauvegarde.
