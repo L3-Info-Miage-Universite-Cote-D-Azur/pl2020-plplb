@@ -23,6 +23,8 @@ import com.example.plplbproject.Vue.Vue;
 import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
 import com.example.plplbproject.controleur.semestreBuilder.UserController;
 import com.example.plplbproject.reseau.Connexion;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 import java.io.Serializable;
@@ -30,9 +32,11 @@ import java.io.Serializable;
 import io.socket.client.Socket;
 import metier.Etudiant;
 import metier.MainModele;
+import metier.semestre.Semestre;
 
 import static constantes.NET.SENDCLIENTSAVE;
 import static constantes.NET.SENDDATACONNEXION;
+import static constantes.NET.SENDETUDIANTID;
 import static constantes.NET.SENDMESSAGE;
 
 
@@ -117,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
     @Override
     protected void onPause() {
         super.onPause();
-        Connexion.CONNEXION.disconnect();
     }
 
 
@@ -131,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
         userController = new UserController((Vue)this,modele,context);
         nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
         previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
+        getSupportActionBar().setTitle("Semestre "+(modele.getSemestreCourant()+1));
+
         categoryListView = findViewById(R.id.catList);
         updateButton();
 
@@ -175,7 +180,10 @@ public class MainActivity extends AppCompatActivity implements Vue {
         if(!Connexion.CONNEXION.isConnected()){
             Connexion.CONNEXION.connect();
         }
-        Connexion.CONNEXION.send(SENDDATACONNEXION,"");
+        if(modele.getSemestres().size()==0){
+            Connexion.CONNEXION.send(SENDDATACONNEXION,"");
+        }
+
 
 
         //##################### Controller for the user #####################
