@@ -190,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
      */
     public void setupEventReseau(){
         reseauController = new ReseauController(this,modele);
-        Connexion.CONNEXION.setEventListener(Socket.EVENT_CONNECT,reseauController.connexionEvent());
         Connexion.CONNEXION.setEventListener(SENDMESSAGE, reseauController.receiveMessage());
         Connexion.CONNEXION.setEventListener(SENDDATACONNEXION, reseauController.dataConnexion());
         Connexion.CONNEXION.setEventListener(SENDCLIENTSAVE,reseauController.receiveSave());
