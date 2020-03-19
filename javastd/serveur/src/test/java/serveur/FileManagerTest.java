@@ -1,9 +1,12 @@
 package serveur;
 
 
+import debug.Debug;
 import org.junit.jupiter.api.*;
 
 import files.FileManager;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
@@ -79,6 +82,38 @@ public class FileManagerTest {
         //on vide le fichier
         fileManager.clearFile();
         assertEquals(null,fileManager.getFileContent());
+    }
+
+    @Test
+    public void getRawTest(){
+        try {
+            fileManager.getFile().createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Le fichier est vide
+        assertEquals("",fileManager.getRaw());
+
+        //On ecrit quelque chose dedans
+        String text = "Bonjour j'ecrit quelque chose\nSur plusieurs lignes...\nEt voila.";
+        fileManager.write(text);
+
+        /* TODO: M'expliquer pourquoi setReadable false m'autorise toujours la lecture.
+        //Le fichier n'est pas autorisé en lecture
+        fileManager.getFile().setReadable(false);
+        System.out.println(fileManager.getFile().canRead());
+        assertEquals("",fileManager.getRaw());
+         */
+
+        //Le fichier est autorisé en lecture
+        fileManager.getFile().setReadable(true);
+        assertEquals(text,fileManager.getRaw());
+
+        //Un autre texte
+        String text2 = "Bonjour j'ecrit quelque chose sur une seule ligne";
+        fileManager.write(text2);
+        assertEquals(text2,fileManager.getRaw());
     }
 
     @AfterEach
