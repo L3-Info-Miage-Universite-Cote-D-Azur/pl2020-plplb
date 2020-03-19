@@ -14,11 +14,11 @@ import org.mockito.Mockito;
 import org.mockito.internal.verification.Times;
 
 import java.io.File;
+import java.net.SocketAddress;
 
 import static constantes.NET.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-
+import static org.mockito.ArgumentMatchers.*;
 
 
 /**
@@ -29,7 +29,9 @@ public class ServeurTest {
     Serveur serveur;
 
     @Mock
-    SocketIOClient client;
+    SocketIOClient sockClient;
+    @Mock
+    SocketAddress socketAddress;
     @Mock
     Client c;
     @Mock
@@ -39,39 +41,49 @@ public class ServeurTest {
     public void init(){
         Debug.verbose = false;
         serveur = new Serveur("127.0.0.1",10113);
-        client = Mockito.mock(SocketIOClient.class);
+        sockClient = Mockito.mock(SocketIOClient.class);
+        socketAddress = Mockito.mock(SocketAddress.class);
         etudiant = Mockito.spy(new Etudiant("test"));
-        c = Mockito.spy(new Client(etudiant, client));
+        c = Mockito.spy(new Client(etudiant, sockClient));
         
     }
     @Test
     public void clientOnConnectEventTest(){
+        Mockito.when(c.getSock()).thenReturn(sockClient);
+        Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
+        Mockito.when(socketAddress.toString()).thenReturn("test");
+
         serveur.clientOnConnectEvent(c);
         //quand un client ce connecte on lui envoie un message
-        Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDMESSAGE),any(String.class));
-        // le client est bien enregistrer sur le serveur
-        assertEquals(true, etudiant.equals(ServerUtility.getStudentFromList(client, serveur.getClients())));
-
+        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDMESSAGE),any(String.class));
     }
 
 
     @Test
     public void clientOnConnectEventSendSemestersTest(){
+        Mockito.when(c.getSock()).thenReturn(sockClient);
+        Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
+        Mockito.when(socketAddress.toString()).thenReturn("test");
+
         serveur.clientOnConnectEventSendSemesters(c);
         //quand un client ce connecte on lui envoie bien les donner
-        Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDDATACONNEXION),any(String.class));
+        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDDATACONNEXION),any(String.class));
     }
 
     @Test
     public void clientOnConnectSendSaveTest(){
+        Mockito.when(c.getSock()).thenReturn(sockClient);
+        Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
+        Mockito.when(socketAddress.toString()).thenReturn("test");
+
         serveur.clientOnConnectSendSave(c);
         //quand un client ce connecte on lui envoie bien les donner
-        Mockito.verify(client,new Times(0)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
+        Mockito.verify(sockClient,new Times(0)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
 
         DBManager dbManager = new DBManager(etudiant.toString());
         dbManager.getFile().create();
         serveur.clientOnConnectSendSave(c);
-        Mockito.verify(client,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
+        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
     }
 
     @AfterEach
