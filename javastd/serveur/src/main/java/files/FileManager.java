@@ -145,9 +145,13 @@ FileManager
 				StringBuilder sb = new StringBuilder();
 				/* GET THE CONTENT */
 				String tmp;
+				//On remet le \n sauf la premiere fois que l'on lit une ligne
+				if((tmp = br.readLine()) != null){
+					sb.append(tmp);
+				}
 				while ((tmp = br.readLine()) != null)
 				{
-					sb.append(tmp);
+					sb.append("\n"+tmp);
 				}
 				/* CLOSE FILESTREAMS */
 				br.close();

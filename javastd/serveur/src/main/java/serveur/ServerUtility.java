@@ -75,6 +75,7 @@ ServerUtility
 		ArrayList<String> semestresJsonned = new ArrayList<String>();
 	    semestresJsonned.add(SemestersSample.S1Jsoned);
 	    semestresJsonned.add(SemestersSample.S2Jsoned);
+	    semestresJsonned.add(SemestersSample.S3Jsoned);
 	    return gson.toJson(semestresJsonned);
 	}
 	
