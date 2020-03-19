@@ -58,7 +58,7 @@
 		},
 
 		{
-		"name":"ENSEIGNEMENT"
+		"name":"ENSEIGNEMENT",
 		"listUE":[
 			{
 			"name":"Enseignements fondamentaux 1D",
