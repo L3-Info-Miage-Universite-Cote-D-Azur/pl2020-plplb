@@ -77,7 +77,6 @@ Serveur
         this.server.addEventListener(CONNEXION, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Debug.log("new connection : "+socketIOClient.toString());
             	Client c = new Client(gson.fromJson(json,Etudiant.class), socketIOClient);
             	listOfClients.add(c);
             }
@@ -112,7 +111,7 @@ Serveur
                 Client currentClient = ServerUtility.getClientFromSocketOnList(socketIOClient, listOfClients);
                 dbManager.setFile(currentClient.getStudent().toString());
                 dbManager.save(data);
-                Debug.log("Save data for " + currentClient.toString());
+                Debug.log("Save data for " + currentClient.getStudent().getNom());
             }
         });
 
@@ -120,7 +119,7 @@ Serveur
         this.server.addDisconnectListener(new DisconnectListener() {
 			@Override
 			public void onDisconnect(SocketIOClient client) {
-				Debug.log(client.getRemoteAddress().toString() + " leaved the server.");
+				Debug.log(ServerUtility.getClientFromSocketOnList(client, listOfClients).getStudent().getNom() + " leaved the server.");
 				listOfClients.remove(ServerUtility.getClientFromSocketOnList(client, listOfClients));
 			}
 		});
@@ -158,7 +157,7 @@ Serveur
     protected void 
     clientOnConnectEvent (Client c) 
     {
-        Debug.log("New client connected : " + c.toString());
+        Debug.log("New client connected : " + c.getStudent().getNom());
         c.getSock().sendEvent(SENDMESSAGE ,"Connected to server");
     }
 
@@ -169,7 +168,7 @@ Serveur
     protected void 
     clientOnConnectEventSendSemesters (Client c)
     {
-        Debug.log("Send Semesters to : " + c.getSock().getRemoteAddress().toString());
+        Debug.log("Send Semesters to : " + c.getStudent().getNom());
 
         String msg = ServerUtility.getListOfSemestersJSONed();
 
@@ -186,7 +185,7 @@ Serveur
         dbManager = new DBManager(c.getStudent().toString());
         if (dbManager.getFile().exists()) 
         {
-            Debug.log("Send data to : " + c.toString());
+            Debug.log("Send data to : " + c.getStudent().getNom());
             c.getSock().sendEvent(SENDCLIENTSAVE, gson.toJson(dbManager.load()));
         }
 
@@ -207,7 +206,7 @@ Serveur
         // Pour chaque client, on lui envoie le message
     	for (Client c : this.listOfClients)
     	{
-    		Debug.log("Sending to " + c);
+    		Debug.log("Sending to " + c.getStudent().getNom());
     		c.getSock().sendEvent(NET.SENDCLIENTUPDATE, msg);
     	}
     	Debug.log("--- New Semesters sended. ---");
