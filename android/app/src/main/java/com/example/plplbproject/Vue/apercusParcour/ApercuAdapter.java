@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.semestreBuilder.ExpandableCategoryAdapter;
@@ -16,27 +17,36 @@ import metier.Categorie;
 import metier.MainModele;
 import metier.semestre.Semestre;
 
+import metier.UE;
 
 public class ApercuAdapter extends BaseAdapter {
 
     private Context context;
     private MainModele modele;
-    private ArrayList<Semestre> semestres;
+    private ArrayList<UE> ues;
 
-    public ApercuAdapter(Context context, MainModele modele) {
+    public ApercuAdapter(Context context, MainModele modele, int semestreCourant) {
         this.context = context;
         this.modele = modele;
-        this.semestres = modele.getSemestres();
+        this.ues = new ArrayList<>();
+        System.out.println(modele == null);
+        for (Categorie cat: this.modele.getSemestre(semestreCourant -1).getListCategorie()
+             ) {
+            for (UE ue: cat.getListUE()
+                 ) {
+                ues.add(ue);
+            }
+        }
     }
 
     @Override
     public int getCount() {
-        return semestres.size();
+        return ues.size();
     }
 
     @Override
-    public ArrayList<Categorie> getItem(int i) {
-        return semestres.get(i).getListCategorie();
+    public UE getItem(int i) {
+        return ues.get(i);
     }
 
     @Override
@@ -45,22 +55,23 @@ public class ApercuAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int i, View convertView, ViewGroup parent) {
+
+        UE ue = getItem(i);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.ue_element_main,parent,false);
+            convertView = LayoutInflater.from(context).
+                    inflate(R.layout.ue_element_main, parent, false);
         }
 
-        ArrayList<Categorie> categories = getItem(position);
+        TextView ueName = (TextView) convertView.findViewById(R.id.ueName);
+        TextView ueCode = (TextView) convertView.findViewById(R.id.codeUe);
+        View ueRect = (View) convertView.findViewById(R.id.rectangleUe);
 
-        ExpandableListView expandableListView = convertView.findViewById(R.id.catExpList);
-        ExpandableCategoryAdapter expandableCategoryAdapter = new ExpandableCategoryAdapter(context,categories);
-        expandableListView.setAdapter(expandableCategoryAdapter);
-
-        // Pour qu'elles soient toutes déroulées de base
-        for(int i=0; i < expandableCategoryAdapter.getGroupCount(); i++)
-            expandableListView.expandGroup(i);
+        //Mise a jour du texte
+        ueName.setText(ue.getUeName());
+        ueCode.setText(ue.getUeCode());
+        ueRect.setBackgroundColor(0xff51C5C4);
 
         return convertView;
     }

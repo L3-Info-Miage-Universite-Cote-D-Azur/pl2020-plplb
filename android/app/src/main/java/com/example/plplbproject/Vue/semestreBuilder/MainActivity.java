@@ -1,6 +1,7 @@
 package com.example.plplbproject.Vue.semestreBuilder;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private ReseauController reseauController;
     private MainModele modele;
 
+    private Context context;
+
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
 
@@ -62,8 +65,13 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.modele = new MainModele();
+
         Serializable etu = getIntent().getSerializableExtra("etudiant");
         if(etu!=null) this.modele.setEtudiant((Etudiant) getIntent().getSerializableExtra("etudiant"));
+
+        
+        this.context = getApplicationContext();
+
     }
 
 
@@ -120,7 +128,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
         super.onResume();
 
         getSupportActionBar().setTitle("Semestre 1");
-        userController = new UserController((Vue)this,modele);
+        userController = new UserController((Vue)this,modele,context);
+        save = findViewById(R.id.save);// Boutton de sauvegarde
         nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
         previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
         categoryListView = findViewById(R.id.catList);

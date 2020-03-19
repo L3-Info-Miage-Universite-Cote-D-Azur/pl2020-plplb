@@ -58,6 +58,18 @@
 		},
 
 		{
+		"name":"ENSEIGNEMENT",
+		"listUE":[
+			{
+			"name":"Enseignements fondamentaux 1D",
+			"code":"HPULE36",
+			"semestreNumber":3,
+			"categorie":"ENSEIGNEMENT"
+			}
+			]
+		},
+
+		{
 		"name":"ELECTRONIQUE",
 		"listUE":[
 			{
@@ -251,7 +263,7 @@
 		}
 	],
 	"rules":{
-		"maxUELibre":3,
+		"maxUELibre":4,
 		"maxByCategory":3,
 		"obligatoryUEList":
 			["KCTSS3"],
