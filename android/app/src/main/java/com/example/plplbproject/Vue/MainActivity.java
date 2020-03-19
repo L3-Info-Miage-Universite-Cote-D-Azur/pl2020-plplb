@@ -24,6 +24,7 @@ import com.example.plplbproject.controleur.UserController;
 import com.example.plplbproject.reseau.Connexion;
 
 
+import metier.Etudiant;
 import metier.MainModele;
 
 
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements Vue {
         this.modele = new MainModele();
         Connexion.CONNEXION.setup();
 
+        Etudiant etu = (Etudiant) getIntent().getSerializableExtra("etudiant");
+        System.out.println(etu.getNom());
+        modele.setEtudiant(etu);
     }
 
 

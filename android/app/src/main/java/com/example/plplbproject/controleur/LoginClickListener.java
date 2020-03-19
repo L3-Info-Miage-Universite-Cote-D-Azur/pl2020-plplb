@@ -19,8 +19,10 @@ public class LoginClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        String ine = vue.getLoginInput();
 
-        if(modele.acceptINE(vue.getLoginInput())){
+        if(modele.acceptINE(ine)){
+            vue.createEtudiant(ine);
             vue.switchIntent();
         }else{
             vue.setTextError("INE invalide (format : ab123456)");

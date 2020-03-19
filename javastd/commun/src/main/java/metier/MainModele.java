@@ -20,7 +20,7 @@ public class MainModele implements Serializable {
 
     /* CONSTRUCTOR */
     public MainModele(){
-        this.etudiant = new Etudiant("Etudiant 1");
+        this.etudiant = new Etudiant("Etudiant defaut");
         this.semestres = new SemestreList();
         this.parcours = new Parcours(semestres);
         this.semestreCourant = 0; // On pense en terme d'index de liste
