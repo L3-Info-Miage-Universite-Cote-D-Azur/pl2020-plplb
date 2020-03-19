@@ -1,9 +1,9 @@
-package com.example.plplbproject.controleur;
+package com.example.plplbproject.controleur.login;
 
 import android.view.View;
-import android.widget.TextView;
 
-import com.example.plplbproject.Vue.LoginActivity;
+import com.example.plplbproject.Vue.login.LoginActivity;
+import com.example.plplbproject.reseau.Connexion;
 
 import metier.LoginModele;
 
@@ -22,8 +22,14 @@ public class LoginClickListener implements View.OnClickListener {
         String ine = vue.getLoginInput();
 
         if(modele.acceptINE(ine)){
-            vue.createEtudiant(ine);
-            vue.switchIntent();
+            if(Connexion.CONNEXION.isConnected()){
+                vue.createEtudiant(ine);
+                vue.switchIntent();
+            }
+            else{
+                vue.setTextError("Il est impossible de ce connecter au serveur");
+            }
+
         }else{
             vue.setTextError("INE invalide (format : ab123456)");
             vue.clearLoginInput();

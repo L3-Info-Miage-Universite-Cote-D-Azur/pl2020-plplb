@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue;
+package com.example.plplbproject.Vue.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.controleur.LoginClickListener;
+import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
+import com.example.plplbproject.controleur.login.LoginClickListener;
 import com.example.plplbproject.reseau.Connexion;
 
 import metier.Etudiant;
@@ -27,11 +28,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private Etudiant etudiant;
 
+    public static final String AUTOCONNECT = "AUTOCONNECT";
+    private boolean autoconnect =  true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         this.modele = new LoginModele();
+        //On setup la connexion
+        autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
+        if(autoconnect) Connexion.CONNEXION.setup();
     }
 
     @Override
@@ -44,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //On met le button sur ecoute.
         loginButton.setOnClickListener(new LoginClickListener(modele,this));
+        if(autoconnect && !Connexion.CONNEXION.isConnected()) Connexion.CONNEXION.connect();
     }
 
 
@@ -81,12 +89,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void switchIntent(){
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("etudiant",etudiant);
-
-        //On procède à la connexion.
-        Connexion.CONNEXION.setup();
-
+        intent.putExtra(AUTOCONNECT,autoconnect);
         startActivity(intent);
     }
 }

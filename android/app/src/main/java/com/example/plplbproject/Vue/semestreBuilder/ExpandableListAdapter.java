@@ -1,18 +1,16 @@
-package com.example.plplbproject.Vue;
+package com.example.plplbproject.Vue.semestreBuilder;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.controleur.UeClickListener;
+import com.example.plplbproject.Vue.Vue;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import metier.Categorie;
 import metier.MainModele;

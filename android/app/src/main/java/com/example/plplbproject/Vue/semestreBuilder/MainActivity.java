@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue;
+package com.example.plplbproject.Vue.semestreBuilder;
 
 
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -19,13 +18,20 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.controleur.ReseauController;
-import com.example.plplbproject.controleur.UserController;
+import com.example.plplbproject.Vue.Vue;
+import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
+import com.example.plplbproject.controleur.semestreBuilder.UserController;
 import com.example.plplbproject.reseau.Connexion;
 
 
+import java.io.Serializable;
+
+import io.socket.client.Socket;
 import metier.Etudiant;
 import metier.MainModele;
+
+import static constantes.NET.SENDCLIENTSAVE;
+import static constantes.NET.SENDMESSAGE;
 
 
 public class MainActivity extends AppCompatActivity implements Vue {
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private Button extendButton;
 
     private UserController userController;
+    private ReseauController reseauController;
     private MainModele modele;
 
     ExpandableListAdapter listAdapter;
@@ -55,11 +62,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.modele = new MainModele();
-        Connexion.CONNEXION.setup();
-
-        Etudiant etu = (Etudiant) getIntent().getSerializableExtra("etudiant");
-        System.out.println(etu.getNom());
-        modele.setEtudiant(etu);
+        Serializable etu = getIntent().getSerializableExtra("etudiant");
+        if(etu!=null) this.modele.setEtudiant((Etudiant) getIntent().getSerializableExtra("etudiant"));
     }
 
 
@@ -159,14 +163,26 @@ public class MainActivity extends AppCompatActivity implements Vue {
         expListView.setAdapter(listAdapter);
 
         //###################### Server connection #####################
-        Connexion.CONNEXION.setupEvent(new ReseauController(this,modele));
-        Connexion.CONNEXION.connect();
+        setupEventReseau();
+        if(!Connexion.CONNEXION.isConnected()) Connexion.CONNEXION.connect();
 
 
         //##################### Controller for the user #####################
         nextButton.setOnClickListener(userController.nextButton());
         previousButton.setOnClickListener(userController.prevButton());
 
+
+    }
+
+    /**
+     * setup les event necessaire pour cette activity
+     */
+    public void setupEventReseau(){
+        reseauController = new ReseauController(this,modele);
+        Connexion.CONNEXION.setEventListener(Socket.EVENT_CONNECT,reseauController.connexionEvent());
+        Connexion.CONNEXION.setEventListener(SENDMESSAGE, reseauController.receiveMessage());
+        Connexion.CONNEXION.setEventListener(SENDMESSAGE, reseauController.receiveMessage());
+        Connexion.CONNEXION.setEventListener(SENDCLIENTSAVE,reseauController.receiveSave());
 
     }
 

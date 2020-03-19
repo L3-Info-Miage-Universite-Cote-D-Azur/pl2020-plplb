@@ -1,4 +1,4 @@
-package com.example.plplbproject.controleur;
+package com.example.plplbproject.controleur.semestreBuilder;
 
 import android.view.View;
 import android.widget.CheckBox;

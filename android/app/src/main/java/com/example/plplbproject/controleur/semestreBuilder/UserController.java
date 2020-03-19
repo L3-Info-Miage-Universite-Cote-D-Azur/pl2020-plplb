@@ -1,9 +1,9 @@
-package com.example.plplbproject.controleur;
+package com.example.plplbproject.controleur.semestreBuilder;
 
 import android.view.View;
-import android.widget.CheckBox;
 
 import com.example.plplbproject.Vue.Vue;
+import com.example.plplbproject.controleur.listener.ClickListener;
 import com.example.plplbproject.reseau.Connexion;
 
 import com.google.gson.Gson;

@@ -1,4 +1,4 @@
-package com.example.plplbproject.controleur;
+package com.example.plplbproject.controleur.listener;
 
 import com.example.plplbproject.Vue.Vue;
 import com.example.plplbproject.reseau.Connexion;

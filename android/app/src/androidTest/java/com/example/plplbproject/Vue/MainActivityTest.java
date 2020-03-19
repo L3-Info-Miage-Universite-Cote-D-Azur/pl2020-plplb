@@ -1,14 +1,9 @@
 package com.example.plplbproject.Vue;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import android.widget.ListView;
-import android.widget.Toolbar;
-
 import androidx.test.espresso.Espresso;
-import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.BoundedMatcher;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -17,7 +12,8 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.example.plplbproject.R;
 
-import com.example.plplbproject.controleur.ReseauController;
+import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
+import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,7 +23,6 @@ import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -44,7 +39,6 @@ import metier.MainModele;
 import metier.UE;
 import metier.parcours.Parcours;
 import metier.semestre.Semestre;
-import metier.semestre.SemestreRules;
 
 
 import static androidx.test.espresso.Espresso.onData;
@@ -64,7 +58,6 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 

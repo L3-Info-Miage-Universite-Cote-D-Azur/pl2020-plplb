@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue;
+package com.example.plplbproject.Vue.apercusParcour;
 
 import androidx.appcompat.app.AppCompatActivity;
 

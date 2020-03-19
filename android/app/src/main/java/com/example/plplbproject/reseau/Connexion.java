@@ -1,22 +1,17 @@
 package com.example.plplbproject.reseau;
 
-import com.example.plplbproject.Vue.Vue;
-import com.example.plplbproject.controleur.ReseauController;
-
 import java.net.URISyntaxException;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import metier.MainModele;
-
-import static constantes.NET.*;
+import io.socket.emitter.Emitter;
 
 public enum Connexion {
     CONNEXION;
 
     /* FIELDS */
     private Socket mSocket;
-    private final String ip = "10.0.2.2";
+    private final String ip = "192.168.1.46";
     private final String port = "10101";
 
 
@@ -35,11 +30,13 @@ public enum Connexion {
 
     }
 
-    public void setupEvent(ReseauController controller){
-        mSocket.on(Socket.EVENT_CONNECT, controller.connexionEvent());
-        mSocket.on(SENDMESSAGE, controller.receiveMessage());
-        mSocket.on(SENDDATACONNEXION,controller.dataConnexion());
-        mSocket.on(SENDCLIENTSAVE,controller.receiveSave());
+    /**
+     * permet d'aplliquer un traitement a un event
+     * @param event l'event qui ce produit
+     * @param listener le listener qui doit gerer l'event
+     */
+    public void setEventListener(String event, Emitter.Listener listener){
+        mSocket.on(event, listener);
     }
 
     /**
@@ -64,6 +61,14 @@ public enum Connexion {
      */
     public void send(String event, String json){
         mSocket.emit(event,json);
+    }
+
+    /**
+     * Permet de voir si on est actuellement connecter au serveur
+     * @return true = connecter; false deconnecter.
+     */
+    public boolean isConnected(){
+        return mSocket.connected();
     }
 
     

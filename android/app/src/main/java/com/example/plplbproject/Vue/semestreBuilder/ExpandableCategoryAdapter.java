@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue;
+package com.example.plplbproject.Vue.semestreBuilder;
 
 import android.content.Context;
 import android.view.LayoutInflater;

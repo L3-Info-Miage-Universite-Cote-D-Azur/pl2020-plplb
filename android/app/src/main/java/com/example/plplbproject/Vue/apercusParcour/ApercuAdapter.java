@@ -1,22 +1,19 @@
-package com.example.plplbproject.Vue;
+package com.example.plplbproject.Vue.apercusParcour;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.Vue.semestreBuilder.ExpandableCategoryAdapter;
 
 import java.util.ArrayList;
 
 import metier.Categorie;
 import metier.MainModele;
-import metier.UE;
-import metier.parcours.Parcours;
 import metier.semestre.Semestre;
 
 
