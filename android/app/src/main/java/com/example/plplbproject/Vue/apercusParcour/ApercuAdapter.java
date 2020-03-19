@@ -29,11 +29,9 @@ public class ApercuAdapter extends BaseAdapter {
         this.context = context;
         this.modele = modele;
         this.ues = new ArrayList<>();
-        System.out.println(modele == null);
-        for (Categorie cat: this.modele.getSemestre(semestreCourant -1).getListCategorie()
+        for (UE ue: this.modele.getParcours().getParcoursSelect().values()
              ) {
-            for (UE ue: cat.getListUE()
-                 ) {
+            if(modele.getParcours().isChecked(ue) && ( ue.getSemestreNumber() == semestreCourant)){
                 ues.add(ue);
             }
         }

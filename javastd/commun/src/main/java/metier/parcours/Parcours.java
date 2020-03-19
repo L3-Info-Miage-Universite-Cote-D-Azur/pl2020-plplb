@@ -57,6 +57,10 @@ public class Parcours implements Serializable {
         this.parcoursSelect = parcoursSelect;
     }
 
+    public HashMap<String, UE> getParcoursSelect() {
+        return parcoursSelect;
+    }
+
     /**
      * Permet de mettre a jour le parcours (a utiliser quand on ajoute un semestre au modele)
      */
