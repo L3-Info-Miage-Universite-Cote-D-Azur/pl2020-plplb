@@ -150,11 +150,9 @@ Serveur
     {
         Debug.log("Send Semesters to : " + c.getSock().getRemoteAddress().toString());
 
-        ArrayList<String> semestresJsonned = new ArrayList<String>();
-        semestresJsonned.add(SemestersSample.S1Jsoned);
-        semestresJsonned.add(SemestersSample.S2Jsoned);
+        String msg = ServerUtility.getListOfSemestersJSONed();
 
-        c.getSock().sendEvent(SENDDATACONNEXION, gson.toJson(semestresJsonned));
+        c.getSock().sendEvent(SENDDATACONNEXION, msg);
     }
 
     /**
@@ -184,10 +182,7 @@ Serveur
     		return;
     	Debug.log("--- Sending new semesters to clients... ---");
     	// Creation du message
-    	ArrayList<String> semestresJsonned = new ArrayList<String>();
-        semestresJsonned.add(SemestersSample.S1Jsoned);
-        semestresJsonned.add(SemestersSample.S2Jsoned);
-        String msg = this.gson.toJson(semestresJsonned);
+    	String msg = ServerUtility.getListOfSemestersJSONed();
         // Pour chaque client, on lui envoie le message
     	for (Client c : this.listOfClients)
     	{

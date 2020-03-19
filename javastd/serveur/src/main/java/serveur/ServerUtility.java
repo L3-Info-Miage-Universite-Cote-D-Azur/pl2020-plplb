@@ -1,10 +1,14 @@
 package serveur;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.corundumstudio.socketio.SocketIOClient;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import metier.Etudiant;
+import semester_manager.SemestersSample;
 
 /**
  * Class utilitaire pour une meilleure
@@ -58,4 +62,20 @@ ServerUtility
 				return c;
 		return null;
 	}
+	
+	/**
+	 * Renvoie une String contenant la liste des
+	 * semestres sous format JSON
+	 * @return une String
+	 */
+	public static String
+	getListOfSemestersJSONed ()
+	{
+		Gson gson = new GsonBuilder().create();
+		ArrayList<String> semestresJsonned = new ArrayList<String>();
+	    semestresJsonned.add(SemestersSample.S1Jsoned);
+	    semestresJsonned.add(SemestersSample.S2Jsoned);
+	    return gson.toJson(semestresJsonned);
+	}
+	
 }
