@@ -16,7 +16,7 @@ public enum Connexion {
 
     /* FIELDS */
     private Socket mSocket;
-    private final String ip = "10.0.2.2";
+    private final String ip = "192.168.0.17";
     private final String port = "10101";
 
 

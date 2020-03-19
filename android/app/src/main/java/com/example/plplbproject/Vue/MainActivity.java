@@ -1,6 +1,7 @@
 package com.example.plplbproject.Vue;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
     private UserController userController;
     private MainModele modele;
 
+    private Context context;
+
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
 
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.modele = new MainModele();
+        this.context = getApplicationContext();
         Connexion.CONNEXION.setup();
 
         Etudiant etu = (Etudiant) getIntent().getSerializableExtra("etudiant");
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
         super.onResume();
 
         getSupportActionBar().setTitle("Semestre 1");
-        userController = new UserController((Vue)this,modele);
+        userController = new UserController((Vue)this,modele,context);
         save = findViewById(R.id.save);// Boutton de sauvegarde
         categoryListView = findViewById(R.id.catList);
 
