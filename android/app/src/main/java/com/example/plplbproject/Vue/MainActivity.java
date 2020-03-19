@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     /* FIELDS */
     private ListView categoryListView;
-    private Button save; //Le bouton de sauvegarde
+    private Button nextButton; //Le bouton suivant
+    private Button previousButton; //boutton precedent
     private Button extendButton;
 
     private UserController userController;
@@ -121,7 +122,10 @@ public class MainActivity extends AppCompatActivity implements Vue {
         getSupportActionBar().setTitle("Semestre 1");
         userController = new UserController((Vue)this,modele,context);
         save = findViewById(R.id.save);// Boutton de sauvegarde
+        nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
+        previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
         categoryListView = findViewById(R.id.catList);
+        updateButton();
 
         if(autoconnect) initVue();
     }
@@ -165,7 +169,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
 
         //##################### Controller for the user #####################
-        save.setOnClickListener(userController.saveButton());
+        nextButton.setOnClickListener(userController.nextButton());
+        previousButton.setOnClickListener(userController.prevButton());
 
 
     }
@@ -186,11 +191,37 @@ public class MainActivity extends AppCompatActivity implements Vue {
         });
     }
 
+    /**
+     * Replis toutes les liste de categorie
+     */
     @Override
     public void collapseList() {
         int count =  expListView.getCount();
         for (int i = 0; i <count ; i++)
             expListView.collapseGroup(i);
+    }
+
+    /**
+     * notifie l'affichage que le semestre courant a changer
+     */
+    @Override
+    public void notifySemestreChange() {
+        getSupportActionBar().setTitle("Semestre "+(modele.getSemestreCourant()+1));
+        notifyUeListView();
+        collapseList();
+        updateButton();
+    }
+
+    /**
+     * Permet de mettre a jour les boutton suivant et precedent
+     * (pour le moment uniquement le precedent a besoin d'etre mis a jour)
+     */
+    private void updateButton(){
+        boolean prev = modele.hasPrevSemestre();
+        if(!prev){
+            previousButton.setText(R.string.deconnexion);
+        }
+        else previousButton.setText(R.string.suivant);
     }
 
 
@@ -213,6 +244,14 @@ public class MainActivity extends AppCompatActivity implements Vue {
     }
 
     /**
+     * permet de quité l'intent et passe a l'intent precedent
+     */
+    @Override
+    public void exitIntent(){
+        finish();
+    }
+
+    /**
      * Fonction à appeller lorsque l'utilisateur change de semestre
      */
     public void onChangeSemestre(int newSemesterIndex){
@@ -226,6 +265,9 @@ public class MainActivity extends AppCompatActivity implements Vue {
     protected  void setModele(MainModele modele){
         this.modele = modele;
     }
+
+
+
 
 
 

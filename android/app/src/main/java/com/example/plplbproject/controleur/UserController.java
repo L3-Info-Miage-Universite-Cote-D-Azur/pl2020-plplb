@@ -47,6 +47,41 @@ public class UserController {
         };
     }
 
+    /**
+     * controller du boutton suivant
+     * @return le controller
+     */
+    public View.OnClickListener nextButton(){
+        return new ClickListener(vue,modele) {
+            @Override
+            public void onClick(View view) {
+                boolean nextExist = modele.hasNextSemestre();
+                if(nextExist){
+                    modele.nextSemestre();
+                    vue.notifySemestreChange();
+                }
+            }
+        };
+    }
+
+    /**
+     * controller du boutton precedent
+     * @return le controller
+     */
+    public View.OnClickListener prevButton(){
+        return new ClickListener(vue,modele) {
+            @Override
+            public void onClick(View view) {
+                boolean prevExist = modele.hasPrevSemestre();
+                if(prevExist){
+                    modele.prevSemestre();
+                    vue.notifySemestreChange();
+                }
+                else vue.exitIntent();
+            }
+        };
+    }
+
 
 
 }

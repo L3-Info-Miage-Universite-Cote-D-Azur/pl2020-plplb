@@ -5,12 +5,22 @@ import java.util.concurrent.TimeUnit;
 import debug.Debug;
 import serveur.Serveur;
 
+/**
+ * Class qui permet la gestion de la mise
+ * a jour des semestres dans le serveur
+ */
 public class
 SemesterThread implements Runnable
 {
+	/** Objet gerant les semestres */
 	private SemesterManager sm;
+	/** Objet qui represente le serveur */
 	private Serveur serv;
 	
+	/**
+	 * Constructeur de SemesterThread
+	 * @param s Le serveur
+	 */
 	public
 	SemesterThread (Serveur s)
 	{
@@ -19,7 +29,8 @@ SemesterThread implements Runnable
 	}
 	
 	@Override
-	public void run() 
+	public void 
+	run () 
 	{
 		try {
 			this.sm.updateConsts();
@@ -30,6 +41,7 @@ SemesterThread implements Runnable
 				{
 					Debug.log("Semesters updated !");
 					this.sm.updateConsts();
+					this.serv.updateSemestersOfClients();
 				}
 			}
 		} catch (Exception E) {
