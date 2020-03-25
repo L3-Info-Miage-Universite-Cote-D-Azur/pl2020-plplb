@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Menu principal"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:layout_marginTop="30dp">
+    </TextView>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="11dp"
+        android:background="?android:attr/listDivider" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vos parcours : "
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="#63AC63"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:clickable="false"
+        >
+
+    </Button>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/parcoursList"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:scrollbars="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/nouveauParcours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#63AC63"
+        android:text="Nouveau Parcours"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        />
+
+
+    <Button
+        android:id="@+id/deconnexion"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0"
+        android:text="Deconnexion"
+        android:layout_gravity="center_horizontal|center"
+        android:visibility="visible" />
+
+
+</LinearLayout>

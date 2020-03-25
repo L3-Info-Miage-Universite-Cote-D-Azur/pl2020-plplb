@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Vue.apercusParcour.ApercuActivity"></activity>
+        <activity android:name=".Vue.menuPrincipal.MenuInter"></activity>
+        <activity android:name=".Vue.menuPrincipal.MenuPrinc" />
+        <activity android:name=".Vue.apercusParcour.ApercuActivity" />
         <activity
             android:name=".Vue.login.LoginActivity"
             android:label="@string/app_name"
@@ -23,11 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Vue.semestreBuilder.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
