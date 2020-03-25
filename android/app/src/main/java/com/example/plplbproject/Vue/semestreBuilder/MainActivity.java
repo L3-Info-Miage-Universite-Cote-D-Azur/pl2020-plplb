@@ -2,6 +2,7 @@ package com.example.plplbproject.Vue.semestreBuilder;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -20,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.Vue;
+import com.example.plplbproject.Vue.apercusParcour.ApercuActivity;
+import com.example.plplbproject.controleur.listener.ClickListener;
 import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
 import com.example.plplbproject.controleur.semestreBuilder.UserController;
 import com.example.plplbproject.reseau.Connexion;
@@ -126,30 +130,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
      */
     protected void initVue(){
 
-        /*
-        // Pour tester en local, à enlever! TODO
-        // Il faut mettre à jour les méthodes des classes contenues dans controlleur
-        UE ue1 = new UE("Maths","0000");
-        UE ue2 = new UE("Anglais","0001");
-        UE ue3 = new UE("Francais","0002");
-        UE ue4 = new UE("Algo","0003");
-        UE ue5 = new UE("OFI","0004");
-        UE ue6 = new UE("POO","0005");
-
-        ArrayList<UE> arr1= new ArrayList<UE>();
-        ArrayList<UE> arr2= new ArrayList<UE>();
-
-        arr1.add(ue1);arr1.add(ue2);arr1.add(ue3);
-        arr2.add(ue4);arr2.add(ue5);arr2.add(ue6);
-
-        Categorie generalCat = new Categorie("general",arr1);
-        Categorie infoCat = new Categorie("info",arr2);
-
-        categoryList = new ArrayList<>();
-        categoryList.add(generalCat);categoryList.add(infoCat);
-
-
-         */
         expListView = (ExpandableListView) findViewById(R.id.catList);
         listAdapter = new ExpandableListAdapter(this, modele);
         expListView.setAdapter(listAdapter);
@@ -167,6 +147,26 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         //##################### Controller for the user #####################
         nextButton.setOnClickListener(userController.nextButton());
+
+        /*
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(modele.getParcours().verifiParcours()){
+                    Intent intent = new Intent(context, ApercuActivity.class);
+                    intent.putExtra("modele",modele);
+                    startActivityForResult(intent,1);
+                }
+                else{
+                    Toast toast = Toast. makeText(context, "La sauvegarde n'a pas pue etre effectuer car le parcours est incomplet (une page de renseignement serat ultérieurement mis en place)", Toast. LENGTH_SHORT);
+                }
+                            //TODO verification que le serveur a bien recus la sauvegarde
+            }
+
+        });
+
+         */
         previousButton.setOnClickListener(userController.prevButton());
 
 

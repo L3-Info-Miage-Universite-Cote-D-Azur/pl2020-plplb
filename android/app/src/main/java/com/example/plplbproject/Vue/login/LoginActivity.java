@@ -10,12 +10,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
+import com.example.plplbproject.Vue.menuPrincipal.MenuPrinc;
 import com.example.plplbproject.controleur.login.LoginClickListener;
-import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
 import com.example.plplbproject.reseau.Connexion;
 
-import io.socket.client.Socket;
 import metier.Etudiant;
 import metier.LoginModele;
 
@@ -94,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void switchIntent(){
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MenuPrinc.class);
         intent.putExtra("etudiant",etudiant);
         intent.putExtra(AUTOCONNECT,autoconnect);
         startActivity(intent);
