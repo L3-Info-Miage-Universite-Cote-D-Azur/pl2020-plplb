@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
-import metier.MainModele;
 import metier.UE;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreList;
@@ -15,6 +15,7 @@ import metier.semestre.SemestreManager;
  * Classe qui s'occupe de la gestion du parcours et des regle a respecter.
  */
 public class Parcours implements Serializable {
+
 
     private String name = "default";
     private SemestreList semestreList;
@@ -57,6 +58,22 @@ public class Parcours implements Serializable {
         this.parcoursSelect = parcoursSelect;
     }
 
+    /**
+     * Recuperer le nom
+     * @return le nom du parcours
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set le nom du parcours
+     * @param name le nom de parcours
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public HashMap<String, UE> getParcoursSelect() {
         return parcoursSelect;
     }
@@ -67,7 +84,15 @@ public class Parcours implements Serializable {
     public void updateSemestre(){
         initParcoursSemestresManager();
         initObligatoryUE();
+
+        //on rajoute de nouveau tout les ue(si il existe encore
+        Set<String> setAllSelected = parcoursSelect.keySet();
+        parcoursSelect.clear(); //on vide la liste d'ue
+        for(String codeUE : setAllSelected){
+            checkUENoVerif(semestreList.findUE(codeUE));
+        }
     }
+
 
     /**
      * Initialisation des ue avec une liste de code d'ue
@@ -209,6 +234,8 @@ public class Parcours implements Serializable {
         }
         return true;
     }
+
+
 
 
 
