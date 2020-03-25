@@ -18,11 +18,11 @@ import metier.parcours.Parcours;
 public class ParcoursPredefRecyclerAdapter extends RecyclerView.Adapter<ParcoursPredefViewHolder> {
 
     private Context context;
-    private ArrayList<?> parcours;
+    private ArrayList<String> parcoursTypeName;
 
-    public ParcoursPredefRecyclerAdapter(Context context, ArrayList<?> parcours) {
+    public ParcoursPredefRecyclerAdapter(Context context, ArrayList<String> parcoursTypeName) {
         this.context = context;
-        this.parcours = parcours;
+        this.parcoursTypeName = parcoursTypeName;
     }
 
     @NonNull
@@ -38,11 +38,11 @@ public class ParcoursPredefRecyclerAdapter extends RecyclerView.Adapter<Parcours
 
     @Override
     public void onBindViewHolder(@NonNull ParcoursPredefViewHolder holder, int position) {
-        //holder.parcoursPredefName.;  TODO
+        holder.parcoursPredefName.setText(parcoursTypeName.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return parcours.size();
+        return parcoursTypeName.size();
     }
 }

@@ -80,6 +80,9 @@ public class ParcoursSample {
 
          listParcoursType.add(new ParcoursType("Parcours Electronique",null,obligatoryUeElect));
 
+         //PARCOURS LIBRE
+         listParcoursType.add(new ParcoursType("Parcours Libre",null,null));
+
          //TODO : ajouter les autres parcours types quand on les aura.
          ParcoursSample.parcoursTypes = listParcoursType;
      }

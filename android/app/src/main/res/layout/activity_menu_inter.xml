@@ -8,12 +8,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Création d'un nouveau parcours"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:textSize="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="5dp">
-    </TextView>
+        android:text="Création d'un nouveau parcours"
+        android:textSize="30dp"></TextView>
 
     <View
         android:id="@+id/divider"
@@ -24,13 +23,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nom du parcours"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
+        android:text="Nom du parcours"
         android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="5dp">
-    </TextView>
+        android:textStyle="bold"></TextView>
 
     <EditText
         android:id="@+id/editParcoursName"
@@ -43,25 +41,24 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Orientations disponibles"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
+        android:text="Orientations disponibles"
         android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="5dp">
-    </TextView>
+        android:textStyle="bold"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/parcoursList"
         android:layout_width="match_parent"
         android:layout_height="0dip"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
         android:layout_weight="1"
         android:clickable="true"
-        android:scrollbars="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="20dp">
+        android:scrollbars="vertical">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -70,15 +67,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#63AC63"
-        android:text="Nouveau Parcours"
+        android:text="Creer Nouveau Parcours"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
         />
 
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Ce nom de parcours existe déjà"
+        android:textColor="#AD3535"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/deconnexion"

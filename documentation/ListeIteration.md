@@ -57,7 +57,7 @@
 	gérées par le serveur
 	-Les choix de parcours sont enregistrés sur le serveur, le client peut sauvegarder/charger ses choix de parcours
 	- ajout de l'option : filtrer / rechercher par discipline quand le client creer/modifie un parcours (coté client)
-	- Donner au client le type de parcours qu'il a envoyer au serveur (si son parcours est un parcours d'info ou de math)
+	- Le client peut choisir un parcours prédefinie quand il en créer un nouveau (parcours de math, d'info...)
 	-Avancements sur l'IHM:
 		-Toolbar pour les choix:
 			-Charger ses parcours
