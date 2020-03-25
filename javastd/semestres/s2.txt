@@ -195,7 +195,7 @@
       }
    ],
    "rules":{
-      "maxUELibre":4,
+      "maxUELibre":3,
       "maxByCategory":2,
       "obligatoryUEList":[
          "KCTTS2",
