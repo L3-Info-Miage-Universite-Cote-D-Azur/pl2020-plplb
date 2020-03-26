@@ -100,6 +100,7 @@ public class MenuInter extends AppCompatActivity {
         intent.putExtra(AUTOCONNECT,autoconnect);
         intent.putExtra("ParcoursTypeName",modele.getParcoursTypeName());
         intent.putExtra("ParcoursName",modele.getParcoursName());
+        intent.putExtra("className","MenuInter");
         startActivity(intent);
     }
 

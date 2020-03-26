@@ -64,6 +64,7 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
                 prepareModele(position);
                 Intent intent = new Intent(menuPrinc, ApercuActivity.class);
                 intent.putExtra("modele",modele);
+                intent.putExtra("className","MenuPrinc");
                 menuPrinc.startActivityForResult(intent,2);
 
             }
