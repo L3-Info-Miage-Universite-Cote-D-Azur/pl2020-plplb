@@ -49,4 +49,8 @@ public class ParcoursRules {
         //Toute les vérif sont ok.
         return true;
     }
+
+    public ParcoursType getParcoursType(){
+        return this.parcoursType;
+    }
 }
