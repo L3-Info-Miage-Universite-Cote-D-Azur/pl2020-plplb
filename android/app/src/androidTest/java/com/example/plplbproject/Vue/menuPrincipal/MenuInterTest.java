@@ -9,7 +9,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
 
 import org.junit.Before;
 import org.junit.Rule;

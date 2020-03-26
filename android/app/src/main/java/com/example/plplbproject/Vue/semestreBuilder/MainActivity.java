@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
             finish();
         }
         else if (requestCode==1){
-            onChangeSemestre(1);
+            onChangeSemestre(0);
         }
     }
 

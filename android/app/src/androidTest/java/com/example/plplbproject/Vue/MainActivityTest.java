@@ -60,7 +60,9 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 
-
+/*
+    TODO:refaire en adaptant a  la nouvelle connexion
+ */
 /**
  * Instrumented test, which will execute on an Android device.
  *
