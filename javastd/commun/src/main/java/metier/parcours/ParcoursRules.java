@@ -19,27 +19,30 @@ public class ParcoursRules {
      * @return true ou false.
      */
     public boolean acceptParcours(ArrayList<HashMap<String,Integer>> listHashmap,ArrayList<String> listSelectUe){
-
         //VERIFICATION SUR LE NOMBRE
         int res;//Le nombre d'ue de la catégorie key dans les 4 semestres.
 
-        for(String key : parcoursType.getNumberUes().keySet()){
-            res = 0;//On remet res à 0.
+        if(parcoursType.getNumberUes() != null){
+            for(String key : parcoursType.getNumberUes().keySet()){
+                res = 0;//On remet res à 0.
 
-            for(HashMap<String,Integer> UebyCategorie : listHashmap){
-                //On ajoute le nombre d'ue de la catégorie key
-                res += UebyCategorie.getOrDefault(key,0);
-            }
+                for(HashMap<String,Integer> UebyCategorie : listHashmap){
+                    //On ajoute le nombre d'ue de la catégorie key
+                    res += UebyCategorie.getOrDefault(key,0);
+                }
 
-            if(res < parcoursType.getNumberUes().get(key)){
-                return false;//Pas assez d'ue de la catégorie key.
+                if(res < parcoursType.getNumberUes().get(key)){
+                    return false;//Pas assez d'ue de la catégorie key.
+                }
             }
         }
 
         //VERIFICATION SUR LES UES OBLIGATOIRE.
-        for(String obligatoryUe : parcoursType.getObligatoryUes()){
-            if(!listSelectUe.contains(obligatoryUe)){
-                return false;//On ne contient pas une ue obligatoire.
+        if(parcoursType.getObligatoryUes() != null){
+            for(String obligatoryUe : parcoursType.getObligatoryUes()){
+                if(!listSelectUe.contains(obligatoryUe)){
+                    return false;//On ne contient pas une ue obligatoire.
+                }
             }
         }
 
