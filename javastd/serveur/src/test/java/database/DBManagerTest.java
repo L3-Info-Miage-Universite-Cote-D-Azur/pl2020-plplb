@@ -199,6 +199,7 @@ public class DBManagerTest {
 
         //ON CREER LE FICHIER QUI CONTIENT QUELQUE CHOSE.
         ArrayList<String> expected = new ArrayList<String>();
+        expected.add("monFichierTest");
         expected.add("Informatique");
         expected.add("SPUGDE10");
         expected.add("SPUGDC10");
@@ -213,7 +214,8 @@ public class DBManagerTest {
 
         ArrayList<String> res = dbManager.load("monFichierTest");
         assertEquals(res.size(), expected.size());
-        for (int i = 0; i < expected.size(); i++)
+        assertEquals(res.contains(expected.get(0)), true);
+        for (int i = 1; i < expected.size(); i++)
         {
         	assertEquals(res.contains(expected.get(i)), true);
         }

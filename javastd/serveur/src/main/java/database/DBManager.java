@@ -188,7 +188,10 @@ DBManager
 		final Gson gson = new GsonBuilder().create();
 		@SuppressWarnings("unchecked")
 		ArrayList<String> content = gson.fromJson(fcontent, ArrayList.class);
-
-		return content; //On renvoie le type de parcours + les ues selectionnee de la sauvegarde.
+		ArrayList<String> res = new ArrayList<String>();
+		res.add(courseName);
+		res.addAll(content);
+		
+		return res; //On renvoie le type de parcours + les ues selectionnee de la sauvegarde.
 	}
 }
