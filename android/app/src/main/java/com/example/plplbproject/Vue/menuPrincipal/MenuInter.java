@@ -61,7 +61,7 @@ public class MenuInter extends AppCompatActivity {
         super.onResume();
 
         //Chargement des elements graphiques
-        parcoursRecyclerView = findViewById(R.id.parcoursList);
+        parcoursRecyclerView = findViewById(R.id.parcoursPredefList);
         deconnexion = findViewById(R.id.deconnexion);
         createNewParcours = findViewById(R.id.nouveauParcours);
         editParcoursName = findViewById(R.id.editParcoursName);
@@ -71,6 +71,7 @@ public class MenuInter extends AppCompatActivity {
         adapterParcoursType = new ParcoursPredefRecyclerAdapter(this,modele.getListParcoursPredef());
         parcoursRecyclerView.setAdapter(adapterParcoursType);
         parcoursRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         //Mise en place des listener
         createNewParcours.setOnClickListener(new createNewParcoursListener(this,modele));
@@ -109,5 +110,21 @@ public class MenuInter extends AppCompatActivity {
     public void setTextError(String text) {
         errorMessage.setText(text);
         errorMessage.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * permet de recuperer le modele (utile pour les test)
+     * @return le modele de lactivity
+     */
+    protected MenuInterModele getModele(){
+        return modele;
+    }
+
+    /**
+     * permet de set le modele (utile pour les test
+     * @param modele le modele que l'on veut set
+     */
+    protected void setModele(MenuInterModele modele){
+        this.modele = modele;
     }
 }
