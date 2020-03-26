@@ -98,12 +98,20 @@ Serveur
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
                 clientOnConnectEventSendSemesters(client);
+            }
+        });
+        
+        /*  */
+        this.server.addEventListener(SENDCLIENTLISTCOURSE,String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
                 clientOnConnectSendCourses(client);
             }
         });
         
         /* Le client envoie un parcours a charger */
-        this.server.addEventListener(SENDCLIENTLISTCOURSE,String.class, new DataListener<String>() {
+        this.server.addEventListener(SENDCOURSE,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);

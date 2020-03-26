@@ -12,11 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.ApercuRecyclerAdapter;
-import com.example.plplbproject.Vue.Vue;
-import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
-import com.example.plplbproject.controleur.listener.EmitterListener;
-import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,6 +24,7 @@ import metier.Etudiant;
 import metier.MainModele;
 import metier.parcours.Parcours;
 
+import static constantes.NET.SENDCLIENTLISTCOURSE;
 import static constantes.NET.SENDCLIENTSAVE;
 import static constantes.NET.SENDDATACONNEXION;
 import static constantes.NET.SENDMESSAGE;
@@ -107,12 +103,12 @@ public class MenuPrinc extends AppCompatActivity{
         // ################### récupération des parcours sauvegardés ######################################
 
         setupEventReseau();
-        Connexion.CONNEXION.send(SENDDATACONNEXION,"");
+        Connexion.CONNEXION.send(SENDCLIENTLISTCOURSE,"");
 
         // #################### Mise en place de l'adapter de parcours ################################"
 
         parcoursRecyclerView = findViewById(R.id.parcoursList);
-        parcoursAdapter = new ParcoursRecyclerAdapter(this,this.parcoursList);
+        parcoursAdapter = new ParcoursRecyclerAdapter(this,this.parcoursList,this);
         parcoursRecyclerView.setAdapter(parcoursAdapter);
         parcoursRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -121,11 +117,25 @@ public class MenuPrinc extends AppCompatActivity{
      * setup les event necessaire pour cette activity
      */
     public void setupEventReseau(){
-        Connexion.CONNEXION.setEventListener(SENDDATACONNEXION, receiveParcoursName());
+        Connexion.CONNEXION.setEventListener(SENDCLIENTLISTCOURSE, receiveParcoursName());
     }
 
     public void setParcoursList(ArrayList<String> parcoursNames){
         this.parcoursList = parcoursNames;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2)
+        {
+            finish();
+        }
+        else{
+            System.out.println("Une erreur?");
+            finish();
+        }
     }
 
 
@@ -145,7 +155,4 @@ public class MenuPrinc extends AppCompatActivity{
         };
     }
 
-    /*
-    TODO : modifier reseauController pour qu'il accepte autre chose qu'une vue en constructeur
-     */
 }

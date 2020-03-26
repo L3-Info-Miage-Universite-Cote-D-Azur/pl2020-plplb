@@ -39,6 +39,7 @@ public class ParcoursPredefRecyclerAdapter extends RecyclerView.Adapter<Parcours
     }
 
     @Override
+
     public void onBindViewHolder(@NonNull ParcoursPredefViewHolder holder, final int position) {
         final String name = parcoursTypeName.get(position);
         holder.parcoursPredefName.setText(name);
@@ -51,6 +52,7 @@ public class ParcoursPredefRecyclerAdapter extends RecyclerView.Adapter<Parcours
                 ((MenuInter)context).notifyParcoursTypeSelected();
             }
         });
+
     }
 
     @Override
