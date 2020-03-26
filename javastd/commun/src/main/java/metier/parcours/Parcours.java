@@ -177,7 +177,7 @@ public class Parcours implements Serializable {
             for (String ueCode : parcoursRules.getParcoursType().getObligatoryUes()) {
                 ue = semestreList.findUE(ueCode);
                 if (ue != null) {
-                    parcoursSelect.put(ueCode, ue);
+                    checkUENoVerif(ue);
                 }
             }
         }
