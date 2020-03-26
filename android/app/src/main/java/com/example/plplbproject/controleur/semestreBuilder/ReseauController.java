@@ -77,7 +77,7 @@ public class ReseauController{
                     modele.addSemestre(gson.fromJson(s,Semestre.class));
                 }
                 if(modele.getParcours()!=null) {
-                    modele.getParcours().updateSemestre();
+                    modele.getParcours().updateSemestre(modele.getSemestres());
                 }
                 vue.notifyUeListView();
             }

@@ -1,9 +1,10 @@
 package metier.parcours;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ParcoursRules {
+public class ParcoursRules implements Serializable {
 
     private ParcoursType parcoursType;//Le parcours type.
 

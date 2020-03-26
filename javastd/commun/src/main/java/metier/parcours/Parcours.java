@@ -83,10 +83,27 @@ public class Parcours implements Serializable {
 
     /**
      * Permet de mettre a jour le parcours (a utiliser quand on ajoute un semestre au modele)
+     * @param semestreList si il a un nouveau semestre a set
+     */
+    public void updateSemestre(SemestreList semestreList){
+        this.semestreList = semestreList;
+        initParcoursSemestresManager();
+
+        //on rajoute de nouveau tout les ue (si il existe encore)
+        Set<String> setAllSelected = parcoursSelect.keySet();
+        parcoursSelect.clear(); //on vide la liste d'ue
+        for(String codeUE : setAllSelected){
+            checkUENoVerif(semestreList.findUE(codeUE));
+        }
+        initObligatoryUE();
+    }
+
+    /**
+     * Permet de mettre a jour le parcours (a utiliser quand on ajoute un semestre au modele)
      */
     public void updateSemestre(){
+
         initParcoursSemestresManager();
-        initObligatoryUE();
 
         //on rajoute de nouveau tout les ue(si il existe encore
         Set<String> setAllSelected = parcoursSelect.keySet();
@@ -94,7 +111,9 @@ public class Parcours implements Serializable {
         for(String codeUE : setAllSelected){
             checkUENoVerif(semestreList.findUE(codeUE));
         }
+        initObligatoryUE();
     }
+
 
 
     /**
@@ -115,7 +134,7 @@ public class Parcours implements Serializable {
 
         for(ParcoursType parcoursType : listparcoursType){
 
-            if(parcoursType.getName() == parcoursName){
+            if(parcoursType.getName().equals(parcoursName)){
                 parcoursRules = new ParcoursRules(parcoursType);
             }
         }
