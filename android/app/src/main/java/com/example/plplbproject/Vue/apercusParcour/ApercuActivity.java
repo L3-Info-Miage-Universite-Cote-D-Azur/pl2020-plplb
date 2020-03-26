@@ -25,7 +25,6 @@ import metier.parcours.Parcours;
 public class ApercuActivity extends AppCompatActivity {
 
     private MainModele modele;
-    private Parcours parcours;
     private long backPressedTime = 0;    // used by onBackPressed()
 
     private RecyclerView apercuList;
@@ -39,7 +38,6 @@ public class ApercuActivity extends AppCompatActivity {
         setContentView(R.layout.apercu_activity);
 
         modele = (MainModele) getIntent().getExtras().get("modele");
-        parcours = modele.getParcours();
 
         apercuList = findViewById(R.id.apercuList);
         apercuAdapter = new ApercuRecyclerAdapter(this,modele);
@@ -47,20 +45,27 @@ public class ApercuActivity extends AppCompatActivity {
         apercuList.setLayoutManager(new LinearLayoutManager(this));
 
         Button saveButton = findViewById(R.id.saveApercu);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Connexion.CONNEXION.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours().createListCodeUE()));
-                Toast toast = Toast.makeText(getApplicationContext(), "Parcours sauvegardé", Toast.LENGTH_SHORT);
-                toast.show();
 
-                Intent intent=new Intent();
-                setResult(2,intent);
-                finish();
-            }
-        });
-
+        if (getCallingActivity().getClassName() == "MenuPrinc" ){
+            saveButton.setVisibility(View.GONE);
+        }
+        else {
+            saveButton.setOnClickListener(saveButtonListener);
+        }
     }
+
+    public View.OnClickListener saveButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Connexion.CONNEXION.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours().createListCodeUE()));
+            Toast toast = Toast.makeText(getApplicationContext(), "Parcours sauvegardé", Toast.LENGTH_SHORT);
+            toast.show();
+
+            Intent intent=new Intent();
+            setResult(2,intent);
+            finish();
+        }
+    };
 
     @Override
     public void onBackPressed(){

@@ -39,6 +39,8 @@ public class ParcoursPredefRecyclerAdapter extends RecyclerView.Adapter<Parcours
     @Override
     public void onBindViewHolder(@NonNull ParcoursPredefViewHolder holder, int position) {
         holder.parcoursPredefName.setText(parcoursTypeName.get(position));
+
+        // TODO holder.setONClick...
     }
 
     @Override
