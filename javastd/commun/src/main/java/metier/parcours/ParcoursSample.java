@@ -84,7 +84,7 @@ public class ParcoursSample {
          obligatoryUeElect.add("SPUE40");
 
          listParcoursType.add(new ParcoursType("Parcours Electronique",null,obligatoryUeElect));
-         parcoursTypesName.add("Parcours Informatique");
+         parcoursTypesName.add("Parcours Electronique");
 
          //PARCOURS LIBRE
          listParcoursType.add(new ParcoursType("Parcours Libre",null,null));

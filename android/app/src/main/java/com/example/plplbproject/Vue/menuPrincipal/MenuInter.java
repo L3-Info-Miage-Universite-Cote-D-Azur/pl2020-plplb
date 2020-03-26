@@ -68,7 +68,7 @@ public class MenuInter extends AppCompatActivity {
         errorMessage = findViewById(R.id.errorMessage);
 
         //Mise en place de l'adapter.
-        adapterParcoursType = new ParcoursPredefRecyclerAdapter(this,modele.getListParcoursPredef());
+        adapterParcoursType = new ParcoursPredefRecyclerAdapter(this,modele);
         parcoursRecyclerView.setAdapter(adapterParcoursType);
         parcoursRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -101,6 +101,15 @@ public class MenuInter extends AppCompatActivity {
         intent.putExtra("ParcoursTypeName",modele.getParcoursTypeName());
         intent.putExtra("ParcoursName",modele.getParcoursName());
         startActivity(intent);
+    }
+
+    public void notifyParcoursTypeSelected(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapterParcoursType.notifyDataSetChanged();
+            }
+        });
     }
 
     /**

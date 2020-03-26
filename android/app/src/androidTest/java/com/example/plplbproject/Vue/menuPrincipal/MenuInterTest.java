@@ -45,6 +45,10 @@ public class MenuInterTest {
         parcoursName.add("old4");
         startIntent.putExtra("parcoursList",parcoursName);
         mActivityRule.launchActivity(startIntent);
+
+        //on ferme le clavier pour eviter certaint bug entre 2 test
+        onView(withId(R.id.parcoursPredefList)).perform(closeSoftKeyboard());
+
     }
 
     @Test
@@ -87,11 +91,16 @@ public class MenuInterTest {
 
     @Test
     public void testClickOnParcoursType(){
-        //on rentre de bonne valeur
-        onView(withId(R.id.parcoursPredefList)).perform(actionOnItemAtPosition(0, click()));
+        for(int i=0; i<ParcoursSample.parcoursTypesName.size();i++) {
 
-        //non implementer pour le moment
-        //assertEquals(mActivityRule.getActivity().getModele().getParcoursTypeName(),"Parcours Informatique");
+            //on rentre de bonne valeur
+            onView(withId(R.id.parcoursPredefList)).perform(actionOnItemAtPosition(i, click()));
+
+            // on verifie que tout les element peuve etre selectionner 1 a 1
+            ParcoursSample.init();
+            assertEquals(mActivityRule.getActivity().getModele().getParcoursTypeName(), ParcoursSample.parcoursTypesName.get(i));
+
+        }
 
     }
 
