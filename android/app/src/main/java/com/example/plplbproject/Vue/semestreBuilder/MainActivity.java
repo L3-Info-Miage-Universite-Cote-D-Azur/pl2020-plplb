@@ -45,6 +45,7 @@ import metier.semestre.Semestre;
 import metier.semestre.SemestreList;
 
 import static constantes.NET.SENDCLIENTSAVE;
+import static constantes.NET.SENDCOURSE;
 import static constantes.NET.SENDDATACONNEXION;
 import static constantes.NET.SENDETUDIANTID;
 import static constantes.NET.SENDMESSAGE;
@@ -81,9 +82,10 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         String classCall = getIntent().getStringExtra("className");
-        if (classCall.equals("MenuPrinc") ) {
-            modele = (MainModele) getIntent().getSerializableExtra("modele");
-            if (modele == null) modele = new MainModele();
+        if (classCall.equals("MenuPrinc")) {
+            modele = new MainModele();
+
+
         }
         else if(classCall.equals("MenuInter") ){
             this.modele = new MainModele();
@@ -169,6 +171,10 @@ public class MainActivity extends AppCompatActivity implements Vue {
         }
         if(modele.getSemestres().size()==0){
             Connexion.CONNEXION.send(SENDDATACONNEXION,"");
+        }
+        String parcourName = getIntent().getStringExtra("parcourName");
+        if(parcourName!=null){
+            Connexion.CONNEXION.send(SENDCOURSE,parcourName);
         }
 
 

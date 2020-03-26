@@ -1,7 +1,9 @@
 package metier.parcours;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -108,6 +110,7 @@ public class Parcours implements Serializable {
         //on rajoute de nouveau tout les ue(si il existe encore
         Set<String> setAllSelected = parcoursSelect.keySet();
         parcoursSelect.clear(); //on vide la liste d'ue
+
         for(String codeUE : setAllSelected){
             checkUENoVerif(semestreList.findUE(codeUE));
         }
@@ -140,11 +143,13 @@ public class Parcours implements Serializable {
         }
 
         //On recupere les ues cochées
+
         UE ue;
         for(int i =2; i < allCodeUESelected.size();i++){
             ue = semestreList.findUE(allCodeUESelected.get(i));
             if(ue != null) checkUENoVerif(ue);
         }
+
 
     }
 
@@ -167,7 +172,7 @@ public class Parcours implements Serializable {
             for(String codeUE : semestres.getRules().obligatoryUEList()){
                 ue = semestreList.findUE(codeUE);
                 if(ue!=null){
-                    parcoursSelect.put(codeUE,ue);
+                    checkUENoVerif(ue);
                 }
             }
         }
@@ -177,7 +182,7 @@ public class Parcours implements Serializable {
             for (String ueCode : parcoursRules.getParcoursType().getObligatoryUes()) {
                 ue = semestreList.findUE(ueCode);
                 if (ue != null) {
-                    checkUENoVerif(ue);
+                    if(!isChecked(ue)) checkUENoVerif(ue);
                 }
             }
         }
@@ -242,6 +247,7 @@ public class Parcours implements Serializable {
     public void checkUENoVerif(UE ue){
         parcoursSelect.put(ue.getUeCode(),ue);
         semestresManager.get(ue.getSemestreNumber()-1).check(ue);
+
     }
 
 
@@ -315,8 +321,6 @@ public class Parcours implements Serializable {
         }
         return true;
     }
-
-
 
 
 

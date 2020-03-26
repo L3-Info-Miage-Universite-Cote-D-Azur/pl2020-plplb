@@ -25,7 +25,8 @@ public class ApercuRecyclerAdapter extends RecyclerView.Adapter<ApercuViewHolder
     public ApercuRecyclerAdapter(Context context, MainModele modele) {
         this.context = context;
         this.modele = modele;
-        this.semestres = modele.getSemestres();
+        if(modele==null) semestres = new ArrayList<Semestre>();
+        else this.semestres = modele.getSemestres();
     }
 
     @NonNull
@@ -43,6 +44,7 @@ public class ApercuRecyclerAdapter extends RecyclerView.Adapter<ApercuViewHolder
         int semestreNumber = this.semestres.get(position).getNumber();
         holder.semesterName.setText("Semestre " + semestreNumber);
 
+
         //Semestre semestre = this.semestres.get(position);
         holder.listView.setAdapter(new ApercuAdapter(context,modele,semestreNumber));
 
@@ -52,5 +54,14 @@ public class ApercuRecyclerAdapter extends RecyclerView.Adapter<ApercuViewHolder
     @Override
     public int getItemCount() {
         return semestres.size();
+    }
+
+
+    /**
+     * Permet de set le modele
+     * @param modele le modele a set
+     */
+    public void setModele(MainModele modele) {
+        this.modele = modele;
     }
 }

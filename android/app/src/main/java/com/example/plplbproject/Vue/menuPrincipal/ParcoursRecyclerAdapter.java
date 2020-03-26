@@ -43,6 +43,14 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
         this.menuPrinc = menuPrinc;
     }
 
+    /**
+     * permet de set la liste des nom de parcours
+     * @param parcoursNames la liste a set
+     */
+    public void setParcoursNames(ArrayList<String> parcoursNames){
+        this.parcoursNames = parcoursNames;
+    }
+
     @NonNull
     @Override
     public ParcoursViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -61,10 +69,9 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
         holder.visualiserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                prepareModele(position);
                 Intent intent = new Intent(menuPrinc, ApercuActivity.class);
-                intent.putExtra("modele",modele);
                 intent.putExtra("className","MenuPrinc");
+                intent.putExtra("parcourName",parcoursNames.get(position));
                 menuPrinc.startActivityForResult(intent,2);
 
             }
@@ -73,9 +80,9 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
         holder.modifButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                prepareModele(position);
                 Intent intent = new Intent(menuPrinc, MainActivity.class);
-                intent.putExtra("modele",modele);
+                intent.putExtra("className","MenuPrinc");
+                intent.putExtra("parcourName",parcoursNames.get(position));
                 menuPrinc.startActivity(intent);
             }
         });
@@ -87,44 +94,5 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
         return parcoursNames.size();
     }
 
-
-    // TODO modifier reseauControlleur
-
-    public Emitter.Listener receiveParcours (){
-        return new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
-                modele.setParcours(new Parcours(modele.getSemestres(),ueCode));
-            }
-        };
-    }
-
-    public Emitter.Listener receiveSemesters (){
-        return new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                ArrayList<String> semestres = gson.fromJson((String) args[0], ArrayList.class);
-                for (String s: semestres) {
-                    modele.addSemestre(gson.fromJson(s, Semestre.class));
-                }
-                if(modele.getParcours()!= null) {
-                    modele.getParcours().updateSemestre(modele.getSemestres());
-                }
-            }
-        };
-    }
-
-    public void prepareModele(int position){
-
-        this.modele = new MainModele();
-        String parcoursChoisi = parcoursNames.get(position);
-
-        Connexion.CONNEXION.send(SENDDATACONNEXION,"");
-        Connexion.CONNEXION.setEventListener(SENDDATACONNEXION, receiveSemesters());
-
-        Connexion.CONNEXION.setEventListener(SENDCLIENTSAVE, receiveParcours());
-        Connexion.CONNEXION.send(SENDCOURSE,parcoursChoisi);
-    }
 
 }

@@ -124,10 +124,11 @@ public class MenuPrinc extends AppCompatActivity{
             finish();
         }
         else{
-            System.out.println("Une erreur?");
             finish();
         }
     }
+
+
 
 
     /**
@@ -140,8 +141,15 @@ public class MenuPrinc extends AppCompatActivity{
         return new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                ArrayList<String> parcoursName = gson.fromJson((String) args[0], ArrayList.class);
+                final ArrayList<String> parcoursName = gson.fromJson((String) args[0], ArrayList.class);
                 setParcoursList(parcoursName);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        parcoursAdapter.setParcoursNames(parcoursName);
+                        parcoursAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         };
     }

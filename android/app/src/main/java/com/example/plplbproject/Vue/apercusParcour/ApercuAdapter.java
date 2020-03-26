@@ -29,13 +29,15 @@ public class ApercuAdapter extends BaseAdapter {
         this.context = context;
         this.modele = modele;
         this.ues = new ArrayList<>();
-        for (UE ue: this.modele.getParcours().getParcoursSelect().values()
-             ) {
-            if(modele.getParcours().isChecked(ue) && ( ue.getSemestreNumber() == semestreCourant)){
-                ues.add(ue);
-            }
-        }
+        if(modele.getParcours()!=null){
+            for (UE ue: this.modele.getParcours().getParcoursSelect().values()
+                ) {
+                if(modele.getParcours().isChecked(ue) && ( ue.getSemestreNumber() == semestreCourant)){
+                    ues.add(ue);
+                }
+            }}
     }
+
 
     @Override
     public int getCount() {

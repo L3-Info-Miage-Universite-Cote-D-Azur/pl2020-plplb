@@ -20,6 +20,7 @@ public class MenuInterModele {
      * @return true ou false.
      */
     public boolean canBeChooseName(String name){
+        if(name.trim().equals("")) return false;
         if(listParcoursName.contains(name)){//Le nom est déjà pris.
             return false;
         }
