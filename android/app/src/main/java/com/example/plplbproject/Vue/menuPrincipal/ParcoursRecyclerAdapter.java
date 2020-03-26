@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,7 +61,7 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
             @Override
             public void onClick(View view) {
                 prepareModele(position);
-                Intent intent = new Intent();
+                Intent intent = new Intent(menuPrinc, MainActivity.class);
                 intent.putExtra("modele",modele);
                 menuPrinc.startActivityForResult(intent,2);
 
@@ -82,7 +83,7 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
             @Override
             public void call(Object... args) {
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
-                modele.addParcours(new Parcours(modele.getSemestres(),ueCode));
+                modele.setParcours(new Parcours(modele.getSemestres(),ueCode));
             }
         };
     }
@@ -95,7 +96,7 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
                 for (String s: semestres) {
                     modele.addSemestre(gson.fromJson(s, Semestre.class));
                 }
-                modele.getParcoursList().updateSemestre();
+                modele.getParcours().updateSemestre();
             }
         };
     }

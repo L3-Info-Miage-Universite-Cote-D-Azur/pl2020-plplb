@@ -73,10 +73,16 @@ public class MainActivity extends AppCompatActivity implements Vue {
         setSupportActionBar(toolbar);
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
-        this.modele = new MainModele();
+        if (getCallingActivity().getClassName() == "MenuPrinc" ){
+            modele = (MainModele) getIntent().getSerializableExtra("modele");
+        }
+        else if(getCallingActivity().getClassName() == "MenuInter" ){
+            this.modele = new MainModele();
+            String parcourTypeName = getIntent().getStringExtra("ParcoursTypeName");
+            String parcoursName = getIntent().getStringExtra("ParcoursName");
 
-        Serializable etu = getIntent().getSerializableExtra("etudiant");
-        if(etu!=null) this.modele.setEtudiant((Etudiant) getIntent().getSerializableExtra("etudiant"));
+            //TODO init le modele avec ces valeur
+        }
 
         this.context = getApplicationContext();
 
