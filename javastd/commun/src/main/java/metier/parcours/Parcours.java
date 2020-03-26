@@ -279,6 +279,19 @@ public class Parcours implements Serializable {
         return codeUEToList;
     }
 
+
+    /**
+     * Cree une liste pres pour une sauvegarde
+     * @return le liste pour sauvegarder le parcours
+     */
+    public ArrayList<String> createSaveList(){
+        ArrayList<String> saveList = new ArrayList<String>();
+        saveList.add(name);
+        saveList.add(parcoursRules.getParcoursType().getName());
+        saveList.addAll(createListCodeUE());
+        return saveList;
+    }
+
     /**
      * Verification du parcours entier
      * @return l'etat de la verification

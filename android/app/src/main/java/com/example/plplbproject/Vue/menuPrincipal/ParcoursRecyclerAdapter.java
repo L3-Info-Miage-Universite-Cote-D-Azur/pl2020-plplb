@@ -108,7 +108,9 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
                 for (String s: semestres) {
                     modele.addSemestre(gson.fromJson(s, Semestre.class));
                 }
-                modele.getParcours().updateSemestre(modele.getSemestres());
+                if(modele.getParcours()!= null) {
+                    modele.getParcours().updateSemestre(modele.getSemestres());
+                }
             }
         };
     }
