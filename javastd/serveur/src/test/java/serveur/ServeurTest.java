@@ -69,6 +69,19 @@ public class ServeurTest {
         //quand un client ce connecte on lui envoie bien les donner
         Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDDATACONNEXION),any(String.class));
     }
+    
+    @Test
+    public void 
+    clientOnConnectSendCourses ()
+    {
+        Mockito.when(c.getSock()).thenReturn(sockClient);
+        Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
+        Mockito.when(socketAddress.toString()).thenReturn("test");
+
+        serveur.clientOnConnectSendCourses(c);
+        //quand un client ce connecte on lui envoie bien les donner
+        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDCLIENTLISTCOURSE),any(String.class));
+    }
 
     @Test
     public void clientOnConnectSendSaveTest(){
@@ -76,13 +89,14 @@ public class ServeurTest {
         Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
         Mockito.when(socketAddress.toString()).thenReturn("test");
 
-        serveur.clientOnConnectSendSave(c);
+        serveur.clientOnConnectSendSave(c, "aaa");
         //quand un client ce connecte on lui envoie bien les donner
         Mockito.verify(sockClient,new Times(0)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
 
-        DBManager dbManager = new DBManager(etudiant.toString());
-        dbManager.getFile().create();
-        serveur.clientOnConnectSendSave(c);
+        DBManager dbManager = new DBManager(etudiant.toString(), "parcours");
+        dbManager.getDir().getFile().mkdir();
+        dbManager.getCourse().create();
+        serveur.clientOnConnectSendSave(c, "parcours");
         Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
     }
 

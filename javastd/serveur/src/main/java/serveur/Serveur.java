@@ -98,7 +98,17 @@ Serveur
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
                 clientOnConnectEventSendSemesters(client);
-                clientOnConnectSendSave(client);
+                clientOnConnectSendCourses(client);
+            }
+        });
+        
+        /* Le client envoie un parcours a charger */
+        this.server.addEventListener(SENDCLIENTLISTCOURSE,String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
+                String fname = gson.fromJson(json, String.class);
+                clientOnConnectSendSave(client, fname);
             }
         });
 
@@ -109,7 +119,7 @@ Serveur
                 @SuppressWarnings("unchecked")
 				ArrayList<String> data = gson.fromJson(json, ArrayList.class);
                 Client currentClient = ServerUtility.getClientFromSocketOnList(socketIOClient, listOfClients);
-                dbManager.setFile(currentClient.getStudent().toString());
+                dbManager.setCurrentDir(currentClient.getStudent().toString());
                 dbManager.save(data);
                 Debug.log("Save data for " + currentClient.getStudent().getNom());
             }
@@ -174,21 +184,35 @@ Serveur
 
         c.getSock().sendEvent(SENDDATACONNEXION, msg);
     }
+    
+    protected void
+    clientOnConnectSendCourses (Client c)
+    {
+    	dbManager = new DBManager(c.getStudent().toString(), "");
+    	ArrayList<String> filenames = dbManager.getAllCourses();
+    	Debug.log("Sending course\'s list " + filenames.toString() + " to " + c.getStudent().toString());
+    	c.getSock().sendEvent(SENDCLIENTLISTCOURSE, gson.toJson(filenames));
+    }
 
     /**
      * Permet d'envoyer au client sa derniere sauvegarde
      * @param c La representation du Client
      */
     protected void
-    clientOnConnectSendSave (Client c)
+    clientOnConnectSendSave (Client c, String filename)
     {
-        dbManager = new DBManager(c.getStudent().toString());
-        if (dbManager.getFile().exists()) 
+        dbManager = new DBManager(c.getStudent().toString(), filename);
+        if (dbManager.getCourse().exists()) 
         {
             Debug.log("Send data to : " + c.getStudent().getNom());
-            c.getSock().sendEvent(SENDCLIENTSAVE, gson.toJson(dbManager.load()));
+            if (dbManager.getAllCourses().contains(filename))
+            	c.getSock().sendEvent(SENDCLIENTSAVE, gson.toJson(dbManager.load(filename)));
+            else
+            {
+            	Debug.error(c.getStudent().toString() + " sent an impossible course: " + filename);
+            	Debug.error(filename + " not in " + dbManager.getAllCourses().toString());
+            }
         }
-
     }
     
     /**
