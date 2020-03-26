@@ -24,6 +24,8 @@ import metier.Etudiant;
 import metier.MainModele;
 import metier.MenuInterModele;
 import metier.parcours.Parcours;
+import metier.parcours.ParcoursSample;
+import metier.parcours.ParcoursType;
 
 public class MenuInter extends AppCompatActivity {
 
@@ -49,7 +51,9 @@ public class MenuInter extends AppCompatActivity {
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.context = getApplicationContext();
 
-        //TODO : initialiser MenuInterModele.
+        ArrayList<String> parcoursName = (ArrayList<String>) getIntent().getSerializableExtra("parcoursList");
+        ParcoursSample.init();
+        modele = new MenuInterModele(ParcoursSample.parcoursTypesName,parcoursName);
     }
 
     @Override

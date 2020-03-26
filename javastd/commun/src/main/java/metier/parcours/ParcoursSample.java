@@ -7,12 +7,14 @@ public class ParcoursSample {
 
     //La liste des parcours types.
     public static ArrayList<ParcoursType> parcoursTypes;
+    public static ArrayList<String> parcoursTypesName;
 
     /**
      * Initialise la liste des parcours Types
      */
      public static void init(){
          ArrayList<ParcoursType> listParcoursType = new ArrayList<ParcoursType>();
+         ArrayList<String> parcoursTypesName = new ArrayList<String>();
 
          //PARCOURS INFO
          HashMap<String,Integer> numberUeInfo = new HashMap<String,Integer>();
@@ -20,6 +22,7 @@ public class ParcoursSample {
          numberUeInfo.put("MATHEMATIQUES",2);
 
          listParcoursType.add(new ParcoursType("Parcours Informatique",numberUeInfo,null));
+         parcoursTypesName.add("Parcours Informatique");
 
          //PARCOURS MATHEMATIQUES
          ArrayList<String> obligatoryUeMath = new ArrayList<String>();
@@ -39,6 +42,7 @@ public class ParcoursSample {
          obligatoryUeMath.add("SPUM43");
 
          listParcoursType.add(new ParcoursType("Parcours Mathématiques",null,obligatoryUeMath));
+         parcoursTypesName.add("Parcours Mathématiques");
 
          //PARCOURS MAJEUR MATHEMATIQUES
          ArrayList<String> obligatoryUeMathMaj = new ArrayList<String>();
@@ -59,6 +63,7 @@ public class ParcoursSample {
          //obligatoryUeMathMaj.add("SPUM43");
 
          listParcoursType.add(new ParcoursType("Parcours Majeur Mathématiques",null,obligatoryUeMathMaj));
+         parcoursTypesName.add("Parcours Majeur Mathématiques");
 
          //PARCOURS ELECTRONIQUE
          ArrayList<String> obligatoryUeElect = new ArrayList<String>();
@@ -79,12 +84,15 @@ public class ParcoursSample {
          obligatoryUeElect.add("SPUE40");
 
          listParcoursType.add(new ParcoursType("Parcours Electronique",null,obligatoryUeElect));
+         parcoursTypesName.add("Parcours Informatique");
 
          //PARCOURS LIBRE
          listParcoursType.add(new ParcoursType("Parcours Libre",null,null));
+         parcoursTypesName.add("Parcours Libre");
 
          //TODO : ajouter les autres parcours types quand on les aura.
          ParcoursSample.parcoursTypes = listParcoursType;
+         ParcoursSample.parcoursTypesName = parcoursTypesName;
      }
 
     /**
