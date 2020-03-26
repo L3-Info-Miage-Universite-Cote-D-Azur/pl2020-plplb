@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.Vue.apercusParcour.ApercuActivity;
 import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
@@ -61,10 +62,20 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
             @Override
             public void onClick(View view) {
                 prepareModele(position);
-                Intent intent = new Intent(menuPrinc, MainActivity.class);
+                Intent intent = new Intent(menuPrinc, ApercuActivity.class);
                 intent.putExtra("modele",modele);
                 menuPrinc.startActivityForResult(intent,2);
 
+            }
+        });
+
+        holder.modifButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prepareModele(position);
+                Intent intent = new Intent(menuPrinc, MainActivity.class);
+                intent.putExtra("modele",modele);
+                menuPrinc.startActivity(intent);
             }
         });
         //TODO Mettre les listeners sur les deux boutons
