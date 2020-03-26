@@ -82,6 +82,10 @@ public class MenuPrinc extends AppCompatActivity{
         deconnexion = findViewById(R.id.deconnexion);
         nouveauParcours = findViewById(R.id.nouveauParcours);
 
+        if(parcoursList == null){
+            parcoursList= new ArrayList<>();
+        }
+
         nouveauParcours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
