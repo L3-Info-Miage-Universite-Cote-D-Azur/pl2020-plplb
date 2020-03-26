@@ -56,7 +56,6 @@
 	-Le client peut choisir de sauvegarder un ou plusieurs parcours et les charger/modifier. Ces sauvegardes envoyées sont 
 	gérées par le serveur
 	-Les choix de parcours sont enregistrés sur le serveur, le client peut sauvegarder/charger ses choix de parcours
-	- ajout de l'option : filtrer / rechercher par discipline quand le client creer/modifie un parcours (coté client)
 	- Le client peut choisir un parcours prédefinie quand il en créer un nouveau (parcours de math, d'info...)
 	-Avancements sur l'IHM:
 		-Toolbar pour les choix:
@@ -68,6 +67,8 @@
 ### Itération 7:
 	-Ajout des ECUEs.
 	-Ajout du choix des ECUEs (si besoin est).
+	-Refonte du code pour optimisation.
+	- ajout de l'option : filtrer / rechercher par discipline quand le client creer/modifie un parcours (coté client)
 	-Gestion des UEs: UEs "impossibles" grisées en fonction des choix, le client doit décocher son choix d'UE pour la matière pour 		rendre les autres disponible
 	-Explication de l'indisponibilité d'une UE en rouge. 
 	-Choix des UEs facultatives et des bonifications (sport...) 
