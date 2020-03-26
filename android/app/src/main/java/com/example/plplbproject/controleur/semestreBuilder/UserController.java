@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.example.plplbproject.Vue.Vue;
 import com.example.plplbproject.Vue.apercusParcour.ApercuActivity;
+import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
 import com.example.plplbproject.controleur.listener.ClickListener;
 
 
@@ -19,14 +20,16 @@ public class UserController {
 
     /*FIELDS*/
     private Vue vue;
+    private MainActivity mainActivity;
     private MainModele modele;
     private Context context;
 
     /*CONSTRUCTOR*/
-    public UserController(Vue vue, MainModele modele, Context context){
-        this.vue = vue;
+    public UserController(MainActivity mainActivity, MainModele modele, Context context){
+        this.vue = (Vue) mainActivity;
         this.modele = modele;
         this.context = context;
+        this.mainActivity = mainActivity;
     }
 
     /**
@@ -39,9 +42,9 @@ public class UserController {
             public void onClick(View view) {
                 if(modele.getParcours().verifiParcours()){
                     Intent intent = new Intent(context, ApercuActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("modele",modele);
-                    context.startActivity(intent);
+                    mainActivity.startActivityForResult(intent,1);
                 }
                 else vue.toastMessage("La sauvegarde n'a pas pue etre effectuer car le parcours est incomplet (une page de renseignement serat ultérieurement mis en place)");
                 //TODO verification que le serveur a bien recus la sauvegarde

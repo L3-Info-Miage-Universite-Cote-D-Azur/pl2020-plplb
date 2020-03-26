@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class ApercuActivity extends AppCompatActivity {
 
     private MainModele modele;
     private Parcours parcours;
+    private long backPressedTime = 0;    // used by onBackPressed()
 
     private RecyclerView apercuList;
     private ApercuRecyclerAdapter apercuAdapter;
@@ -51,9 +53,27 @@ public class ApercuActivity extends AppCompatActivity {
                 Connexion.CONNEXION.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours().createListCodeUE()));
                 Toast toast = Toast.makeText(getApplicationContext(), "Parcours sauvegardé", Toast.LENGTH_SHORT);
                 toast.show();
+
+                Intent intent=new Intent();
+                setResult(2,intent);
                 finish();
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        long t = System.currentTimeMillis();
+        if (t - backPressedTime > 2000) {    // 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, "Appuyer une nouvelle fois pour modifier",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            //super.onBackPressed();
+            Intent intent=new Intent();
+            setResult(1,intent);
+            finish();
+        }
     }
 }

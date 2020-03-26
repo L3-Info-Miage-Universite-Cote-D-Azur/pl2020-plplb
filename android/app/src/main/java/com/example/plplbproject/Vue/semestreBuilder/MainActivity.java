@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
         super.onResume();
 
         getSupportActionBar().setTitle("Semestre 1");
-        userController = new UserController((Vue)this,modele,context);
+        userController = new UserController(this,modele,context);
         nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
         previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
         getSupportActionBar().setTitle("Semestre "+(modele.getSemestreCourant()+1));
@@ -147,26 +147,6 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
         //##################### Controller for the user #####################
         nextButton.setOnClickListener(userController.nextButton());
-
-        /*
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(modele.getParcours().verifiParcours()){
-                    Intent intent = new Intent(context, ApercuActivity.class);
-                    intent.putExtra("modele",modele);
-                    startActivityForResult(intent,1);
-                }
-                else{
-                    Toast toast = Toast. makeText(context, "La sauvegarde n'a pas pue etre effectuer car le parcours est incomplet (une page de renseignement serat ultérieurement mis en place)", Toast. LENGTH_SHORT);
-                }
-                            //TODO verification que le serveur a bien recus la sauvegarde
-            }
-
-        });
-
-         */
         previousButton.setOnClickListener(userController.prevButton());
 
 
@@ -275,13 +255,26 @@ public class MainActivity extends AppCompatActivity implements Vue {
             return;
         }
         this.modele.changeSemestre(newSemesterIndex);
-        notifyUeListView();
+        notifySemestreChange();
     }
 
     protected  void setModele(MainModele modele){
         this.modele = modele;
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2)
+        {
+            finish();
+        }
+        else if (requestCode==1){
+            onChangeSemestre(1);
+        }
+    }
 
 
 

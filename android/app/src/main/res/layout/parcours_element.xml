@@ -8,7 +8,7 @@ android:layout_height="wrap_content">
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/parcoursPredefName"
+        android:id="@+id/parcoursName"
         android:text="ParcoursName"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -23,7 +23,16 @@ android:layout_height="wrap_content">
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="visualiser"
-        android:padding="15dp"
+        android:padding="10dp"
+        ></Button>
+
+    <Button
+        android:id="@+id/modifier"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="modifier"
+        android:padding="10dp"
         ></Button>
 
 </LinearLayout>

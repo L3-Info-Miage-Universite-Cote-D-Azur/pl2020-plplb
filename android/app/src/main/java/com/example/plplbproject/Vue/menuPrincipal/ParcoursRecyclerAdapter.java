@@ -18,9 +18,9 @@ import metier.parcours.Parcours;
 public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHolder> {
 
     private Context context;
-    private ArrayList<Parcours> parcours;
+    private ArrayList<String> parcours;
 
-    public ParcoursRecyclerAdapter(Context context, ArrayList<Parcours> parcours) {
+    public ParcoursRecyclerAdapter(Context context, ArrayList<String> parcours) {
         this.context = context;
         this.parcours = parcours;
     }
@@ -38,7 +38,9 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ParcoursViewHolder holder, int position) {
-        //holder.parcoursName.setText(parcours.get(position).getName());  TODO getName
+        holder.parcoursName.setText(parcours.get(position));
+
+        //TODO Mettre les listeners sur les deux boutons
     }
 
     @Override
