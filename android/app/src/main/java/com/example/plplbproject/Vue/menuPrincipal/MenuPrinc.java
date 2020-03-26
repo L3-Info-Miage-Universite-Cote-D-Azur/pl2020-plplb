@@ -87,6 +87,7 @@ public class MenuPrinc extends AppCompatActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(MenuPrinc.this , MenuInter.class);
                 intent.putExtra("etudiant",etudiant);
+                intent.putExtra("parcoursList",parcoursList);
                 intent.putExtra(AUTOCONNECT,autoconnect);
                 startActivity(intent);
             }
