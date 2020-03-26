@@ -1,4 +1,4 @@
-package serveur;
+package semester_manager;
 
 import org.junit.jupiter.api.Test;
 

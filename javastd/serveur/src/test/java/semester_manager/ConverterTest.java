@@ -1,4 +1,4 @@
-package serveur;
+package semester_manager;
 
 import static org.junit.jupiter.api.Assertions.*;
 

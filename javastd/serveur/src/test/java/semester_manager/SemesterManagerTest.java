@@ -1,4 +1,4 @@
-package serveur;
+package semester_manager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import files.FileManager;
+import database.FileManager;
 import metier.semestre.Semestre;
 import semester_manager.SemesterManager;
 import semester_manager.SemestreConsts;
