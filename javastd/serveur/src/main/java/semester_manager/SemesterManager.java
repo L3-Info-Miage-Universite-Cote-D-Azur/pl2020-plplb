@@ -1,6 +1,6 @@
 package semester_manager;
 
-import files.FileManager;
+import database.FileManager;
 import metier.semestre.Semestre;
 
 /**
