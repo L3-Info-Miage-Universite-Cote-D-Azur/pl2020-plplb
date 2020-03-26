@@ -1,7 +1,6 @@
 package metier;
 
 import metier.parcours.Parcours;
-import metier.parcours.ParcoursList;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreList;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 public class MainModele implements Serializable {
 
     private Etudiant etudiant; //etudiant qui est connecter a l'application
-    private ParcoursList parcoursList; //Le parcours qui est charge.
+    private Parcours parcours; //Le parcours qui est charge.
     private SemestreList semestres;
     private int semestreCourant = 0;
 
@@ -23,7 +22,6 @@ public class MainModele implements Serializable {
     public MainModele(){
         this.etudiant = new Etudiant("Etudiant defaut");
         this.semestres = new SemestreList();
-        this.parcoursList = new ParcoursList();
         this.semestreCourant = 0; // On pense en terme d'index de liste
     }
 
@@ -36,28 +34,22 @@ public class MainModele implements Serializable {
         this.etudiant = etudiant;
     }
 
-    /**
-     * permet de recuperer la list de parcours
-     * @return la list de parcours
-     */
-    public ParcoursList getParcoursList() {
-        return parcoursList;
-    }
+
 
     /**
      * Permet de recupere le parcours courrant
      * @return le parcours courrant
      */
     public Parcours getParcours() {
-        return parcoursList.getCurrentParcours();
+        return parcours;
     }
 
     /**
-     * permet d'ajouter un parcours a la liste
-     * @param parcours
+     * permet de set un parcours
+     * @param parcours le parcours que l'on veut set
      */
-    public void addParcours(Parcours parcours) {
-        this.parcoursList.add(parcours);
+    public void setParcours(Parcours parcours) {
+        this.parcours = parcours;
     }
 
     /**

@@ -32,16 +32,23 @@ import com.google.gson.GsonBuilder;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import io.socket.client.Socket;
 import metier.Etudiant;
 import metier.MainModele;
+import metier.parcours.Parcours;
+import metier.parcours.ParcoursRules;
+import metier.parcours.ParcoursSample;
+import metier.parcours.ParcoursType;
 import metier.semestre.Semestre;
+import metier.semestre.SemestreList;
 
 import static constantes.NET.SENDCLIENTSAVE;
 import static constantes.NET.SENDDATACONNEXION;
 import static constantes.NET.SENDETUDIANTID;
 import static constantes.NET.SENDMESSAGE;
+import static metier.parcours.ParcoursSample.parcoursTypes;
 
 
 public class MainActivity extends AppCompatActivity implements Vue {
@@ -73,10 +80,31 @@ public class MainActivity extends AppCompatActivity implements Vue {
         setSupportActionBar(toolbar);
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
-        this.modele = new MainModele();
+        String classCall = getIntent().getStringExtra("className");
+        if (classCall.equals("MenuPrinc") ) {
+            modele = (MainModele) getIntent().getSerializableExtra("modele");
+            if (modele == null) modele = new MainModele();
+        }
+        else if(classCall.equals("MenuInter") ){
+            this.modele = new MainModele();
+            String parcourTypeName = getIntent().getStringExtra("ParcoursTypeName");
+            String parcoursName = getIntent().getStringExtra("ParcoursName");
 
-        Serializable etu = getIntent().getSerializableExtra("etudiant");
-        if(etu!=null) this.modele.setEtudiant((Etudiant) getIntent().getSerializableExtra("etudiant"));
+            //TODO init le modele avec ces valeur
+            this.modele = new MainModele();
+            ParcoursSample.init();
+            ArrayList<ParcoursType> parcoursTypes =  ParcoursSample.parcoursTypes;
+
+            ParcoursType selected = null;
+            for(ParcoursType parcoursType : parcoursTypes){
+                if(parcoursType.getName().equals(parcourTypeName)){
+                    selected = parcoursType;
+                }
+
+            }
+            modele.setParcours(new Parcours(new SemestreList(),selected,parcoursName));
+        }
+
 
         this.context = getApplicationContext();
 

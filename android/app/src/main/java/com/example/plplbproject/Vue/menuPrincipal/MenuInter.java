@@ -61,16 +61,17 @@ public class MenuInter extends AppCompatActivity {
         super.onResume();
 
         //Chargement des elements graphiques
-        parcoursRecyclerView = findViewById(R.id.parcoursList);
+        parcoursRecyclerView = findViewById(R.id.parcoursPredefList);
         deconnexion = findViewById(R.id.deconnexion);
         createNewParcours = findViewById(R.id.nouveauParcours);
         editParcoursName = findViewById(R.id.editParcoursName);
         errorMessage = findViewById(R.id.errorMessage);
 
         //Mise en place de l'adapter.
-        adapterParcoursType = new ParcoursPredefRecyclerAdapter(this,modele.getListParcoursPredef());
+        adapterParcoursType = new ParcoursPredefRecyclerAdapter(this,modele);
         parcoursRecyclerView.setAdapter(adapterParcoursType);
         parcoursRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         //Mise en place des listener
         createNewParcours.setOnClickListener(new createNewParcoursListener(this,modele));
@@ -99,7 +100,17 @@ public class MenuInter extends AppCompatActivity {
         intent.putExtra(AUTOCONNECT,autoconnect);
         intent.putExtra("ParcoursTypeName",modele.getParcoursTypeName());
         intent.putExtra("ParcoursName",modele.getParcoursName());
+        intent.putExtra("className","MenuInter");
         startActivity(intent);
+    }
+
+    public void notifyParcoursTypeSelected(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapterParcoursType.notifyDataSetChanged();
+            }
+        });
     }
 
     /**
@@ -109,5 +120,21 @@ public class MenuInter extends AppCompatActivity {
     public void setTextError(String text) {
         errorMessage.setText(text);
         errorMessage.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * permet de recuperer le modele (utile pour les test)
+     * @return le modele de lactivity
+     */
+    protected MenuInterModele getModele(){
+        return modele;
+    }
+
+    /**
+     * permet de set le modele (utile pour les test
+     * @param modele le modele que l'on veut set
+     */
+    protected void setModele(MenuInterModele modele){
+        this.modele = modele;
     }
 }

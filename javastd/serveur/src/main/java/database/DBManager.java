@@ -87,9 +87,10 @@ DBManager
 		if (this.dir.exists())
 		{
 			File[] list = this.dir.getFile().listFiles();
+			if(list != null){
 			for (File f : list)
 				res.add(f.getName().replaceAll(".txt", ""));
-		}
+		}}
 		return res;
 	}
 	

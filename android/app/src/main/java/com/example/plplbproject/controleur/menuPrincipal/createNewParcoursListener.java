@@ -22,6 +22,7 @@ public class createNewParcoursListener implements View.OnClickListener {
         //Si le nom peut etre choisir
         if(modele.canBeChooseName(parcoursName)){
             if(modele.isSelectedParcours()){//Si un parcours est selectionner.
+                modele.setParcoursName(parcoursName);
                 vue.switchIntent();
             }
             else{//Sinon on affiche l'erreur

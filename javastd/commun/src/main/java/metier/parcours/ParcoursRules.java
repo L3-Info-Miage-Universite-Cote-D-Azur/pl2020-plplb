@@ -1,9 +1,10 @@
 package metier.parcours;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ParcoursRules {
+public class ParcoursRules implements Serializable {
 
     private ParcoursType parcoursType;//Le parcours type.
 
@@ -48,5 +49,9 @@ public class ParcoursRules {
 
         //Toute les vérif sont ok.
         return true;
+    }
+
+    public ParcoursType getParcoursType(){
+        return this.parcoursType;
     }
 }

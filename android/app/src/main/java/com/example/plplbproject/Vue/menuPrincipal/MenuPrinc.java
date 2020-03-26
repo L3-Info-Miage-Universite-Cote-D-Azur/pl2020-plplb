@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.EmbossMaskFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,18 +20,14 @@ import java.util.ArrayList;
 
 import io.socket.emitter.Emitter;
 import metier.Etudiant;
-import metier.MainModele;
-import metier.parcours.Parcours;
+
 
 import static constantes.NET.SENDCLIENTLISTCOURSE;
-import static constantes.NET.SENDCLIENTSAVE;
-import static constantes.NET.SENDDATACONNEXION;
-import static constantes.NET.SENDMESSAGE;
+
 
 
 public class MenuPrinc extends AppCompatActivity{
 
-    private MainModele modele;
     private Context context;
     public static final String AUTOCONNECT = "AUTOCONNECT";
     private boolean autoconnect =  true;
@@ -53,13 +48,9 @@ public class MenuPrinc extends AppCompatActivity{
         setContentView(R.layout.activity_menu_princ);
 
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
-        this.modele = new MainModele();
 
         Serializable etu = getIntent().getSerializableExtra("etudiant");
-        if(etu!=null){
-            etudiant = (Etudiant) getIntent().getSerializableExtra("etudiant");
-            this.modele.setEtudiant(etudiant);
-        }
+
 
         this.context = getApplicationContext();
     }

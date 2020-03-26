@@ -10,13 +10,14 @@ import metier.UE;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreList;
 import metier.semestre.SemestreManager;
+import metier.semestre.SemestreRules;
 
 /**
  * Classe qui s'occupe de la gestion du parcours et des regle a respecter.
  */
 public class Parcours implements Serializable {
 
-
+    private ParcoursRules parcoursRules;
     private String name = "default";
     private SemestreList semestreList;
     private ArrayList<SemestreManager> semestresManager;
@@ -41,9 +42,11 @@ public class Parcours implements Serializable {
      * Constructeur pour un nouveau parcours
      * @param semestreList la liste de semestre.
      */
-    public Parcours(SemestreList semestreList){
+    public Parcours(SemestreList semestreList,ParcoursType parcoursType,String name){
+        this.setName(name);
         this.semestreList = semestreList;
         parcoursSelect = new HashMap<String,UE>();
+        parcoursRules = new ParcoursRules(parcoursType);
         initParcoursSemestresManager();
         initObligatoryUE();
     }
@@ -80,10 +83,27 @@ public class Parcours implements Serializable {
 
     /**
      * Permet de mettre a jour le parcours (a utiliser quand on ajoute un semestre au modele)
+     * @param semestreList si il a un nouveau semestre a set
+     */
+    public void updateSemestre(SemestreList semestreList){
+        this.semestreList = semestreList;
+        initParcoursSemestresManager();
+
+        //on rajoute de nouveau tout les ue (si il existe encore)
+        Set<String> setAllSelected = parcoursSelect.keySet();
+        parcoursSelect.clear(); //on vide la liste d'ue
+        for(String codeUE : setAllSelected){
+            checkUENoVerif(semestreList.findUE(codeUE));
+        }
+        initObligatoryUE();
+    }
+
+    /**
+     * Permet de mettre a jour le parcours (a utiliser quand on ajoute un semestre au modele)
      */
     public void updateSemestre(){
+
         initParcoursSemestresManager();
-        initObligatoryUE();
 
         //on rajoute de nouveau tout les ue(si il existe encore
         Set<String> setAllSelected = parcoursSelect.keySet();
@@ -91,7 +111,9 @@ public class Parcours implements Serializable {
         for(String codeUE : setAllSelected){
             checkUENoVerif(semestreList.findUE(codeUE));
         }
+        initObligatoryUE();
     }
+
 
 
     /**
@@ -101,11 +123,29 @@ public class Parcours implements Serializable {
     private void initParcours(List<String> allCodeUESelected){
         parcoursSelect = new HashMap<String, UE>();
 
+        //Le premier element de la liste est le nom du parcours;
+        this.setName(allCodeUESelected.get(0));
+
+        //On recupere la liste des parcours type.
+        ParcoursSample.init();
+        ArrayList<ParcoursType> listparcoursType = ParcoursSample.parcoursTypes;
+        //Le deuxieme est le nom du semestre type.
+        String parcoursName = allCodeUESelected.get(1);
+
+        for(ParcoursType parcoursType : listparcoursType){
+
+            if(parcoursType.getName().equals(parcoursName)){
+                parcoursRules = new ParcoursRules(parcoursType);
+            }
+        }
+
+        //On recupere les ues cochées
         UE ue;
-        for(String codeUE : allCodeUESelected){
-            ue = semestreList.findUE(codeUE);
+        for(int i =2; i < allCodeUESelected.size();i++){
+            ue = semestreList.findUE(allCodeUESelected.get(i));
             if(ue != null) checkUENoVerif(ue);
         }
+
     }
 
     /**
@@ -128,6 +168,16 @@ public class Parcours implements Serializable {
                 ue = semestreList.findUE(codeUE);
                 if(ue!=null){
                     parcoursSelect.put(codeUE,ue);
+                }
+            }
+        }
+
+        //Ajout des ues obligatoire du parcours.
+        if(parcoursRules.getParcoursType().getObligatoryUes() != null) {
+            for (String ueCode : parcoursRules.getParcoursType().getObligatoryUes()) {
+                ue = semestreList.findUE(ueCode);
+                if (ue != null) {
+                    checkUENoVerif(ue);
                 }
             }
         }
@@ -157,6 +207,14 @@ public class Parcours implements Serializable {
      */
     public boolean canBeUncheckedUE(UE ue){
         if(!isChecked(ue)) return false;
+
+        //L'ue ne peux etre deselectionner si elle appartient au ues obligatoire du parcours.
+        if(parcoursRules.getParcoursType().getObligatoryUes() != null){
+            if(parcoursRules.getParcoursType().getObligatoryUes().contains(ue.getUeCode())){
+                return false;
+            }
+        }
+
         Boolean semestreUncheck = semestresManager.get(ue.getSemestreNumber()-1).canBeUncheck(ue);
         //iteration ? verification des prerequis (graphe?)
         //Boolean uePrerequisCheck = ...
@@ -221,11 +279,34 @@ public class Parcours implements Serializable {
         return codeUEToList;
     }
 
+
+    /**
+     * Cree une liste pres pour une sauvegarde
+     * @return le liste pour sauvegarder le parcours
+     */
+    public ArrayList<String> createSaveList(){
+        ArrayList<String> saveList = new ArrayList<String>();
+        saveList.add(name);
+        saveList.add(parcoursRules.getParcoursType().getName());
+        saveList.addAll(createListCodeUE());
+        return saveList;
+    }
+
     /**
      * Verification du parcours entier
      * @return l'etat de la verification
      */
     public boolean verifiParcours(){
+        ArrayList<HashMap<String,Integer>> listHasmap = new ArrayList<HashMap<String, Integer>>();
+        //On recupere les hashmap du nombre d'ue par categorie (par semestre).
+        for(SemestreManager semestreManager : this.semestresManager){
+            listHasmap.add(semestreManager.getCountByCategory());
+        }
+
+        //Si le parcours ne repond pas aux critères du parcours type on renvoie faux.
+        if(!parcoursRules.acceptParcours(listHasmap,this.createListCodeUE())){
+            return false;
+        }
 
         //for(SemestreManager manager: semestresManager){
         //Pour le test

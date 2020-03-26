@@ -76,7 +76,9 @@ public class ReseauController{
                 for (String s: semestres) {
                     modele.addSemestre(gson.fromJson(s,Semestre.class));
                 }
-                modele.getParcoursList().updateSemestre();
+                if(modele.getParcours()!=null) {
+                    modele.getParcours().updateSemestre(modele.getSemestres());
+                }
                 vue.notifyUeListView();
             }
         };
@@ -94,7 +96,7 @@ public class ReseauController{
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
                 System.out.println("save receive from server");
                 //TODO Modifier parcours
-                modele.addParcours(new Parcours(modele.getSemestres(),ueCode));
+                modele.setParcours(new Parcours(modele.getSemestres(),ueCode));
                 vue.notifyUeListView();
             }
         };

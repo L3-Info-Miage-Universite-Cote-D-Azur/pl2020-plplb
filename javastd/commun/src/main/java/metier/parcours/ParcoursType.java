@@ -1,9 +1,10 @@
 package metier.parcours;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ParcoursType {
+public class ParcoursType implements Serializable {
     private String name;//Le nom du parcours Type.
 
     private HashMap<String,Integer> numberUes;//Le nombre d'ue a avoir dans chaque catégorie pour passer en l3
