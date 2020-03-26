@@ -1,6 +1,7 @@
 package com.example.plplbproject.Vue.menuPrincipal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +10,35 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.ApercuViewHolder;
+import com.example.plplbproject.reseau.Connexion;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
+import io.socket.emitter.Emitter;
+import metier.MainModele;
 import metier.parcours.Parcours;
+import metier.semestre.Semestre;
+
+import static constantes.NET.SENDCLIENTSAVE;
+import static constantes.NET.SENDCOURSE;
+import static constantes.NET.SENDDATACONNEXION;
 
 public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHolder> {
 
     private Context context;
-    private ArrayList<String> parcours;
+    private ArrayList<String> parcoursNames;
+    private MainModele modele;
+    private MenuPrinc menuPrinc;
+    private final Gson gson = new GsonBuilder().create();
 
-    public ParcoursRecyclerAdapter(Context context, ArrayList<String> parcours) {
+
+    public ParcoursRecyclerAdapter(Context context, ArrayList<String> parcoursNames,MenuPrinc menuPrinc) {
         this.context = context;
-        this.parcours = parcours;
+        this.parcoursNames = parcoursNames;
+        this.modele = null;
+        this.menuPrinc = menuPrinc;
     }
 
     @NonNull
@@ -37,14 +53,63 @@ public class ParcoursRecyclerAdapter extends RecyclerView.Adapter<ParcoursViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ParcoursViewHolder holder, int position) {
-        holder.parcoursName.setText(parcours.get(position));
+    public void onBindViewHolder(@NonNull ParcoursViewHolder holder, final int position) {
+        holder.parcoursName.setText(parcoursNames.get(position));
 
+        holder.visualiserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prepareModele(position);
+                Intent intent = new Intent();
+                intent.putExtra("modele",modele);
+                menuPrinc.startActivityForResult(intent,2);
+
+            }
+        });
         //TODO Mettre les listeners sur les deux boutons
     }
 
     @Override
     public int getItemCount() {
-        return parcours.size();
+        return parcoursNames.size();
     }
+
+
+    // TODO modifier reseauControlleur
+
+    public Emitter.Listener receiveParcours (){
+        return new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
+                modele.addParcours(new Parcours(modele.getSemestres(),ueCode));
+            }
+        };
+    }
+
+    public Emitter.Listener receiveSemesters (){
+        return new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                ArrayList<String> semestres = gson.fromJson((String) args[0], ArrayList.class);
+                for (String s: semestres) {
+                    modele.addSemestre(gson.fromJson(s, Semestre.class));
+                }
+                modele.getParcoursList().updateSemestre();
+            }
+        };
+    }
+
+    public void prepareModele(int position){
+
+        this.modele = new MainModele();
+        String parcoursChoisi = parcoursNames.get(position);
+
+        Connexion.CONNEXION.send(SENDDATACONNEXION,"");
+        Connexion.CONNEXION.setEventListener(SENDDATACONNEXION, receiveSemesters());
+
+        Connexion.CONNEXION.setEventListener(SENDCLIENTSAVE, receiveParcours());
+        Connexion.CONNEXION.send(SENDCOURSE,parcoursChoisi);
+    }
+
 }
