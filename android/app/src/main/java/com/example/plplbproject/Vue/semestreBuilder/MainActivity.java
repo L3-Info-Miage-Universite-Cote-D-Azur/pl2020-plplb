@@ -301,11 +301,13 @@ public class MainActivity extends AppCompatActivity implements Vue {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==2)
+        if(resultCode==2)
         {
+            Intent intent=new Intent();
+            setResult(2,intent);
             finish();
         }
-        else if (requestCode==1){
+        else if (resultCode==1){
             onChangeSemestre(0);
         }
     }

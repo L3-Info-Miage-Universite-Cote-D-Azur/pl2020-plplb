@@ -84,6 +84,16 @@ public class MenuInter extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==2)
+        {
+            finish();
+        }
+    }
+
     /**
      * Recupere le texte dans l'edittext
      * @return le nom du parcours à creer.
@@ -101,7 +111,7 @@ public class MenuInter extends AppCompatActivity {
         intent.putExtra("ParcoursTypeName",modele.getParcoursTypeName());
         intent.putExtra("ParcoursName",modele.getParcoursName());
         intent.putExtra("className","MenuInter");
-        startActivity(intent);
+        startActivityForResult(intent,2);
     }
 
     public void notifyParcoursTypeSelected(){
