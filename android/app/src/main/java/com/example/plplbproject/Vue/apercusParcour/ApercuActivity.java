@@ -48,7 +48,7 @@ public class ApercuActivity extends AppCompatActivity {
         String classCall = getIntent().getStringExtra("className");
         if(classCall == null) classCall ="";
         if (classCall.equals("MenuPrinc") ){
-            String parcoursName = getIntent().getStringExtra("ParcoursName");
+            String parcoursName = getIntent().getStringExtra("parcourName");
             Connexion.CONNEXION.setEventListener(SENDDATACONNEXION, receiveSemesters());
             Connexion.CONNEXION.send(SENDDATACONNEXION,"");
 
