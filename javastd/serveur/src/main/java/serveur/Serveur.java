@@ -8,8 +8,6 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 
-import metier.Etudiant;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -93,7 +91,7 @@ Serveur
         });
 
         //le client demande les donner de connection
-        this.server.addEventListener(SENDDATACONNEXION,String.class, new DataListener<String>() {
+        this.server.addEventListener(SEMSTERDATA,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
@@ -188,9 +186,9 @@ Serveur
     {
         Debug.log("Send Semesters to : " + c.getStudent().getNom());
 
-        String msg = ServerUtility.getListOfSemestersJSONed();
+        String semesterList = ServerUtility.getListOfSemestersJSONed();
 
-        c.getSock().sendEvent(SENDDATACONNEXION, msg);
+        c.getSock().sendEvent(SEMSTERDATA, semesterList);
     }
     
     protected void

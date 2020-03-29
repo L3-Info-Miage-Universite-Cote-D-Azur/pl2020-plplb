@@ -7,30 +7,27 @@ import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import metier.Etudiant;
-import metier.LoginModele;
+import metier.Student;
 
 import static constantes.NET.SENDETUDIANTID;
 
 public class LoginClickListener implements View.OnClickListener {
 
     LoginActivity vue;
-    LoginModele modele;
+    Student student;
 
-    public LoginClickListener(LoginModele modele, LoginActivity vue){
+    public LoginClickListener(Student student, LoginActivity vue){
         this.vue = vue;
-        this.modele = modele;
+        this.student = student;
     }
 
     @Override
     public void onClick(View view) {
         String ine = vue.getLoginInput();
 
-        if(modele.acceptINE(ine)){
+        if(student.acceptINE(ine)){
             if(Connexion.CONNEXION.isConnected()){
-                Gson gson = new GsonBuilder().create();
-                Connexion.CONNEXION.send(SENDETUDIANTID, gson.toJson(new Etudiant(ine)));
-                vue.createEtudiant(ine);
+                student.setNom(ine);
                 vue.switchIntent();
             }
             else{
