@@ -214,7 +214,7 @@ Serveur
         {
             Debug.log("Send data to : " + c.getStudent().getNom());
             if (dbManager.getAllCourses().contains(filename))
-            	c.getSock().sendEvent(SENDCLIENTSAVE, gson.toJson(dbManager.load(filename)));
+            	c.getSock().sendEvent(SENDCOURSE, gson.toJson(dbManager.load(filename)));
             else
             {
             	Debug.error(c.getStudent().toString() + " sent an impossible course: " + filename);
