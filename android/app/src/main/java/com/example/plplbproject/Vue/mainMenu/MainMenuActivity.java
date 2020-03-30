@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.Vue.creationMenu.CreationMenuActivity;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -141,7 +142,7 @@ public class MainMenuActivity extends AppCompatActivity{
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this , creationMenuActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this , CreationMenuActivity.class);
                 intent.putExtra("clientCourses",clientCourses);
                 startActivity(intent);
             }

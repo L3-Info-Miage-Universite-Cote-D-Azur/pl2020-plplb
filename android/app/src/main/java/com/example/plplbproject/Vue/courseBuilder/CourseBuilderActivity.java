@@ -1,7 +1,6 @@
-package com.example.plplbproject.Vue.semestreBuilder;
+package com.example.plplbproject.Vue.courseBuilder;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,66 +11,45 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-
 import android.widget.Toast;
 
+
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.Vue;
-import com.example.plplbproject.Vue.apercusParcour.ApercuActivity;
-import com.example.plplbproject.controleur.listener.ClickListener;
-import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
-import com.example.plplbproject.controleur.semestreBuilder.UserController;
+import com.example.plplbproject.controleur.courseBuilder.CourseBuilderModele;
+import com.example.plplbproject.controleur.courseBuilder.ReseauController;
+import com.example.plplbproject.controleur.courseBuilder.UserController;
+import com.example.plplbproject.data.DataSemester;
 import com.example.plplbproject.reseau.Connexion;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 
-import io.socket.client.Socket;
-import metier.Etudiant;
-import metier.MainModele;
 import metier.parcours.Parcours;
-import metier.parcours.ParcoursRules;
 import metier.parcours.ParcoursSample;
 import metier.parcours.ParcoursType;
-import metier.semestre.Semestre;
-import metier.semestre.SemestreList;
 
-import static constantes.NET.SENDCLIENTSAVE;
-import static constantes.NET.SENDCOURSE;
-import static constantes.NET.SENDDATACONNEXION;
-import static constantes.NET.SENDETUDIANTID;
-import static constantes.NET.SENDMESSAGE;
-import static metier.parcours.ParcoursSample.parcoursTypes;
+import static constantes.NET.LOADCOURSE;
 
 
-public class MainActivity extends AppCompatActivity implements Vue {
 
-    /* FIELDS */
-    private ListView categoryListView;
+public class CourseBuilderActivity extends AppCompatActivity {
+
+
     private Button nextButton; //Le bouton suivant
     private Button previousButton; //boutton precedent
-    private Button extendButton;
 
     private UserController userController;
     private ReseauController reseauController;
-    private MainModele modele;
+    private CourseBuilderModele modele;
 
-    private Context context;
 
-    ExpandableListAdapter listAdapter;
+    ListUEAdaptater listAdapter;
     ExpandableListView expListView;
 
-
-    public static final String AUTOCONNECT = "AUTOCONNECT";
-    private boolean autoconnect =  true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,40 +58,48 @@ public class MainActivity extends AppCompatActivity implements Vue {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
+        modele = new CourseBuilderModele(DataSemester.SEMESTER.getNumberSemesters());
+
         String classCall = getIntent().getStringExtra("className");
-        if (classCall.equals("MenuPrinc")) {
-            modele = new MainModele();
-
-
+        if (classCall.equals("CreationMenuActivity")) {
+            onCreateNewCours();
         }
-        else if(classCall.equals("MenuInter") ){
-            this.modele = new MainModele();
-            String parcourTypeName = getIntent().getStringExtra("ParcoursTypeName");
-            String parcoursName = getIntent().getStringExtra("ParcoursName");
-
-            //TODO init le modele avec ces valeur
-            this.modele = new MainModele();
-            ParcoursSample.init();
-            ArrayList<ParcoursType> parcoursTypes =  ParcoursSample.parcoursTypes;
-
-            ParcoursType selected = null;
-            for(ParcoursType parcoursType : parcoursTypes){
-                if(parcoursType.getName().equals(parcourTypeName)){
-                    selected = parcoursType;
-                }
-
-            }
-            modele.setParcours(new Parcours(new SemestreList(),selected,parcoursName));
+        else if(classCall.equals("MainMenuActivity") ){
+           onCreateLoadCourse();
         }
 
-
-        this.context = getApplicationContext();
 
     }
 
+    /**
+     * Accede a la page d'un nouveau parcour pour crée un nouveau parcour
+     */
+    protected void onCreateNewCours(){
+        String predefinedCourseName = getIntent().getStringExtra("PredefinedCourseName");
+        String courseName = getIntent().getStringExtra("CourseName");
 
-    protected MainModele getModele(){
+        ParcoursSample.init();
+        ArrayList<ParcoursType> parcoursTypes =  ParcoursSample.parcoursTypes;
+        ParcoursType selected = null;
+        for(ParcoursType parcoursType : parcoursTypes){
+            if(parcoursType.getName().equals(predefinedCourseName)){
+                selected = parcoursType;
+            }
+        }
+        modele.setCourse(new Parcours(DataSemester.SEMESTER.getSemesterList(),selected,courseName));
+    }
+
+    /**
+     * Charge la creation de parcour depuis un parcour deja existant pour le modifier
+     */
+    protected void onCreateLoadCourse(){
+        String courseName = getIntent().getStringExtra("CourseName");
+        Connexion.CONNEXION.setEventListener(LOADCOURSE,reseauController.receiveSave());
+        Connexion.CONNEXION.send(LOADCOURSE,courseName);
+    }
+
+
+    protected CourseBuilderModele getModele(){
         return modele;
     }
 
@@ -142,17 +128,16 @@ public class MainActivity extends AppCompatActivity implements Vue {
     @Override
     protected void onResume() {
         super.onResume();
+        //on met le bon numero de semestre
+        getSupportActionBar().setTitle("Semestre "+modele.getIndexCurrentSemester()+1);
 
-        getSupportActionBar().setTitle("Semestre 1");
-        userController = new UserController(this,modele,context);
+        userController = new UserController(this,modele);
+
         nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
         previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
-        getSupportActionBar().setTitle("Semestre "+(modele.getSemestreCourant()+1));
-
-        categoryListView = findViewById(R.id.catList);
         updateButton();
 
-        if(autoconnect) initVue();
+        initVue();
     }
 
     /**
@@ -161,22 +146,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
     protected void initVue(){
 
         expListView = (ExpandableListView) findViewById(R.id.catList);
-        listAdapter = new ExpandableListAdapter(this, modele);
+        listAdapter = new ListUEAdaptater(this, modele);
         expListView.setAdapter(listAdapter);
-
-        //###################### Server connection #####################
-        setupEventReseau();
-        if(!Connexion.CONNEXION.isConnected()){
-            Connexion.CONNEXION.connect();
-        }
-        if(modele.getSemestres().size()==0){
-            Connexion.CONNEXION.send(SENDDATACONNEXION,"");
-        }
-        String parcourName = getIntent().getStringExtra("parcourName");
-        if(parcourName!=null){
-            Connexion.CONNEXION.send(SENDCOURSE,parcourName);
-        }
-
 
 
         //##################### Controller for the user #####################
@@ -186,25 +157,15 @@ public class MainActivity extends AppCompatActivity implements Vue {
 
     }
 
-    /**
-     * setup les event necessaire pour cette activity
-     */
-    public void setupEventReseau(){
-        reseauController = new ReseauController(this,modele);
-        Connexion.CONNEXION.setEventListener(SENDMESSAGE, reseauController.receiveMessage());
-        Connexion.CONNEXION.setEventListener(SENDDATACONNEXION, reseauController.dataConnexion());
-        Connexion.CONNEXION.setEventListener(SENDCLIENTSAVE,reseauController.receiveSave());
-
-    }
 
 
     /**
      * Envoie a la liste des Ues un changement et change la vue en consequence.
      */
 
-    @Override
+
     public void notifyUeListView(){
-        MainActivity.this.runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 listAdapter.notifyDataSetChanged();
@@ -216,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
     /**
      * Replis toutes les liste de categorie
      */
-    @Override
+
     public void collapseList() {
         int count =  expListView.getCount();
         for (int i = 0; i <count ; i++)
@@ -226,9 +187,9 @@ public class MainActivity extends AppCompatActivity implements Vue {
     /**
      * notifie l'affichage que le semestre courant a changer
      */
-    @Override
+
     public void notifySemestreChange() {
-        getSupportActionBar().setTitle("Semestre "+(modele.getSemestreCourant()+1));
+        getSupportActionBar().setTitle("Semestre "+(modele.getIndexCurrentSemester()+1));
         notifyUeListView();
         collapseList();
         updateButton();
@@ -243,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements Vue {
         if(prev){
             previousButton.setText(R.string.precedent);
         }
-        else previousButton.setText(R.string.deconnexion);
+        else previousButton.setText("Menu Precedent");
 
         boolean next = modele.hasNextSemestre();
         if(next){
@@ -259,9 +220,8 @@ public class MainActivity extends AppCompatActivity implements Vue {
      * Affiche un message dans un toast sur la vue actuelle.
      * @param msg message a afficher.
      */
-    @Override
     public void toastMessage(final String msg) {
-        MainActivity.this.runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 String receivedMessage = msg;
@@ -273,10 +233,11 @@ public class MainActivity extends AppCompatActivity implements Vue {
         });
     }
 
+
+
     /**
      * permet de quité l'intent et passe a l'intent precedent
      */
-    @Override
     public void exitIntent(){
         finish();
     }
@@ -285,14 +246,14 @@ public class MainActivity extends AppCompatActivity implements Vue {
      * Fonction à appeller lorsque l'utilisateur change de semestre
      */
     public void onChangeSemestre(int newSemesterIndex){
-        if (newSemesterIndex == this.modele.getSemestreCourant()){
+        if (newSemesterIndex == this.modele.getIndexCurrentSemester()){
             return;
         }
-        this.modele.changeSemestre(newSemesterIndex);
+        this.modele.changeSemester(newSemesterIndex);
         notifySemestreChange();
     }
 
-    protected  void setModele(MainModele modele){
+    protected void setModele(CourseBuilderModele modele){
         this.modele = modele;
     }
 

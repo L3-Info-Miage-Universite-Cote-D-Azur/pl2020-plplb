@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 import metier.UE;
+import metier.semestre.SemesterList;
 import metier.semestre.Semestre;
-import metier.semestre.SemestreList;
 import metier.semestre.SemestreManager;
-import metier.semestre.SemestreRules;
 
 /**
  * Classe qui s'occupe de la gestion du parcours et des regle a respecter.
@@ -21,7 +20,7 @@ public class Parcours implements Serializable {
 
     private ParcoursRules parcoursRules;
     private String name = "default";
-    private SemestreList semestreList;
+    private SemesterList semestreList;
     private ArrayList<SemestreManager> semestresManager;
     private HashMap<String, UE> parcoursSelect; //commun a tout les semestre (permet de rajouter des condition UE necesaire, ...)
 
@@ -32,7 +31,7 @@ public class Parcours implements Serializable {
      * @param semestreList la liste de semestre.
      * @param allCodeUESelected une liste valide d'ue
      */
-    public Parcours(SemestreList semestreList, List<String> allCodeUESelected ) {
+    public Parcours(SemesterList semestreList, List<String> allCodeUESelected ) {
         this.semestreList =  semestreList;
         initParcoursSemestresManager();
         initParcours(allCodeUESelected);
@@ -44,7 +43,7 @@ public class Parcours implements Serializable {
      * Constructeur pour un nouveau parcours
      * @param semestreList la liste de semestre.
      */
-    public Parcours(SemestreList semestreList,ParcoursType parcoursType,String name){
+    public Parcours(SemesterList semestreList,ParcoursType parcoursType,String name){
         this.setName(name);
         this.semestreList = semestreList;
         parcoursSelect = new HashMap<String,UE>();
@@ -57,7 +56,7 @@ public class Parcours implements Serializable {
     /**
      * Constructeur pour test
      */
-    public Parcours(SemestreList semestreList,ArrayList<SemestreManager> semestresManager,HashMap<String, UE> parcoursSelect){
+    public Parcours(SemesterList semestreList,ArrayList<SemestreManager> semestresManager,HashMap<String, UE> parcoursSelect){
         this.semestreList = semestreList;
         this.semestresManager = semestresManager;
         this.parcoursSelect = parcoursSelect;
@@ -87,7 +86,7 @@ public class Parcours implements Serializable {
      * Permet de mettre a jour le parcours (a utiliser quand on ajoute un semestre au modele)
      * @param semestreList si il a un nouveau semestre a set
      */
-    public void updateSemestre(SemestreList semestreList){
+    public void updateSemestre(SemesterList semestreList){
         this.semestreList = semestreList;
         initParcoursSemestresManager();
 

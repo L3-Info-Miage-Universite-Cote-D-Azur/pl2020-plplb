@@ -1,16 +1,12 @@
-package com.example.plplbproject.controleur.semestreBuilder;
+package com.example.plplbproject.controleur.courseBuilder;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.plplbproject.Vue.Vue;
 import com.example.plplbproject.Vue.apercusParcour.ApercuActivity;
-import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
-import com.example.plplbproject.controleur.listener.ClickListener;
+import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
 
 
-import metier.MainModele;
 
 
 /**
@@ -19,17 +15,13 @@ import metier.MainModele;
 public class UserController {
 
     /*FIELDS*/
-    private Vue vue;
-    private MainActivity mainActivity;
-    private MainModele modele;
-    private Context context;
+    private CourseBuilderActivity vue;
+    private CourseBuilderModele modele;
 
     /*CONSTRUCTOR*/
-    public UserController(MainActivity mainActivity, MainModele modele, Context context){
-        this.vue = (Vue) mainActivity;
+    public UserController(CourseBuilderActivity courseBuilderActivity, CourseBuilderModele modele){
+        this.vue = courseBuilderActivity;
         this.modele = modele;
-        this.context = context;
-        this.mainActivity = mainActivity;
     }
 
     /**
@@ -37,14 +29,14 @@ public class UserController {
      * @return traitement a effectuer (sur le modele et la vue)
      */
     public View.OnClickListener saveButton(){
-        return new ClickListener(vue,modele) {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(modele.getParcours().verifiParcours()){
-                    Intent intent = new Intent(context, ApercuActivity.class);
+                if(modele.getCourse().verifiParcours()){
+                    Intent intent = new Intent(vue.getApplicationContext(), ApercuActivity.class);
                     //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("modele",modele);
-                    mainActivity.startActivityForResult(intent,1);
+                    vue.startActivityForResult(intent,1);
                 }
                 else vue.toastMessage("La sauvegarde n'a pas pue etre effectuer car le parcours est incomplet (une page de renseignement serat ultérieurement mis en place)");
                 //TODO verification que le serveur a bien recus la sauvegarde
@@ -57,12 +49,12 @@ public class UserController {
      * @return le controller
      */
     public View.OnClickListener nextButton(){
-        return new ClickListener(vue,modele) {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean nextExist = modele.hasNextSemestre();
                 if(nextExist){
-                    modele.nextSemestre();
+                    modele.nextSemester();
                     vue.notifySemestreChange();
                 }
                 else{
@@ -77,7 +69,7 @@ public class UserController {
      * @return le controller
      */
     public View.OnClickListener prevButton(){
-        return new ClickListener(vue,modele) {
+        return new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 boolean prevExist = modele.hasPrevSemestre();

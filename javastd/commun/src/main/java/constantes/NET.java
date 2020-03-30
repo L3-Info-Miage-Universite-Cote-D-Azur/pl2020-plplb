@@ -8,6 +8,7 @@ public class NET {
     public static final String SEMSTERDATA = "Semestre data";
     public static final String STUDENT = "Student";
     public static final String COURSESNAMES = "Courses names";
+    public static final String LOADCOURSE = "Load/Send course";
 
     public static final String CONNEXION = "connexion";
     public static final String SENDMESSAGE = "send message";

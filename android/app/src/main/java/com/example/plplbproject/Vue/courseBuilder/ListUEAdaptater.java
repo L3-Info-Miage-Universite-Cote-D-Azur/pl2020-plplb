@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue.semestreBuilder;
+package com.example.plplbproject.Vue.courseBuilder;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,65 +8,36 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.Vue;
+import com.example.plplbproject.controleur.courseBuilder.CourseBuilderModele;
+import com.example.plplbproject.data.DataSemester;
 
 import java.util.ArrayList;
 
 import metier.Categorie;
-import metier.MainModele;
 import metier.UE;
 import metier.parcours.Parcours;
 import metier.semestre.Semestre;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class ListUEAdaptater extends BaseExpandableListAdapter {
 
-    private Context context;
-    private MainModele mainModele;
+    private CourseBuilderActivity vue;
+    private CourseBuilderModele modele;
     private int semestreCourant;  // Pour lisibilité
     private ArrayList<Categorie> categorieArrayList = new ArrayList<Categorie>();
 
 
-    /* SOUS CLASSE CONTROLLEUR */
-    public class MyUEClickListener implements View.OnClickListener{
-
-        private UE ue;
-        private Vue vue;
-        private Parcours parcours;
-
-        public MyUEClickListener(UE ue,Parcours parcours,Vue vue) {
-            this.ue = ue;
-            this.vue = vue;
-            this.parcours = parcours;
-        }
-
-        @Override
-        public void onClick(View view) {
-
-            if(!parcours.isChecked(ue) && parcours.canBeCheckedUE(ue)){ //Change le check de l'ue en consequence.
-                parcours.checkUE(ue);
-            }
-            else if(parcours.canBeUncheckedUE(ue)){
-                parcours.uncheckUE(ue);
-            }
-            //Un changement a eu lieu.
-            //vue.needSave(true);
-            vue.notifyUeListView();
-
-        }
-    }
-
     /**
      * L'adapteur doit savoir quel est le semestre qu'il doit adapter
-     * @param context
-     * @param mainModele
+     * @param vue
+     * @param modele
      */
 
-    public ExpandableListAdapter(Context context, MainModele mainModele) {
-        this.context = context;
-        this.mainModele = mainModele;
-        this.semestreCourant = mainModele.getSemestreCourant();
-        if(mainModele.getSemestres().size() > 0){
-            this.categorieArrayList = mainModele.getSemestre(semestreCourant).getListCategorie(); // listDataHeader
+    public ListUEAdaptater(CourseBuilderActivity vue, CourseBuilderModele modele) {
+        this.vue = vue;
+        this.modele = modele;
+        this.semestreCourant = modele.getIndexCurrentSemester();
+        if(DataSemester.SEMESTER.getNumberSemesters()> semestreCourant){
+            this.categorieArrayList = DataSemester.SEMESTER.getSemesterList().get(semestreCourant).getListCategorie(); // listDataHeader
         }
     }
 
@@ -113,7 +84,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
      * @param parent
      * @return
      */
-
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
@@ -121,7 +91,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         String headerTitle = c.getName();
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) vue.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.category_element, null);
         }
 
@@ -134,10 +104,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
+
         UE ue = (UE) getChild(groupPosition,childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) vue.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.ue_element_main, null);
         }
 
@@ -149,35 +120,67 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         ueName.setText(ue.getUeName());
         ueCode.setText(ue.getUeCode());
 
-
-        if(mainModele.getParcours().isChecked(ue)) ueRect.setBackgroundColor(0xff51C5C4);//bleu
-        else if(!mainModele.getParcours().canBeCheckedUE(ue)) ueRect.setBackgroundColor(0xffD54F34);//rouge
-        else ueRect.setBackgroundColor(0xff62C65B);//vert
-
-
-
-        convertView.setOnClickListener(new MyUEClickListener(ue,mainModele.getParcours(),(Vue) context));
+        if(modele.getCourse()!=null) {
+            if (modele.getCourse().isChecked(ue)) ueRect.setBackgroundColor(0xff51C5C4);//bleu
+            else if (!modele.getCourse().canBeCheckedUE(ue))
+                ueRect.setBackgroundColor(0xffD54F34);//rouge
+            else ueRect.setBackgroundColor(0xff62C65B);//vert
 
 
-        //Mise a jour de la case coche ou non.
-        //if(parcours.isChecked(ue)){
-        //    checkBox.setChecked(true);
-        //}
-
+            convertView.setOnClickListener(new UeClickListener(ue));
+        }
+        else{
+            //comme on a pas de parcours on met en gris (ne doit pas ce produire en si l'apllication fonctionne bien
+            ueRect.setBackgroundColor(0xff888888);//gris
+        }
         return convertView;
     }
+
+
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true;
     }
 
+    /**
+     * Permet de notifier a la liste que la liste des donner vient de changer
+     */
     @Override
     public void notifyDataSetChanged(){
-        this.semestreCourant = mainModele.getSemestreCourant();
-        Semestre tmp = mainModele.getSemestre(semestreCourant);
+        this.semestreCourant = modele.getIndexCurrentSemester();
+        Semestre tmp = DataSemester.SEMESTER.getSemesterList().get(semestreCourant);
         if(tmp==null) categorieArrayList = new ArrayList<Categorie>();
         else categorieArrayList = tmp.getListCategorie();
         super.notifyDataSetChanged();
+    }
+
+
+    /**
+     * Controlleur qui s'occupe de gerer les click sur une ue
+     */
+    public class UeClickListener implements View.OnClickListener{
+
+        private UE ue;
+
+
+        public UeClickListener(UE ue) {
+            this.ue = ue;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Parcours course = modele.getCourse();
+            if(!modele.getCourse().isChecked(ue) && course.canBeCheckedUE(ue)){ //Change le check de l'ue en consequence.
+                course.checkUE(ue);
+            }
+            else if(course.canBeUncheckedUE(ue)){
+                course.uncheckUE(ue);
+            }
+            //Un changement a eu lieu.
+            //vue.needSave(true);
+            vue.notifyUeListView();
+
+        }
     }
 }

@@ -13,7 +13,7 @@ import androidx.test.rule.ActivityTestRule;
 import com.example.plplbproject.R;
 
 import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
-import com.example.plplbproject.controleur.semestreBuilder.ReseauController;
+import com.example.plplbproject.controleur.courseBuilder.ReseauController;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

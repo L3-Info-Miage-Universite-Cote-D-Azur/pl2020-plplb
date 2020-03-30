@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * SemestreList est une arrayList de semestre.
  */
-public class SemestreList extends ArrayList<Semestre> implements Serializable {
+public class SemesterList extends ArrayList<Semestre> implements Serializable {
 
     /**
      * Recherche d'une ue parmis l'ensemble des ue

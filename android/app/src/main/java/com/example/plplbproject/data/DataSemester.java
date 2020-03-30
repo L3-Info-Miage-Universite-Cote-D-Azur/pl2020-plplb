@@ -1,17 +1,17 @@
 package com.example.plplbproject.data;
 
-import metier.semestre.SemestreList;
+import metier.semestre.SemesterList;
 
 public enum DataSemester {
     SEMESTER;
 
-    private SemestreList semesterList; //list des semestre qui contient les ue
+    private SemesterList semesterList; //list des semestre qui contient les ue
 
-    public void setSemesterList(SemestreList semesterList) {
+    public void setSemesterList(SemesterList semesterList) {
         this.semesterList = semesterList;
     }
 
-    public SemestreList getSemesterList() {
+    public SemesterList getSemesterList() {
         return semesterList;
     }
 
@@ -19,5 +19,10 @@ public enum DataSemester {
     public boolean hasSemesterList(){
         if(semesterList==null) return false;
         return true;
+    }
+
+    public int getNumberSemesters(){
+        if(semesterList==null) return 0;
+        return semesterList.size();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue.menuPrincipal;
+package com.example.plplbproject.Vue.creationMenu;
 
 import android.content.Intent;
 import android.widget.EditText;
@@ -29,10 +29,10 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(AndroidJUnit4.class)
-public class MenuInterTest {
+public class CreationMenuTest {
 
     @Rule
-    public ActivityTestRule<MenuInter> mActivityRule = new ActivityTestRule<>(MenuInter.class, true, false);
+    public ActivityTestRule<CreationMenuActivity> mActivityRule = new ActivityTestRule<>(CreationMenuActivity.class, true, false);
 
     @Before
     public void initIntent(){
@@ -42,7 +42,7 @@ public class MenuInterTest {
         parcoursName.add("old2");
         parcoursName.add("old3");
         parcoursName.add("old4");
-        startIntent.putExtra("parcoursList",parcoursName);
+        startIntent.putExtra("clientCourses",parcoursName);
         mActivityRule.launchActivity(startIntent);
 
         //on ferme le clavier pour eviter certaint bug entre 2 test
@@ -54,7 +54,7 @@ public class MenuInterTest {
     public void testInit(){
 
         //on recupere l'adaptateur
-        RecyclerView.Adapter<ParcoursViewHolder> adapter = ((RecyclerView)mActivityRule.getActivity().findViewById(R.id.parcoursPredefList)).getAdapter();
+        RecyclerView.Adapter<PredefinedCourseViewHolder> adapter = ((RecyclerView)mActivityRule.getActivity().findViewById(R.id.parcoursPredefList)).getAdapter();
 
         ParcoursSample.init();
         //on regarde que l'on a bien tout les parcours type dans la liste (une bonne initialisation)
@@ -97,7 +97,7 @@ public class MenuInterTest {
 
             // on verifie que tout les element peuve etre selectionner 1 a 1
             ParcoursSample.init();
-            assertEquals(mActivityRule.getActivity().getModele().getParcoursTypeName(), ParcoursSample.parcoursTypesName.get(i));
+            assertEquals(mActivityRule.getActivity().getModele().getPredefinedCourseName(), ParcoursSample.parcoursTypesName.get(i));
 
         }
 

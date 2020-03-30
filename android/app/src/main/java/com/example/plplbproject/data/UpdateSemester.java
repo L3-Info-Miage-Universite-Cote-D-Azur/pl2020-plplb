@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import io.socket.emitter.Emitter;
 import metier.semestre.Semestre;
-import metier.semestre.SemestreList;
+import metier.semestre.SemesterList;
 
 /**
  * Permet de mettre a jour la liste des semestre du client
@@ -18,7 +18,7 @@ public class UpdateSemester implements Emitter.Listener {
         Gson gson = new Gson();
         ArrayList<String> semesters = gson.fromJson((String) args[0], ArrayList.class);
 
-        SemestreList semeterList = new SemestreList();
+        SemesterList semeterList = new SemesterList();
 
         for (String semester: semesters) {
             semeterList.add(gson.fromJson(semester, Semestre.class));

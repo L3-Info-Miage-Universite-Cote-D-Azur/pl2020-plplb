@@ -55,7 +55,7 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
             public void onClick(View view) {
                 Intent intent = new Intent(mainMenuActivity, ApercuActivity.class);
                 intent.putExtra("className","MainMenuActivity");
-                intent.putExtra("coursesNames",coursesNames.get(position));
+                intent.putExtra("CourseName",coursesNames.get(position));
                 mainMenuActivity.startActivityForResult(intent,2);
 
             }
@@ -66,7 +66,7 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
             public void onClick(View view) {
                 Intent intent = new Intent(mainMenuActivity, MainActivity.class);
                 intent.putExtra("className","MainMenuActivity");
-                intent.putExtra("coursesNames",coursesNames.get(position));
+                intent.putExtra("CourseName",coursesNames.get(position));
                 mainMenuActivity.startActivity(intent);
             }
         });
