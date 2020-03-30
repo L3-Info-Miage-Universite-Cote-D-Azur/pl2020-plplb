@@ -1,10 +1,9 @@
-package com.example.plplbproject.Vue.menuPrincipal;
+package com.example.plplbproject.Vue.creationMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,34 +12,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.ApercuRecyclerAdapter;
 import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
-import com.example.plplbproject.controleur.menuPrincipal.createNewParcoursListener;
+import com.example.plplbproject.controleur.creationMenu.CreateNewCourseListener;
+import com.example.plplbproject.controleur.creationMenu.CreationMenuModele;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-import metier.Etudiant;
-import metier.MainModele;
-import metier.MenuInterModele;
-import metier.parcours.Parcours;
 import metier.parcours.ParcoursSample;
-import metier.parcours.ParcoursType;
 
-public class MenuInter extends AppCompatActivity {
+public class CreationMenuActivity extends AppCompatActivity {
+    private CreationMenuModele modele;
 
-    private Context context;
-    public static final String AUTOCONNECT = "AUTOCONNECT";
-    private boolean autoconnect =  true;
-
-    private MenuInterModele modele;
-
-    private RecyclerView parcoursRecyclerView;
-    private ParcoursPredefRecyclerAdapter adapterParcoursType;
+    private RecyclerView courseRecyclerView;
+    private PredefinedCourseAdapter adapterPredefinedCourse;
 
     private Button deconnexion;//Le bouton de deconnexion
-    private Button createNewParcours;//Le bouton pour creer le nouveau parcours
-    private EditText editParcoursName;//Le champs rempli avec le nom du nouveau parcours
+    private Button createNewCourse;//Le bouton pour creer le nouveau parcours
+    private EditText editCourseName;//Le champs rempli avec le nom du nouveau parcours
     private TextView errorMessage;//L'affiche d'erreur
 
     @Override
@@ -48,12 +36,9 @@ public class MenuInter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_inter);
 
-        autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
-        this.context = getApplicationContext();
-
-        ArrayList<String> parcoursName = (ArrayList<String>) getIntent().getSerializableExtra("coursesNames");
+        ArrayList<String> coursesNames = (ArrayList<String>) getIntent().getSerializableExtra("clientCourses");
         ParcoursSample.init();
-        modele = new MenuInterModele(ParcoursSample.parcoursTypesName,parcoursName);
+        modele = new CreationMenuModele(ParcoursSample.parcoursTypesName,coursesNames);
     }
 
     @Override
@@ -61,20 +46,20 @@ public class MenuInter extends AppCompatActivity {
         super.onResume();
 
         //Chargement des elements graphiques
-        parcoursRecyclerView = findViewById(R.id.parcoursPredefList);
+        courseRecyclerView = findViewById(R.id.parcoursPredefList);
         deconnexion = findViewById(R.id.deconnexion);
-        createNewParcours = findViewById(R.id.nouveauParcours);
-        editParcoursName = findViewById(R.id.editParcoursName);
+        createNewCourse = findViewById(R.id.nouveauParcours);
+        editCourseName = findViewById(R.id.editParcoursName);
         errorMessage = findViewById(R.id.errorMessage);
 
         //Mise en place de l'adapter.
-        adapterParcoursType = new ParcoursPredefRecyclerAdapter(this,modele);
-        parcoursRecyclerView.setAdapter(adapterParcoursType);
-        parcoursRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapterPredefinedCourse = new PredefinedCourseAdapter(getApplicationContext(),modele);
+        courseRecyclerView.setAdapter(adapterPredefinedCourse);
+        courseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         //Mise en place des listener
-        createNewParcours.setOnClickListener(new createNewParcoursListener(this,modele));
+        createNewCourse.setOnClickListener(new CreateNewCourseListener(this,modele));
 
         deconnexion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,19 +83,18 @@ public class MenuInter extends AppCompatActivity {
      * Recupere le texte dans l'edittext
      * @return le nom du parcours à creer.
      */
-    public String getParcoursName(){
-        return editParcoursName.getText().toString();
+    public String getCourseName(){
+        return editCourseName.getText().toString();
     }
 
     /**
      * Permet de changer d'activité
      */
     public void switchIntent(){
-        Intent intent = new Intent(MenuInter.this, MainActivity.class);
-        intent.putExtra(AUTOCONNECT,autoconnect);
-        intent.putExtra("ParcoursTypeName",modele.getParcoursTypeName());
-        intent.putExtra("ParcoursName",modele.getParcoursName());
-        intent.putExtra("className","MenuInter");
+        Intent intent = new Intent(CreationMenuActivity.this, MainActivity.class);
+        intent.putExtra("PredefinedCourseName",modele.getPredefinedCourseName());
+        intent.putExtra("CourseName",modele.getCourseName());
+        intent.putExtra("className","CreationMenuActivity");
         startActivityForResult(intent,2);
     }
 
@@ -118,7 +102,7 @@ public class MenuInter extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                adapterParcoursType.notifyDataSetChanged();
+                adapterPredefinedCourse.notifyDataSetChanged();
             }
         });
     }
@@ -136,7 +120,7 @@ public class MenuInter extends AppCompatActivity {
      * permet de recuperer le modele (utile pour les test)
      * @return le modele de lactivity
      */
-    protected MenuInterModele getModele(){
+    protected CreationMenuModele getModele(){
         return modele;
     }
 
@@ -144,7 +128,7 @@ public class MenuInter extends AppCompatActivity {
      * permet de set le modele (utile pour les test
      * @param modele le modele que l'on veut set
      */
-    protected void setModele(MenuInterModele modele){
+    protected void setModele(CreationMenuModele modele){
         this.modele = modele;
     }
 }

@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Vue.menuPrincipal.MenuInter"></activity>
         <activity android:name=".Vue.mainMenu.MainMenuActivity" />
+        <activity android:name=".Vue.creationMenu.CreationMenuActivity"/>
         <activity android:name=".Vue.apercusParcour.ApercuActivity" />
         <activity
             android:name=".Vue.login.LoginActivity"
