@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.menuPrincipal.MenuPrinc;
+import com.example.plplbproject.Vue.mainMenu.MainMenuActivity;
 import com.example.plplbproject.controleur.login.LoginClickListener;
 
 import com.example.plplbproject.data.UpdateSemester;
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         Connexion.CONNEXION.send(STUDENT,gson.toJson(student));
 
         //on lance le prochain intent
-        Intent intent = new Intent(LoginActivity.this, MenuPrinc.class);
+        Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
         intent.putExtra("etudiant",student);
         startActivity(intent);
     }

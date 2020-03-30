@@ -51,7 +51,7 @@ public class MenuInter extends AppCompatActivity {
         autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
         this.context = getApplicationContext();
 
-        ArrayList<String> parcoursName = (ArrayList<String>) getIntent().getSerializableExtra("parcoursList");
+        ArrayList<String> parcoursName = (ArrayList<String>) getIntent().getSerializableExtra("coursesNames");
         ParcoursSample.init();
         modele = new MenuInterModele(ParcoursSample.parcoursTypesName,parcoursName);
     }

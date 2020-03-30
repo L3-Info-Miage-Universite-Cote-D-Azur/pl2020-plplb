@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Vue.menuPrincipal.MenuInter"></activity>
-        <activity android:name=".Vue.menuPrincipal.MenuPrinc" />
+        <activity android:name=".Vue.mainMenu.MainMenuActivity" />
         <activity android:name=".Vue.apercusParcour.ApercuActivity" />
         <activity
             android:name=".Vue.login.LoginActivity"
