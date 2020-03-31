@@ -35,7 +35,9 @@ import metier.parcours.ParcoursType;
 import static constantes.NET.LOADCOURSE;
 
 
-
+/**
+ * Activity de la page de creation de parcour
+ */
 public class CourseBuilderActivity extends AppCompatActivity {
 
 
@@ -59,7 +61,7 @@ public class CourseBuilderActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         modele = new CourseBuilderModele(DataSemester.SEMESTER.getNumberSemesters());
-
+        reseauController = new ReseauController(this,modele);
         String classCall = getIntent().getStringExtra("className");
         if (classCall.equals("CreationMenuActivity")) {
             onCreateNewCours();
@@ -129,7 +131,7 @@ public class CourseBuilderActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //on met le bon numero de semestre
-        getSupportActionBar().setTitle("Semestre "+modele.getIndexCurrentSemester()+1);
+        getSupportActionBar().setTitle("Semestre "+(modele.getIndexCurrentSemester()+1));
 
         userController = new UserController(this,modele);
 

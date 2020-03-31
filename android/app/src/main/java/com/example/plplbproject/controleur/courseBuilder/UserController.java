@@ -3,10 +3,8 @@ package com.example.plplbproject.controleur.courseBuilder;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.plplbproject.Vue.apercusParcour.ApercuActivity;
 import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
-
-
+import com.example.plplbproject.Vue.previewParcour.PreviewActivity;
 
 
 /**
@@ -33,9 +31,10 @@ public class UserController {
             @Override
             public void onClick(View view) {
                 if(modele.getCourse().verifiParcours()){
-                    Intent intent = new Intent(vue.getApplicationContext(), ApercuActivity.class);
+                    Intent intent = new Intent(vue.getApplicationContext(), PreviewActivity.class);
                     //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("modele",modele);
+                    intent.putExtra("Course",modele.getCourse());
+                    intent.putExtra("className","CourseBuilderActivity");
                     vue.startActivityForResult(intent,1);
                 }
                 else vue.toastMessage("La sauvegarde n'a pas pue etre effectuer car le parcours est incomplet (une page de renseignement serat ultérieurement mis en place)");

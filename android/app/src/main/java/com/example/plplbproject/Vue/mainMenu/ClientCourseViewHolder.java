@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plplbproject.R;
 
+/**
+ * ViewHolder d'un parcours deja existant du menu principale
+ */
 public class ClientCourseViewHolder extends RecyclerView.ViewHolder {
 
     protected TextView parcoursName;

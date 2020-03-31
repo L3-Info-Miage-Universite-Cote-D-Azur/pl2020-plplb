@@ -7,7 +7,7 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import metier.Etudiant;
+import metier.Student;
 import semester_manager.SemestersSample;
 
 /**
@@ -23,7 +23,7 @@ ServerUtility
 	 * @param l La liste des clients
 	 * @return L'Etudiant voulu
 	 */
-	public static Etudiant
+	public static Student
 	getStudentFromList (SocketIOClient sock, List<Client> l)
 	{
 		for (Client c : l)
@@ -39,7 +39,7 @@ ServerUtility
 	 * @return La SocketIOCLient voulue
 	 */
 	public static SocketIOClient
-	getSocketFromList (Etudiant etu, List<Client> l)
+	getSocketFromList (Student etu, List<Client> l)
 	{
 		for (Client c : l)
 			if (etu.getNom().equals(c.getStudent().getNom()))

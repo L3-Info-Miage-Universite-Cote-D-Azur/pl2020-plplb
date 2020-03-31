@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue.apercusParcour;
+package com.example.plplbproject.Vue.previewParcour;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +14,7 @@ import static constantes.NET.*;
 
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.ApercuRecyclerAdapter;
+import com.example.plplbproject.data.DataSemester;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,17 +22,18 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 import io.socket.emitter.Emitter;
-import metier.MainModele;
 import metier.parcours.Parcours;
-import metier.semestre.Semestre;
 
-public class ApercuActivity extends AppCompatActivity {
+public class PreviewActivity extends AppCompatActivity {
 
-    private MainModele modele;
+
     private long backPressedTime = 0;    // used by onBackPressed()
 
     private RecyclerView apercuList;
-    private ApercuRecyclerAdapter apercuAdapter;
+    private PreviewRecyclerAdapter apercuAdapter;
+    private Parcours course;
+
+    private Button saveButton;
 
     private final Gson gson = new GsonBuilder().create();
 
@@ -41,73 +42,66 @@ public class ApercuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apercu_activity);
 
+        saveButton = findViewById(R.id.saveApercu);
 
-
-        Button saveButton = findViewById(R.id.saveApercu);
-        modele = new MainModele();
         String classCall = getIntent().getStringExtra("className");
-        if(classCall == null) classCall ="";
+        if(classCall == null)
+            classCall ="";
         if (classCall.equals("MainMenuActivity") ){
-            String parcoursName = getIntent().getStringExtra("coursesNames");
-            Connexion.CONNEXION.setEventListener(SENDDATACONNEXION, receiveSemesters());
-            Connexion.CONNEXION.send(SENDDATACONNEXION,"");
-
-            Connexion.CONNEXION.setEventListener(SENDCLIENTSAVE, receiveParcours());
-            Connexion.CONNEXION.send(SENDCOURSE,parcoursName);
-            saveButton.setVisibility(View.GONE);
+            onCreatePreviews();
+        }
+        else if(classCall.equals("CourseBuilderActivity")){
+            onCreateEndCourseBuilder();
         }
         else {
-            saveButton.setOnClickListener(saveButtonListener);
-            modele = (MainModele) getIntent().getExtras().get("modele");
+            finish(); //aucune autre classe ne doit mener a cette classe
         }
-
-        apercuList = findViewById(R.id.apercuList);
-        apercuAdapter = new ApercuRecyclerAdapter(this,modele);
-        apercuList.setAdapter(apercuAdapter);
-        apercuList.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
+    protected void onCreateEndCourseBuilder(){
+        course = (Parcours) getIntent().getSerializableExtra("Course");
+        initPreviewsCourse();
+        saveButton.setOnClickListener(saveButtonListener);
+    }
 
-    public Emitter.Listener receiveParcours (){
+    protected  void onCreatePreviews(){
+        String courseName = getIntent().getStringExtra("CourseName");
+        Connexion.CONNEXION.setEventListener(LOADCOURSE,receiveCourse());
+        Connexion.CONNEXION.send(LOADCOURSE,courseName);
+        saveButton.setVisibility(View.GONE);
+    }
+
+    protected void initPreviewsCourse(){
+        apercuList = findViewById(R.id.apercuList);
+        apercuAdapter = new PreviewRecyclerAdapter(this,course);
+        apercuList.setAdapter(apercuAdapter);
+        apercuList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
+    /**
+     * Controller qui permet de gerer la reception du parcours
+     * @return le controller
+     */
+    public Emitter.Listener receiveCourse(){
         return new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
-                modele.setParcours(new Parcours(modele.getSemestres(),ueCode));
-            }
-        };
-    }
-
-    public Emitter.Listener receiveSemesters (){
-        return new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                ArrayList<String> semestres = gson.fromJson((String) args[0], ArrayList.class);
-                for (String s: semestres) {
-                    modele.addSemestre(gson.fromJson(s, Semestre.class));
-                }
-                if(modele.getParcours()!= null) {
-                    modele.getParcours().updateSemestre(modele.getSemestres());
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        apercuAdapter.setModele(modele);
-                        apercuAdapter.notifyDataSetChanged();
-
-                    }
-                });
+                course = new Parcours(DataSemester.SEMESTER.getSemesterList(),ueCode);
+                initPreviewsCourse();
             }
         };
     }
 
 
 
-    public View.OnClickListener saveButtonListener = new View.OnClickListener() {
+
+    private View.OnClickListener saveButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Connexion.CONNEXION.send(SENDCLIENTSAVE,gson.toJson(modele.getParcours().createSaveList()));
+            Connexion.CONNEXION.send(SENDCLIENTSAVE,gson.toJson(course.createSaveList()));
             Toast toast = Toast.makeText(getApplicationContext(), "Parcours sauvegardé", Toast.LENGTH_SHORT);
             toast.show();
 

@@ -1,38 +1,38 @@
-package com.example.plplbproject.Vue.apercusParcour;
+package com.example.plplbproject.Vue.previewParcour;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ExpandableListView;
+
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.semestreBuilder.ExpandableCategoryAdapter;
+
 
 import java.util.ArrayList;
 
-import metier.Categorie;
-import metier.MainModele;
-import metier.semestre.Semestre;
+import metier.parcours.Parcours;
+
 
 import metier.UE;
 
-public class ApercuAdapter extends BaseAdapter {
+/**
+ * Liste des ue selectionner a l'interrieur d'un semestre
+ */
+public class PreviewAdapter extends BaseAdapter {
 
     private Context context;
-    private MainModele modele;
     private ArrayList<UE> ues;
 
-    public ApercuAdapter(Context context, MainModele modele, int semestreCourant) {
+    public PreviewAdapter(Context context, Parcours course, int semestreCourant) {
         this.context = context;
-        this.modele = modele;
         this.ues = new ArrayList<>();
-        if(modele.getParcours()!=null){
-            for (UE ue: this.modele.getParcours().getParcoursSelect().values()
+        if(course!=null){
+            for (UE ue: course.getParcoursSelect().values()
                 ) {
-                if(modele.getParcours().isChecked(ue) && ( ue.getSemestreNumber() == semestreCourant)){
+                if(ue.getSemestreNumber() == semestreCourant){
                     ues.add(ue);
                 }
             }}

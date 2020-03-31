@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
+import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
 import com.example.plplbproject.controleur.creationMenu.CreateNewCourseListener;
 import com.example.plplbproject.controleur.creationMenu.CreationMenuModele;
 
@@ -20,6 +20,9 @@ import java.util.ArrayList;
 
 import metier.parcours.ParcoursSample;
 
+/**
+ * Activity de la page de creation d'un nouveau menu
+ */
 public class CreationMenuActivity extends AppCompatActivity {
     private CreationMenuModele modele;
 
@@ -53,7 +56,7 @@ public class CreationMenuActivity extends AppCompatActivity {
         errorMessage = findViewById(R.id.errorMessage);
 
         //Mise en place de l'adapter.
-        adapterPredefinedCourse = new PredefinedCourseAdapter(getApplicationContext(),modele);
+        adapterPredefinedCourse = new PredefinedCourseAdapter(this,modele);
         courseRecyclerView.setAdapter(adapterPredefinedCourse);
         courseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -91,7 +94,7 @@ public class CreationMenuActivity extends AppCompatActivity {
      * Permet de changer d'activité
      */
     public void switchIntent(){
-        Intent intent = new Intent(CreationMenuActivity.this, MainActivity.class);
+        Intent intent = new Intent(CreationMenuActivity.this, CourseBuilderActivity.class);
         intent.putExtra("PredefinedCourseName",modele.getPredefinedCourseName());
         intent.putExtra("CourseName",modele.getCourseName());
         intent.putExtra("className","CreationMenuActivity");

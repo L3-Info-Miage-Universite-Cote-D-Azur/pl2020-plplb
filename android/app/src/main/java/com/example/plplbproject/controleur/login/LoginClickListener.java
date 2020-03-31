@@ -4,12 +4,8 @@ import android.view.View;
 
 import com.example.plplbproject.Vue.login.LoginActivity;
 import com.example.plplbproject.reseau.Connexion;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import metier.Student;
 
-import static constantes.NET.SENDETUDIANTID;
 
 public class LoginClickListener implements View.OnClickListener {
 

@@ -13,15 +13,17 @@ import com.example.plplbproject.controleur.creationMenu.CreationMenuModele;
 
 import java.util.ArrayList;
 
-
+/**
+ * Adapter qui permet de gerer la liste des parcours type existant
+ */
 public class PredefinedCourseAdapter extends RecyclerView.Adapter<PredefinedCourseViewHolder> {
 
-    private Context context;
+    private CreationMenuActivity vue;
     private ArrayList<String> predefinedCoursesNames;
     private CreationMenuModele modele;
 
-    public PredefinedCourseAdapter(Context context, CreationMenuModele modele) {
-        this.context = context;
+    public PredefinedCourseAdapter(CreationMenuActivity vue, CreationMenuModele modele) {
+        this.vue = vue;
         this.predefinedCoursesNames = modele.getListPredefinedCourse();
         this.modele = modele;
     }
@@ -31,7 +33,7 @@ public class PredefinedCourseAdapter extends RecyclerView.Adapter<PredefinedCour
     public PredefinedCourseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
         View view;
-        view = LayoutInflater.from(context).inflate(R.layout.parcours_predef_element, viewGroup, false);
+        view = LayoutInflater.from(vue.getApplicationContext()).inflate(R.layout.parcours_predef_element, viewGroup, false);
         return new PredefinedCourseViewHolder(view);
 
     }
@@ -43,11 +45,12 @@ public class PredefinedCourseAdapter extends RecyclerView.Adapter<PredefinedCour
         holder.predefinedCourseName.setText(name);
         if(modele.getPredefinedCourseName()!= null && name.equals(modele.getPredefinedCourseName())) holder.setSelected();
         else holder.setUnselected();
+        //application du listenener
         holder.predefinedCourseName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 modele.setPredefinedCourseName(name);
-                ((CreationMenuActivity)context).notifyParcoursTypeSelected();
+                vue.notifyParcoursTypeSelected();
             }
         });
 

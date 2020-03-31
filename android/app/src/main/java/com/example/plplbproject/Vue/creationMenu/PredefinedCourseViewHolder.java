@@ -19,10 +19,16 @@ public class PredefinedCourseViewHolder extends RecyclerView.ViewHolder {
         predefinedCourseName = itemView.findViewById(R.id.parcoursPredefName);
     }
 
+    /**
+     * permet de mettre le couleur de l'element selectionner en bleu
+     */
     public void setSelected(){
         itemView.setBackgroundColor(0xff51C5C4);
     }
 
+    /**
+     * permet de mettre la couleur de fond en blanc si il est pas selectionner
+     */
     public void setUnselected(){
         itemView.setBackgroundColor(0xffffffff);
     }

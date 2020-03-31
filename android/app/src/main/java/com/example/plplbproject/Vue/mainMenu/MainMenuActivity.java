@@ -12,6 +12,8 @@ import android.widget.Button;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.creationMenu.CreationMenuActivity;
+import com.example.plplbproject.data.DataSemester;
+import com.example.plplbproject.data.UpdateSemester;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import io.socket.emitter.Emitter;
 
 import static constantes.NET.COURSESNAMES;
+import static constantes.NET.SEMSTERDATA;
 
 /**
  * L'Activité du menu principal.
@@ -41,6 +44,7 @@ public class MainMenuActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_princ);
         this.context = getApplicationContext();
+
     }
 
     @Override
@@ -52,8 +56,15 @@ public class MainMenuActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
 
+        //le client a reussi a se connecter et n'a pas la liste des semestre on lui envoie
+        if(!DataSemester.SEMESTER.hasSemesterList()){
+            Connexion.CONNEXION.setEventListener(SEMSTERDATA, new UpdateSemester());
+            Connexion.CONNEXION.send(SEMSTERDATA, "");
+        }
+
         deconnexion = findViewById(R.id.deconnexion);
         newCourse = findViewById(R.id.nouveauParcours);
+
 
         if(clientCourses == null){
             clientCourses = new ArrayList<String>();
@@ -96,18 +107,6 @@ public class MainMenuActivity extends AppCompatActivity{
         this.clientCourses = clientCourses;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==2)
-        {
-            finish();
-        }
-        else{
-            finish();
-        }
-    }
 
     /**
      * Gère la reception des parcours sauvegardés envoyé par le serveur

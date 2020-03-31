@@ -23,6 +23,9 @@ import metier.Student;
 import static constantes.NET.SEMSTERDATA;
 import static constantes.NET.STUDENT;
 
+/**
+ * Page de login
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private Button loginButton;//Le button pour se connecter
@@ -89,13 +92,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Permet de changer d'intent pour passer au menu principale
+     */
     public void switchIntent(){
 
-        //le client a reussi a se connecter on lui envoie la liste des semestre
-        Connexion.CONNEXION.setEventListener(SEMSTERDATA, new UpdateSemester());
-        Connexion.CONNEXION.send(SEMSTERDATA, "");
-
+        //on enregistre l'etudiant qui c'est connecter dans la connection
         Gson gson = new GsonBuilder().create();
         Connexion.CONNEXION.setStudentLogin(student);
         Connexion.CONNEXION.send(STUDENT,gson.toJson(student));

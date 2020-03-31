@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.apercusParcour.ApercuActivity;
-import com.example.plplbproject.Vue.semestreBuilder.MainActivity;
+import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
+import com.example.plplbproject.Vue.previewParcour.PreviewActivity;
 
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
         holder.visualiserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mainMenuActivity, ApercuActivity.class);
+                Intent intent = new Intent(mainMenuActivity, PreviewActivity.class);
                 intent.putExtra("className","MainMenuActivity");
                 intent.putExtra("CourseName",coursesNames.get(position));
                 mainMenuActivity.startActivityForResult(intent,2);
@@ -64,7 +64,7 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
         holder.modifButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mainMenuActivity, MainActivity.class);
+                Intent intent = new Intent(mainMenuActivity, CourseBuilderActivity.class);
                 intent.putExtra("className","MainMenuActivity");
                 intent.putExtra("CourseName",coursesNames.get(position));
                 mainMenuActivity.startActivity(intent);

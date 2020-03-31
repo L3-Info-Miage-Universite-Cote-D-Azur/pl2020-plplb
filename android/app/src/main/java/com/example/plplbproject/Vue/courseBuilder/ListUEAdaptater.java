@@ -18,6 +18,9 @@ import metier.UE;
 import metier.parcours.Parcours;
 import metier.semestre.Semestre;
 
+/**
+ * Adaptateur de la liste des categorie contenant les ue
+ */
 public class ListUEAdaptater extends BaseExpandableListAdapter {
 
     private CourseBuilderActivity vue;

@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import constantes.NET;
 import database.DBManager;
 import debug.Debug;
+import metier.Student;
 import semester_manager.SemesterThread;
 import semester_manager.SemestersSample;
 
@@ -72,19 +73,19 @@ Serveur
     initEventListener ()
     {
         //le client viens de ce connecter
-        this.server.addEventListener(CONNEXION, String.class, new DataListener<String>() {
+        this.server.addEventListener(STUDENT, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-            	Client c = new Client(gson.fromJson(json,Etudiant.class), socketIOClient);
+            	Client c = new Client(gson.fromJson(json, Student.class), socketIOClient);
             	listOfClients.add(c);
             }
         });
 
         //le client envoie ces donner
-        this.server.addEventListener(SENDETUDIANTID,String.class, new DataListener<String>() {
+        this.server.addEventListener(STUDENT,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Client c = new Client(gson.fromJson(json,Etudiant.class), socketIOClient);
+                Client c = new Client(gson.fromJson(json,Student.class), socketIOClient);
                 listOfClients.add(c);
                 clientOnConnectEvent(c);
             }
@@ -100,7 +101,7 @@ Serveur
         });
         
         /*  */
-        this.server.addEventListener(SENDCLIENTLISTCOURSE,String.class, new DataListener<String>() {
+        this.server.addEventListener(COURSESNAMES,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
@@ -109,7 +110,7 @@ Serveur
         });
         
         /* Le client envoie un parcours a charger */
-        this.server.addEventListener(SENDCOURSE,String.class, new DataListener<String>() {
+        this.server.addEventListener(LOADCOURSE,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
@@ -174,7 +175,7 @@ Serveur
     clientOnConnectEvent (Client c) 
     {
         Debug.log("New client connected : " + c.getStudent().getNom());
-        c.getSock().sendEvent(SENDMESSAGE ,"Connected to server");
+        //c.getSock().sendEvent(SENDMESSAGE ,"Connected to server");
     }
 
     /**
@@ -197,7 +198,7 @@ Serveur
     	dbManager = new DBManager(c.getStudent().toString(), "");
     	ArrayList<String> filenames = dbManager.getAllCourses();
     	Debug.log("Sending course\'s list " + filenames.toString() + " to " + c.getStudent().toString());
-    	c.getSock().sendEvent(SENDCLIENTLISTCOURSE, gson.toJson(filenames));
+    	c.getSock().sendEvent(COURSESNAMES, gson.toJson(filenames));
     }
 
     /**
@@ -212,7 +213,7 @@ Serveur
         {
             Debug.log("Send data to : " + c.getStudent().getNom());
             if (dbManager.getAllCourses().contains(filename))
-            	c.getSock().sendEvent(SENDCOURSE, gson.toJson(dbManager.load(filename)));
+            	c.getSock().sendEvent(LOADCOURSE, gson.toJson(dbManager.load(filename)));
             else
             {
             	Debug.error(c.getStudent().toString() + " sent an impossible course: " + filename);

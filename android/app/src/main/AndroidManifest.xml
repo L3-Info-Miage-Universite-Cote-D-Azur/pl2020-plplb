@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Vue.mainMenu.MainMenuActivity" />
         <activity android:name=".Vue.creationMenu.CreationMenuActivity"/>
-        <activity android:name=".Vue.apercusParcour.ApercuActivity" />
+        <activity android:name=".Vue.previewParcour.PreviewActivity" />
         <activity
             android:name=".Vue.login.LoginActivity"
             android:label="@string/app_name"
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Vue.semestreBuilder.MainActivity"
+            android:name=".Vue.courseBuilder.CourseBuilderActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
