@@ -1,8 +1,8 @@
 package metiermanager.semesters;
 
 import database.FileManager;
-import metier.parcours.manager.Converter;
-import metier.parcours.manager.Parser;
+import metiermanager.Converter;
+import metiermanager.Parser;
 import metier.semestre.Semestre;
 
 /**

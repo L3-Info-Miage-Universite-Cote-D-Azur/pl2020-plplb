@@ -1,4 +1,4 @@
-package metier.parcours.manager;
+package metiermanager;
 
 import java.util.ArrayList;
 
