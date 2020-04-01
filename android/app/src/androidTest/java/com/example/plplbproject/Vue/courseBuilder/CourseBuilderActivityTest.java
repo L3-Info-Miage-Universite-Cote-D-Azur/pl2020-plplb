@@ -1,33 +1,25 @@
 package com.example.plplbproject.Vue.courseBuilder;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.os.Build;
+
 import android.widget.Button;
 
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.matcher.BoundedMatcher;
-import androidx.test.platform.app.InstrumentationRegistry;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 
 import com.example.plplbproject.R;
 
-import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
+
 
 import com.example.plplbproject.controleur.courseBuilder.CourseBuilderModele;
-import com.example.plplbproject.controleur.courseBuilder.ReseauController;
-import com.example.plplbproject.controleur.courseBuilder.UserController;
+
 import com.example.plplbproject.data.DataSemester;
-import com.example.plplbproject.reseau.Connexion;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-
-import org.hamcrest.Matcher;
 import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +27,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+
 
 
 
@@ -49,33 +40,22 @@ import metier.semestre.SemesterList;
 import metier.semestre.Semestre;
 
 
-import static androidx.test.espresso.Espresso.onData;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.core.internal.deps.dagger.internal.Preconditions.checkNotNull;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
+
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity.AUTOINIT;
-import static constantes.NET.LOADCOURSE;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
+
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
+
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import io.socket.client.IO;
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
+
 
 /*
     TODO:refaire en adaptant a  la nouvelle connexion
@@ -86,7 +66,7 @@ import io.socket.emitter.Emitter;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class CourseBuilderTest {
+public class CourseBuilderActivityTest {
 
     @Rule
     public ActivityTestRule<CourseBuilderActivity> mActivityRule = new ActivityTestRule<>(CourseBuilderActivity.class, true, false);
@@ -96,8 +76,6 @@ public class CourseBuilderTest {
     @Mock
     Parcours course;
 
-    @Mock
-    Socket socket;
 
     @Spy
     CourseBuilderModele modele;
@@ -161,7 +139,6 @@ public class CourseBuilderTest {
     public void init() {
 
         initSemesterList();
-        socket = Mockito.mock(Socket.class);
 
         modele = Mockito.spy(new CourseBuilderModele(DataSemester.SEMESTER.getNumberSemesters()));
         course = Mockito.mock(Parcours.class);
