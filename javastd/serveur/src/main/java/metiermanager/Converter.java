@@ -46,9 +46,9 @@ Converter
 	 * @param s la String sous format JSON
 	 * @return L'ArrayList&ltPacoursType&gt lie a la String
 	 */
-	public ArrayList<ParcoursType>
+	public ParcoursType
 	stringToCourse (String s)
 	{
-		return gson.fromJson(s, new TypeToken<ArrayList<ParcoursType>>(){}.getType());
+		return gson.fromJson(s, ParcoursType.class);
 	}
 }

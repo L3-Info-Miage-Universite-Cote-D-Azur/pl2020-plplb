@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import metier.Student;
+import metiermanager.courses.ParcoursSample;
 import metiermanager.semesters.SemestersSample;
 
 /**
@@ -80,4 +81,21 @@ ServerUtility
 	    return gson.toJson(semestresJsonned);
 	}
 	
+	/**
+	 * Renvoie une String contenant la liste des
+	 * semestres sous format JSON
+	 * @return une String
+	 */
+	public static String
+	getListOfCourseTypeJSONed()
+	{
+		Gson gson = new GsonBuilder().create();
+		ArrayList<String> coursesJsonned = new ArrayList<String>();
+		coursesJsonned.add(ParcoursSample.JPI);
+		coursesJsonned.add(ParcoursSample.JPM);
+		coursesJsonned.add(ParcoursSample.JPMM);
+		coursesJsonned.add(ParcoursSample.JPE);
+		coursesJsonned.add(ParcoursSample.JPF);
+	    return gson.toJson(coursesJsonned);
+	}
 }
