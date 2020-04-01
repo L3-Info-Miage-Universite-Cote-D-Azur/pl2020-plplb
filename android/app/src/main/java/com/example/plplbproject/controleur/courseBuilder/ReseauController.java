@@ -3,6 +3,7 @@ package com.example.plplbproject.controleur.courseBuilder;
 
 
 import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
+import com.example.plplbproject.data.DataPredefinedCourse;
 import com.example.plplbproject.data.DataSemester;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,7 +42,7 @@ public class ReseauController{
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
                 System.out.println("save receive from server");
                 //TODO Modifier parcours
-                modele.setCourse(new Parcours(DataSemester.SEMESTER.getSemesterList(),ueCode));
+                modele.setCourse(new Parcours(DataSemester.SEMESTER.getSemesterList(),ueCode, DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList()));
                 vue.notifyUeListView();
             }
         };

@@ -14,6 +14,7 @@ import static constantes.NET.*;
 
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.data.DataPredefinedCourse;
 import com.example.plplbproject.data.DataSemester;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
@@ -89,7 +90,7 @@ public class PreviewActivity extends AppCompatActivity {
             @Override
             public void call(Object... args) {
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
-                course = new Parcours(DataSemester.SEMESTER.getSemesterList(),ueCode);
+                course = new Parcours(DataSemester.SEMESTER.getSemesterList(),ueCode, DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList());
                 initPreviewsCourse();
             }
         };

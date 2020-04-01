@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import metier.UE;
-import com.example.plplbproject.data.DataPredefinedCourse;
 import metier.semestre.SemesterList;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreManager;
@@ -30,10 +29,10 @@ public class Parcours implements Serializable {
      * @param semestreList la liste de semestre.
      * @param allCodeUESelected une liste valide d'ue
      */
-    public Parcours(SemesterList semestreList, List<String> allCodeUESelected ) {
+    public Parcours(SemesterList semestreList, List<String> allCodeUESelected ,ArrayList<ParcoursType> listparcoursType) {
         this.semestreList =  semestreList;
         initParcoursSemestresManager();
-        initParcours(allCodeUESelected);
+        initParcours(allCodeUESelected, listparcoursType);
         initObligatoryUE();
 
     }
@@ -121,14 +120,11 @@ public class Parcours implements Serializable {
      * Initialisation des ue avec une liste de code d'ue
      * @param allCodeUESelected tout les ue de la liste
      */
-    private void initParcours(List<String> allCodeUESelected){
+    private void initParcours(List<String> allCodeUESelected, ArrayList<ParcoursType> listparcoursType){
         parcoursSelect = new HashMap<String, UE>();
 
         //Le premier element de la liste est le nom du parcours;
         this.setName(allCodeUESelected.get(0));
-
-        //On recupere la liste des parcours type
-        ArrayList<ParcoursType> listparcoursType = DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList();
 
         //Le deuxieme est le nom du semestre type.
         String parcoursName = allCodeUESelected.get(1);
