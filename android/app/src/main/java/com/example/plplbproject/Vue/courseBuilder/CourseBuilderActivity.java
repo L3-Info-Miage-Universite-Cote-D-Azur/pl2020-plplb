@@ -1,6 +1,8 @@
 package com.example.plplbproject.Vue.courseBuilder;
 
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,6 +16,7 @@ import android.view.Menu;
 
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
@@ -38,11 +41,12 @@ import static constantes.NET.LOADCOURSE;
 /**
  * Activity de la page de creation de parcour
  */
-public class CourseBuilderActivity extends AppCompatActivity {
+public class CourseBuilderActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
 
     private Button nextButton; //Le bouton suivant
     private Button previousButton; //boutton precedent
+    private SearchView searchView;
 
     private UserController userController;
     private ReseauController reseauController;
@@ -141,6 +145,14 @@ public class CourseBuilderActivity extends AppCompatActivity {
 
         nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
         previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = findViewById(R.id.search);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+
+        updateButton();
 
 
         if(autoInit) initVue();
@@ -278,6 +290,23 @@ public class CourseBuilderActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onClose() {
+        listAdapter.filterData("");
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        listAdapter.filterData(s);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        listAdapter.filterData(s);
+        return false;
+    }
 
     /*SETTER uniquement pour les test */
     protected void setModele(CourseBuilderModele modele){
@@ -286,5 +315,4 @@ public class CourseBuilderActivity extends AppCompatActivity {
     protected void setUserController(UserController userController){
         this.userController = userController;
     }
-
 }

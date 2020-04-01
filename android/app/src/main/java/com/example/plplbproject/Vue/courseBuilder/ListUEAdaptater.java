@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
@@ -27,6 +28,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
     private CourseBuilderModele modele;
     private int semestreCourant;  // Pour lisibilité
     private ArrayList<Categorie> categorieArrayList = new ArrayList<Categorie>();
+    private ArrayList<Categorie> originalcategorieArraylist = new ArrayList<>();
 
 
     /**
@@ -41,6 +43,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
         this.semestreCourant = modele.getIndexCurrentSemester();
         if(DataSemester.SEMESTER.getNumberSemesters()> semestreCourant){
             this.categorieArrayList = DataSemester.SEMESTER.getSemesterList().get(semestreCourant).getListCategorie(); // listDataHeader
+            this.originalcategorieArraylist.addAll(categorieArrayList);
         }
     }
 
@@ -139,7 +142,41 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    /**
+     * Fonction utlisée pour filtrer les Ues affichées dans les catégories
+     * @param query l'input pour filtre
+     */
 
+    public void filterData(String query){
+
+        query = query.toLowerCase();
+        categorieArrayList.clear();
+
+        if(query.isEmpty()){
+            categorieArrayList.addAll(originalcategorieArraylist);
+        }
+        else{
+            for (Categorie c: originalcategorieArraylist
+                 ) {
+                ArrayList<UE> ueList = c.getListUE();
+                ArrayList<UE> newUEList = new ArrayList<>();
+
+                for (UE ue: ueList
+                     ) {
+                    if(ue.getUeName().toLowerCase().contains(query) || ue.getUeCode().toLowerCase().contains(query)){
+                        newUEList.add(ue);
+                    }
+
+                }
+                if (newUEList.size() >0){
+                    Categorie newCategorie = new Categorie(c.getName(),newUEList);
+                    categorieArrayList.add(newCategorie);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+    }
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
