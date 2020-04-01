@@ -12,7 +12,9 @@ import android.widget.Button;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.creationMenu.CreationMenuActivity;
+import com.example.plplbproject.data.DataPredefinedCourse;
 import com.example.plplbproject.data.DataSemester;
+import com.example.plplbproject.data.UpdatePredefinedCourse;
 import com.example.plplbproject.data.UpdateSemester;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import io.socket.emitter.Emitter;
 
 import static constantes.NET.COURSESNAMES;
+import static constantes.NET.PREDEFINEDCOURSE;
 import static constantes.NET.SEMSTERDATA;
 
 /**
@@ -60,6 +63,12 @@ public class MainMenuActivity extends AppCompatActivity{
         if(!DataSemester.SEMESTER.hasSemesterList()){
             Connexion.CONNEXION.setEventListener(SEMSTERDATA, new UpdateSemester());
             Connexion.CONNEXION.send(SEMSTERDATA, "");
+        }
+
+        //Le client a reussi a se connecter et n'a pas la liste des parcours prédéfinis. on lui envoie
+        if(!DataPredefinedCourse.PREDEFINEDCOURSE.hasPredefinedCourseList()){
+            Connexion.CONNEXION.setEventListener(PREDEFINEDCOURSE, new UpdatePredefinedCourse());
+            Connexion.CONNEXION.send(PREDEFINEDCOURSE,"");
         }
 
         deconnexion = findViewById(R.id.deconnexion);

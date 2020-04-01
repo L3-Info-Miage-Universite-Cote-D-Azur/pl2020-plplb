@@ -91,7 +91,7 @@ Serveur
             }
         });
 
-        //le client demande les donner de connection
+        //le client demande les donnees de connexion
         this.server.addEventListener(SEMSTERDATA,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
@@ -238,7 +238,7 @@ Serveur
     	for (Client c : this.listOfClients)
     	{
     		Debug.log("Sending to " + c.getStudent().getNom());
-    		c.getSock().sendEvent(NET.SENDCLIENTUPDATE, msg);
+    		c.getSock().sendEvent(NET.CLIENTUPDATE, msg);
     	}
     	Debug.log("--- New Semesters sended. ---");
     }

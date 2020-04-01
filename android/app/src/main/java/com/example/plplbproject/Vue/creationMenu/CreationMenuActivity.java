@@ -15,10 +15,10 @@ import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
 import com.example.plplbproject.controleur.creationMenu.CreateNewCourseListener;
 import com.example.plplbproject.controleur.creationMenu.CreationMenuModele;
+import com.example.plplbproject.data.DataPredefinedCourse;
 
 import java.util.ArrayList;
 
-import metier.parcours.ParcoursSample;
 
 /**
  * Activity de la page de creation d'un nouveau menu
@@ -40,8 +40,10 @@ public class CreationMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_inter);
 
         ArrayList<String> coursesNames = (ArrayList<String>) getIntent().getSerializableExtra("clientCourses");
-        ParcoursSample.init();
-        modele = new CreationMenuModele(ParcoursSample.parcoursTypesName,coursesNames);
+
+        ArrayList<String> predefinedCourseName = DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseName();
+
+        modele = new CreationMenuModele(predefinedCourseName,coursesNames);
     }
 
     @Override

@@ -20,5 +20,11 @@ public class NET {
     //le client envoie sa sauvegarde
     public static final String SENDCLIENTSAVE = "send client save";
 
+    //le client envoie une mise a jour
+    public static final String CLIENTUPDATE = "client update";
+
+    //Le client demande/recoit les parcours predefinis.
+    public static final String PREDEFINEDCOURSE = "predefined course";
+
 
 }

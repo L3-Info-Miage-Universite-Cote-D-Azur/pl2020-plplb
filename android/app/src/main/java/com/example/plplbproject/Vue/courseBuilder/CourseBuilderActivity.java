@@ -21,6 +21,7 @@ import com.example.plplbproject.R;
 import com.example.plplbproject.controleur.courseBuilder.CourseBuilderModele;
 import com.example.plplbproject.controleur.courseBuilder.ReseauController;
 import com.example.plplbproject.controleur.courseBuilder.UserController;
+import com.example.plplbproject.data.DataPredefinedCourse;
 import com.example.plplbproject.data.DataSemester;
 import com.example.plplbproject.reseau.Connexion;
 
@@ -29,7 +30,6 @@ import com.example.plplbproject.reseau.Connexion;
 import java.util.ArrayList;
 
 import metier.parcours.Parcours;
-import metier.parcours.ParcoursSample;
 import metier.parcours.ParcoursType;
 
 import static constantes.NET.LOADCOURSE;
@@ -80,10 +80,10 @@ public class CourseBuilderActivity extends AppCompatActivity {
         String predefinedCourseName = getIntent().getStringExtra("PredefinedCourseName");
         String courseName = getIntent().getStringExtra("CourseName");
 
-        ParcoursSample.init();
-        ArrayList<ParcoursType> parcoursTypes =  ParcoursSample.parcoursTypes;
+        ArrayList<ParcoursType> predefinedCourse =  DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList();
+
         ParcoursType selected = null;
-        for(ParcoursType parcoursType : parcoursTypes){
+        for(ParcoursType parcoursType : predefinedCourse){
             if(parcoursType.getName().equals(predefinedCourseName)){
                 selected = parcoursType;
             }

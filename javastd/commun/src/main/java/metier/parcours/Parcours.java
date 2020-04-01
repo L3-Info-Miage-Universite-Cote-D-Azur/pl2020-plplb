@@ -1,9 +1,9 @@
 package metier.parcours;
 
+import com.example.plplbproject.data.DataPredefinedCourse;
+
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -128,9 +128,9 @@ public class Parcours implements Serializable {
         //Le premier element de la liste est le nom du parcours;
         this.setName(allCodeUESelected.get(0));
 
-        //On recupere la liste des parcours type.
-        ParcoursSample.init();
-        ArrayList<ParcoursType> listparcoursType = ParcoursSample.parcoursTypes;
+        //On recupere la liste des parcours type
+        ArrayList<ParcoursType> listparcoursType = DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList();
+
         //Le deuxieme est le nom du semestre type.
         String parcoursName = allCodeUESelected.get(1);
 
