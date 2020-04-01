@@ -99,6 +99,15 @@ Serveur
                 clientOnConnectEventSendSemesters(client);
             }
         });
+
+        //Le client demande la liste des parcours predefinis
+        this.server.addEventListener(PREDEFINEDCOURSE, String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
+                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
+                clientOnConnectSendPredefinedCourse(client);
+            }
+        });
         
         /*  */
         this.server.addEventListener(COURSESNAMES,String.class, new DataListener<String>() {
@@ -191,7 +200,16 @@ Serveur
 
         c.getSock().sendEvent(SEMSTERDATA, semesterList);
     }
-    
+
+    protected void
+    clientOnConnectSendPredefinedCourse(Client c)
+    {
+        Debug.log("Send predefined course to : "+c.getStudent().getNom());
+        //TODO : Gere l'envoie des parcours predefinie selon les classes de maxime.
+
+        c.getSock().sendEvent(PREDEFINEDCOURSE,"");//TODO : envoie des donnes.
+    }
+
     protected void
     clientOnConnectSendCourses (Client c)
     {
