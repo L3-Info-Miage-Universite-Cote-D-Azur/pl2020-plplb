@@ -1,7 +1,5 @@
 package metier.parcours;
 
-import com.example.plplbproject.data.DataPredefinedCourse;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import metier.UE;
+import metier.parcours.manager.DataPredefinedCourse;
 import metier.semestre.SemesterList;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreManager;

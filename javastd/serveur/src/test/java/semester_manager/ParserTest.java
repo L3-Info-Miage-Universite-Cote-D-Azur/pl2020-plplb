@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
 
-import semester_manager.Parser;
+import metier.parcours.manager.Parser;
 
 public class
 ParserTest 

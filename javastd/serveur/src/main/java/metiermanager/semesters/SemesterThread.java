@@ -1,4 +1,4 @@
-package semester_manager;
+package metiermanager.semesters;
 
 import java.util.concurrent.TimeUnit;
 

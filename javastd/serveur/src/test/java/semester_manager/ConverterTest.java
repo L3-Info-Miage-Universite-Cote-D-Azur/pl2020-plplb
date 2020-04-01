@@ -11,9 +11,9 @@ import com.google.gson.GsonBuilder;
 
 import metier.Categorie;
 import metier.UE;
+import metier.parcours.manager.Converter;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreRules;
-import semester_manager.Converter;
 
 public class
 ConverterTest

@@ -12,8 +12,8 @@ import com.google.gson.GsonBuilder;
 
 import database.FileManager;
 import metier.semestre.Semestre;
-import semester_manager.SemesterManager;
-import semester_manager.SemestreConsts;
+import metiermanager.SemesterManager;
+import metiermanager.SemestreConsts;
 
 public class
 SemesterManagerTest

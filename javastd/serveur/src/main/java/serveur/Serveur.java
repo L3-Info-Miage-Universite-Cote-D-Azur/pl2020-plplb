@@ -15,8 +15,8 @@ import constantes.NET;
 import database.DBManager;
 import debug.Debug;
 import metier.Student;
-import semester_manager.SemesterThread;
-import semester_manager.SemestersSample;
+import metiermanager.semesters.SemesterThread;
+import metiermanager.semesters.SemestersSample;
 
 import java.util.ArrayList;
 

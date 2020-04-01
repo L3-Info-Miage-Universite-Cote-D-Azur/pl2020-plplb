@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import metier.Student;
-import semester_manager.SemestersSample;
+import metiermanager.semesters.SemestersSample;
 
 /**
  * Class utilitaire pour une meilleure

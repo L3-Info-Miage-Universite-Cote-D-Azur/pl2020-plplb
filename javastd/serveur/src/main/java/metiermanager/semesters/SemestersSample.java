@@ -1,4 +1,4 @@
-package semester_manager;
+package metiermanager.semesters;
 
 import metier.semestre.Semestre;
 
