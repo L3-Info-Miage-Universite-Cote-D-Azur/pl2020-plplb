@@ -8,14 +8,13 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 
-import metier.Etudiant;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import constantes.NET;
 import database.DBManager;
 import debug.Debug;
+import metier.Student;
 import semester_manager.SemesterThread;
 import semester_manager.SemestersSample;
 
@@ -74,35 +73,44 @@ Serveur
     initEventListener ()
     {
         //le client viens de ce connecter
-        this.server.addEventListener(CONNEXION, String.class, new DataListener<String>() {
+        this.server.addEventListener(STUDENT, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-            	Client c = new Client(gson.fromJson(json,Etudiant.class), socketIOClient);
+            	Client c = new Client(gson.fromJson(json, Student.class), socketIOClient);
             	listOfClients.add(c);
             }
         });
 
         //le client envoie ces donner
-        this.server.addEventListener(SENDETUDIANTID,String.class, new DataListener<String>() {
+        this.server.addEventListener(STUDENT,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Client c = new Client(gson.fromJson(json,Etudiant.class), socketIOClient);
+                Client c = new Client(gson.fromJson(json,Student.class), socketIOClient);
                 listOfClients.add(c);
                 clientOnConnectEvent(c);
             }
         });
 
-        //le client demande les donner de connection
-        this.server.addEventListener(SENDDATACONNEXION,String.class, new DataListener<String>() {
+        //le client demande les donnees de connexion
+        this.server.addEventListener(SEMSTERDATA,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
                 clientOnConnectEventSendSemesters(client);
             }
         });
+
+        //Le client demande la liste des parcours predefinis
+        this.server.addEventListener(PREDEFINEDCOURSE, String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
+                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
+                clientOnConnectSendPredefinedCourse(client);
+            }
+        });
         
         /*  */
-        this.server.addEventListener(SENDCLIENTLISTCOURSE,String.class, new DataListener<String>() {
+        this.server.addEventListener(COURSESNAMES,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
@@ -111,7 +119,7 @@ Serveur
         });
         
         /* Le client envoie un parcours a charger */
-        this.server.addEventListener(SENDCOURSE,String.class, new DataListener<String>() {
+        this.server.addEventListener(LOADCOURSE,String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
@@ -176,7 +184,7 @@ Serveur
     clientOnConnectEvent (Client c) 
     {
         Debug.log("New client connected : " + c.getStudent().getNom());
-        c.getSock().sendEvent(SENDMESSAGE ,"Connected to server");
+        //c.getSock().sendEvent(SENDMESSAGE ,"Connected to server");
     }
 
     /**
@@ -188,18 +196,27 @@ Serveur
     {
         Debug.log("Send Semesters to : " + c.getStudent().getNom());
 
-        String msg = ServerUtility.getListOfSemestersJSONed();
+        String semesterList = ServerUtility.getListOfSemestersJSONed();
 
-        c.getSock().sendEvent(SENDDATACONNEXION, msg);
+        c.getSock().sendEvent(SEMSTERDATA, semesterList);
     }
-    
+
+    protected void
+    clientOnConnectSendPredefinedCourse(Client c)
+    {
+        Debug.log("Send predefined course to : "+c.getStudent().getNom());
+        //TODO : Gere l'envoie des parcours predefinie selon les classes de maxime.
+
+        c.getSock().sendEvent(PREDEFINEDCOURSE,"");//TODO : envoie des donnes.
+    }
+
     protected void
     clientOnConnectSendCourses (Client c)
     {
     	dbManager = new DBManager(c.getStudent().toString(), "");
     	ArrayList<String> filenames = dbManager.getAllCourses();
     	Debug.log("Sending course\'s list " + filenames.toString() + " to " + c.getStudent().toString());
-    	c.getSock().sendEvent(SENDCLIENTLISTCOURSE, gson.toJson(filenames));
+    	c.getSock().sendEvent(COURSESNAMES, gson.toJson(filenames));
     }
 
     /**
@@ -214,7 +231,7 @@ Serveur
         {
             Debug.log("Send data to : " + c.getStudent().getNom());
             if (dbManager.getAllCourses().contains(filename))
-            	c.getSock().sendEvent(SENDCOURSE, gson.toJson(dbManager.load(filename)));
+            	c.getSock().sendEvent(LOADCOURSE, gson.toJson(dbManager.load(filename)));
             else
             {
             	Debug.error(c.getStudent().toString() + " sent an impossible course: " + filename);
@@ -239,7 +256,7 @@ Serveur
     	for (Client c : this.listOfClients)
     	{
     		Debug.log("Sending to " + c.getStudent().getNom());
-    		c.getSock().sendEvent(NET.SENDCLIENTUPDATE, msg);
+    		c.getSock().sendEvent(NET.CLIENTUPDATE, msg);
     	}
     	Debug.log("--- New Semesters sended. ---");
     }

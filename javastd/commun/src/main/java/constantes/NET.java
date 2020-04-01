@@ -5,12 +5,26 @@ package constantes;
  */
 public class NET {
 
-    public static final String CONNEXION = "connexion";
-    public static final String SENDMESSAGE = "send message";
-    public static final String SENDDATACONNEXION = "send data connexion";
+    //demande/envoie la liste des ue
+    public static final String SEMSTERDATA = "Semestre data";
+
+    //envoie le login de l'etudiant pour l'identifier au pres du serveur
+    public static final String STUDENT = "Student";
+
+    //requete/envoie de la liste des nom de parcours
+    public static final String COURSESNAMES = "Courses names";
+
+    //le client envoie un nom de parcour, le serveur lui envoie le parcour
+    public static final String LOADCOURSE = "Load/Send course";
+
+    //le client envoie sa sauvegarde
     public static final String SENDCLIENTSAVE = "send client save";
-    public static final String SENDCLIENTUPDATE = "UPDATE";
-    public static final String SENDETUDIANTID = "send etudiant id";
-    public static final String SENDCLIENTLISTCOURSE = "COURSES";
-    public static final String SENDCOURSE = "send course";
+
+    //le client envoie une mise a jour
+    public static final String CLIENTUPDATE = "client update";
+
+    //Le client demande/recoit les parcours predefinis.
+    public static final String PREDEFINEDCOURSE = "predefined course";
+
+
 }

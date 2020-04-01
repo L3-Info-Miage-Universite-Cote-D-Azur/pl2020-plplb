@@ -2,7 +2,7 @@ package serveur;
 
 import com.corundumstudio.socketio.SocketIOClient;
 
-import metier.Etudiant;
+import metier.Student;
 
 /**
  * Classe-association pour le client
@@ -11,7 +11,7 @@ public class
 Client 
 {
 	/** L'etudiant represente */
-	private Etudiant etu;
+	private Student etu;
 	/** La socket du client */
 	private SocketIOClient sock;
 	
@@ -21,7 +21,7 @@ Client
 	 * @param sock La socket du client
 	 */
 	public
-	Client (Etudiant etu, SocketIOClient sock)
+	Client (Student etu, SocketIOClient sock)
 	{
 		this.etu = etu;
 		this.sock = sock;
@@ -41,7 +41,7 @@ Client
 	}
 	
 	/** Getter de Etudiant */
-	public Etudiant getStudent ()
+	public Student getStudent ()
 	{return this.etu;}
 	
 	/** Getter de SocketIOCLient */

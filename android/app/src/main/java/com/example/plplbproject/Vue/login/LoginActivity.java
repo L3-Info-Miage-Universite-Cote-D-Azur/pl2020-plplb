@@ -10,35 +10,44 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.plplbproject.R;
-import com.example.plplbproject.Vue.menuPrincipal.MenuPrinc;
+import com.example.plplbproject.Vue.mainMenu.MainMenuActivity;
 import com.example.plplbproject.controleur.login.LoginClickListener;
+
+import com.example.plplbproject.data.UpdateSemester;
 import com.example.plplbproject.reseau.Connexion;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import metier.Etudiant;
-import metier.LoginModele;
+import metier.Student;
 
+import static constantes.NET.SEMSTERDATA;
+import static constantes.NET.STUDENT;
+
+/**
+ * Page de login
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private Button loginButton;//Le button pour se connecter
     private EditText loginInput;//Le champ ou l'utilisateur ecrit
     private TextView textError;//Le champ d'erreur.
 
-    //Le modele du login.
-    private LoginModele modele;
+    private Student student;
 
-    private Etudiant etudiant;
 
-    public static final String AUTOCONNECT = "AUTOCONNECT";
-    private boolean autoconnect =  true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        this.modele = new LoginModele();
+
+        student = new Student("default");
+
+
         //On setup la connexion
-        autoconnect = getIntent().getBooleanExtra(AUTOCONNECT, true);
-        if(autoconnect) Connexion.CONNEXION.setup();
+        Connexion.CONNEXION.setup();
+        Connexion.CONNEXION.connect();
+
     }
 
     @Override
@@ -50,9 +59,8 @@ public class LoginActivity extends AppCompatActivity {
         textError = findViewById(R.id.connexionError);
 
         //On met le button sur ecoute.
-        loginButton.setOnClickListener(new LoginClickListener(modele,this));
-        if(autoconnect && !Connexion.CONNEXION.isConnected()) {
-            //TODO send event connexion to the server
+        loginButton.setOnClickListener(new LoginClickListener(student,this));
+        if(!Connexion.CONNEXION.isConnected()) {
             Connexion.CONNEXION.connect();
         }
     }
@@ -83,18 +91,20 @@ public class LoginActivity extends AppCompatActivity {
         loginInput.getText().clear();
     }
 
-    /**
-     * creer un etudiant avec le nom name.
-     * @param name : le nom.
-     */
-    public void createEtudiant(String name){
-        etudiant = new Etudiant(name);
-    }
 
+    /**
+     * Permet de changer d'intent pour passer au menu principale
+     */
     public void switchIntent(){
-        Intent intent = new Intent(LoginActivity.this, MenuPrinc.class);
-        intent.putExtra("etudiant",etudiant);
-        intent.putExtra(AUTOCONNECT,autoconnect);
+
+        //on enregistre l'etudiant qui c'est connecter dans la connection
+        Gson gson = new GsonBuilder().create();
+        Connexion.CONNEXION.setStudentLogin(student);
+        Connexion.CONNEXION.send(STUDENT,gson.toJson(student));
+
+        //on lance le prochain intent
+        Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
+        intent.putExtra("etudiant",student);
         startActivity(intent);
     }
 }

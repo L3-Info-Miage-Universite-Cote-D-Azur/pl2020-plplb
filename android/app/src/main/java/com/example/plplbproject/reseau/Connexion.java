@@ -5,12 +5,14 @@ import java.net.URISyntaxException;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import metier.Student;
 
 public enum Connexion {
     CONNEXION;
 
     /* FIELDS */
     private Socket mSocket;
+    private Student studentLogin;
 
     private final String ip = "10.0.2.2";
     private final String port = "10101";
@@ -45,7 +47,6 @@ public enum Connexion {
      */
     public void connect() {
         mSocket.connect();
-
     }
 
     /**
@@ -70,6 +71,15 @@ public enum Connexion {
      */
     public boolean isConnected(){
         return mSocket.connected();
+    }
+
+
+    public void setStudentLogin(Student etudiant){
+        this.studentLogin = etudiant;
+    }
+
+    public Student getStudentLogin(){
+        return  this.studentLogin;
     }
 
     
