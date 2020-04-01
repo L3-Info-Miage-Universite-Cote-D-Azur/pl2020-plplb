@@ -1,6 +1,7 @@
 package com.example.plplbproject.data;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ public class UpdatePredefinedCourse implements Emitter.Listener {
 
     @Override
     public void call(Object... args) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().create();
         ArrayList<ParcoursType> predefinedCourseList = new ArrayList<ParcoursType>();
         ArrayList<String> data = gson.fromJson((String) args[0], ArrayList.class);
 
