@@ -1,6 +1,4 @@
 import metiermanager.semesters.*;
-import metier.parcours.manager.ParcoursSample;
-import metiermanager.courses.*;
 import serveur.Serveur;
 
 /**
@@ -16,7 +14,6 @@ public class App {
                 
         Serveur serv = new Serveur(ip, port);
         SemestersSample.init();
-        ParcoursSample.init();
         serv.startServer();
     }
 }

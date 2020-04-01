@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import metier.UE;
-import metier.parcours.manager.DataPredefinedCourse;
+import com.example.plplbproject.data.DataPredefinedCourse;
 import metier.semestre.SemesterList;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreManager;
