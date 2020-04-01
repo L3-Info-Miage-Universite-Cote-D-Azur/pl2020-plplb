@@ -1,0 +1,16 @@
+{
+    "name":"Parcours Mathématiques",
+    "obligatoryUes":[
+        "SPUM11",
+        "SPUM13",
+        "SPUM21",
+        "SPUM23",
+        "SPUM30",
+        "SPUM32",
+        "SPUM31",
+        "SPUM40",
+        "SPUM42",
+        "SPUM41",
+        "SPUM43"
+    ]
+}

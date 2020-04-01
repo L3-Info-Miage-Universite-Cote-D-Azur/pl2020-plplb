@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue.previewParcour;
+package com.example.plplbproject.Vue.previewCourse;
 
 import android.view.View;
 import android.widget.TextView;

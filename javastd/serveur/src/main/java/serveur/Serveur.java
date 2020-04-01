@@ -206,7 +206,7 @@ Serveur
     clientOnConnectSendPredefinedCourse(Client c)
     {
         Debug.log("Send predefined course to : "+c.getStudent().getNom());
-        c.getSock().sendEvent(PREDEFINEDCOURSE, gson.toJson(ParcoursSample.PrefinedCourse));
+        c.getSock().sendEvent(PREDEFINEDCOURSE, ServerUtility.getListOfCourseTypeJSONed());
     }
 
     protected void

@@ -1,4 +1,4 @@
-package com.example.plplbproject.Vue.previewParcour;
+package com.example.plplbproject.Vue.previewCourse;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

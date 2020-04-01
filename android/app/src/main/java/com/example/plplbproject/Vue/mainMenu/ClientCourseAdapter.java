@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
-import com.example.plplbproject.Vue.previewParcour.PreviewActivity;
+import com.example.plplbproject.Vue.previewCourse.PreviewActivity;
 
 
 import java.util.ArrayList;
