@@ -57,6 +57,7 @@ import static androidx.test.espresso.core.internal.deps.dagger.internal.Precondi
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity.AUTOINIT;
 import static constantes.NET.LOADCOURSE;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
@@ -101,28 +102,6 @@ public class CourseBuilderTest {
     @Spy
     CourseBuilderModele modele;
 
-
-    public static Matcher<Object> withChildName(String name) {
-        checkNotNull(name);
-        return withChildName(equalTo(name));
-    }
-
-    public static Matcher<Object> withChildName(final Matcher<String> name) {
-        checkNotNull(name);
-        return new BoundedMatcher<Object, UE>(UE.class){
-
-            @Override
-            public void describeTo(org.hamcrest.Description description) {
-                name.describeTo(description);
-
-            }
-
-            @Override
-            public boolean matchesSafely (final UE childStruct){
-                return name.matches(childStruct.getUeName());
-            }
-        } ;
-    }
 
 
     /**
@@ -194,7 +173,7 @@ public class CourseBuilderTest {
         startIntent.putExtra("PredefinedCourseName","none");
         startIntent.putExtra("CourseName","none");
         startIntent.putExtra("className","test");
-        startIntent.putExtra("AUTOINIT",false);
+        startIntent.putExtra(AUTOINIT,false);
         mActivityRule.launchActivity(startIntent);
         modele.setCourse(course);
         mActivityRule.getActivity().setModele(modele);
