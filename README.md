@@ -65,13 +65,9 @@
 
 
 ### Itération 7:
-	-Ajout des ECUEs.
-	-Ajout du choix des ECUEs (si besoin est).
 	- Refonte du code pour optimisation.
 	- ajout de l'option : filtrer / rechercher par discipline quand le client creer/modifie un parcours (coté client)
-	-Gestion des UEs: UEs "impossibles" grisées en fonction des choix, le client doit décocher son choix d'UE pour la matière pour 		rendre les autres disponible
 	-Explication de l'indisponibilité d'une UE en rouge. 
-	-Choix des UEs facultatives et des bonifications (sport...) 
 	
 
 ### Itération 8:
