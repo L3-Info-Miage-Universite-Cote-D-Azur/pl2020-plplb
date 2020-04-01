@@ -117,7 +117,7 @@ public class PreviewActivity extends AppCompatActivity {
         long t = System.currentTimeMillis();
         if (t - backPressedTime > 2000) {    // 2 secs
             backPressedTime = t;
-            Toast.makeText(this, "Appuyer une nouvelle fois pour modifier",
+            Toast.makeText(this, "Appuyer une nouvelle fois pour quitter",
                     Toast.LENGTH_SHORT).show();
         } else {
             //super.onBackPressed();

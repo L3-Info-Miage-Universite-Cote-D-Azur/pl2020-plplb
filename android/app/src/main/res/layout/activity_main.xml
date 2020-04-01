@@ -20,13 +20,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <SearchView
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"/>
-
-
     <include
         android:id="@+id/include"
         layout="@layout/content_main" />
