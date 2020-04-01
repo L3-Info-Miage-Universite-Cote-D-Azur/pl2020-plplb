@@ -1,4 +1,4 @@
-package metier.parcours.manager;
+package metiermanager.courses;
 
 import java.util.ArrayList;
 
@@ -17,10 +17,10 @@ ParcoursSample
 	init ()
 	{
 		ParcoursManager pm = new ParcoursManager();
-		ParcoursSample.P1 = pm.get(ParcoursConsts.filenames[0]);
+		ParcoursSample.PrefinedCourse = pm.get(ParcoursConsts.filenames[0]);
 	}
 
-	public static ArrayList<ParcoursType> P1;
+	public static ArrayList<ParcoursType> PrefinedCourse;
 
 	/**
 	 * Class non instanciable, c'est une class utilitaire

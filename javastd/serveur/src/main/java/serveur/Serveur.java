@@ -15,6 +15,7 @@ import constantes.NET;
 import database.DBManager;
 import debug.Debug;
 import metier.Student;
+import metiermanager.courses.ParcoursSample;
 import metiermanager.semesters.SemesterThread;
 import metiermanager.semesters.SemestersSample;
 
@@ -205,9 +206,7 @@ Serveur
     clientOnConnectSendPredefinedCourse(Client c)
     {
         Debug.log("Send predefined course to : "+c.getStudent().getNom());
-        //TODO : Gere l'envoie des parcours predefinie selon les classes de maxime.
-
-        c.getSock().sendEvent(PREDEFINEDCOURSE,"");//TODO : envoie des donnes.
+        c.getSock().sendEvent(PREDEFINEDCOURSE, gson.toJson(ParcoursSample.PrefinedCourse));
     }
 
     protected void
