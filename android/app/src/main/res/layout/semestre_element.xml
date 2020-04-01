@@ -21,7 +21,7 @@
         android:layout_height="11dp"
         android:background="?android:attr/listDivider" />
 
-    <com.example.plplbproject.Vue.previewParcour.ListViewApercu
+    <com.example.plplbproject.Vue.previewCourse.ListViewApercu
         android:id="@+id/apercuListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

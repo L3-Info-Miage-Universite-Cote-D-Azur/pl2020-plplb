@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Vue.mainMenu.MainMenuActivity" />
         <activity android:name=".Vue.creationMenu.CreationMenuActivity"/>
-        <activity android:name=".Vue.previewParcour.PreviewActivity" />
+        <activity android:name=".Vue.previewCourse.PreviewActivity" />
         <activity
             android:name=".Vue.login.LoginActivity"
             android:label="@string/app_name"

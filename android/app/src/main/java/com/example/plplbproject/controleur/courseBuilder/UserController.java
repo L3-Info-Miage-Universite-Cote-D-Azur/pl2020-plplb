@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.example.plplbproject.Vue.courseBuilder.CourseBuilderActivity;
-import com.example.plplbproject.Vue.previewParcour.PreviewActivity;
+import com.example.plplbproject.Vue.previewCourse.PreviewActivity;
 
 
 /**
