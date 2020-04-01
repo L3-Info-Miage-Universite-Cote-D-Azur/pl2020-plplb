@@ -1,0 +1,17 @@
+{
+    "name":"Parcours Electronique",
+    "obligatoryUes":[
+        "SPUE10",
+        "SPUM12",
+        "SPUE21",
+        "SPUM22",
+        "SPUM33",
+        "SPUE31",
+        "SPUE32",
+        "SPUE30",
+        "SPUM44",
+        "SPUE42",
+        "SPUE41",
+        "SPUE40"
+    ]
+}
