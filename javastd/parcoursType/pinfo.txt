@@ -1,0 +1,7 @@
+{
+    "name":"Parcours Informatique",
+    "numberUes":{
+        "MATHEMATIQUES":2,
+        "INFORMATIQUE":6
+    }
+}

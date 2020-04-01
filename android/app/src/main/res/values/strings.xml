@@ -7,6 +7,8 @@
     <string name="loginError">INE invalide (format : ab123456)</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="deconnexion">Deconnexion</string>
+
+    <string name="menuPrecedent">Menu Precedent</string>
     <string name="precedent">Precedent</string>
     <string name="suivant">Suivant</string>
     <string name="finaliser">Finaliser</string>

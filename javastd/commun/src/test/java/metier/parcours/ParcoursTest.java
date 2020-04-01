@@ -1,6 +1,5 @@
 package metier.parcours;
 
-import metier.MainModele;
 import metier.UE;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreManager;

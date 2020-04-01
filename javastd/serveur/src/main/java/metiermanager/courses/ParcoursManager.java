@@ -1,6 +1,5 @@
 package metiermanager.courses;
 
-import java.util.ArrayList;
 
 import database.FileManager;
 import metier.parcours.ParcoursType;
@@ -24,10 +23,9 @@ ParcoursManager
 		this.converter = new Converter();
 	}
 	
-	public ArrayList<ParcoursType>
-	get (String fileOfCourse, boolean needToCheck)
+	public String
+	getJson (String fileOfCourse, boolean needToCheck)
 	{
-		ArrayList<ParcoursType> courses = new ArrayList<ParcoursType>();
 		if (needToCheck) 
 		{
 			// Check si le directory est en parametre ou non
@@ -38,14 +36,24 @@ ParcoursManager
 				this.fman = new FileManager(ParcoursConsts.dir + fileOfCourse);
 		} else
 			this.fman = new FileManager(fileOfCourse);
-		// Parsing
 		String parsed = this.parser.parse(this.fman.getRaw());
-		// Converting
-		courses = this.converter.stringToCourse(parsed);
+		return parsed;
+	}
+	
+	public String
+	getJson (String fileOfCourse)
+	{return this.getJson(fileOfCourse, true);}
+	
+	public ParcoursType
+	get (String fileOfCourse, boolean needToCheck)
+	{
+		// Parsing
+		String parsed = this.getJson(fileOfCourse, needToCheck);
+		ParcoursType courses = this.converter.stringToCourse(parsed);
 		return courses;
 	}
 	
-	public ArrayList<ParcoursType>
+	public ParcoursType
 	get (String fileOfSemester)
 	{return this.get(fileOfSemester, true);}
 }
