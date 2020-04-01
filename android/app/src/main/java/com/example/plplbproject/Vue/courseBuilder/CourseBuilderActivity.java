@@ -48,6 +48,8 @@ public class CourseBuilderActivity extends AppCompatActivity {
     private ReseauController reseauController;
     private CourseBuilderModele modele;
 
+    public static final String AUTOINIT = "AUTOINIT";
+    private boolean autoInit =  true;
 
     ListUEAdaptater listAdapter;
     ExpandableListView expListView;
@@ -59,6 +61,8 @@ public class CourseBuilderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        autoInit = getIntent().getBooleanExtra(AUTOINIT,true);
 
         modele = new CourseBuilderModele(DataSemester.SEMESTER.getNumberSemesters());
         reseauController = new ReseauController(this,modele);
@@ -133,20 +137,21 @@ public class CourseBuilderActivity extends AppCompatActivity {
         //on met le bon numero de semestre
         getSupportActionBar().setTitle("Semestre "+(modele.getIndexCurrentSemester()+1));
 
-        userController = new UserController(this,modele);
+
 
         nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
         previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
-        updateButton();
 
-        initVue();
+
+        if(autoInit) initVue();
     }
 
     /**
      * Initialisation de le vue
      */
     protected void initVue(){
-
+        userController = new UserController(this,modele);
+        updateButton();
         expListView = (ExpandableListView) findViewById(R.id.catList);
         listAdapter = new ListUEAdaptater(this, modele);
         expListView.setAdapter(listAdapter);
@@ -206,7 +211,7 @@ public class CourseBuilderActivity extends AppCompatActivity {
         if(prev){
             previousButton.setText(R.string.precedent);
         }
-        else previousButton.setText("Menu Precedent");
+        else previousButton.setText(R.string.menuPrecedent);
 
         boolean next = modele.hasNextSemestre();
         if(next){
@@ -255,9 +260,6 @@ public class CourseBuilderActivity extends AppCompatActivity {
         notifySemestreChange();
     }
 
-    protected void setModele(CourseBuilderModele modele){
-        this.modele = modele;
-    }
 
 
     @Override
@@ -277,6 +279,12 @@ public class CourseBuilderActivity extends AppCompatActivity {
 
 
 
-
+    /*SETTER uniquement pour les test */
+    protected void setModele(CourseBuilderModele modele){
+        this.modele = modele;
+    }
+    protected void setUserController(UserController userController){
+        this.userController = userController;
+    }
 
 }
