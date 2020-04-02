@@ -16,6 +16,25 @@ SemesterThread implements Runnable
 	private SemesterManager sm;
 	/** Objet qui represente le serveur */
 	private Serveur serv;
+	/** Sert uniquement aux tests unitaires */
+	private boolean __UT;
+	
+	/**
+	 * Constructeur de SemesterThread
+	 * @param s Le serveur
+	 * @param sm Le semesterManager
+	 */
+	public
+	SemesterThread (Serveur s, SemesterManager sm)
+	{this(s, sm, false);}
+	
+	public
+	SemesterThread (Serveur s, SemesterManager sm, boolean ut)
+	{
+		this.sm = sm;
+		this.serv = s;
+		this.__UT = ut;
+	}
 	
 	/**
 	 * Constructeur de SemesterThread
@@ -23,10 +42,7 @@ SemesterThread implements Runnable
 	 */
 	public
 	SemesterThread (Serveur s)
-	{
-		this.sm = new SemesterManager();
-		this.serv = s;
-	}
+	{this(s, new SemesterManager());}
 	
 	@Override
 	public void 
@@ -36,7 +52,8 @@ SemesterThread implements Runnable
 			this.sm.updateConsts();
 			while (true)
 			{
-				TimeUnit.SECONDS.sleep(10);
+				if (!this.__UT)
+					TimeUnit.SECONDS.sleep(10);
 				if (sm.areSemestersUpdated())
 				{
 					Debug.log("Semesters updated !");
