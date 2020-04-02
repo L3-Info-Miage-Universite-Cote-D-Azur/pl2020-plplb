@@ -88,7 +88,7 @@ Serveur
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client c = new Client(gson.fromJson(json,Student.class), socketIOClient);
                 listOfClients.add(c);
-                clientOnConnectEvent(c);
+                Debug.log("New client connected : " + c.getStudent().getNom());
             }
         });
 
@@ -175,17 +175,6 @@ Serveur
     	Debug.log("The application is about to shutdown..");
         server.stop();
         Debug.log("Shutdown.");
-    }
-
-    /**
-     * Gestion de la connexion d'un client
-     * @param c La representation du Client
-     */
-    protected void 
-    clientOnConnectEvent (Client c) 
-    {
-        Debug.log("New client connected : " + c.getStudent().getNom());
-        //c.getSock().sendEvent(SENDMESSAGE ,"Connected to server");
     }
 
     /**

@@ -38,11 +38,15 @@ public class PreviewActivity extends AppCompatActivity {
 
     private final Gson gson = new GsonBuilder().create();
 
+    public static final String AUTOINIT = "AUTOINIT";
+    private boolean autoInit =  true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apercu_activity);
 
+        autoInit = getIntent().getBooleanExtra(AUTOINIT,true);
         saveButton = findViewById(R.id.saveApercu);
 
         String classCall = getIntent().getStringExtra("className");
@@ -62,7 +66,7 @@ public class PreviewActivity extends AppCompatActivity {
 
     protected void onCreateEndCourseBuilder(){
         course = (Parcours) getIntent().getSerializableExtra("Course");
-        initPreviewsCourse();
+        if(autoInit) initPreviewsCourse();
         saveButton.setOnClickListener(saveButtonListener);
     }
 
@@ -126,4 +130,11 @@ public class PreviewActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    //SETTER for test
+    protected void setCourse(Parcours course){
+        this.course = course;
+    }
+
+
 }

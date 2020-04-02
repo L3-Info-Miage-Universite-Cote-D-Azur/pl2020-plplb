@@ -82,6 +82,11 @@ public enum Connexion {
         return  this.studentLogin;
     }
 
+    //pour les test
+    public void setSocket(Socket socket){
+        this.mSocket =socket;
+    }
+
     
 
 }

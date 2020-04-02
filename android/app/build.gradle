@@ -22,6 +22,10 @@ android {
         main.java.srcDirs += '../../javastd/commun/src/main/java'
         // test.java.srcDirs += '../../../javastd/commun/src/test/java'
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {

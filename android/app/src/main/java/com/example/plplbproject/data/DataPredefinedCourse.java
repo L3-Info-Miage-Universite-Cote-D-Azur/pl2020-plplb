@@ -27,13 +27,16 @@ public enum  DataPredefinedCourse {
      * Permet de récuprer la liste des noms des parcours type
      * @return une arraylist de string pour les noms des parcours type
      */
-
     public ArrayList<String> getPredefinedCourseName(){
         ArrayList<String> predefinedCourseName = new ArrayList<String>();
 
-        //On parcours nos ParcoursType et on recupère leurs noms.
-        for(ParcoursType parcoursType : predefinedCourseList){
-            predefinedCourseName.add(parcoursType.getName());
+        //On verifique que l'on a reçu des données
+        if(hasPredefinedCourseList()){
+            //On parcours nos ParcoursType et on recupère leurs noms.
+            for(ParcoursType parcoursType : predefinedCourseList){
+                //On les ajoute a notre liste
+                predefinedCourseName.add(parcoursType.getName());
+            }
         }
         return predefinedCourseName;
     }
@@ -43,12 +46,15 @@ public enum  DataPredefinedCourse {
      * @param predifinedCourseName le nom du parcours à trouver
      * @return renvoie le parcoursType si trouvé, null sinon
      */
-
     public ParcoursType getPredefinedCourse(String predifinedCourseName){
-        for (ParcoursType p: predefinedCourseList
-             ) {
-            if(p.getName() == predifinedCourseName){
-                return p;
+        //On verifique l'on a des données
+        if(hasPredefinedCourseList()){
+            for (ParcoursType p: predefinedCourseList) {
+                //Si le nom correspond
+                if(p.getName() == predifinedCourseName){
+                    //On renvoie l'objet parcoursType
+                    return p;
+                }
             }
         }
         return null;

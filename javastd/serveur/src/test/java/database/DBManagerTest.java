@@ -2,8 +2,6 @@ package database;
 
 import metier.Categorie;
 import metier.UE;
-import metier.parcours.Parcours;
-import metier.semestre.Semestre;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
