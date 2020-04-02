@@ -1,4 +1,4 @@
-package metier.semestre.manager;
+package metier.semestre;
 
 import metier.UE;
 import metier.semestre.SemestreManager;

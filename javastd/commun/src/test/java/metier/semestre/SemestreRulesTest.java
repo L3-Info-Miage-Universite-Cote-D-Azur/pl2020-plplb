@@ -1,4 +1,4 @@
-package metier.semestre.rules;
+package metier.semestre;
 
 import metier.UE;
 import metier.semestre.Semestre;
