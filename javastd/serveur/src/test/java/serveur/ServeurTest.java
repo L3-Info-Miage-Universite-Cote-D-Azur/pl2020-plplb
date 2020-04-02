@@ -4,7 +4,7 @@ import com.corundumstudio.socketio.*;
 
 import database.DBManager;
 import debug.Debug;
-import metier.Etudiant;
+import metier.Student;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class ServeurTest {
     @Mock
     Client c;
     @Mock
-    Etudiant etudiant;
+    Student etudiant;
     
     @BeforeEach
     public void init(){
@@ -43,10 +43,11 @@ public class ServeurTest {
         serveur = new Serveur("127.0.0.1",10113);
         sockClient = Mockito.mock(SocketIOClient.class);
         socketAddress = Mockito.mock(SocketAddress.class);
-        etudiant = Mockito.spy(new Etudiant("test"));
+        etudiant = Mockito.spy(new Student("test"));
         c = Mockito.spy(new Client(etudiant, sockClient));
         
     }
+    /*
     @Test
     public void clientOnConnectEventTest(){
         Mockito.when(c.getSock()).thenReturn(sockClient);
@@ -56,7 +57,7 @@ public class ServeurTest {
         serveur.clientOnConnectEvent(c);
         //quand un client ce connecte on lui envoie un message
         Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDMESSAGE),any(String.class));
-    }
+    }*/
 
 
     @Test
@@ -67,7 +68,7 @@ public class ServeurTest {
 
         serveur.clientOnConnectEventSendSemesters(c);
         //quand un client ce connecte on lui envoie bien les donner
-        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDDATACONNEXION),any(String.class));
+        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SEMSTERDATA),any(String.class));
     }
     
     @Test
@@ -80,7 +81,7 @@ public class ServeurTest {
 
         serveur.clientOnConnectSendCourses(c);
         //quand un client ce connecte on lui envoie bien les donner
-        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SENDCLIENTLISTCOURSE),any(String.class));
+        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(COURSESNAMES),any(String.class));
     }
 
     @Test

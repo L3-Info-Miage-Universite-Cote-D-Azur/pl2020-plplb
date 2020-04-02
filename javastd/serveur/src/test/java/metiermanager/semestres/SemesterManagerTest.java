@@ -1,4 +1,4 @@
-package semester_manager;
+package metiermanager.semestres;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,8 +12,8 @@ import com.google.gson.GsonBuilder;
 
 import database.FileManager;
 import metier.semestre.Semestre;
-import metiermanager.SemesterManager;
-import metiermanager.SemestreConsts;
+import metiermanager.semesters.SemesterManager;
+import metiermanager.semesters.SemestreConsts;
 
 public class
 SemesterManagerTest

@@ -1,4 +1,3 @@
-import metier.parcours.Parcours;
 import metiermanager.courses.ParcoursSample;
 import metiermanager.semesters.*;
 import serveur.Serveur;

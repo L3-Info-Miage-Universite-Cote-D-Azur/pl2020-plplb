@@ -1,10 +1,10 @@
-package semester_manager;
+package metiermanager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
 
-import metier.parcours.manager.Parser;
+import metiermanager.Parser;
 
 public class
 ParserTest 

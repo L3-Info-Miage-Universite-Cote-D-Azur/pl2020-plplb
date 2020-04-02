@@ -1,8 +1,8 @@
-package semester_manager;
+package metiermanager.semestres;
 
 import org.junit.jupiter.api.Test;
 
-import metiermanager.SemestersSample;
+import metiermanager.semesters.SemestersSample;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
