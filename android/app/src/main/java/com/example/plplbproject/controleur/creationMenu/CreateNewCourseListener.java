@@ -71,28 +71,31 @@ public class CreateNewCourseListener implements View.OnClickListener {
         ParcoursType parcoursType = DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourse(parcoursName);
         HashMap<String, Integer> numberUes = parcoursType.getNumberUes();
         String messagetemp = "";
-        String message = "Vous devrez cocher ";
+        String message = "";
 
         Boolean flag = true;
 
-        for (String s: numberUes.keySet()
-             ) {
+        if(numberUes != null){
+            message = "Vous devrez cocher : ";
 
-            // premier cas, pas de virgule
-            if(flag){
-                flag = false;
-            }
-            else{
+            for (String s: numberUes.keySet()) {
+
+                // premier cas, pas de virgule
+                if(flag){
+                    flag = false;
+                }
+                else{
+                    messagetemp = message;
+                    message = messagetemp + " , " ;
+                }
+
                 messagetemp = message;
-                message = messagetemp + " , " ;
+                message = messagetemp + numberUes.get(s) + " Ues de la catégorie " + s;
             }
 
             messagetemp = message;
-            message = messagetemp + numberUes.get(s) + "Ues de la catégorie " + s;
+            message = messagetemp + ".";
         }
-
-        messagetemp = message;
-        message = messagetemp + ".";
 
         return message;
     }
