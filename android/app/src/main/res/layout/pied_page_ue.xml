@@ -10,13 +10,18 @@
         android:id="@+id/semestre_precedent"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@drawable/naviagtion_button"
+        android:textStyle="bold"
         android:text="@string/precedent"
         android:layout_weight="1"/>
+
 
     <Button
         android:id="@+id/semestre_suivant"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/naviagtion_button"
+        android:textStyle="bold"
         android:text="@string/suivant"
         android:layout_weight="1"
         />
