@@ -71,9 +71,8 @@
 	
 
 ### Itération 8:
-	-Implémentation des parcours automatisés, le serveur propose au client des parcours préconçu (modele type de cursus) si celui-ci 	le demande
-	- Mise en place d'une liste de parcours préconcus en fonction des .
-	- Le client peut partager son parcours.
+	- Le client peut partager son parcours (par mail, fichier txt voir reseaux sociaux).
+	- intégrer un parcours en partie fait (par exemple le S1 ou le S2, il reste les autres semestres/cours à choisir)
 	- Le client peut voir le parcours des autres utilisateurs qui ont partagé.
 
 ### Itération 9:
