@@ -152,7 +152,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
         query = query.toLowerCase();
         categorieArrayList.clear();
 
-        if(query.isEmpty()){
+        if(query == "" || query.isEmpty()){
             categorieArrayList.addAll(originalcategorieArraylist);
         }
         else{
