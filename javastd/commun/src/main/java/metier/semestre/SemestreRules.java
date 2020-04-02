@@ -168,4 +168,6 @@ public class SemestreRules implements Serializable {
         }
         return false;
     }
+
+
 }

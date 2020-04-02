@@ -50,11 +50,17 @@ public class Parcours implements Serializable {
         initObligatoryUE();
     }
 
-
     /**
      * Constructeur pour test
+     * @param parcoursRules
+     * @param name
+     * @param semestreList
+     * @param semestresManager
+     * @param parcoursSelect
      */
-    public Parcours(SemesterList semestreList,ArrayList<SemestreManager> semestresManager,HashMap<String, UE> parcoursSelect){
+    public Parcours(ParcoursRules parcoursRules, String name, SemesterList semestreList, ArrayList<SemestreManager> semestresManager, HashMap<String, UE> parcoursSelect) {
+        this.parcoursRules = parcoursRules;
+        this.name = name;
         this.semestreList = semestreList;
         this.semestresManager = semestresManager;
         this.parcoursSelect = parcoursSelect;
@@ -152,9 +158,11 @@ public class Parcours implements Serializable {
      */
     public void initParcoursSemestresManager(){
         semestresManager = new ArrayList<SemestreManager>();
-        for(Semestre semestre: semestreList){
-            semestresManager.add(semestre.getRules().createManager());
+
+        for (int i = 0; i <semestreList.size() ; i++) {
+            semestresManager.add(semestreList.get(i).getRules().createManager());
         }
+
     }
 
     /**
@@ -251,7 +259,7 @@ public class Parcours implements Serializable {
      * @param ue l'ue a supprimer du parcours
      */
     public void uncheckUE(UE ue){
-        //si elle fait parti de la liste des ue selectionner et qu'elle peut etre uncheck
+        //si elle fait partie de la liste des ue selectionnées et qu'elle peut etre uncheck
         if(parcoursSelect.containsKey(ue.getUeCode()) && canBeUncheckedUE(ue)) {
             parcoursSelect.remove(ue.getUeCode());
             semestresManager.get(ue.getSemestreNumber()-1).uncheck(ue);
@@ -299,8 +307,9 @@ public class Parcours implements Serializable {
     public boolean verifiParcours(){
         ArrayList<HashMap<String,Integer>> listHasmap = new ArrayList<HashMap<String, Integer>>();
         //On recupere les hashmap du nombre d'ue par categorie (par semestre).
-        for(SemestreManager semestreManager : this.semestresManager){
-            listHasmap.add(semestreManager.getCountByCategory());
+
+        for (int i = 0; i <semestresManager.size() ; i++) {
+            listHasmap.add(semestresManager.get(i).getCountByCategory());
         }
 
         //Si le parcours ne repond pas aux critères du parcours type on renvoie faux.
@@ -311,7 +320,9 @@ public class Parcours implements Serializable {
         //for(SemestreManager manager: semestresManager){
         //Pour le test
         for(int i = 0; i< semestresManager.size(); i++){
-            if(!semestresManager.get(i).verifCompleteParcours()) return false;
+            if(!semestresManager.get(i).verifCompleteParcours()){
+                return false;
+            }
         }
         return true;
     }
@@ -319,4 +330,5 @@ public class Parcours implements Serializable {
     public ParcoursRules getParcoursRules() {
         return parcoursRules;
     }
+
 }

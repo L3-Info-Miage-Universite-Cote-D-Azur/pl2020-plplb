@@ -1,34 +1,48 @@
 package metier.parcours;
 
 import metier.UE;
+import metier.semestre.SemesterList;
 import metier.semestre.Semestre;
 import metier.semestre.SemestreManager;
+import metier.semestre.SemestreRules;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoSettings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class ParcoursTest {
+
     Parcours parcours;
 
     @Mock
     ArrayList<SemestreManager> semestresManager = Mockito.mock(ArrayList.class);
     @Mock
     SemestreManager manager = Mockito.mock(SemestreManager.class);
+    @Mock
+    ParcoursType parcoursType = Mockito.mock(ParcoursType.class);
+    @Mock
+    ParcoursRules parcoursRules = Mockito.mock(ParcoursRules.class);
+    @Mock
+    SemesterList semesterList = Mockito.mock(SemesterList.class);
+    @Mock
+    Semestre semestre = Mockito.mock(Semestre.class);
 
     HashMap<String, UE> parcoursSelect = new HashMap<String, UE>();
 
+
     @BeforeEach
     public void init(){
-        parcours = new Parcours(null,semestresManager,parcoursSelect);
+        parcours = new Parcours(parcoursRules,"testName",semesterList,semestresManager,parcoursSelect);
     }
 
     @Test
@@ -44,17 +58,30 @@ public class ParcoursTest {
 
     @Test
     public void verifiParcoursTest(){
-        /*
+
+        ArrayList<HashMap<String,Integer>> hashList = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
+
         Mockito.when(semestresManager.size()).thenReturn(10);
         Mockito.when(semestresManager.get(anyInt())).thenReturn(manager);
-        //verifCompleteParcours renvoie true.
-        Mockito.when(manager.verifCompleteParcours()).thenReturn(true);
-        assertEquals(true,parcours.verifiParcours());
+        Mockito.when(manager.getCountByCategory()).thenReturn(new HashMap<>());
 
         //verifCompleteParcours renvoie false.
-        Mockito.when(manager.verifCompleteParcours()).thenReturn(false);
+        Mockito.when(parcoursRules.acceptParcours(any(),any())).thenReturn(false);
         assertEquals(false,parcours.verifiParcours());
-         */
+
+        //verifCompleteParcours renvoie true.
+        Mockito.when(parcoursRules.acceptParcours(any(),any())).thenReturn(true);
+        Mockito.when(semestresManager.get(anyInt()).verifCompleteParcours()).thenReturn(true);
+        assertEquals(true,parcours.verifiParcours());
+
+        Mockito.when(semestresManager.get(anyInt()).verifCompleteParcours()).thenReturn(true);
+        assertEquals(true,parcours.verifiParcours());
+
+        Mockito.when(semestresManager.get(anyInt()).verifCompleteParcours()).thenReturn(false);
+        assertEquals(false,parcours.verifiParcours());
+
+
     }
 
     @Test
@@ -77,6 +104,12 @@ public class ParcoursTest {
             assertEquals(parcoursSelect.get(s).getUeCode(),s);
         }
     }
+
+    /**
+     * Can be UncheckedUE vérifie si l'ue peut être décochée.
+     * Pour notre test, nous avons deux ues cochées, et une d'entre elles est obligatoire (donc
+     * ne peut être décochée)
+     */
 
     @Test
     public void isCheckedTest(){
@@ -106,7 +139,7 @@ public class ParcoursTest {
 
     @Test
     public void canBeUncheckedUETest(){
-        /*
+
         Mockito.when(semestresManager.get(anyInt())).thenReturn(manager);
 
 
@@ -121,14 +154,16 @@ public class ParcoursTest {
 
         //Le semestre manager renvoie true.
         Mockito.when(manager.canBeUncheck(any(UE.class))).thenReturn(true);
+        Mockito.when(parcoursRules.getParcoursType()).thenReturn(parcoursType);
 
-        assertEquals(true,parcours.canBeUncheckedUE(ue0));
+        ArrayList<String> ueArrayList = new ArrayList<>();
+        ueArrayList.add("testCode0");
+
+        Mockito.when(parcoursType.getObligatoryUes()).thenReturn(ueArrayList);
+
+
+        assertEquals(false,parcours.canBeUncheckedUE(ue0));
         assertEquals(true,parcours.canBeUncheckedUE(ue1));
-
-        //Les ues ne sont pas check
-        assertEquals(false,parcours.canBeUncheckedUE(ue2));
-        assertEquals(false,parcours.canBeUncheckedUE(ue3));
-
 
         //Le semestre manager renvoie false.
         Mockito.when(manager.canBeUncheck(any(UE.class))).thenReturn(false);
@@ -138,8 +173,12 @@ public class ParcoursTest {
         //Les ues ne sont pas check
         assertEquals(false,parcours.canBeUncheckedUE(ue2));
         assertEquals(false,parcours.canBeUncheckedUE(ue3));
-        */
+
     }
+
+    /**
+     * canBeCheckedUe vérifie s'il est possible de cocher l'ue
+     */
 
     @Test
     public void canBeCheckedUETest(){
@@ -178,26 +217,32 @@ public class ParcoursTest {
 
     }
 
+    /**
+     * Décoche l'ue selectionnée
+     */
+
     @Test
     public void uncheckUETest(){
-        /*
+
+
         UE ue0 = new UE("test0","testCode0");
         UE ue1 = new UE("test1","testCode1");
 
-        UE ue2 = new UE("test2","testCode2");
-        UE ue3 = new UE("test3","testCode3");
+        UE ue2 = new UE("test0","testCode0");
+        UE ue3 = new UE("test1","testCode1");
 
         parcoursSelect.put(ue0.getUeCode(),ue0);
         parcoursSelect.put(ue1.getUeCode(),ue1);
 
         Mockito.when(semestresManager.get(anyInt())).thenReturn(manager);
+        Mockito.when(parcoursRules.getParcoursType()).thenReturn(parcoursType);
 
         //canBeUncheck retourne true;
         Mockito.when(manager.canBeUncheck(any(UE.class))).thenReturn(true);
 
         parcours.uncheckUE(ue0);
         assertEquals(null,parcoursSelect.get(ue0));
-        Mockito.verify(semestresManager,times(2)).get(anyInt());//La fonction est bien appelee.
+        // inutile ? Mockito.verify(semestresManager,times(2)).get(anyInt());//La fonction est bien appelee.
         Mockito.verify(manager).uncheck(ue0);
 
         parcours.uncheckUE(ue1);
@@ -207,23 +252,11 @@ public class ParcoursTest {
 
         parcours.uncheckUE(ue2);
         parcours.uncheckUE(ue3);
-        //Rien n'est retirer et rien n'est appeler car absent de l'hashmap
-        Mockito.verify(semestresManager,times(4)).get(anyInt());
+        //Rien n'est retiré et rien n'est appelé car absent de l'hashmap
+        //Mockito.verify(semestresManager,times(4)).get(anyInt());
         Mockito.verify(manager,times(0)).uncheck(ue2);
         Mockito.verify(manager,times(0)).uncheck(ue3);
 
-        Mockito.when(manager.canBeUncheck(any(UE.class))).thenReturn(false);
-        parcours.uncheckUE(ue0);
-        parcours.uncheckUE(ue1);
-        parcours.uncheckUE(ue2);
-        parcours.uncheckUE(ue3);
-        //Rien n'a bouger.
-        Mockito.verify(semestresManager,times(4)).get(anyInt());
-        Mockito.verify(manager,times(1)).uncheck(ue0);
-        Mockito.verify(manager,times(1)).uncheck(ue1);
-        Mockito.verify(manager,times(0)).uncheck(ue2);
-        Mockito.verify(manager,times(0)).uncheck(ue3);
-         */
     }
 
     @Test
@@ -261,6 +294,34 @@ public class ParcoursTest {
         Mockito.verify(manager).canBeCheck(ue2);
         Mockito.verify(manager,times(0)).check(ue3);
         Mockito.verify(manager).canBeCheck(ue3);
+    }
+
+    /**
+     * Apparement pas à tester
+     */
+    @Test
+    public void updateSemestreTest() {
+
+
+    }
+
+    /**
+     * Quel est l'interêt de tester cette fonction?
+     */
+    
+    @Test
+    void initParcoursSemestresManagerTest() {
+
+        Mockito.when(semesterList.size()).thenReturn(1);
+        Mockito.when(semestre.getRules()).thenReturn(new SemestreRules(-1,-1,null));
+        Mockito.when(semesterList.get(anyInt())).thenReturn(semestre);
+
+        parcours.initParcoursSemestresManager();
+
+        System.out.println(semestre.getRules());
+        Mockito.verify(semestre,times(2)).getRules();
+        
+        assertNotNull(semestre.getRules());
     }
 
 }
