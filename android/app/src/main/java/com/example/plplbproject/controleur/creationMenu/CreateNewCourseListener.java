@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.creationMenu.CreationMenuActivity;
 import com.example.plplbproject.controleur.creationMenu.CreationMenuModele;
 import com.example.plplbproject.data.DataPredefinedCourse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import metier.parcours.ParcoursType;
@@ -36,10 +38,13 @@ public class CreateNewCourseListener implements View.OnClickListener {
                 AlertDialog.Builder builder = new AlertDialog.Builder(vue);
                 builder.setView(promptsView);
 
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(vue,R.layout.ue_obligatoire_element,dialogMessageBuilder(modele.getPredefinedCourseName()));
+
+
                 builder
                         .setTitle("Vous allez créer un parcours " + modele.getPredefinedCourseName())
                         .setCancelable(false)
-                        .setMessage(dialogMessageBuilder(modele.getPredefinedCourseName()))
+                        //.setMessage()
                         .setPositiveButton("Créer", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -54,6 +59,12 @@ public class CreateNewCourseListener implements View.OnClickListener {
                             }
                         });
 
+                builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
@@ -67,37 +78,32 @@ public class CreateNewCourseListener implements View.OnClickListener {
         }
     }
 
-    public String dialogMessageBuilder(String parcoursName){
+    public ArrayList<String> dialogMessageBuilder(String parcoursName){
+
         ParcoursType parcoursType = DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourse(parcoursName);
         HashMap<String, Integer> numberUes = parcoursType.getNumberUes();
-        String messagetemp = "";
-        String message = "";
 
-        Boolean flag = true;
+        ArrayList<String> messagefinal = new ArrayList<>();
+
+        String message = "";
+        messagefinal.add("");
+        messagefinal.add("      Pour valider votre parcours, vous devrez");
+        messagefinal.add("      obligatoirement cocher les Ues ci-dessous:");
+
 
         if(numberUes != null){
-            message = "Vous devrez cocher : ";
 
             for (String s: numberUes.keySet()) {
 
-                // premier cas, pas de virgule
-                if(flag){
-                    flag = false;
-                }
-                else{
-                    messagetemp = message;
-                    message = messagetemp + " , " ;
-                }
-
-                messagetemp = message;
-                message = messagetemp + numberUes.get(s) + " Ues de la catégorie " + s;
+                message = "         - " + numberUes.get(s) + " Ues de la catégorie " + s;
+                messagefinal.add(message);
             }
 
-            messagetemp = message;
-            message = messagetemp + ".";
         }
 
-        return message;
+        messagefinal.add("");
+        
+        return messagefinal;
     }
 
 }

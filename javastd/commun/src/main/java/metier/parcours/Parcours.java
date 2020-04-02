@@ -316,7 +316,7 @@ public class Parcours implements Serializable {
         return true;
     }
 
-
-
-
+    public ParcoursRules getParcoursRules() {
+        return parcoursRules;
+    }
 }

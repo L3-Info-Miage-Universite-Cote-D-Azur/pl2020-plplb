@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class ParcoursRules implements Serializable {
 
     private ParcoursType parcoursType;//Le parcours type.
+    private String currentErrorMessage;
 
     /* CONSTRUCTOR */
     public ParcoursRules(ParcoursType parcoursType){
@@ -23,6 +24,8 @@ public class ParcoursRules implements Serializable {
         //VERIFICATION SUR LE NOMBRE
         int res;//Le nombre d'ue de la catégorie key dans les 4 semestres.
 
+        setCurrentErrorMessage("");
+
         if(parcoursType.getNumberUes() != null){
             for(String key : parcoursType.getNumberUes().keySet()){
                 res = 0;//On remet res à 0.
@@ -33,6 +36,7 @@ public class ParcoursRules implements Serializable {
                 }
 
                 if(res < parcoursType.getNumberUes().get(key)){
+                    setCurrentErrorMessage("Pas assez d'UE de la catégorie " + key + ".");
                     return false;//Pas assez d'ue de la catégorie key.
                 }
             }
@@ -42,6 +46,7 @@ public class ParcoursRules implements Serializable {
         if(parcoursType.getObligatoryUes() != null){
             for(String obligatoryUe : parcoursType.getObligatoryUes()){
                 if(!listSelectUe.contains(obligatoryUe)){
+                    setCurrentErrorMessage("Une UE obligatoire n'a pas été chochée: " + obligatoryUe + ".");
                     return false;//On ne contient pas une ue obligatoire.
                 }
             }
@@ -53,5 +58,13 @@ public class ParcoursRules implements Serializable {
 
     public ParcoursType getParcoursType(){
         return this.parcoursType;
+    }
+
+    public String getCurrentErrorMessage() {
+        return currentErrorMessage;
+    }
+
+    public void setCurrentErrorMessage(String currentErrorMessage) {
+        this.currentErrorMessage = currentErrorMessage;
     }
 }

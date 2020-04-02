@@ -37,7 +37,7 @@ public class UserController {
                     intent.putExtra("className","CourseBuilderActivity");
                     vue.startActivityForResult(intent,1);
                 }
-                else vue.toastMessage("La sauvegarde n'a pas pue etre effectuer car le parcours est incomplet (une page de renseignement serat ultérieurement mis en place)");
+                else vue.toastMessage(errorMessage());
                 //TODO verification que le serveur a bien recus la sauvegarde
             }
         };
@@ -79,6 +79,17 @@ public class UserController {
                 else vue.exitIntent();
             }
         };
+    }
+
+    public String errorMessage(){
+
+        // Une erreur dans
+        if(modele.getCourse().getParcoursRules().getCurrentErrorMessage() != ""){
+            return modele.getCourse().getParcoursRules().getCurrentErrorMessage();
+        }
+        else{
+            return "Une UE libre n'a pas été cochée";
+        }
     }
 
 
