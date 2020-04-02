@@ -5,10 +5,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.ViewAssertion;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.data.DataPredefinedCourse;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,19 +19,20 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
-import metier.parcours.ParcoursSample;
+import metier.parcours.ParcoursType;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
 
 
 @RunWith(AndroidJUnit4.class)
-public class CreationMenuTest {
+public class CreationMenuActivityTest {
 
     @Rule
     public ActivityTestRule<CreationMenuActivity> mActivityRule = new ActivityTestRule<>(CreationMenuActivity.class, true, false);
@@ -43,7 +46,16 @@ public class CreationMenuTest {
         parcoursName.add("old3");
         parcoursName.add("old4");
         startIntent.putExtra("clientCourses",parcoursName);
+
+        ArrayList<ParcoursType> predefine = new ArrayList<ParcoursType>();
+        for(int i = 0; i<10; i++){
+            predefine.add(new ParcoursType("course"+i,null,null));
+        }
+        DataPredefinedCourse.PREDEFINEDCOURSE.setPredefinedCourseList(predefine);
+
         mActivityRule.launchActivity(startIntent);
+
+
 
         //on ferme le clavier pour eviter certaint bug entre 2 test
         onView(withId(R.id.parcoursPredefList)).perform(closeSoftKeyboard());
@@ -56,9 +68,9 @@ public class CreationMenuTest {
         //on recupere l'adaptateur
         RecyclerView.Adapter<PredefinedCourseViewHolder> adapter = ((RecyclerView)mActivityRule.getActivity().findViewById(R.id.parcoursPredefList)).getAdapter();
 
-        ParcoursSample.init();
+
         //on regarde que l'on a bien tout les parcours type dans la liste (une bonne initialisation)
-        assertEquals(adapter.getItemCount(),ParcoursSample.parcoursTypesName.size());
+        assertEquals(adapter.getItemCount(),DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList().size());
     }
 
 
@@ -90,14 +102,13 @@ public class CreationMenuTest {
 
     @Test
     public void testClickOnParcoursType(){
-        for(int i=0; i<ParcoursSample.parcoursTypesName.size();i++) {
+        for(int i=0; i<DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList().size();i++) {
 
             //on rentre de bonne valeur
             onView(withId(R.id.parcoursPredefList)).perform(actionOnItemAtPosition(i, click()));
 
             // on verifie que tout les element peuve etre selectionner 1 a 1
-            ParcoursSample.init();
-            assertEquals(mActivityRule.getActivity().getModele().getPredefinedCourseName(), ParcoursSample.parcoursTypesName.get(i));
+            assertEquals(mActivityRule.getActivity().getModele().getPredefinedCourseName(), DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseName().get(i));
 
         }
 
