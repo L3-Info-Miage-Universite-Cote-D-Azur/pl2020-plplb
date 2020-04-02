@@ -84,7 +84,8 @@ public class UserController {
     public String errorMessage(){
 
         // Une erreur dans
-        if(modele.getCourse().getParcoursRules().getCurrentErrorMessage() != ""){
+        if(modele.getCourse().getParcoursRules()!=null &&
+                modele.getCourse().getParcoursRules().getCurrentErrorMessage() != ""){
             return modele.getCourse().getParcoursRules().getCurrentErrorMessage();
         }
         else{

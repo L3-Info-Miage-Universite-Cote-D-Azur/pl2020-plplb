@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
+import metier.semestre.Semestre;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -152,7 +153,7 @@ ServerUtilityTest
     			",\"numberChooseUE\":0}}";
 		
 		String before = "[\"{\\\"number\\\":42,\\\"listCategorie\\\":[{\\\"name\\\":\\\"CAT1\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE1\\\",\\\"code\\\":\\\"CODE1\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"},{\\\"name\\\":\\\"UE2\\\",\\\"code\\\":\\\"CODE2\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"}]},{\\\"name\\\":\\\"CAT2\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE3\\\",\\\"code\\\":\\\"CODE3\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"},{\\\"name\\\":\\\"UE4\\\",\\\"code\\\":\\\"CODE4\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"}]}],\\\"rules\\\":{\\\"maxUELibre\\\":-1,\\\"maxByCategory\\\":-1,\\\"obligatoryUEList\\\":[],\\\"chooseUEList\\\":[],\\\"numberChooseUE\\\":0}}\",\"{\\\"number\\\":42,\\\"listCategorie\\\":[{\\\"name\\\":\\\"CAT1\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE1\\\",\\\"code\\\":\\\"CODE1\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"},{\\\"name\\\":\\\"UE2\\\",\\\"code\\\":\\\"CODE2\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"}]},{\\\"name\\\":\\\"CAT2\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE3\\\",\\\"code\\\":\\\"CODE3\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"},{\\\"name\\\":\\\"UE4\\\",\\\"code\\\":\\\"CODE4\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"}]}],\\\"rules\\\":{\\\"maxUELibre\\\":-1,\\\"maxByCategory\\\":-1,\\\"obligatoryUEList\\\":[],\\\"chooseUEList\\\":[],\\\"numberChooseUE\\\":0}}\",\"{\\\"number\\\":42,\\\"listCategorie\\\":[{\\\"name\\\":\\\"CAT1\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE1\\\",\\\"code\\\":\\\"CODE1\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"},{\\\"name\\\":\\\"UE2\\\",\\\"code\\\":\\\"CODE2\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"}]},{\\\"name\\\":\\\"CAT2\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE3\\\",\\\"code\\\":\\\"CODE3\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"},{\\\"name\\\":\\\"UE4\\\",\\\"code\\\":\\\"CODE4\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"}]}],\\\"rules\\\":{\\\"maxUELibre\\\":-1,\\\"maxByCategory\\\":-1,\\\"obligatoryUEList\\\":[],\\\"chooseUEList\\\":[],\\\"numberChooseUE\\\":0}}\",\"{\\\"number\\\":42,\\\"listCategorie\\\":[{\\\"name\\\":\\\"CAT1\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE1\\\",\\\"code\\\":\\\"CODE1\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"},{\\\"name\\\":\\\"UE2\\\",\\\"code\\\":\\\"CODE2\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"}]},{\\\"name\\\":\\\"CAT2\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE3\\\",\\\"code\\\":\\\"CODE3\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"},{\\\"name\\\":\\\"UE4\\\",\\\"code\\\":\\\"CODE4\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"}]}],\\\"rules\\\":{\\\"maxUELibre\\\":-1,\\\"maxByCategory\\\":-1,\\\"obligatoryUEList\\\":[],\\\"chooseUEList\\\":[],\\\"numberChooseUE\\\":0}}\"]";
-		
+
 		SemestreConsts.dir = "testSU/";
 		SemestreConsts.filenames = new String[] {"s1.txt","s1.txt","s1.txt","s1.txt"};
 		SemestreConsts.lastUpdate = new long[] {0L, 0L, 0L, 0L};
@@ -161,7 +162,9 @@ ServerUtilityTest
 		fm.create();
 		fm.write(toWrite);
 
-		assertTrue(before.equals(ServerUtility.getListOfSemestersJSONed()));
+		//assertTrue(before.equals(ServerUtility.getListOfSemestersJSONed()));
+		SemestersSample.init();
+		assertEquals(before, ServerUtility.getListOfSemestersJSONed());
 		
 		/* Old objects reinitializing as expected */
     	SemestreConsts.dir = _fdir;

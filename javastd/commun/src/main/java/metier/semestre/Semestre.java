@@ -61,9 +61,11 @@ public class Semestre implements Serializable {
     }
 
     public void setListCategorie(ArrayList<Categorie> listCategorie) {
-        for(Categorie c : listCategorie) {
-            for (UE ue : c.getListUE()) {
-                ue.setSemestreNumber(this.number);
+        if(listCategorie != null) {
+            for (Categorie c : listCategorie) {
+                for (UE ue : c.getListUE()) {
+                    ue.setSemestreNumber(this.number);
+                }
             }
         }
         this.listCategorie = listCategorie;
