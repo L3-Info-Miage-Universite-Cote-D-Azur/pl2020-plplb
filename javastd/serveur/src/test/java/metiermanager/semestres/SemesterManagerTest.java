@@ -100,7 +100,7 @@ SemesterManagerTest
 		SemestreConsts.lastUpdate = new long[] {this.fm.getFile().lastModified()};
 				
 		try {
-			TimeUnit.SECONDS.sleep(5);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -127,12 +127,34 @@ SemesterManagerTest
 		
 		assertFalse(this.sm.areSemestersUpdated());
 		try {
-			TimeUnit.SECONDS.sleep(5);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		this.fm.write("Updated");
 		assertTrue(this.sm.areSemestersUpdated());
+		
+		SemestreConsts.filenames = old;
+		SemestreConsts.lastUpdate = old_;
+	}
+	
+	@Test
+	public void
+	testHasBeenUpdated ()
+	{
+		String[] old = SemestreConsts.filenames;
+		long[] old_ = SemestreConsts.lastUpdate;
+		SemestreConsts.filenames = new String[] {this.fm.getFile().getName()};
+		SemestreConsts.lastUpdate = new long[] {this.fm.getFile().lastModified()};
+		
+		assertFalse(this.sm.hasBeenUpdated(0));
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.fm.write("Updated");
+		assertTrue(this.sm.hasBeenUpdated(0));
 		
 		SemestreConsts.filenames = old;
 		SemestreConsts.lastUpdate = old_;
