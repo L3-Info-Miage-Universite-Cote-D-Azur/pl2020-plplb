@@ -169,7 +169,7 @@ Serveur
     /**
      * Permet au serveur d'arreter de listen et de se fermer
      */
-    protected void 
+    public void 
     stopServeur ()
     {
     	Debug.log("The application is about to shutdown..");

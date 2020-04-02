@@ -2,6 +2,7 @@ package serveur;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Set;
@@ -18,9 +19,11 @@ import com.corundumstudio.socketio.SocketIONamespace;
 import com.corundumstudio.socketio.Transport;
 import com.corundumstudio.socketio.protocol.Packet;
 
+import database.FileManager;
 import debug.Debug;
 import metier.Student;
 import metiermanager.semesters.SemestersSample;
+import metiermanager.semesters.SemestreConsts;
 
 public class 
 ServerUtilityTest 
@@ -129,8 +132,43 @@ ServerUtilityTest
 	public void
 	testGetListOfSemestersJSONed ()
 	{
-		String expected = "[null,null,null,null]";
-		assertTrue(expected.equals(ServerUtility.getListOfSemestersJSONed()));
+		/* Old objects saving */
+		String[] _fnames = SemestreConsts.filenames;
+		String _fdir = SemestreConsts.dir;
+		long[] _fold = SemestreConsts.lastUpdate;
+		
+		String toWrite = "{\"number\":42,\"listCategorie\":" +
+    			"[{\"name\":\"CAT1\",\"listUE\":[{\"name\":\"" +
+    			"UE1\",\"code\":\"CODE1\",\"semestreNumber\":" +
+    			"42,\"categorie\":\"CAT1\"},{\"name\":\"UE2\","+
+    			"\"code\":\"CODE2\",\"semestreNumber\":42,\"ca"+
+    			"tegorie\":\"CAT1\"}]},{\"name\":\"CAT2\",\"li"+
+    			"stUE\":[{\"name\":\"UE3\",\"code\":\"CODE3\","+
+    			"\"semestreNumber\":42,\"categorie\":\"CAT2\"}"+
+    			",{\"name\":\"UE4\",\"code\":\"CODE4\",\"semes"+
+    			"treNumber\":42,\"categorie\":\"CAT2\"}]}],\"r"+
+    			"ules\":{\"maxUELibre\":-1,\"maxByCategory\":-"+
+    			"1,\"obligatoryUEList\":[],\"chooseUEList\":[]"+
+    			",\"numberChooseUE\":0}}";
+		
+		String before = "[\"{\\\"number\\\":42,\\\"listCategorie\\\":[{\\\"name\\\":\\\"CAT1\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE1\\\",\\\"code\\\":\\\"CODE1\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"},{\\\"name\\\":\\\"UE2\\\",\\\"code\\\":\\\"CODE2\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"}]},{\\\"name\\\":\\\"CAT2\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE3\\\",\\\"code\\\":\\\"CODE3\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"},{\\\"name\\\":\\\"UE4\\\",\\\"code\\\":\\\"CODE4\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"}]}],\\\"rules\\\":{\\\"maxUELibre\\\":-1,\\\"maxByCategory\\\":-1,\\\"obligatoryUEList\\\":[],\\\"chooseUEList\\\":[],\\\"numberChooseUE\\\":0}}\",\"{\\\"number\\\":42,\\\"listCategorie\\\":[{\\\"name\\\":\\\"CAT1\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE1\\\",\\\"code\\\":\\\"CODE1\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"},{\\\"name\\\":\\\"UE2\\\",\\\"code\\\":\\\"CODE2\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"}]},{\\\"name\\\":\\\"CAT2\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE3\\\",\\\"code\\\":\\\"CODE3\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"},{\\\"name\\\":\\\"UE4\\\",\\\"code\\\":\\\"CODE4\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"}]}],\\\"rules\\\":{\\\"maxUELibre\\\":-1,\\\"maxByCategory\\\":-1,\\\"obligatoryUEList\\\":[],\\\"chooseUEList\\\":[],\\\"numberChooseUE\\\":0}}\",\"{\\\"number\\\":42,\\\"listCategorie\\\":[{\\\"name\\\":\\\"CAT1\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE1\\\",\\\"code\\\":\\\"CODE1\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"},{\\\"name\\\":\\\"UE2\\\",\\\"code\\\":\\\"CODE2\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"}]},{\\\"name\\\":\\\"CAT2\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE3\\\",\\\"code\\\":\\\"CODE3\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"},{\\\"name\\\":\\\"UE4\\\",\\\"code\\\":\\\"CODE4\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"}]}],\\\"rules\\\":{\\\"maxUELibre\\\":-1,\\\"maxByCategory\\\":-1,\\\"obligatoryUEList\\\":[],\\\"chooseUEList\\\":[],\\\"numberChooseUE\\\":0}}\",\"{\\\"number\\\":42,\\\"listCategorie\\\":[{\\\"name\\\":\\\"CAT1\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE1\\\",\\\"code\\\":\\\"CODE1\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"},{\\\"name\\\":\\\"UE2\\\",\\\"code\\\":\\\"CODE2\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT1\\\"}]},{\\\"name\\\":\\\"CAT2\\\",\\\"listUE\\\":[{\\\"name\\\":\\\"UE3\\\",\\\"code\\\":\\\"CODE3\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"},{\\\"name\\\":\\\"UE4\\\",\\\"code\\\":\\\"CODE4\\\",\\\"semestreNumber\\\":42,\\\"categorie\\\":\\\"CAT2\\\"}]}],\\\"rules\\\":{\\\"maxUELibre\\\":-1,\\\"maxByCategory\\\":-1,\\\"obligatoryUEList\\\":[],\\\"chooseUEList\\\":[],\\\"numberChooseUE\\\":0}}\"]";
+		
+		SemestreConsts.dir = "testSU/";
+		SemestreConsts.filenames = new String[] {"s1.txt","s1.txt","s1.txt","s1.txt"};
+		SemestreConsts.lastUpdate = new long[] {0L, 0L, 0L, 0L};
+		FileManager fm = new FileManager(SemestreConsts.dir + SemestreConsts.filenames[0]);
+		new File(SemestreConsts.dir).mkdir();
+		fm.create();
+		fm.write(toWrite);
+
+		assertTrue(before.equals(ServerUtility.getListOfSemestersJSONed()));
+		
+		/* Old objects reinitializing as expected */
+    	SemestreConsts.dir = _fdir;
+		SemestreConsts.filenames = _fnames;
+		SemestreConsts.lastUpdate = _fold;
+		fm.getFile().delete();
+		new File(SemestreConsts.dir).delete();
 	}
 	
 	@Test

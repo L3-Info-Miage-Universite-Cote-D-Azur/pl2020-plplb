@@ -42,8 +42,6 @@ DebugTest
 	testError ()
 	{
 		Debug.error("Test");
-		System.setOut(old);
-		System.out.print(output.toString());
 		assertTrue(output.toString().equals("[E] Test" + System.lineSeparator()));
 	}
 	

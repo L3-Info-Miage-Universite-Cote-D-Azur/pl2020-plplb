@@ -151,6 +151,9 @@ SemestersSampleTest
         				.equals(sem.getListCategorie().get(ci).getListUE().get(uei).getCategorie()));
         	}
         }
+        
+        fm.getFile().delete();
+        new File(SemestreConsts.dir).delete();
     }
     
     @AfterEach

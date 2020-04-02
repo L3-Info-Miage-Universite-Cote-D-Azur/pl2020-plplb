@@ -63,7 +63,8 @@ SemesterThreadTest
 	testConstructor ()
 	{
 		Debug.verbose = false;
-		this.serv = new Serveur("127.0.0.1", 1234);
+		this.serv = new Serveur("0.0.0.0", 9999);
+		this.serv.startServer();
 		this.sm = new SemesterManager();
 		
 		new File(SemestreConsts.dir).mkdir();
@@ -156,5 +157,15 @@ SemesterThreadTest
 		 * car modification */
 		for (long l : SemestreConsts.lastUpdate)
 			assertTrue(l > time);
+		
+		fm.getFile().delete();
+		new File(SemestreConsts.dir).delete();
+	}
+	
+	@AfterEach
+	public void
+	__end ()
+	{
+		this.serv.stopServeur();
 	}
 }
