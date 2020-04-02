@@ -119,5 +119,22 @@ public class SemestreManager implements Serializable {
         return rules.verifCorrectSemestre(this);
     }
 
+    /**
+     * revoie le nombre d'ue necessaire pour complete le parcours
+     * @return
+     */
+    public int ueNeedToCompleteSemester(){
+
+        int chooseSelect = chooseUESelected;
+
+        //si on en a + elle en plus est considere comme normale en plus d'etre considerer a choix
+        if(rules.getNumberChooseUE()<chooseUESelected) chooseSelect = rules.getNumberChooseUE();
+
+        int maxUeToChoose = rules.getNumberChooseUE()+rules.getMaxUELibre();
+
+        return maxUeToChoose-(ueLibreSelected+chooseSelect);
+
+    }
+
 }
 

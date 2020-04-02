@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -47,6 +48,7 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
     private Button nextButton; //Le bouton suivant
     private Button previousButton; //boutton precedent
     private SearchView searchView;
+    private TextView information;
 
     private UserController userController;
     private ReseauController reseauController;
@@ -145,7 +147,7 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
 
         nextButton = findViewById(R.id.semestre_suivant);// Boutton suivant
         previousButton = findViewById(R.id.semestre_precedent);// Boutton suivant
-
+        information = findViewById(R.id.informationUe);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = findViewById(R.id.search);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -172,6 +174,8 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
         //##################### Controller for the user #####################
         nextButton.setOnClickListener(userController.nextButton());
         previousButton.setOnClickListener(userController.prevButton());
+
+        updateInformationCourse();
 
 
     }
@@ -212,6 +216,20 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
         notifyUeListView();
         collapseList();
         updateButton();
+        updateInformationCourse();
+    }
+
+    /**
+     * Permet de mettre a jour les information de parcours du semestre
+     */
+    public void updateInformationCourse(){
+        if(modele ==null || modele.getCourse()==null) {
+            information.setText("Chargement");
+            return;
+        }
+        int ueToChosse = modele.getCourse().ueNeedToCompleteSemester(modele.getIndexCurrentSemester());
+        information.setText("UE a choisir pour ce semestre: "+ueToChosse);
+
     }
 
     /**

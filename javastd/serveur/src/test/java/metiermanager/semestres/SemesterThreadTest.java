@@ -1,6 +1,7 @@
 package metiermanager.semestres;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -63,8 +64,7 @@ SemesterThreadTest
 	testConstructor ()
 	{
 		Debug.verbose = false;
-		this.serv = new Serveur("0.0.0.0", 9999);
-		this.serv.startServer();
+		this.serv = Mockito.mock(Serveur.class);
 		this.sm = new SemesterManager();
 		
 		new File(SemestreConsts.dir).mkdir();
@@ -83,13 +83,15 @@ SemesterThreadTest
     			"ules\":{\"maxUELibre\":-1,\"maxByCategory\":-"+
     			"1,\"obligatoryUEList\":[],\"chooseUEList\":[]"+
     			",\"numberChooseUE\":0}}");
+
+
 		this.sm.updateConsts();
 		time = SemestreConsts.lastUpdate[0];
 		
 		SemestersSample.init();
 		this.st = new SemesterThread(this.serv, this.sm, true);
 	}
-	
+
 	@Test
 	public void
 	runTest ()

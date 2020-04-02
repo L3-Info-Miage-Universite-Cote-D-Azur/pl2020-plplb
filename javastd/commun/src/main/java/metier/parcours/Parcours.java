@@ -327,6 +327,17 @@ public class Parcours implements Serializable {
         return true;
     }
 
+    /**
+     * Nombre d'ue encore necessaire de cocher pour le semestre
+     * @param semestreIndex l'index du semestre
+     * @return le nombre d'ue a cocher
+     */
+    public int ueNeedToCompleteSemester(int semestreIndex){
+        if(semestresManager == null) return 0;
+        if(semestresManager.size()<=semestreIndex) return 0;
+        return semestresManager.get(semestreIndex).ueNeedToCompleteSemester();
+    }
+
     public ParcoursRules getParcoursRules() {
         return parcoursRules;
     }

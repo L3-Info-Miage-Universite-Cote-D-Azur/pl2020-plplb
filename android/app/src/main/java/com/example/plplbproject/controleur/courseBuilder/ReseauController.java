@@ -44,6 +44,7 @@ public class ReseauController{
                 //TODO Modifier parcours
                 modele.setCourse(new Parcours(DataSemester.SEMESTER.getSemesterList(),ueCode, DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList()));
                 vue.notifyUeListView();
+                vue.updateInformationCourse();
             }
         };
     }

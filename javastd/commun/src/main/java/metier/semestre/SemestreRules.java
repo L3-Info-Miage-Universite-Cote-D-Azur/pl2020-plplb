@@ -56,6 +56,14 @@ public class SemestreRules implements Serializable {
     }
 
     /**
+     * Get le nombre d'ue a cocher
+     * @return le nombre d'ue possible
+     */
+    public int getMaxUELibre(){
+        return maxUELibre;
+    }
+
+    /**
      * Regarde si il est possible de cocher les ue libre
      * @param ue l'ue libre que l'on veut cocher
      * @return tru:e il est possible de cocher; false: il n'est pas possible

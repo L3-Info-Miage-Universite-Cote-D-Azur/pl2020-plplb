@@ -220,6 +220,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
             //Un changement a eu lieu.
             //vue.needSave(true);
             vue.notifyUeListView();
+            vue.updateInformationCourse();
 
         }
     }
