@@ -5,3 +5,7 @@ javastd/commun/.classpath
 javastd/commun/.project
 javastd/serveur/.classpath
 javastd/serveur/.project
+.idea/modules.xml
+.idea/pl2020-plplb.iml
+.idea/vcs.xml
+.idea/workspace.xml

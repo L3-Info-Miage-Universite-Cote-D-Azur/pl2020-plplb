@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import debug.Debug;
 
 /**
  * DBManager permet de gerer le systeme de base 
@@ -20,6 +21,9 @@ DBManager
 	private FileManager dir;
 	/** Le FileManager qui permet de gerer le parcours du client */
 	private FileManager courseFile;
+
+	private FileManager dirSharedCourse;
+	private FileManager sharedCourseFile;
 	
 	/* CONSTRUCTORS */
 	/**
@@ -53,6 +57,10 @@ DBManager
 		FileManager dir = new FileManager("db");
 		if (!dir.exists())
 			dir.getFile().mkdir();
+		// Creation du dossier pour les parcours partages
+		this.dirSharedCourse = new FileManager("db/sharedCourses");
+		if (!dirSharedCourse.exists())
+			dirSharedCourse.getFile().mkdir();
 		this.dir = new FileManager("db/" + directory);
 		this.courseFile = new FileManager("db/" + directory + "/" + course + ".txt");
 	}
@@ -172,8 +180,7 @@ DBManager
 	 * @return Parcours de l'utilisateur au premier semestre
 	 */
 	public ArrayList<String>
-	load (String courseName)
-	{
+	load (String courseName) {
 		if (!this.dir.exists())
 			return null;
 		// Represente le contenu du fichier
@@ -181,7 +188,7 @@ DBManager
 		if (!file.exists())
 			return null;
 		String fcontent = file.getFileContent();
-		
+
 		/*
 		 * Transformation d'une String sous format JSON vers une List<String>
 		 * qui contient les keys (ici les codes)
@@ -192,7 +199,43 @@ DBManager
 		ArrayList<String> res = new ArrayList<String>();
 		res.add(courseName);
 		res.addAll(content);
-		
+
 		return res; //On renvoie le type de parcours + les ues selectionnee de la sauvegarde.
+	}
+
+	public void
+	saveSharedCourse (String code, ArrayList<String> toSave)
+	{
+		Gson gson = new GsonBuilder().create();
+		this.sharedCourseFile = new FileManager("db/sharedCourses/" + code + ".txt");
+		if (this.sharedCourseFile.exists())
+			Debug.log("Overwriting " + "db/sharedCourses/" + code + ".txt ...");
+		else
+			Debug.log("Creating " + "db/sharedCourses/" + code + ".txt ...");
+		this.sharedCourseFile.write(gson.toJson(toSave));
+	}
+
+	/**
+	 * Fonction qui permet de renvoyer la liste
+	 * des codes des parcours enregistres dans
+	 * la base de donnees
+	 * @return
+	 */
+	public ArrayList<String>
+	loadSharedCourseNames ()
+	{
+		File[] files = this.dirSharedCourse.getFile().listFiles();
+		ArrayList<String> filenames = new ArrayList<String>();
+		for (File f : files)
+			filenames.add(f.getName());
+		return filenames;
+	}
+
+	public String
+	loadSharedCourseFile (String sharedCourseCode)
+	{
+		FileManager file = new FileManager("db/sharedCourses/" + sharedCourseCode + ".txt");
+		String res = file.getFileContent();
+		return res;
 	}
 }
