@@ -82,7 +82,7 @@ public class LoginClickListenerTest {
         loginClickListener.onClick(view);
 
         //Les fonctions ont été appelées et les autres n'ont pas bouger
-        Mockito.verify(vue,times(1)).setTextError("INE invalide (format : ab123456)");
+        Mockito.verify(vue,times(1)).setTextError("Numéro étudiant invalide (format : ab123456)");
         Mockito.verify(vue,times(1)).clearLoginInput();
 
         Mockito.verify(student,times(1)).setNom(anyString());

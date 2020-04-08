@@ -1,6 +1,7 @@
-package metier.semestre.rules;
+package metier.semestre;
 
 import metier.UE;
+import metier.semestre.Semestre;
 import metier.semestre.SemestreManager;
 import metier.semestre.SemestreRules;
 
@@ -10,9 +11,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class SemestreRulesTest {
@@ -21,6 +23,10 @@ public class SemestreRulesTest {
 
     @Mock
     SemestreManager manager;
+    @Mock
+    HashMap<String, Integer> getCountByCategorie = Mockito.mock(HashMap.class);
+    @Mock
+    UE ue = Mockito.mock(UE.class);
 
 
     @Test
@@ -221,7 +227,120 @@ public class SemestreRulesTest {
         assertEquals(rules.isChooseUE(notChooseUE),false);
     }
 
+    @Test
+    public void canBeCheckLibreUETest(){
+        //Mise en place des mocks
+        manager = Mockito.mock(SemestreManager.class);
+        Mockito.when(manager.getCountByCategory()).thenReturn(getCountByCategorie);
+        Mockito.when(ue.getCategorie()).thenReturn("NeSeraPasLu");
 
+
+        //Mise en place du semestreRules
+        SemestreRules semestreRules = new SemestreRules(10,15,null);
+
+        for(int i =0;i<20;i++){
+            for(int j=0;j<20;j++){
+                //Changement du renvoie des mocks
+                Mockito.when(manager.getUeLibreSelected()).thenReturn(i);
+                Mockito.when(getCountByCategorie.getOrDefault(anyString(),anyInt())).thenReturn(j);
+
+                //inferieur a maxUeLibre et MaxByCategory
+                if(i < 10 && j < 15){
+                    assertTrue(semestreRules.canBeCheckLibreUE(ue,manager));
+                }
+                //L'un des deux est superieur
+                else{
+                    assertEquals(false,semestreRules.canBeCheckLibreUE(ue,manager));
+                }
+            }
+        }
+    }
+
+    @Test
+    public void verifCorrectSemestreUELibreTest(){
+        //Mise en place du semestreRules
+        SemestreRules semestreRules = new SemestreRules(10,15,null);
+
+        //tab contient des choses inferieures a maxByCategory
+        ArrayList<Integer> tab = new ArrayList<>();
+        for(int i=0;i<=15;i++){
+            tab.add(i);
+        }
+
+        //tab2 contient des choses superieur a maxByCategory
+        ArrayList<Integer> tab2 = new ArrayList<>();
+        for(int i=0;i<15;i++){
+            tab2.add(i);
+        }
+        tab2.add(16);
+
+        //Mise en place des mocks
+        manager = Mockito.mock(SemestreManager.class);
+        Mockito.when(manager.getCountByCategory()).thenReturn(getCountByCategorie);
+
+        //Tout marche
+        Mockito.when(getCountByCategorie.values()).thenReturn(tab);
+        Mockito.when(manager.getUeLibreSelected()).thenReturn(10);
+        assertTrue(semestreRules.verifCorrectSemestreUELibre(manager));
+
+        //Ce n'est plus egal a maxUeLibre
+        for(int i=0;i<20;i++){
+            if(i != 10) {//On ignore quand on a une valeur qui marche
+                Mockito.when(manager.getUeLibreSelected()).thenReturn(i);
+                assertFalse(semestreRules.verifCorrectSemestreUELibre(manager));
+            }
+        }
+
+        //On remet quelque chose qui marche sauf pour les values
+        Mockito.when(manager.getUeLibreSelected()).thenReturn(10);
+        Mockito.when(getCountByCategorie.values()).thenReturn(tab2);
+        assertFalse(semestreRules.verifCorrectSemestreUELibre(manager));
+
+        //Si on retire la valeur qui pose probleme tout remarche
+        tab2.remove(tab2.indexOf(16));
+        assertTrue(semestreRules.verifCorrectSemestreUELibre(manager));
+    }
+
+    @Test
+    public void verifCorrectSemestreTest(){
+        //Mise en place du semestreRules
+        SemestreRules semestreRules = new SemestreRules(10,15,null,null,12);
+
+        //tab contient des choses inferieures a maxByCategory
+        ArrayList<Integer> tab = new ArrayList<>();
+        for(int i=0;i<=15;i++){
+            tab.add(i);
+        }
+
+        //Mise en place des mocks
+        manager = Mockito.mock(SemestreManager.class);
+        Mockito.when(manager.getCountByCategory()).thenReturn(getCountByCategorie);
+        //Tester dans verifCorrectSemestreUELibreTest on ne s'attarde pas sur les different cas
+        Mockito.when(getCountByCategorie.values()).thenReturn(tab);//Tab marche a tout les coups
+
+        //Tout marche
+        Mockito.when(manager.getUeLibreSelected()).thenReturn(10);
+        Mockito.when(manager.getChooseUeSelected()).thenReturn(14);
+        assertTrue(semestreRules.verifCorrectSemestre(manager));
+
+        //verifCorrectSemestreUELibre renvoie faux
+        Mockito.when(manager.getUeLibreSelected()).thenReturn(8);//Tout sauf 10
+        assertFalse(semestreRules.verifCorrectSemestre(manager));
+
+        //verifCorrectSemestreUELibre renvoie vrai
+        Mockito.when(manager.getUeLibreSelected()).thenReturn(10);
+
+        for(int i=0;i<12;i++){
+            Mockito.when(manager.getChooseUeSelected()).thenReturn(i);
+            if(i<12){//mais semestreManager.getChooseUeSelected()< numberChooseUE
+                assertFalse(semestreRules.verifCorrectSemestre(manager));
+            }
+            else{//tout marche
+                assertTrue(semestreRules.verifCorrectSemestre(manager));
+            }
+        }
+
+    }
 
 }
 

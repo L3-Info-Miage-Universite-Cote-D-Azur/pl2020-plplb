@@ -110,6 +110,9 @@ public class UpdateSemesterTest {
         toSend.add(gson.toJson(semestre2));
         toSend.add(gson.toJson(semestre3));
         toSend.add(gson.toJson(semestre4));
+
+        //On remet a zero le singleton.
+        DataSemester.SEMESTER.setSemesterList(null);
     }
 
     @Test

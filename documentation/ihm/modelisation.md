@@ -25,9 +25,9 @@ nouvelle activité s'affiche avec les catégories du semestre choisies (non dér
     - Bleu : l'ue est selectionnée.
 
 ### Itération 5 :
-- L'utilisateur arrive sur la page de login (1) où il doit rentrer son INE (Identification Nationale des Etudiants)
-puis valider avec le bouton "Connexion", un message d'erreur apparaît si l'INE est mauvais (2) et peut réessayer.
-- L'utilisateur passe ensuite de la page de login (1 ou 2) à la page du parcours (3) si son INE est valide.
+- L'utilisateur arrive sur la page de login (1) où il doit rentrer son numéro étudiant (Identification Nationale des Etudiants)
+puis valider avec le bouton "Connexion", un message d'erreur apparaît si le numéro étudiant est mauvais (2) et peut réessayer.
+- L'utilisateur passe ensuite de la page de login (1 ou 2) à la page du parcours (3) si son numéro étudiant est valide.
 - La page de parcours affiche de la même manière que la page pendant l'itération 4, toutefois elle possède
 en plus deux nouveaux boutons: le bouton (4) permet de se déconnecter et ramène à la page de login (1), et le
 bouton (5) permet de passer au semestre suivant.
@@ -50,7 +50,17 @@ ses UEs.
 - Si l'utilisateur n'a pas choisi un des choix pour la création de son parcours, un message d'erreur s'affiche et lui
 redemande de choisir (12)
 - Le bouton (11) lui permet de se déconnecter et de revenir à la page de login (1)
-- S'il appuie sur une case parcours déja créé, il va arriver sur une page de visualisation de celui-ci (5).
+- S'il appuie sur une case parcours déja créé, il va arriver sur une page de visualisation de celui-ci.
 - Avec les flèches il peut dérouler les UEs choisies pour les semestres correspondants.
 - Il peut modifier son parcours en appuyant sur l'icône du stylo, ce qui l'amène à l'image 3.
 - S'il appuie sur l'icône poubelle, il va supprimer son parcours et revenir au menu (4).
+
+### Itération 7:
+- La page de création de parcours (9) va maintenant afficher un pop-up (12) pour donner à l'avance le nombre
+et les types d'UEs que l'utilisateur va devoir choisir pour ce type de parcours, il peut
+soit confirmer en appuyant sur créer, soit annuler s'il veut apporter une modification.
+- Le menu principal (7) a subit une refonte (13). Maintenant chaque parcours créer propose deux boutons, 
+"modifier" (permet de changer le parcours), et "visualiser" (même fonction que dans l'itération 6 
+pour visualiser un ancien parcours). Et le bouton pour créer un nouveau parcours est placé plus bas.
+- La page de création de parcours a aussi subit une refonte (14) avec notamment l'ajout d'une barre de recherche (15)
+qui va afficher le nom des UEs avec le mot recherché (ici les UEs affichées contiennent toutes le mot 'base".

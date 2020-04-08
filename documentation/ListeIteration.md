@@ -43,7 +43,7 @@
 	-Ajout du s3.
 	-Ajout des UEs du s4.
 	-Ajout du s4.
-	-Ajout d'une activité Login. L'INE de l'étudiant caractérisera le client, qu'il devra fournir au login pour 	récupérer ses UEs.
+	-Ajout d'une activité Login. Le numéro de l'étudiant caractérisera le client, qu'il devra fournir au login pour 	récupérer ses UEs.
 	-Le login est stocké de base dans un fichier.
 	-Le serveur reconnais un étudiant déjà dans le fichier et charge ses sauvegardes.
 	-IHM : page de login a l'ouverture de l'application.
@@ -71,9 +71,8 @@
 	
 
 ### Itération 8:
-	-Implémentation des parcours automatisés, le serveur propose au client des parcours préconçu (modele type de cursus) si celui-ci 	le demande
-	- Mise en place d'une liste de parcours préconcus en fonction des .
-	- Le client peut partager son parcours.
+	- Le client peut partager son parcours (par mail, fichier txt voir reseaux sociaux).
+	- intégrer un parcours en partie fait (par exemple le S1 ou le S2, il reste les autres semestres/cours à choisir)
 	- Le client peut voir le parcours des autres utilisateurs qui ont partagé.
 
 ### Itération 9:
