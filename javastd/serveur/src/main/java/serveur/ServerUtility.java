@@ -112,9 +112,12 @@ ServerUtility
 
 		//Tant que le code n'a pas été créer ou qu'il existe déjà.
 		while(code == "todo" || existingCode.contains(code)){
+			//On reinitialise le code.
+			code = "";
+
 			//On ajoute 5 fois un chiffre aléatoire entre 0 et 9
 			for(int i = 0; i < 5;i++){
-				code  = ""+random.nextInt(10);
+				code  += ""+random.nextInt(10);
 			}
 		}
 		//On retourne le code.

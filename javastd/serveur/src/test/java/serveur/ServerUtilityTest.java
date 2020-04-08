@@ -1,5 +1,6 @@
 package serveur;
 
+import static java.lang.Character.isDigit;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
@@ -180,5 +181,30 @@ ServerUtilityTest
 	{
 		String expected = "[null,null,null,null,null]";
 		assertTrue(expected.equals(ServerUtility.getListOfCourseTypeJSONed()));
+	}
+
+	@Test
+	public void generateCourseCode(){
+		//La liste des codes qui existe est vide de base (on va la completer pour montrer l'unicite).
+		ArrayList<String> existingCode = new ArrayList<String>();
+
+		for(int i =0; i < 500; i++){
+			//On créer le code
+			String code = ServerUtility.generateCourseCode(existingCode);
+
+			//Le code est toujours de longueur 5
+			assertEquals(5,code.length());
+
+			for(int j =0; j<5; j++){
+				//Ce sont tous des chiffres.
+				assertEquals(true,isDigit(code.charAt(j)));
+			}
+			//Le code n'etait pas dans les codes existant.
+			assertEquals(false,existingCode.contains(code));
+
+			//On l'ajoute a la liste des codes existant
+			existingCode.add(code);
+			assertEquals(true,existingCode.contains(code));
+		}
 	}
 }
