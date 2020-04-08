@@ -2,6 +2,7 @@ package serveur;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.google.gson.Gson;
@@ -97,5 +98,26 @@ ServerUtility
 		coursesJsonned.add(ParcoursSample.JPE);
 		coursesJsonned.add(ParcoursSample.JPF);
 	    return gson.toJson(coursesJsonned);
+	}
+
+	/**
+	 * Renvoie le code (string) unique généré.
+	 * @param existingCode : la liste des codes qui existent déjà
+	 * @return le code unique.
+	 */
+	public static String
+	generateCourseCode(ArrayList<String> existingCode){
+		Random random = new Random();
+		String code = "todo";
+
+		//Tant que le code n'a pas été créer ou qu'il existe déjà.
+		while(code == "todo" || existingCode.contains(code)){
+			//On ajoute 5 fois un chiffre aléatoire entre 0 et 9
+			for(int i = 0; i < 5;i++){
+				code  = ""+random.nextInt(10);
+			}
+		}
+		//On retourne le code.
+		return code;
 	}
 }

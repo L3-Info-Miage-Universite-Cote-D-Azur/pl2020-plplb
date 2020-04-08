@@ -15,6 +15,7 @@ import constantes.NET;
 import database.DBManager;
 import debug.Debug;
 import metier.Student;
+import metier.parcours.Parcours;
 import metiermanager.courses.ParcoursSample;
 import metiermanager.semesters.SemesterThread;
 import metiermanager.semesters.SemestersSample;
@@ -150,6 +151,31 @@ Serveur
 				listOfClients.remove(ServerUtility.getClientFromSocketOnList(client, listOfClients));
 			}
 		});
+
+        //Le client veut partager son parcours.
+        this.server.addEventListener(ASKCODE, String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                ArrayList<String> shareCourse = gson.fromJson(json, ArrayList.class);
+                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
+                clientCreateShareCourse(shareCourse,client);
+            }
+        });
+
+
+        //Le client veut charger un parcours partage, le serveur lui envoie.
+        this.server.addEventListener(COURSECODE, String.class, new DataListener<String>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
+                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
+                //On recupere le code du parcours partage.
+                String code = gson.fromJson(json, String.class);
+
+                //TODO : charger le parcours depuis le code.
+                client.getSock().sendEvent(COURSECODE,gson.toJson(null));
+                //TODO Envoie le parcours, ou direct si c'est deja un json
+            }
+        });
     }
 
     /**
@@ -227,7 +253,23 @@ Serveur
             }
         }
     }
-    
+
+    /**
+     * Enregistre shareCourse puis renvoie le code généré.
+     * @param shareCourse : le parcours partage a enregistrer
+     * @return le Code généré.
+     */
+    protected void clientCreateShareCourse(ArrayList<String> shareCourse, Client client){
+        //La liste des codes existant deja (le nom des fichiers sont les codes)
+        ArrayList<String> existingName = null;//TODO: Donner les noms de parcours partager existant (code)
+        //On genere le code
+        String code = ServerUtility.generateCourseCode(existingName);
+
+        //TODO enregistrer le parcours partager.
+        Debug.log("Save share course and send code "+code+" to "+client.getStudent().getNom());
+        client.getSock().sendEvent(ASKCODE,gson.toJson(code));
+    }
+
     /**
      * Permet de mettre a jour les semestres et de les envoyer aux clients
      */

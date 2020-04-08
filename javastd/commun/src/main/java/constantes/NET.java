@@ -26,5 +26,11 @@ public class NET {
     //Le client demande/recoit les parcours predefinis.
     public static final String PREDEFINEDCOURSE = "predefined course";
 
+    //Le client creer un parcours partage ou recoit un code pour le partage.
+    public static final String ASKCODE = "ask code";
+
+    //Le client veut charger un parcours partage depuis un code.
+    public static final String COURSECODE = "share course code";
+
 
 }
