@@ -25,9 +25,9 @@ nouvelle activité s'affiche avec les catégories du semestre choisies (non dér
     - Bleu : l'ue est selectionnée.
 
 ### Itération 5 :
-- L'utilisateur arrive sur la page de login (1) où il doit rentrer son INE (Identification Nationale des Etudiants)
-puis valider avec le bouton "Connexion", un message d'erreur apparaît si l'INE est mauvais (2) et peut réessayer.
-- L'utilisateur passe ensuite de la page de login (1 ou 2) à la page du parcours (3) si son INE est valide.
+- L'utilisateur arrive sur la page de login (1) où il doit rentrer son numéro étudiant (Identification Nationale des Etudiants)
+puis valider avec le bouton "Connexion", un message d'erreur apparaît si le numéro étudiant est mauvais (2) et peut réessayer.
+- L'utilisateur passe ensuite de la page de login (1 ou 2) à la page du parcours (3) si son numéro étudiant est valide.
 - La page de parcours affiche de la même manière que la page pendant l'itération 4, toutefois elle possède
 en plus deux nouveaux boutons: le bouton (4) permet de se déconnecter et ramène à la page de login (1), et le
 bouton (5) permet de passer au semestre suivant.

@@ -13,14 +13,12 @@ import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.mainMenu.MainMenuActivity;
 import com.example.plplbproject.controleur.login.LoginClickListener;
 
-import com.example.plplbproject.data.UpdateSemester;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import metier.Student;
 
-import static constantes.NET.SEMSTERDATA;
 import static constantes.NET.STUDENT;
 
 /**

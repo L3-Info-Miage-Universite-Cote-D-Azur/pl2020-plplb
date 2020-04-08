@@ -19,11 +19,11 @@ public class LoginClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        String ine = vue.getLoginInput();
+        String numEtu = vue.getLoginInput();
 
-        if(student.acceptINE(ine)){
+        if(student.acceptINE(numEtu)){
             if(Connexion.CONNEXION.isConnected()){
-                student.setNom(ine);
+                student.setNom(numEtu);
                 vue.switchIntent();
             }
             else{
@@ -31,7 +31,7 @@ public class LoginClickListener implements View.OnClickListener {
             }
 
         }else{
-            vue.setTextError("INE invalide (format : ab123456)");
+            vue.setTextError("Numéro étudiant invalide (format : ab123456)");
             vue.clearLoginInput();
         }
     }

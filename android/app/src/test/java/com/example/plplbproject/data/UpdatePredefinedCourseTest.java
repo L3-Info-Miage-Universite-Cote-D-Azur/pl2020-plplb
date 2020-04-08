@@ -100,6 +100,9 @@ public class UpdatePredefinedCourseTest {
             toSend.add(gson.toJson(parcoursType));
         }
 
+        //On remet a zero le singleton.
+        DataPredefinedCourse.PREDEFINEDCOURSE.setPredefinedCourseList(null);
+
     }
 
     @Test
