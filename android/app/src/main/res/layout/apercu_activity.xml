@@ -15,15 +15,32 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/saveApercu"
-        android:layout_width="150dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_weight="0"
-        android:text="Save"
+        android:orientation="horizontal"
         android:layout_gravity="center_horizontal|center"
-        android:visibility="visible" />
+        android:layout_marginBottom="10dp"
+        >
+
+        <Button
+            android:id="@+id/saveApercu"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_share_black_18dp"/>
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

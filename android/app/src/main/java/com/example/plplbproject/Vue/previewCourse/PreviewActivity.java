@@ -4,10 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import static constantes.NET.*;
@@ -35,8 +46,14 @@ public class PreviewActivity extends AppCompatActivity {
     private Parcours course;
 
     private Button saveButton;
+    private ImageButton shareButton;
 
     private final Gson gson = new GsonBuilder().create();
+
+    private ClipboardManager clipboardManager;
+    private ClipData clipData;
+
+    private String shareCode;
 
     public static final String AUTOINIT = "AUTOINIT";
     private boolean autoInit =  true;
@@ -48,6 +65,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         autoInit = getIntent().getBooleanExtra(AUTOINIT,true);
         saveButton = findViewById(R.id.saveApercu);
+        shareButton = findViewById(R.id.shareButton);
 
         String classCall = getIntent().getStringExtra("className");
         if(classCall == null)
@@ -64,19 +82,36 @@ public class PreviewActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Si on vient du créateur de nouveau parcours
+     */
     protected void onCreateEndCourseBuilder(){
         course = (Parcours) getIntent().getSerializableExtra("Course");
         if(autoInit) initPreviewsCourse();
         saveButton.setOnClickListener(saveButtonListener);
+        shareButton.setOnClickListener(shareButtonListener);
     }
 
+    /**
+     * Si on vient de l'apercu du menu principal
+     */
     protected  void onCreatePreviews(){
         String courseName = getIntent().getStringExtra("CourseName");
+
+        // Pour récupérer le parcours
         Connexion.CONNEXION.setEventListener(LOADCOURSE,receiveCourse());
         Connexion.CONNEXION.send(LOADCOURSE,courseName);
         saveButton.setVisibility(View.GONE);
+        initPreviewsCourse();
+
+        // Pour le bouton share
+        shareButton.setOnClickListener(shareButtonListener);
     }
 
+    /**
+     * Qu'on vienne du menu principal ou du constructeur de parcours, on initialise la vue
+     */
     protected void initPreviewsCourse(){
         apercuList = findViewById(R.id.apercuList);
         apercuAdapter = new PreviewRecyclerAdapter(this,course);
@@ -95,7 +130,6 @@ public class PreviewActivity extends AppCompatActivity {
             public void call(Object... args) {
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
                 course = new Parcours(DataSemester.SEMESTER.getSemesterList(),ueCode, DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList());
-                initPreviewsCourse();
             }
         };
     }
@@ -113,6 +147,54 @@ public class PreviewActivity extends AppCompatActivity {
             Intent intent=new Intent();
             setResult(2,intent);
             finish();
+        }
+    };
+
+    public Emitter.Listener receiveCode(){
+        return new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                String code = gson.fromJson((String) args[0], String.class);
+                shareCode = code;
+            }
+        };
+    }
+
+    private View.OnClickListener shareButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            clipboardManager = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+
+            Connexion.CONNEXION.setEventListener(ASKCODE,receiveCourse());
+            Connexion.CONNEXION.send(ASKCODE,gson.toJson(course.createSaveList()));
+
+            // inflate the layout of the popup window
+            LayoutInflater inflater = (LayoutInflater)
+                    getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.share_popup, null);
+
+            // create the popup window
+            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            boolean focusable = true; // lets taps outside the popup also dismiss it
+            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+            // show the popup window
+            // which view you pass in doesn't matter, it is only used for the window tolken
+            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+            // dismiss the popup window when touched
+            popupView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    clipData = ClipData.newPlainText("text",shareCode);
+                    clipboardManager.setPrimaryClip(clipData);
+                    Toast.makeText(getApplicationContext(),"Data Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                    popupWindow.dismiss();  // Enlever?
+                    return true;
+                }
+            });
+
         }
     };
 
