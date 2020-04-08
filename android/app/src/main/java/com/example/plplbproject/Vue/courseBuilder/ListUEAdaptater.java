@@ -5,10 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Filterable;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.controleur.UeVisualisation.UeVisualisationClickListener;
 import com.example.plplbproject.controleur.courseBuilder.CourseBuilderModele;
 import com.example.plplbproject.data.DataSemester;
 
@@ -110,7 +111,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        UE ue = (UE) getChild(groupPosition,childPosition);
+        final UE ue = (UE) getChild(groupPosition,childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) vue.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -118,8 +119,10 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
         }
 
         TextView ueName = (TextView) convertView.findViewById(R.id.ueName);
-        TextView ueCode = (TextView) convertView.findViewById(R.id.codeUe);
+        final TextView ueCode = (TextView) convertView.findViewById(R.id.codeUe);
         View ueRect = (View) convertView.findViewById(R.id.rectangleUe);
+        Button description = (Button) convertView.findViewById(R.id.descriptionButton);
+
 
         //Mise a jour du texte
         ueName.setText(ue.getUeName());
@@ -133,6 +136,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
 
 
             convertView.setOnClickListener(new UeClickListener(ue));
+            description.setOnClickListener(new UeVisualisationClickListener(vue.getApplicationContext(),ue));
         }
         else{
             //comme on a pas de parcours on met en gris (ne doit pas ce produire en si l'apllication fonctionne bien
