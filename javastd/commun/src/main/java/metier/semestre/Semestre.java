@@ -93,4 +93,8 @@ public class Semestre implements Serializable {
     	Gson gson = new GsonBuilder().create();
     	return gson.toJson(this);
     }
+
+
+
+
 }

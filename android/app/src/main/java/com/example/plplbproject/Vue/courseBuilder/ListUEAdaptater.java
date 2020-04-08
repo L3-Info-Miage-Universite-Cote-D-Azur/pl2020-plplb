@@ -30,7 +30,6 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
     private ArrayList<Categorie> categorieArrayList = new ArrayList<Categorie>();
     private ArrayList<Categorie> originalcategorieArraylist = new ArrayList<>();
 
-
     /**
      * L'adapteur doit savoir quel est le semestre qu'il doit adapter
      * @param vue
@@ -149,6 +148,8 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
 
     public void filterData(String query){
 
+        int flag = 0;
+
         query = query.toLowerCase();
         categorieArrayList.clear();
 
@@ -171,12 +172,17 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
                 if (newUEList.size() >0){
                     Categorie newCategorie = new Categorie(c.getName(),newUEList);
                     categorieArrayList.add(newCategorie);
+                    flag = 1;
+                }
+                if(c.getName().toLowerCase().contains(query) && flag == 0){
+                    categorieArrayList.add(c);
                 }
             }
         }
 
         notifyDataSetChanged();
     }
+
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
