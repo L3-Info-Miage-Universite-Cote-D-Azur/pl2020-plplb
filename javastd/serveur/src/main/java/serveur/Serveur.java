@@ -171,9 +171,7 @@ Serveur
                 //On recupere le code du parcours partage.
                 String code = gson.fromJson(json, String.class);
 
-                //TODO : charger le parcours depuis le code.
-                client.getSock().sendEvent(COURSECODE,gson.toJson(null));
-                //TODO Envoie le parcours, ou direct si c'est deja un json
+                client.getSock().sendEvent(COURSECODE,gson.toJson(dbManager.loadSharedCourseFile(code)));
             }
         });
     }

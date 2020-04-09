@@ -208,10 +208,8 @@ DBManager
 	{
 		Gson gson = new GsonBuilder().create();
 		this.sharedCourseFile = new FileManager("db/sharedCourses/" + code + ".txt");
-		if (this.sharedCourseFile.exists())
-			Debug.log("Overwriting " + "db/sharedCourses/" + code + ".txt ...");
-		else
-			Debug.log("Creating " + "db/sharedCourses/" + code + ".txt ...");
+		if (!this.sharedCourseFile.exists())
+			this.sharedCourseFile.create();
 		this.sharedCourseFile.write(gson.toJson(toSave));
 	}
 
@@ -226,8 +224,9 @@ DBManager
 	{
 		File[] files = this.dirSharedCourse.getFile().listFiles();
 		ArrayList<String> filenames = new ArrayList<String>();
-		for (File f : files)
+		for (File f : files) {
 			filenames.add(f.getName());
+		}
 		return filenames;
 	}
 
@@ -235,7 +234,11 @@ DBManager
 	loadSharedCourseFile (String sharedCourseCode)
 	{
 		FileManager file = new FileManager("db/sharedCourses/" + sharedCourseCode + ".txt");
-		String res = file.getFileContent();
+		String res;
+		if (file.exists())
+			res = file.getFileContent();
+		else
+			res = "NOTFOUND";
 		return res;
 	}
 }

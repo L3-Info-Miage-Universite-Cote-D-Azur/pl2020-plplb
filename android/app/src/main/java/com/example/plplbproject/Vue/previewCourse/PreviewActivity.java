@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static constantes.NET.*;
@@ -52,6 +53,8 @@ public class PreviewActivity extends AppCompatActivity {
 
     private ClipboardManager clipboardManager;
     private ClipData clipData;
+
+    TextView codeText;
 
     private String shareCode;
 
@@ -156,6 +159,9 @@ public class PreviewActivity extends AppCompatActivity {
             public void call(Object... args) {
                 String code = gson.fromJson((String) args[0], String.class);
                 shareCode = code;
+                if(codeText != null){
+                    codeText.setText(shareCode);
+                }
             }
         };
     }
@@ -165,8 +171,13 @@ public class PreviewActivity extends AppCompatActivity {
         public void onClick(View view) {
             clipboardManager = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
 
-            Connexion.CONNEXION.setEventListener(ASKCODE,receiveCourse());
-            Connexion.CONNEXION.send(ASKCODE,gson.toJson(course.createSaveList()));
+            //Si le client n'a pas partager son code
+            if(shareCode == null){
+                //Si reclique sur le bouton, on lui redonnera donc son code déjà créer par le serveur
+                Connexion.CONNEXION.setEventListener(ASKCODE,receiveCode());
+                Connexion.CONNEXION.send(ASKCODE,gson.toJson(course.createSaveList()));
+            }
+
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater)
@@ -183,14 +194,16 @@ public class PreviewActivity extends AppCompatActivity {
             // which view you pass in doesn't matter, it is only used for the window tolken
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
+            codeText = ((TextView)popupWindow.getContentView().findViewById(R.id.codeText));
+            codeText.setText(shareCode);
+
             // dismiss the popup window when touched
             popupView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     clipData = ClipData.newPlainText("text",shareCode);
                     clipboardManager.setPrimaryClip(clipData);
-                    Toast.makeText(getApplicationContext(),"Data Copied to Clipboard", Toast.LENGTH_SHORT).show();
-                    popupWindow.dismiss();  // Enlever?
+                    Toast.makeText(getApplicationContext(),"Copié dans le presse papier", Toast.LENGTH_SHORT).show();
                     return true;
                 }
             });

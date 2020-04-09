@@ -20,21 +20,39 @@
         android:layout_height="11dp"
         android:background="?android:attr/listDivider" />
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vos parcours : "
-        android:gravity="center"
         android:layout_marginTop="50dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:background="#63AC63"
-        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
         android:layout_marginLeft="50dp"
-        android:clickable="false"
+        android:layout_marginRight="50dp"
         >
 
-    </Button>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:text="Vos parcours : "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#63AC63"
+            android:clickable="false"
+            >
+
+        </Button>
+
+        <ImageButton
+            android:id="@+id/addImageButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_library_add_black_18dp"/>
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/parcoursList"

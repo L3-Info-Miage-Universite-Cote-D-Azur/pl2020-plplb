@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.controleur.UeVisualisation.UeVisualisationClickListener;
 
 
 import java.util.ArrayList;
@@ -67,11 +69,13 @@ public class PreviewAdapter extends BaseAdapter {
         TextView ueName = (TextView) convertView.findViewById(R.id.ueName);
         TextView ueCode = (TextView) convertView.findViewById(R.id.codeUe);
         View ueRect = (View) convertView.findViewById(R.id.rectangleUe);
+        Button description = (Button) convertView.findViewById(R.id.descriptionButton);
 
         //Mise a jour du texte
         ueName.setText(ue.getUeName());
         ueCode.setText(ue.getUeCode());
         ueRect.setBackgroundColor(0xff51C5C4);
+        description.setOnClickListener(new UeVisualisationClickListener(context,ue));
 
         return convertView;
     }
