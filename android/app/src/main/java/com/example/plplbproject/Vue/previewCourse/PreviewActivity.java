@@ -171,8 +171,13 @@ public class PreviewActivity extends AppCompatActivity {
         public void onClick(View view) {
             clipboardManager = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
 
-            Connexion.CONNEXION.setEventListener(ASKCODE,receiveCode());
-            Connexion.CONNEXION.send(ASKCODE,gson.toJson(course.createSaveList()));
+            //Si le client n'a pas partager son code
+            if(shareCode == null){
+                //Si reclique sur le bouton, on lui redonnera donc son code déjà créer par le serveur
+                Connexion.CONNEXION.setEventListener(ASKCODE,receiveCode());
+                Connexion.CONNEXION.send(ASKCODE,gson.toJson(course.createSaveList()));
+            }
+
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater)
