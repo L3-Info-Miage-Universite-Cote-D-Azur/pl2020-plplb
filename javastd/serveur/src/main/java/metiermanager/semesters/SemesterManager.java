@@ -1,6 +1,7 @@
 package metiermanager.semesters;
 
 import database.FileManager;
+import metier.semestre.SemestreRules;
 import metiermanager.Converter;
 import metiermanager.Parser;
 import metier.semestre.Semestre;
@@ -47,12 +48,51 @@ SemesterManager
 				this.fman = new FileManager(SemestreConsts.dir + fileOfSemester);
 		} else
 			this.fman = new FileManager(fileOfSemester);
+
+		// Converting
+		Semestre converted = this.converter.stringToSemestre(this.fman.getRaw());
+		return converted;
+	}
+
+
+
+	/**
+	 * La fonction get permet de renvoyer semestreRule a partir du nom du fichier contenant
+	 * le semestreRule sous format JSON
+	 * @param fileOfSemester Le nom du fichier ou se situe les regle de semestre sous JSON
+	 * @param needToCheck Si les checks sont necessaires sur fileOfSemesters
+	 * @return Le semestre represente par le fichier
+	 */
+	public SemestreRules
+	getRule (String fileOfSemester, boolean needToCheck)
+	{
+		if (needToCheck)
+		{
+			// Check si le directory est en parametre ou non
+			if ( fileOfSemester.length() > SemestreConsts.dir.length()
+					&& fileOfSemester.subSequence(0, SemestreConsts.dir.length()).equals(SemestreConsts.dir))
+				this.fman = new FileManager(fileOfSemester);
+			else
+				this.fman = new FileManager(SemestreConsts.dir + fileOfSemester);
+		} else
+			this.fman = new FileManager(fileOfSemester);
 		// Parsing
 		String parsed = this.parser.parse(this.fman.getRaw());
 		// Converting
-		Semestre converted = this.converter.stringToSemestre(parsed);
-		return converted;
+		SemestreRules rule = this.converter.stringToSemestreRule(parsed);
+		return rule;
 	}
+
+	/**
+	 * La fonction get permet de renvoyer semestreRule a partir du nom du fichier contenant
+	 * le semestreRule sous format JSON
+	 * @param fileOfSemester Le nom du fichier ou se situe le semestre sous JSON
+	 * @return Le semestre represente par le fichier
+	 */
+	public SemestreRules getRule (String fileOfSemester)
+	{return this.getRule(fileOfSemester, true);}
+
+
 	
 	/**
 	 * La fonction get permet de renvoyer un Semestre a partir du nom du fichier contenant

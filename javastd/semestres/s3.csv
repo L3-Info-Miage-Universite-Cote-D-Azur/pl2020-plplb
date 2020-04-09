@@ -1,0 +1,31 @@
+code ue;nom;semestre;Categorie;Description
+SPUGDE33;Approfondissement hors geographie 1;3;GEOGRAPHIE;pas de description
+SPUGDI30;Disciplinaire 3;3;GEOGRAPHIE;pas de description
+SPUGDI31;Disciplinaire 4;3;GEOGRAPHIE;pas de description
+SPUGDI32;Disciplinaire 5;3;GEOGRAPHIE;pas de description
+SPUC30;Chimie des solutions;3;CHIMIE;pas de description
+SPUC31;Chimie organique;3;CHIMIE;pas de description
+SPUC32;Materiaux 1;3;CHIMIE;pas de description
+HPULE36;Enseignements fondamentaux 1D;3;ENSEIGNEMENT;pas de description
+SPUE30;Automatique - introduction;3;ELECTRONIQUE;pas de description
+SPUE32;Physique des capteurs;3;ELECTRONIQUE;pas de description
+SPUE31;Systeme embarque;3;ELECTRONIQUE;pas de description
+SPUF31;Bases de donnees;3;INFORMATIQUE;pas de description
+SPUF32;Outils formels de l'informatique;3;INFORMATIQUE;pas de description
+SPUF30;Structures de donnees et programmation C;3;INFORMATIQUE;pas de description
+SPUM32;Complements d'algebre;3;MATHEMATIQUES;pas de description
+SPUM31;Complements d'analyse;3;MATHEMATIQUES;pas de description
+SPUM30;Fondements 3;3;MATHEMATIQUES;pas de description
+SPUM34;Methodes - approche geometrique;3;MATHEMATIQUES;pas de description
+SPUM33;Methodes - mathematiques et ingenierie;3;MATHEMATIQUES;pas de description
+SPUA30;Economie gestion 3;3;ECONOMIE - GESTION;pas de description
+SPUA31;Introduction R;3;ECONOMIE - GESTION;pas de description
+SPUP30;Electromagnetisme 1;3;PHYSIQUE;pas de description
+SPUP32;Outils et methodes 1;3;PHYSIQUE;pas de description
+SPUP31;Thermodynamique 1;3;PHYSIQUE;pas de description
+SPUT30;Atmosphere - ocean - climats;3;SCIENCES DE LA TERRE;pas de description
+SPUT31;Le temps en geosciences;3;SCIENCES DE LA TERRE;pas de description
+SPUT33;Materiaux terrestres;3;SCIENCES DE LA TERRE;pas de description
+SPUT32;Physique de la Terre;3;SCIENCES DE LA TERRE;pas de description
+KCTSS3;Competences transversales 3;3;COMPETENCES TRANSVERSALES;pas de description
+SPUSF300;Fablab S3;3;FABLAB;pas de description

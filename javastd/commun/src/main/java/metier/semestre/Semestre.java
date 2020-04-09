@@ -2,6 +2,7 @@ package metier.semestre;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,8 +31,35 @@ public class Semestre implements Serializable {
         this.setListCategorie(listCategorie); //Pour rattacher le semestre au Ues.
         //For RULE
         this.rules = rules;
-
     }
+
+    /**
+     * Constructeur de semestre a l'aide d'une liste d'ue les ue permet de créer les categorie
+     * @param allUeInSemester tout les ue du semestre
+     */
+    public Semestre(List<UE> allUeInSemester) {
+        //on recupere le numero du semestre dans la premiere ue
+        this.number = allUeInSemester.get(0).getSemestreNumber();
+        listCategorie = new ArrayList<Categorie>();
+        for(UE ue : allUeInSemester){
+            boolean findCategory = false;
+            for(Categorie category: listCategorie ) {
+                //on regarde si la categorie existe
+                if (category.getName().equals(ue.getCategorie())) {
+                    category.addUe(ue);
+                    findCategory = true; //on a trouver
+                }
+            }
+            //la categorie n'est pas pas encore créer on la crée
+            if(!findCategory){
+                Categorie newCategory = new Categorie(ue.getCategorie());
+                newCategory.addUe(ue);
+                listCategorie.add(newCategory);
+            }
+        }
+    }
+
+
 
     public Semestre() {
         this.number = -1;
@@ -92,6 +120,14 @@ public class Semestre implements Serializable {
     {
     	Gson gson = new GsonBuilder().create();
     	return gson.toJson(this);
+    }
+
+    /**
+     * Permet de set les regle de smeestre
+     * @param rules les regle que l'on veut mettre
+     */
+    public void setRules(SemestreRules rules){
+        this.rules = rules;
     }
 
 

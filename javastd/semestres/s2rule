@@ -1,0 +1,13 @@
+{
+      "maxUELibre":3,
+      "maxByCategory":2,
+      "obligatoryUEList":[
+         "KCTTS2",
+         "SPUS20"
+      ],
+      "chooseUEList":[
+         "SPUM21",
+         "SPUM22"
+      ],
+      "numberChooseUE":1
+}

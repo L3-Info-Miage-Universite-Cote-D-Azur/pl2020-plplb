@@ -1,0 +1,9 @@
+{
+    "maxUELibre": 4,
+    "maxByCategory": 4,
+    "obligatoryUEList": [
+      "KCTSS4"
+    ],
+    "chooseUEList": [],
+    "numberChooseUE": 0
+}
