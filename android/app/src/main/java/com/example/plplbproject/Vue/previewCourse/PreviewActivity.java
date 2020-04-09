@@ -54,6 +54,8 @@ public class PreviewActivity extends AppCompatActivity {
     private ClipboardManager clipboardManager;
     private ClipData clipData;
 
+    TextView codeText;
+
     private String shareCode;
 
     public static final String AUTOINIT = "AUTOINIT";
@@ -157,6 +159,9 @@ public class PreviewActivity extends AppCompatActivity {
             public void call(Object... args) {
                 String code = gson.fromJson((String) args[0], String.class);
                 shareCode = code;
+                if(codeText != null){
+                    codeText.setText(shareCode);
+                }
             }
         };
     }
@@ -184,7 +189,8 @@ public class PreviewActivity extends AppCompatActivity {
             // which view you pass in doesn't matter, it is only used for the window tolken
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-            ((TextView)popupWindow.getContentView().findViewById(R.id.codeText)).setText(shareCode);
+            codeText = ((TextView)popupWindow.getContentView().findViewById(R.id.codeText));
+            codeText.setText(shareCode);
 
             // dismiss the popup window when touched
             popupView.setOnTouchListener(new View.OnTouchListener() {
