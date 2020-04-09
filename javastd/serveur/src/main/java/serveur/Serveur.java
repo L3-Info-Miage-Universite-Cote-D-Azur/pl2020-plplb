@@ -20,6 +20,7 @@ import metiermanager.courses.ParcoursSample;
 import metiermanager.semesters.SemesterThread;
 import metiermanager.semesters.SemestersSample;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static constantes.NET.*;
@@ -232,19 +233,20 @@ Serveur
     {
         dbManager.getDBCourse().setCurrentDir(c.getStudent().toString());
         dbManager.getDBCourse().setCourseFile(filename);
-        if (dbManager.getDBCourse().getCourse().exists())
+        if (new File(System.getProperty("user.dir") + "\\serveur\\db\\" + c.getStudent().getNom() + "\\" + filename + ".txt").exists())
         {
-
             if (dbManager.getDBCourse().getAllCourses().contains(filename))
             {
                 Debug.log("Send data to : " + c.getStudent().getNom());
-                c.getSock().sendEvent(LOADCOURSE, gson.toJson(dbManager.getDBCourse().load(filename)));
+                c.getSock().sendEvent(LOADCOURSE, gson.toJson(dbManager.getDBCourse().load(c.getStudent().getNom() + "\\" + filename)));
             }
             else
             {
             	Debug.error(c.getStudent().toString() + " sent an impossible course: " + filename);
             	Debug.error(filename + " not in " + dbManager.getDBCourse().getAllCourses().toString());
             }
+        } else {
+            Debug.error("File " + System.getProperty("user.dir") + "\\serveur\\db\\" + c.getStudent().getNom() + "\\" + filename + ".txt" + " doesnt exist");
         }
     }
 

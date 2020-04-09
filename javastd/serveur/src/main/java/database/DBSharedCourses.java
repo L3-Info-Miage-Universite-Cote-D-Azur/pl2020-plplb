@@ -27,8 +27,8 @@ DBSharedCourses
     saveSharedCourse (String code, ArrayList<String> toSave)
     {
         Gson gson = new GsonBuilder().create();
-        toSave.remove(toSave.get(0));
         this.currentFile = new FileManager(this.directory.getObject().getAbsolutePath() + "\\" + code + ".txt");
+        toSave.remove(toSave.get(0));
         if (!this.currentFile.exists())
             this.currentFile.create();
         this.currentFile.write(gson.toJson(toSave));
