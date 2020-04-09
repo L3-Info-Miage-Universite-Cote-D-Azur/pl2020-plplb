@@ -91,7 +91,7 @@ public class ServeurTest {
         //quand un client ce connecte on lui envoie bien les donner
         Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(COURSESNAMES),any(String.class));
     }
-
+/*
     @Test
     public void clientOnConnectSendSaveTest(){
         Mockito.when(c.getSock()).thenReturn(sockClient);
@@ -111,7 +111,7 @@ public class ServeurTest {
         serveur.clientOnConnectSendSave(c, "parcours");
         Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(LOADCOURSE),any(String.class));
     }
-    
+    */
     /* ----------------------------------- */
     
 	private String[] _fnames;
