@@ -62,6 +62,7 @@ public class MainMenuActivityTest {
         listParcour.add("aaa");
         listParcour.add("bbb");
         listParcour.add("ccc");
+        DataSemester.SEMESTER.setSemesterList(null);
 
         Intent startIntent = new Intent();
         mActivityRule.launchActivity(startIntent);
