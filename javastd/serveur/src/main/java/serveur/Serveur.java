@@ -61,6 +61,7 @@ Serveur
         Debug.log("Server configuration created.");
         
         this.listOfClients = new ArrayList<Client>();
+        this.dbManager = new DBManager("db");
         
         // creation du serveur
         this.server = new SocketIOServer(config);
@@ -74,15 +75,6 @@ Serveur
     protected void 
     initEventListener ()
     {
-        //le client viens de ce connecter
-        this.server.addEventListener(STUDENT, String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-            	Client c = new Client(gson.fromJson(json, Student.class), socketIOClient);
-            	listOfClients.add(c);
-            }
-        });
-
         //le client envoie ces donner
         this.server.addEventListener(STUDENT,String.class, new DataListener<String>() {
             @Override
@@ -137,8 +129,8 @@ Serveur
                 @SuppressWarnings("unchecked")
 				ArrayList<String> data = gson.fromJson(json, ArrayList.class);
                 Client currentClient = ServerUtility.getClientFromSocketOnList(socketIOClient, listOfClients);
-                dbManager.setCurrentDir(currentClient.getStudent().toString());
-                dbManager.save(data);
+                dbManager.getDBCourse().setCurrentDir(currentClient.getStudent().toString());
+                dbManager.getDBCourse().save(data);
                 Debug.log("Save data for " + currentClient.getStudent().getNom());
             }
         });
@@ -171,7 +163,7 @@ Serveur
                 //On recupere le code du parcours partage.
                 String code = gson.fromJson(json, String.class);
 
-                client.getSock().sendEvent(COURSECODE,gson.toJson(dbManager.loadSharedCourseFile(code)));
+                client.getSock().sendEvent(COURSECODE,gson.toJson(dbManager.getDbSharedCourses().loadSharedCourseFile(code, client, dbManager.getDBCourse())));
             }
         });
     }
@@ -225,8 +217,9 @@ Serveur
     protected void
     clientOnConnectSendCourses (Client c)
     {
-    	dbManager = new DBManager(c.getStudent().toString(), "");
-    	ArrayList<String> filenames = dbManager.getAllCourses();
+        Debug.log(dbManager.getDBCourse().getDir().getWorkingDirectory().getCurrentDirectory());
+    	dbManager.getDBCourse().setCurrentDir(c.getStudent().toString());
+    	ArrayList<String> filenames = dbManager.getDBCourse().getAllCourses();
     	Debug.log("Sending course\'s list " + filenames.toString() + " to " + c.getStudent().toString());
     	c.getSock().sendEvent(COURSESNAMES, gson.toJson(filenames));
     }
@@ -238,16 +231,20 @@ Serveur
     protected void
     clientOnConnectSendSave (Client c, String filename)
     {
-        dbManager = new DBManager(c.getStudent().toString(), filename);
-        if (dbManager.getCourse().exists()) 
+        dbManager.getDBCourse().setCurrentDir(c.getStudent().toString());
+        dbManager.getDBCourse().setCourseFile(filename);
+        if (dbManager.getDBCourse().getCourse().exists())
         {
-            Debug.log("Send data to : " + c.getStudent().getNom());
-            if (dbManager.getAllCourses().contains(filename))
-            	c.getSock().sendEvent(LOADCOURSE, gson.toJson(dbManager.load(filename)));
+
+            if (dbManager.getDBCourse().getAllCourses().contains(filename))
+            {
+                Debug.log("Send data to : " + c.getStudent().getNom());
+                c.getSock().sendEvent(LOADCOURSE, gson.toJson(dbManager.getDBCourse().load(filename)));
+            }
             else
             {
             	Debug.error(c.getStudent().toString() + " sent an impossible course: " + filename);
-            	Debug.error(filename + " not in " + dbManager.getAllCourses().toString());
+            	Debug.error(filename + " not in " + dbManager.getDBCourse().getAllCourses().toString());
             }
         }
     }
@@ -259,11 +256,11 @@ Serveur
      */
     protected void clientCreateShareCourse(ArrayList<String> shareCourse, Client client){
         //La liste des codes existant deja (le nom des fichiers sont les codes)
-        ArrayList<String> existingName = dbManager.loadSharedCourseNames();
+        ArrayList<String> existingName = dbManager.getDbSharedCourses().loadSharedCourseNames();
         //On genere le code
         String code = ServerUtility.generateCourseCode(existingName);
 
-        dbManager.saveSharedCourse(code, shareCourse);
+        dbManager.getDbSharedCourses().saveSharedCourse(code, shareCourse);
         Debug.log("Save share course and send code "+code+" to "+client.getStudent().getNom());
         client.getSock().sendEvent(ASKCODE,gson.toJson(code));
     }

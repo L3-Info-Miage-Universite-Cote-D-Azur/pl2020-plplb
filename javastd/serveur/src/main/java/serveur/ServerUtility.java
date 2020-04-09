@@ -64,6 +64,32 @@ ServerUtility
 				return c;
 		return null;
 	}
+
+	/**
+	 * Permet d'ajouter correctement un client
+	 * sans qu'il y ait duplication de sockets
+	 * @param list la liste des clients
+	 * @param client le client a ajouter
+	 */
+	void
+	addClientToList (ArrayList<Client> list, Client client)
+	{
+		SocketIOClient clientSocket = client.getSock();
+		/* Recherche des clients de list qui contiennent la meme socket
+		* que le client qu'on veut ajouter */
+		for (int i = 0; i < list.size(); i++)
+		{
+			/* Pour chaque client qui a la meme socket */
+			if (list.get(i).getSock() == clientSocket)
+			{
+				/* Le supprimer de la liste */
+				list.remove(list.get(i));
+				break;
+			}
+		}
+		/* Ajouter le client a la liste */
+		list.add(client);
+	}
 	
 	/**
 	 * Renvoie une String contenant la liste des

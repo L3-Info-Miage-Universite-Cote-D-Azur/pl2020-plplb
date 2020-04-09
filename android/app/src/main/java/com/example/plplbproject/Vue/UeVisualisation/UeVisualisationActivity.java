@@ -60,6 +60,6 @@ public class UeVisualisationActivity extends AppCompatActivity {
         nameUE.setText(ue.getUeName());
         codeUE.setText(ue.getUeCode());
         categoryUE.setText(ue.getCategorie());
-        descriptionUE.setText("TODO : ajouter une description à chaque ue...");
+        descriptionUE.setText(ue.getUeDescription());
     }
 }
