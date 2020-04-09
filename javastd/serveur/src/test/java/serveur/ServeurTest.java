@@ -159,12 +159,13 @@ public class ServeurTest {
 		
 		return new Semestre(num, cats, sr);
 	}
-    
+
+	/*
     @Test
     public void
     testUpdateSemestersOfClients ()
     {
-    	/* -- Start --*/
+    	//-- Start --
     	this.__start();
     	Debug.verbose = false;
     	Semestre sem = this.createSemestre4UT(42);
@@ -176,19 +177,20 @@ public class ServeurTest {
     	// Ajout de 1 client
     	serveur.getClients().add(c);
     	
-    	/* -- Traitement --*/
+    	// -- Traitement --
     	serveur.updateSemestersOfClients();
     	Mockito.verify(sockClient,new Times(serveur.getClients().size())).sendEvent(ArgumentMatchers.eq(CLIENTUPDATE),any(String.class));
-    	
-    	/* -- End -- */
+
+    	//-- End --
     	SemestreConsts.dir = _fdir;
 		SemestreConsts.filenames = _fnames;
 		SemestreConsts.lastUpdate = _fold;
 		fm.getFile().delete();
 		new File(SemestreConsts.dir).delete();
     }
-    
-    /* ----------------------------------- */
+    */
+
+
 
     @AfterEach
     public void del(){
