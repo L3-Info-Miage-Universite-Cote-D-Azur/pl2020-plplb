@@ -54,7 +54,6 @@ public class MainMenuActivity extends AppCompatActivity{
     private final Gson gson = new GsonBuilder().create();
 
     String code;
-    Boolean codeFound = false;
     private ImageButton addButton;
 
     @Override
@@ -201,12 +200,6 @@ public class MainMenuActivity extends AppCompatActivity{
                                 if (code != "") {
                                     Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
                                     Connexion.CONNEXION.send(COURSECODE,gson.toJson(code));
-                                    if (codeFound){
-                                        Toast.makeText(getApplicationContext(), "Parcours ajouté", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else{
-                                        Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
-                                    }
                                 }
                                 else {
                                     Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
@@ -220,7 +213,6 @@ public class MainMenuActivity extends AppCompatActivity{
                                 dialog.cancel();
                             }
                         });
-                codeFound = false;
                 alertDialog.show();
             }
 
@@ -238,7 +230,9 @@ public class MainMenuActivity extends AppCompatActivity{
             public void call(Object... args) {
                 final Boolean parcoursFound = gson.fromJson((String) args[0], Boolean.class);
                 if(parcoursFound == true){
-                    codeFound = true;
+
+                    Toast.makeText(getApplicationContext(), "Parcours ajouté", Toast.LENGTH_SHORT).show();
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -248,7 +242,7 @@ public class MainMenuActivity extends AppCompatActivity{
                     });
                 }
                 else{
-                    codeFound = false;
+                    Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
                 }
             }
         };
