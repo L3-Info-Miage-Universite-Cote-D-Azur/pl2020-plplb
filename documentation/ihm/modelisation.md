@@ -64,3 +64,12 @@ soit confirmer en appuyant sur créer, soit annuler s'il veut apporter une modif
 pour visualiser un ancien parcours). Et le bouton pour créer un nouveau parcours est placé plus bas.
 - La page de création de parcours a aussi subit une refonte (14) avec notamment l'ajout d'une barre de recherche (15)
 qui va afficher le nom des UEs avec le mot recherché (ici les UEs affichées contiennent toutes le mot 'base".
+
+### Itération 8:
+- Sur la page du menu principal, un bouton (16) est ajouté et permet d'entrer un code de partage de parcours (ce code est
+composé de 5 chiffres).
+- Une case s'affiche (17) après avoir appuyé sur le bouton (16) pour rentrer un code, s'il est faux un message d'erreur s'affiche,
+mais dans le cas contraire, le parcours associé au code est enregistré dans la partie "vos parcours" et peut être traité comme tous les autres parcours déja créé.
+- Les UEs ont maintenant un bouton sur le côté (18) qui permet d'afficher une nouvelle page (19) contenant les informations de 
+celle-ci (le code, le nom, la catégorie, description de la matière).
+- Sur la page pour finaliser et sauvegarder un parcours (6), un bouton de partage est maintenant disponible et va donner le code de partage du parcours (20) (le code peut être directement copié si l'utilisateur clique sur le code).
