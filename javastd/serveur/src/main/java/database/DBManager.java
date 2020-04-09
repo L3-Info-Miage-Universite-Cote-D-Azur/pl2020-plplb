@@ -5,7 +5,6 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import debug.Debug;
 
 /**
  * DBManager permet de gerer le systeme de base 
@@ -52,7 +51,6 @@ DBManager
 		if (!dbDir.exists())
 			dbDir.makeDirectory();
 		// Creation du dossier pour les parcours partages
-		Debug.log("CWD: " + this.dbDir.getWorkingDirectory().getCurrentDirectory());
 		this.dbSharedCourses = new DBSharedCourses(this.dbDir.getDirectoryName());
 		this.dbCourses = new DBCourses(this.dbDir.getDirectoryName());
 	}

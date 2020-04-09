@@ -217,7 +217,6 @@ Serveur
     protected void
     clientOnConnectSendCourses (Client c)
     {
-        Debug.log(dbManager.getDBCourse().getDir().getWorkingDirectory().getCurrentDirectory());
     	dbManager.getDBCourse().setCurrentDir(c.getStudent().toString());
     	ArrayList<String> filenames = dbManager.getDBCourse().getAllCourses();
     	Debug.log("Sending course\'s list " + filenames.toString() + " to " + c.getStudent().toString());

@@ -2,7 +2,6 @@ package database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import debug.Debug;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,8 +16,7 @@ DBCourses
 
     public
     DBCourses (String whereToWork)
-    {this.directory = new Directory("", whereToWork);
-    Debug.log("WTW " + this.directory.getWorkingDirectory().getCurrentDirectory() + this.directory.getDirectoryName());}
+    {this.directory = new Directory("", whereToWork);}
 
     /**
      * Permet de d'ecraser la sauvegarde courante du client
@@ -153,7 +151,6 @@ DBCourses
     getAllCourses ()
     {
         ArrayList<String> res = new ArrayList<String>();
-        Debug.log(this.directory.getObject().getAbsolutePath());
         if (this.directory.exists())
         {
             File[] list = this.directory.listFiles();
