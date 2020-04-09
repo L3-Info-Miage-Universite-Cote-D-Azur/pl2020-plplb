@@ -131,7 +131,7 @@ Serveur
 				ArrayList<String> data = gson.fromJson(json, ArrayList.class);
                 Client currentClient = ServerUtility.getClientFromSocketOnList(socketIOClient, listOfClients);
                 dbManager.getDBCourse().setCurrentDir(currentClient.getStudent().toString());
-                dbManager.getDBCourse().save(data);
+                dbManager.getDBCourse().save(data, currentClient.getStudent().getNom());
                 Debug.log("Save data for " + currentClient.getStudent().getNom());
             }
         });
