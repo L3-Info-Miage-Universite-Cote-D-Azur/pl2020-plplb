@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.creationMenu.CreationMenuActivity;
@@ -23,7 +28,10 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 import io.socket.emitter.Emitter;
+import metier.parcours.Parcours;
 
+import static constantes.NET.ASKCODE;
+import static constantes.NET.COURSECODE;
 import static constantes.NET.COURSESNAMES;
 import static constantes.NET.PREDEFINEDCOURSE;
 import static constantes.NET.SEMSTERDATA;
@@ -41,6 +49,12 @@ public class MainMenuActivity extends AppCompatActivity{
 
     private RecyclerView clientCourseRecyclerView;
     private ClientCourseAdapter clientCourseAdapter;
+
+    private final Gson gson = new GsonBuilder().create();
+
+    String code;
+    Boolean codeFound = false;
+    private ImageButton addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +87,8 @@ public class MainMenuActivity extends AppCompatActivity{
 
         deconnexion = findViewById(R.id.deconnexion);
         newCourse = findViewById(R.id.nouveauParcours);
+        addButton = findViewById(R.id.addImageButton);
+
 
 
         if(clientCourses == null){
@@ -98,6 +114,9 @@ public class MainMenuActivity extends AppCompatActivity{
                 finish();
             }
         });
+
+        // Listener pour ajout d'un parcours via Code
+        addButton.setOnClickListener(addButtonListener());
 
         // ################### récupération des parcours sauvegardés #####################################
         setupCoursesList();
@@ -153,6 +172,75 @@ public class MainMenuActivity extends AppCompatActivity{
                 Intent intent = new Intent(MainMenuActivity.this , CreationMenuActivity.class);
                 intent.putExtra("clientCourses",clientCourses);
                 startActivity(intent);
+            }
+        };
+    }
+
+    public View.OnClickListener addButtonListener(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getApplicationContext());
+                alertDialog.setTitle("Ajout par code");
+                alertDialog.setMessage("Entrer un code");
+
+                alertDialog.setView(R.layout.add_course_alertdialog);
+                alertDialog.setIcon(R.drawable.ic_library_add_black_18dp);
+
+                final EditText input = findViewById(R.id.codeInput);
+
+                alertDialog.setPositiveButton("Ajouter",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                code = input.getText().toString();
+                                if (code != "") {
+                                    Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
+                                    Connexion.CONNEXION.send(COURSECODE,gson.toJson(code));
+                                    if (!codeFound){
+                                        Toast.makeText(getApplicationContext(), "Parcours ajouté", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                alertDialog.setNegativeButton("Annuler",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                codeFound = false;
+                alertDialog.show();
+            }
+
+        };
+    }
+
+
+    /**
+     * Controller qui permet de gerer la reception du parcours
+     * @return le controller
+     */
+    public Emitter.Listener receiveCourseWithCode(){
+        return new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                String parcoursName = gson.fromJson((String) args[0], String.class);
+                if(parcoursName != "NOTFOUND"){
+                    clientCourses.add(parcoursName);
+                    codeFound = true;
+                    clientCourseAdapter.notifyDataSetChanged();
+                }
+                else{
+                    codeFound = false;
+                }
             }
         };
     }
