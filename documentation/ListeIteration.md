@@ -79,7 +79,7 @@
 	-Résolution de conflits
 	-nombre limite de parcours possibles "sauvegardables"
 	-Amélioration de l'IHM pour un rendu plus esthétique (fond,icones etc)
-	
+	-Reorganisation du serveur pour maintenabilité
 	-Marge d'erreur pour retard.
 
 ### Itération 10:
