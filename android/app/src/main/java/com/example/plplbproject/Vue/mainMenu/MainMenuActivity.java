@@ -201,7 +201,7 @@ public class MainMenuActivity extends AppCompatActivity{
                                 if (code != "") {
                                     Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
                                     Connexion.CONNEXION.send(COURSECODE,gson.toJson(code));
-                                    if (!codeFound){
+                                    if (codeFound){
                                         Toast.makeText(getApplicationContext(), "Parcours ajouté", Toast.LENGTH_SHORT).show();
                                     }
                                     else{
@@ -236,13 +236,13 @@ public class MainMenuActivity extends AppCompatActivity{
         return new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                final String parcoursName = gson.fromJson((String) args[0], String.class);
-                if(parcoursName != "NOTFOUND"){
+                final Boolean parcoursFound = gson.fromJson((String) args[0], Boolean.class);
+                if(parcoursFound == true){
                     codeFound = true;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            clientCourses.add(parcoursName);
+                            clientCourses.add(code);
                             clientCourseAdapter.notifyDataSetChanged();
                         }
                     });

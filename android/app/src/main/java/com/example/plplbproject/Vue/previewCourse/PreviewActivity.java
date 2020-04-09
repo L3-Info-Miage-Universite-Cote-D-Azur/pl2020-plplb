@@ -120,6 +120,7 @@ public class PreviewActivity extends AppCompatActivity {
         apercuAdapter = new PreviewRecyclerAdapter(this,course);
         apercuList.setAdapter(apercuAdapter);
         apercuList.setLayoutManager(new LinearLayoutManager(this));
+        apercuAdapter.notifyDataSetChanged();
     }
 
 
@@ -133,6 +134,14 @@ public class PreviewActivity extends AppCompatActivity {
             public void call(Object... args) {
                 ArrayList<String> ueCode = gson.fromJson((String) args[0], ArrayList.class);
                 course = new Parcours(DataSemester.SEMESTER.getSemesterList(),ueCode, DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourseList());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        apercuAdapter.setCourse(course);
+                        apercuAdapter.notifyDataSetChanged();
+                    }
+                });
+
             }
         };
     }

@@ -52,5 +52,7 @@ public class PreviewRecyclerAdapter extends RecyclerView.Adapter<SemesterViewHol
         return DataSemester.SEMESTER.getNumberSemesters();
     }
 
-
+    public void setCourse(Parcours course) {
+        this.course = course;
+    }
 }
