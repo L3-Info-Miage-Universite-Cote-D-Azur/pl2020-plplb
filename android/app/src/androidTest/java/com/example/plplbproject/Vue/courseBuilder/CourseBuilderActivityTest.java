@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.widget.Button;
 
 
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.matcher.BoundedMatcher;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -225,7 +226,7 @@ public class CourseBuilderActivityTest {
 
  */
 
-    //@Test
+    @Test
     public void loadTest(){
 
         assertEquals(2, DataSemester.SEMESTER.getNumberSemesters());
@@ -234,7 +235,7 @@ public class CourseBuilderActivityTest {
     /**
      * Scénario de choix d'UE dans un semestre
      */
-   // @Test
+    @Test
     public void choisirUE(){
 
 
@@ -269,7 +270,7 @@ public class CourseBuilderActivityTest {
      * Simulation d'un cas: passage d'un semestre à l'autre
      */
 
-   // @Test
+    @Test
     public void changeSemester(){
 
         //on est au semestre 1
@@ -308,7 +309,7 @@ public class CourseBuilderActivityTest {
 
     }
 
-    //@Test
+    @Test
     public void menuPrecedentTest(){
 
         //on quite l'activity pour retourner a la precedente
@@ -323,7 +324,7 @@ public class CourseBuilderActivityTest {
         assertTrue(mActivityRule.getActivity().isDestroyed());
     }
 
-    //@Test
+    @Test
     public void finaliserTest(){
         //on quite l'activity pour retourner a la precedente
         // suivant (semestre 2)
@@ -410,6 +411,7 @@ public class CourseBuilderActivityTest {
         
 
     }
+    
 
 
 }

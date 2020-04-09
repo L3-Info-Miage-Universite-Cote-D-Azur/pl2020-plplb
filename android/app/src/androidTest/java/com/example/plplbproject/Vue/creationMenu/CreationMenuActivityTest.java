@@ -5,6 +5,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
@@ -29,6 +30,8 @@ import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtP
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -121,6 +124,25 @@ public class CreationMenuActivityTest {
                 //on vide le text
                 ((EditText)mActivityRule.getActivity().findViewById(R.id.editParcoursName)).setText("");
             }});
+    }
+
+    @Test
+    public void pressBackTest(){
+
+        //on a bien l'activiter active
+        assertFalse(mActivityRule.getActivity().isDestroyed());
+
+        //on essaye de quiter:
+        Espresso.pressBackUnconditionally();
+
+        try {
+            Thread.sleep(2000); //le temps de finir
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //l'activiter c'est bien finit
+        assertTrue(mActivityRule.getActivity().isDestroyed());
     }
 
 

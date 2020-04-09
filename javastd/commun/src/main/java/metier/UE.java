@@ -61,4 +61,12 @@ public class UE implements Serializable {
     public String getUeDescription() {
         return description;
     }
+
+    /**
+     * Permet de set la description de l'ue
+     * @param description la description de l'ue
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

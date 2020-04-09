@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.test.espresso.Espresso;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.plplbproject.R;
@@ -24,6 +25,8 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 public class LoginActivityTest {
@@ -74,7 +77,7 @@ public class LoginActivityTest {
         //on ne voit pas de message d'erreur au debut
         assertEquals(textError.getVisibility(),View.VISIBLE);
         //le message d'erreur est "INE invalide (format : ab123456)"
-        assertEquals(textError.getText().toString(),"INE invalide (format : ab123456)");
+        assertEquals(textError.getText().toString(),"Numéro étudiant invalide (format : ab123456)");
         //on a l'input qui est vider
         assertEquals(loginInput.getText().toString(),"");
 
@@ -89,5 +92,24 @@ public class LoginActivityTest {
         //le message d'erreur est "Il est impossible de ce connecter au serveur"
         assertEquals(textError.getText().toString(),"Il est impossible de ce connecter au serveur");
 
+    }
+
+    @Test
+    public void pressBackTest(){
+
+        //on a bien l'activiter active
+        assertFalse(mActivityRule.getActivity().isDestroyed());
+
+        //on essaye de quiter:
+        Espresso.pressBackUnconditionally();
+
+        try {
+            Thread.sleep(2000); //le temps de finir
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //l'activiter c'est bien finit
+        assertTrue(mActivityRule.getActivity().isDestroyed());
     }
 }
