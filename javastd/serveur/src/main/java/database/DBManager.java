@@ -235,7 +235,11 @@ DBManager
 	loadSharedCourseFile (String sharedCourseCode)
 	{
 		FileManager file = new FileManager("db/sharedCourses/" + sharedCourseCode + ".txt");
-		String res = file.getFileContent();
+		String res;
+		if (file.exists())
+			res = file.getFileContent();
+		else
+			res = "NOTFOUND";
 		return res;
 	}
 }
