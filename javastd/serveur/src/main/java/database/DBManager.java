@@ -224,8 +224,9 @@ DBManager
 	{
 		File[] files = this.dirSharedCourse.getFile().listFiles();
 		ArrayList<String> filenames = new ArrayList<String>();
-		for (File f : files)
+		for (File f : files) {
 			filenames.add(f.getName());
+		}
 		return filenames;
 	}
 

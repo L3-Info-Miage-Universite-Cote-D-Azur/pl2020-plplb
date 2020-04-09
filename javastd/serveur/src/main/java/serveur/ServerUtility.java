@@ -110,6 +110,11 @@ ServerUtility
 		Random random = new Random();
 		String code = "todo";
 
+		//Si l'on reçoit un null, on creer une liste vide.
+		if(existingCode == null){
+			existingCode = new ArrayList<String>();
+		}
+
 		//Tant que le code n'a pas été créer ou qu'il existe déjà.
 		while(code == "todo" || existingCode.contains(code)){
 			//On reinitialise le code.
