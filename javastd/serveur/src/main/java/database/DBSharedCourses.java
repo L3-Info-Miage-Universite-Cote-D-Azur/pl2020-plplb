@@ -65,7 +65,7 @@ DBSharedCourses
             contentToSave.addAll(contentOfFile);
             /* Sauvegarde dans les fichiers du client */
             privateClientDatabase.setCourseFile(client.getStudent().getNom());
-            privateClientDatabase.save(contentToSave);
+            privateClientDatabase.save(contentToSave, client.getStudent().getNom());
             res = true;
         }
         return res;

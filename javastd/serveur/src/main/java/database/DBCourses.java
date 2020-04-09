@@ -45,6 +45,22 @@ DBCourses
         file.write(gson.toJson(als));
     }
 
+    public void
+    save (ArrayList<String> als, String dossier)
+    {
+        // Si le dossier de l'etudiant existe
+        if (!this.directory.exists())
+            this.directory.makeDirectory();
+        FileManager file = new FileManager(this.directory.getWorkingDirectory().getCurrentDirectory() + "\\"  + dossier + "\\" + als.get(0) + ".txt");
+        // Enlever le nom du parcours de la liste
+        als.remove(0);
+        // Si son parcours existe
+        if (!file.exists())
+            file.create();
+        final Gson gson = new GsonBuilder().create();
+        file.write(gson.toJson(als));
+    }
+
     /**
      * Permet de charger le fichier de l'utilisateur sous un Parcours.
      * Si le client n a pas de sauvegarde, on revoie <strong>null</strong>

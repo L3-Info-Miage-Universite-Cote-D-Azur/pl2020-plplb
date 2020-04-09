@@ -140,8 +140,11 @@ Serveur
         this.server.addDisconnectListener(new DisconnectListener() {
 			@Override
 			public void onDisconnect(SocketIOClient client) {
-				Debug.log(ServerUtility.getClientFromSocketOnList(client, listOfClients).getStudent().getNom() + " leaved the server.");
-				listOfClients.remove(ServerUtility.getClientFromSocketOnList(client, listOfClients));
+				if (listOfClients.size() > 0)
+                {
+                    Debug.log(ServerUtility.getClientFromSocketOnList(client, listOfClients).getStudent().getNom() + " leaved the server.");
+                    listOfClients.remove(ServerUtility.getClientFromSocketOnList(client, listOfClients));
+                }
 			}
 		});
 
