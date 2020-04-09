@@ -261,11 +261,11 @@ Serveur
      */
     protected void clientCreateShareCourse(ArrayList<String> shareCourse, Client client){
         //La liste des codes existant deja (le nom des fichiers sont les codes)
-        ArrayList<String> existingName = null;//TODO: Donner les noms de parcours partager existant (code)
+        ArrayList<String> existingName = dbManager.loadSharedCourseNames();
         //On genere le code
         String code = ServerUtility.generateCourseCode(existingName);
 
-        //TODO enregistrer le parcours partager.
+        dbManager.saveSharedCourse(code, shareCourse);
         Debug.log("Save share course and send code "+code+" to "+client.getStudent().getNom());
         client.getSock().sendEvent(ASKCODE,gson.toJson(code));
     }

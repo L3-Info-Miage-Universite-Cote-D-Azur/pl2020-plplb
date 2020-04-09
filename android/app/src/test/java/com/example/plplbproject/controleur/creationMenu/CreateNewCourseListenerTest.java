@@ -180,47 +180,69 @@ public class CreateNewCourseListenerTest {
 
     @Test
     public void dialogMessageBuilderTest(){
-        /* TODO ADAPTER LE TEST CAR CHANGEMENT DE RETOUR
-        //PREMIER TEST
-        String expected = "Vous devrez cocher : 2 Ues de la catégorie MATHEMATIQUES , 6 Ues de la catégorie INFORMATIQUE.";
-        String result = createNewCourseListener.dialogMessageBuilder("Parcours Informatique");
+        //Certain éléments sont constant
+        String first = "";
+        String second = "      Pour valider votre parcours, vous devrez";
+        String third = "      obligatoirement cocher les Ues ci-dessous:";
+        String last  = "";
 
-        assertEquals(expected,result);
+        //Mise en place de ce qui est attendu
+        ArrayList<String> expected1 = new ArrayList<>();
+        expected1.add("         - 2 Ues de la catégorie MATHEMATIQUES");
+        expected1.add("         - 6 Ues de la catégorie INFORMATIQUE");
 
-        //DEUXIEME TEST
-        String expected1 = "";
-        String result1 = createNewCourseListener.dialogMessageBuilder("Parcours Mathématiques");
+        ArrayList<String> expected2 = new ArrayList<>();
+        ArrayList<String> expected3 = new ArrayList<>();
+        ArrayList<String> expected4 = new ArrayList<>();
+        ArrayList<String> expected5 = new ArrayList<>();
 
-        assertEquals(expected1,result1);
+        ArrayList<String> expected6 = new ArrayList<>();
+        expected6.add("         - 7 Ues de la catégorie GEOGRAPHIE");
+        expected6.add("         - 4 Ues de la catégorie ECONOMIE ET GESTION");
 
-        //TROISIEME TEST
-        String expected2 = "";
-        String result2 = createNewCourseListener.dialogMessageBuilder("Parcours Majeur Mathématiques");
+        ArrayList<String> expected7 = new ArrayList<>();
+        expected7.add("         - 2 Ues de la catégorie SCIENCES ET VIE DE LA TERRE");
+        expected7.add("         - 10 Ues de la catégorie CHIMIE");
 
-        assertEquals(expected2,result2);
 
-        //QUATRIEME TEST
-        String expected3 = "";
-        String result3 = createNewCourseListener.dialogMessageBuilder("Parcours Electronique");
+        //La liste des tests
+        HashMap<String,ArrayList<String>> testList = new HashMap<>();
+        testList.put("Parcours Informatique",expected1);
+        testList.put("Parcours Mathématiques",expected2);
+        testList.put("Parcours Majeur Mathématiques",expected3);
+        testList.put("Parcours Electronique",expected4);
+        testList.put("Parcours Libre",expected5);
+        testList.put("ParcoursTest",expected6);
+        testList.put("ParcoursTest2",expected7);
 
-        assertEquals(expected3,result3);
 
-        //CINQUIEME TEST
-        String expected4 = "";
-        String result4 = createNewCourseListener.dialogMessageBuilder("Parcours Libre");
+        //Variables de la boucle
+        ArrayList<String> result;
+        ArrayList<String> expected;
 
-        assertEquals(expected4,result4);
+        //Pour chaque parcours a tester
+        for(String parcours : testList.keySet()) {
+            //On recupere expectation et resultat
+            result = createNewCourseListener.dialogMessageBuilder(parcours);
+            expected = testList.get(parcours);
 
-        //TEST BONUS
-        String expected5 = "Vous devrez cocher : 7 Ues de la catégorie GEOGRAPHIE , 4 Ues de la catégorie ECONOMIE ET GESTION.";
-        String result5 = createNewCourseListener.dialogMessageBuilder("ParcoursTest");
+            //Ils doivent avoir la meme taille
+            //On ajout 4 car les 4 éléments constants ne sont pas dans expected
+            assertEquals(expected.size()+4, result.size());
 
-        assertEquals(expected5,result5);
+            //Les 3 premiers sont constant
+            assertEquals(first,result.get(0));
+            assertEquals(second,result.get(1));
+            assertEquals(third,result.get(2));
 
-        String expected6 = "Vous devrez cocher : 2 Ues de la catégorie SCIENCES ET VIE DE LA TERRE , 10 Ues de la catégorie CHIMIE.";
-        String result6 = createNewCourseListener.dialogMessageBuilder("ParcoursTest2");
+            //Du 4e au avant dernier élément.
+            for (int i = 3; i < result.size() - 1; i++) {
+                //On regarde chaque élément du message.
+                assertEquals(expected.get(i-3), result.get(i));
+            }
 
-        assertEquals(expected6,result6);
-        */
+            //Le dernier est constant
+            assertEquals(last,result.get(result.size()-1));
+        }
     }
 }

@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.creationMenu.CreationMenuActivity;
-import com.example.plplbproject.controleur.creationMenu.CreationMenuModele;
 import com.example.plplbproject.data.DataPredefinedCourse;
 
 import java.util.ArrayList;
