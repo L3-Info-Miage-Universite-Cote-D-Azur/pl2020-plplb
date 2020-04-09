@@ -57,4 +57,8 @@ public class UE implements Serializable {
     public void setSemestreNumber(int semestreNumber) {
         this.semestreNumber = semestreNumber;
     }
+
+    public String getUeDescription() {
+        return description;
+    }
 }
