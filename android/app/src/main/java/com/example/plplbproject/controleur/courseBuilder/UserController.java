@@ -89,7 +89,7 @@ public class UserController {
         }
         else{
             String errorMessage = modele.getCourse().getLastVerifErrorMessage();
-            if(errorMessage== null && errorMessage.trim().equals("")) {
+            if(errorMessage == null || errorMessage.trim().equals("")) {
                 //si il a pas de message generer on ne connais pas l'erreur
                 return "Votre parcours est incorrect"; //cas normalement improbable
             }
