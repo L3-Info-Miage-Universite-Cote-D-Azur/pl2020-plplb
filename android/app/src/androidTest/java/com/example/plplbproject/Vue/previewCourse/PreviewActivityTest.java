@@ -3,6 +3,7 @@ package com.example.plplbproject.Vue.previewCourse;
 import android.content.Intent;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -33,12 +34,16 @@ import metier.semestre.Semestre;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.plplbproject.Vue.previewCourse.PreviewActivity.AUTOINIT;
 
+import static constantes.NET.ASKCODE;
 import static constantes.NET.SENDCLIENTSAVE;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,6 +51,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.never;
 
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static androidx.test.espresso.Espresso.onView;
@@ -128,8 +134,13 @@ public class PreviewActivityTest {
         //on appuis sur le boutton save
         onView(withId(R.id.saveApercu)).perform(click());
 
+        //le message est bien afficher (test impossible car l'apllcation ce ferme trop rapidement)
+        //onView(withText("Parcours sauvegardé")).inRoot(withDecorView(not(is(mActivityRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+
         //on envoie la sauvegarde
         verify(socket,atLeast(1)).emit(eq(SENDCLIENTSAVE),any());
+
+
 
         try {
             Thread.sleep(2000); //le temps de finir
@@ -137,6 +148,59 @@ public class PreviewActivityTest {
             e.printStackTrace();
         }
         //l'activity esr fermer
+        assertTrue(mActivityRule.getActivity().isDestroyed());
+    }
+
+    @Test
+    public void partageButton() {
+        Socket socket = Mockito.mock(Socket.class);
+        Connexion.CONNEXION.setSocket(socket);
+
+        //on a rien envoyer avant
+        verify(socket, never()).emit(eq(ASKCODE), any());
+
+        //on appuis sur le boutton save
+        onView(withId(R.id.shareButton)).perform(click());
+
+        //on envoie la sauvegarde
+        verify(socket,times(1)).emit(eq(ASKCODE),any());
+
+        //TODO verification popup bien appeler
+        //la popup c'est bien ouverte:
+        //on apuis de nouveau sur le bouton partage le socket n'est pas de nouveau appeler
+
+
+    }
+
+    @Test
+    public void pressBackTest(){
+
+        //on a bien l'activiter active
+        assertFalse(mActivityRule.getActivity().isDestroyed());
+
+        //on apuis que 1 fois sur le bouton back
+        Espresso.pressBackUnconditionally();
+        //on a bien le toast message qui indique qu'il faut de nouveau apuyer
+        onView(withText("Appuyer une nouvelle fois pour quitter")).inRoot(withDecorView(not(is(mActivityRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        try {
+            Thread.sleep(2050); //le temps avant que le bouton ce reinitialise
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //on a bien l'activiter encore active
+        assertFalse(mActivityRule.getActivity().isDestroyed());
+
+        //on apuis 2 fois
+        Espresso.pressBackUnconditionally();
+        Espresso.pressBackUnconditionally();
+
+        try {
+            Thread.sleep(2000); //le temps de finir
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //l'activiter c'est bien finit
         assertTrue(mActivityRule.getActivity().isDestroyed());
     }
 
