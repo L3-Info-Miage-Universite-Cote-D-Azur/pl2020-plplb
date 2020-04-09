@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -181,14 +182,17 @@ public class MainMenuActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainMenuActivity.this);
                 alertDialog.setTitle("Ajout par code");
                 alertDialog.setMessage("Entrer un code");
 
-                alertDialog.setView(R.layout.add_course_alertdialog);
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialogView = inflater.inflate(R.layout.add_course_alertdialog, null);
+
+                alertDialog.setView(dialogView);
                 alertDialog.setIcon(R.drawable.ic_library_add_black_18dp);
 
-                final EditText input = findViewById(R.id.codeInput);
+                final EditText input = dialogView.findViewById(R.id.codeInput);
 
                 alertDialog.setPositiveButton("Ajouter",
                         new DialogInterface.OnClickListener() {
@@ -232,11 +236,16 @@ public class MainMenuActivity extends AppCompatActivity{
         return new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                String parcoursName = gson.fromJson((String) args[0], String.class);
+                final String parcoursName = gson.fromJson((String) args[0], String.class);
                 if(parcoursName != "NOTFOUND"){
-                    clientCourses.add(parcoursName);
                     codeFound = true;
-                    clientCourseAdapter.notifyDataSetChanged();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            clientCourses.add(parcoursName);
+                            clientCourseAdapter.notifyDataSetChanged();
+                        }
+                    });
                 }
                 else{
                     codeFound = false;
