@@ -33,6 +33,8 @@ import com.example.plplbproject.reseau.Connexion;
 
 import java.util.ArrayList;
 
+import metier.Categorie;
+import metier.UE;
 import metier.parcours.Parcours;
 import metier.parcours.ParcoursType;
 
@@ -176,8 +178,6 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
         previousButton.setOnClickListener(userController.prevButton());
 
         updateInformationCourse();
-
-
     }
 
 
@@ -198,14 +198,31 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
     }
 
     /**
-     * Replis toutes les liste de categorie
+     * Replie toutes les liste de categories, sauf celles qui contiennent des UEs cochées
      */
 
     public void collapseList() {
-        int count =  expListView.getCount();
-        for (int i = 0; i <count ; i++)
-            expListView.collapseGroup(i);
+        Categorie cat = null;
+        UE ue = null;
+        int flag = 0; // Pour éviter d'expand plusieurs fois quand une catégorie contient + d'une UE cochée
+        int count = listAdapter.getGroupCount();
+
+        for (int i = 0; i <count ; i++) {
+            cat = (Categorie) listAdapter.getGroup(i);
+            for (int y = 0; y <listAdapter.getChildrenCount(i); y++) {
+                ue = (UE) listAdapter.getChild(i,y);
+                if (modele.getCourse().getParcoursSelect().containsKey(ue.getUeCode()) && flag == 0){
+                    expListView.expandGroup(i);
+                    flag = 1;
+                }
+                if (flag == 0){
+                    expListView.collapseGroup(i);
+                }
+            }
+            flag = 0;
+        }
     }
+
 
     /**
      * notifie l'affichage que le semestre courant a changer
@@ -218,6 +235,7 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
         updateButton();
         updateInformationCourse();
     }
+
 
     /**
      * Permet de mettre a jour les information de parcours du semestre
@@ -263,7 +281,7 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
             public void run() {
                 String receivedMessage = msg;
 
-                // add the message to view todo
+                // add the message to view
                 //just show the message in a toast
                 Toast.makeText(getApplicationContext(), receivedMessage,Toast.LENGTH_LONG).show();
             }
@@ -287,9 +305,9 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
             return;
         }
         this.modele.changeSemester(newSemesterIndex);
+
         notifySemestreChange();
     }
-
 
 
     @Override
