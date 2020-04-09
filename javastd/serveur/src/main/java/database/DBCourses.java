@@ -35,7 +35,7 @@ DBCourses
         // Si le dossier de l'etudiant existe
         if (!this.directory.exists())
             this.directory.makeDirectory();
-        FileManager file = new FileManager(this.getPathTo(als.get(0) + ".txt"));
+        FileManager file = new FileManager(this.directory.getWorkingDirectory().getCurrentDirectory() + "\\" + als.get(0) + ".txt");
         // Enlever le nom du parcours de la liste
         als.remove(0);
         // Si son parcours existe
@@ -54,12 +54,18 @@ DBCourses
     public ArrayList<String>
     load (String courseName)
     {
-        if (!this.directory.exists())
+        if (!new File(this.directory.getWorkingDirectory().getCurrentDirectory()).exists())
+        {
+            Debug.error("Directory " + this.directory.getWorkingDirectory().getCurrentDirectory() + " doesnt exist");
             return null;
+        }
         // Represente le contenu du fichier
         FileManager file = new FileManager(this.directory.getWorkingDirectory().getCurrentDirectory() + "\\" + courseName + ".txt");
         if (!file.exists())
+        {
+            Debug.error("File " + this.directory.getWorkingDirectory().getCurrentDirectory() + "\\" + courseName + ".txt" + " doesnt exist");
             return null;
+        }
         String fcontent = file.getFileContent();
 
         /*
@@ -72,7 +78,7 @@ DBCourses
         ArrayList<String> res = new ArrayList<String>();
         res.add(courseName);
         res.addAll(content);
-
+        Debug.log("Sending " + res.toString());
         return res; //On renvoie le type de parcours + les ues selectionnee de la sauvegarde.
     }
 
@@ -108,7 +114,7 @@ DBCourses
      */
     public void
     setCourseFile (String cf)
-    {this.courseFile = new FileManager(this.directory.getWorkingDirectory().getCurrentDirectory() + "\\" + cf);}
+    {this.courseFile = new FileManager(this.directory.getWorkingDirectory().getCurrentDirectory() + "\\" + this.directory.getDirectoryName() + "\\" + cf);}
 
     /**
      * Setter du FileManager a l'aide d'une String representant le nom du parcours.
@@ -125,7 +131,7 @@ DBCourses
      */
     public void
     setCurrentDir (String dir)
-    {this.directory.setDirectory(this.directory.getWorkingDirectory().getCurrentDirectory() + "\\" + dir + "\\");}
+    {this.directory.setDirectory(this.directory.getWorkingDirectory().getCurrentDirectory() + "\\" + dir);}
 
     /**
      * Setter du FileManager a l'aide d'une String representant le nom du dossier.
