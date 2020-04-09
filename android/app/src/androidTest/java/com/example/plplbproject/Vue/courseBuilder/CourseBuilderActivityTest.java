@@ -53,6 +53,7 @@ import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.core.internal.deps.dagger.internal.Preconditions.checkNotNull;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -346,9 +347,11 @@ public class CourseBuilderActivityTest {
                 .check(ViewAssertions.matches(isClickable())) //il est bien clickable
                 .perform(click());
 
-
         //on est encore sur l'activity car la verification n'est pas passer
          assertEquals(((Button) mActivityRule.getActivity().findViewById(R.id.semestre_suivant)).getText().toString(),mActivityRule.getActivity().getString(R.string.finaliser));
+
+         //un message est afficher pour prevenir l'utilisateur:
+        onView(withText("Votre parcours est incorrect")).inRoot(withDecorView(not(is(mActivityRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
 
 
         try {
