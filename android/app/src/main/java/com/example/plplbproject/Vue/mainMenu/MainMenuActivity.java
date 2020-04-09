@@ -230,12 +230,12 @@ public class MainMenuActivity extends AppCompatActivity{
             public void call(Object... args) {
                 final Boolean parcoursFound = gson.fromJson((String) args[0], Boolean.class);
                 if(parcoursFound == true){
-
-                    Toast.makeText(getApplicationContext(), "Parcours ajouté", Toast.LENGTH_SHORT).show();
-
+                    
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            Toast.makeText(getApplicationContext(), "Parcours ajouté", Toast.LENGTH_SHORT).show();
+
                             clientCourses.add(code);
                             clientCourseAdapter.notifyDataSetChanged();
                         }

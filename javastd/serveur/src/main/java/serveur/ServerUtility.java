@@ -90,6 +90,24 @@ ServerUtility
 		/* Ajouter le client a la liste */
 		list.add(client);
 	}
+
+	public static void
+	removeClientToList (ArrayList<Client> list, Client client)
+	{
+		SocketIOClient clientSocket = client.getSock();
+		/* Recherche des clients de list qui contiennent la meme socket
+		 * que le client qu'on veut ajouter */
+		for (int i = 0; i < list.size(); i++)
+		{
+			/* Pour chaque client qui a la meme socket */
+			if (list.get(i).getSock() == clientSocket)
+			{
+				/* Le supprimer de la liste */
+				list.remove(list.get(i));
+				break;
+			}
+		}
+	}
 	
 	/**
 	 * Renvoie une String contenant la liste des

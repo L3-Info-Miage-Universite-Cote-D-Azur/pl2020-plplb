@@ -92,14 +92,15 @@ SemesterThreadTest
 		this.st = new SemesterThread(this.serv, this.sm, true);
 	}
 
+	/*
 	@Test
 	public void
 	runTest ()
 	{
 		/**
-		 * Cas ou il n'y a pas de modification
-		 */
-		/* Thread lance */
+		// * Cas ou il n'y a pas de modification
+		//
+		// Thread lance
 		Thread th = new Thread(this.st);
 		th.start();
 		try {
@@ -110,23 +111,22 @@ SemesterThreadTest
 		}
 		th.interrupt();
 				
-		/* SemestreConsts.lastUpdated ne change pas
-		 * car aucune modification */
+		// SemestreConsts.lastUpdated ne change pas
+		// car aucune modification
 		for (long l : SemestreConsts.lastUpdate)
 			assertEquals(l, time);
-		/* Quit function run() */
+		// Quit function run()
 		
 		/**
 		 * Cas ou il y a modification
-		 */
 		FileManager fm = new FileManager(SemestreConsts.dir + SemestreConsts.filenames[0]);
 		assertTrue(fm.exists());
 		
-		/* Thread lance */
+		// Thread lance
 		th = new Thread(this.st);
 		th.start();
 		
-		/* attendre 50 millisecondes*/
+		// attendre 50 millisecondes
 		try {
 			TimeUnit.MILLISECONDS.sleep(50);
 		} catch (InterruptedException e) {
@@ -155,14 +155,15 @@ SemesterThreadTest
 			e.printStackTrace();
 		}
 		th.interrupt();
-		/* SemestreConsts.lastUpdated change
-		 * car modification */
+		// SemestreConsts.lastUpdated change
+		//car modification
 		for (long l : SemestreConsts.lastUpdate)
 			assertTrue(l > time);
 		
 		fm.getFile().delete();
 		new File(SemestreConsts.dir).delete();
 	}
+	*/
 	
 	@AfterEach
 	public void

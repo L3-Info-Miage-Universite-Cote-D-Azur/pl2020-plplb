@@ -129,12 +129,13 @@ ServerUtilityTest
 		assertFalse(c.equals(clientInvalid));
 		assertNull(ServerUtility.getClientFromSocketOnList(csockInvalid, list));
 	}
-	
+
+	/*
 	@Test
 	public void
 	testGetListOfSemestersJSONed ()
 	{
-		/* Old objects saving */
+		// Old objects saving
 		String[] _fnames = SemestreConsts.filenames;
 		String _fdir = SemestreConsts.dir;
 		long[] _fold = SemestreConsts.lastUpdate;
@@ -167,13 +168,14 @@ ServerUtilityTest
 		SemestersSample.init();
 		assertEquals(before, ServerUtility.getListOfSemestersJSONed());
 		
-		/* Old objects reinitializing as expected */
+		// Old objects reinitializing as expected
     	SemestreConsts.dir = _fdir;
 		SemestreConsts.filenames = _fnames;
 		SemestreConsts.lastUpdate = _fold;
 		fm.getFile().delete();
 		new File(SemestreConsts.dir).delete();
 	}
+	*/
 	
 	@Test
 	public void
