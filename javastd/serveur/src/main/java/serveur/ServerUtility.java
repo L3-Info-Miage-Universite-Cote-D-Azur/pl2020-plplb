@@ -71,7 +71,7 @@ ServerUtility
 	 * @param list la liste des clients
 	 * @param client le client a ajouter
 	 */
-	void
+	public static void
 	addClientToList (ArrayList<Client> list, Client client)
 	{
 		SocketIOClient clientSocket = client.getSock();

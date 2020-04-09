@@ -80,7 +80,7 @@ Serveur
             @Override
             public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
                 Client c = new Client(gson.fromJson(json,Student.class), socketIOClient);
-                listOfClients.add(c);
+                ServerUtility.addClientToList(listOfClients, c);
                 Debug.log("New client connected : " + c.getStudent().getNom());
             }
         });
