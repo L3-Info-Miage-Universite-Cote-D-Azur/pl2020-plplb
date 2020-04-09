@@ -32,23 +32,28 @@ ConverterTest
 	public void
 	testStringToSemester ()
 	{
-		// Creation des UE
-		ArrayList<UE> listUE = new ArrayList<UE>();
-		listUE.add(new UE("NAME", "CODE"));
-		// Creation des Categorie
-		ArrayList<Categorie> cats = new ArrayList<Categorie>();
-		cats.add(new Categorie("CAT", listUE));
-		// Creation des regles du semestre
-		SemestreRules rules = new SemestreRules(1, 1, new ArrayList<String>());
-		// Creation du semestre
-		Semestre expected = new Semestre(1, cats, rules);
-		
-		Gson gson = new GsonBuilder().create();
-		String before = gson.toJson(expected);
-		Semestre received = this.conv.stringToSemestre(before);
-		String after = gson.toJson(received);
-		
-		assertTrue(before.equals(after));
+		//creation des ue d'un semestre:
+		//code;nom;semestre;categorie;description
+		String ueInString = "code;nom;semestre;categorie;description\n"+ //(la conversion ignore la premiere ligne elle permet d'aider a remplir le reste)
+				"CODE1;NAME1;1;CAT1;None\n" +
+				"CODE2;NAME2;1;CAT1;None\n"+
+				"CODE3;NAME3;1;CAT2;None\n";
+
+
+		Semestre received = this.conv.stringToSemestre(ueInString);
+
+		//on verifie on dois avoir 2 categorie cat1 et cat2
+		assertEquals(received.getListCategorie().size(),2);
+
+		//on a bien les 2 bon nom de categorie
+		assertEquals(received.getListCategorie().get(0).getName(),"CAT1");
+		assertEquals(received.getListCategorie().get(1).getName(),"CAT2");
+
+		//on a bien 2 ue dans cat1
+		assertEquals(received.getListCategorie().get(0).getListUE().size(),2);
+
+		//on a bien 1 ue dans cat2
+		assertEquals(received.getListCategorie().get(1).getListUE().size(),1);
 	}
 	
 	@Test
