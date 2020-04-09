@@ -2,6 +2,7 @@ package database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import debug.Debug;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ DBCourses
         // Si le dossier de l'etudiant existe
         if (!this.directory.exists())
             this.directory.makeDirectory();
-        FileManager file = new FileManager(this.getPathTo(als.get(0)));
+        FileManager file = new FileManager(this.getPathTo(als.get(0) + ".txt"));
         // Enlever le nom du parcours de la liste
         als.remove(0);
         // Si son parcours existe

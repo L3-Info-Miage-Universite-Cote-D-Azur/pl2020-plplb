@@ -2,6 +2,7 @@ package database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import debug.Debug;
 import serveur.Client;
 
 import java.io.File;
@@ -17,7 +18,7 @@ DBSharedCourses
     public
     DBSharedCourses (String whereToWork)
     {
-        this.directory = new Directory("sharedCourses", whereToWork);
+        this.directory = new Directory("\\sharedCourses", whereToWork);
         if (!this.directory.exists())
             this.directory.makeDirectory();
     }
@@ -27,7 +28,7 @@ DBSharedCourses
     {
         Gson gson = new GsonBuilder().create();
         toSave.remove(toSave.get(0));
-        this.currentFile = new FileManager(this.directory.getWorkingDirectory().getCurrentDirectory() + code + ".txt");
+        this.currentFile = new FileManager(this.directory.getObject().getAbsolutePath() + "\\" + code + ".txt");
         if (!this.currentFile.exists())
             this.currentFile.create();
         this.currentFile.write(gson.toJson(toSave));

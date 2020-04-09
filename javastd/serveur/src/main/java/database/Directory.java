@@ -13,7 +13,7 @@ Directory
     public
     Directory (String directoryName, String workingDirectory)
     {
-        this.directory = new File(directoryName);
+        this.directory = new File(workingDirectory + directoryName);
         this.workingDirectory = new WorkingDirectory(workingDirectory);
     }
 
