@@ -26,21 +26,16 @@ public class UserController {
      * Gere l'appui sur le bouton de sauvegarde
      * @return traitement a effectuer (sur le modele et la vue)
      */
-    public View.OnClickListener saveButton(){
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(modele.getCourse().verifiParcours()){
-                    Intent intent = new Intent(vue.getApplicationContext(), PreviewActivity.class);
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("Course",modele.getCourse());
-                    intent.putExtra("className","CourseBuilderActivity");
-                    vue.startActivityForResult(intent,1);
-                }
-                else vue.toastMessage(errorMessage());
-                //TODO verification que le serveur a bien recus la sauvegarde
-            }
-        };
+    public void saveButton(){
+        if(modele.getCourse().verifiParcours()){
+            Intent intent = new Intent(vue.getApplicationContext(), PreviewActivity.class);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("Course",modele.getCourse());
+            intent.putExtra("className","CourseBuilderActivity");
+            vue.startActivityForResult(intent,1);
+        }
+        else vue.toastMessage(errorMessage());
+        //TODO verification que le serveur a bien recus la sauvegarde
     }
 
     /**
@@ -57,7 +52,7 @@ public class UserController {
                     vue.notifySemestreChange();
                 }
                 else{
-                    saveButton().onClick(view);
+                    saveButton();
                 }
             }
         };

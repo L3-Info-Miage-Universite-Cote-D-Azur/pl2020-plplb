@@ -47,21 +47,20 @@ public class UserControllerTest {
         Mockito.verify(courseBuilderActivity,never()).startActivityForResult(any(Intent.class),anyInt());
         Mockito.verify(courseBuilderActivity,never()).toastMessage(anyString());
 
-        //Mise en place du bouton.
-        View.OnClickListener saveButton = userController.saveButton();
 
         //VERIFIPARCOURS RENVOIE TRUE.
         Mockito.when(courseBuilderModele.getCourse()).thenReturn(parcours);
         Mockito.when(parcours.verifiParcours()).thenReturn(true);
 
-        saveButton.onClick(view);
+
+        userController.saveButton();
         //On appel bien une fois la fonction.
         Mockito.verify(courseBuilderActivity,times(1)).startActivityForResult(any(Intent.class),anyInt());
 
         //VERIFIPARCOURS RENVOIE FALSE.
         Mockito.when(parcours.verifiParcours()).thenReturn(false);
 
-        saveButton.onClick(view);
+        userController.saveButton();
         //On appel bien une fois la fonction.
         Mockito.verify(courseBuilderActivity,times(1)).toastMessage(anyString());
 
