@@ -22,6 +22,8 @@ public class Parcours implements Serializable {
     private ArrayList<SemestreManager> semestresManager;
     private HashMap<String, UE> parcoursSelect; //commun a tout les semestre (permet de rajouter des condition UE necesaire, ...)
 
+    private String lastVerifErrorMessage;
+
 
     //TODO init avec les ue automatiquement present
     /**
@@ -305,6 +307,16 @@ public class Parcours implements Serializable {
      * @return l'etat de la verification
      */
     public boolean verifiParcours(){
+
+        //verification des regle du semestre
+        for(int i = 0; i< semestresManager.size(); i++){
+            if(!semestresManager.get(i).verifCompleteParcours()){
+                lastVerifErrorMessage = "Vous n'avez pas selectionner les ue necessaire au semestre "+(i+1);
+                return false;
+            }
+        }
+
+
         ArrayList<HashMap<String,Integer>> listHasmap = new ArrayList<HashMap<String, Integer>>();
         //On recupere les hashmap du nombre d'ue par categorie (par semestre).
 
@@ -317,15 +329,12 @@ public class Parcours implements Serializable {
             return false;
         }
 
-        //for(SemestreManager manager: semestresManager){
-        //Pour le test
-        for(int i = 0; i< semestresManager.size(); i++){
-            if(!semestresManager.get(i).verifCompleteParcours()){
-                return false;
-            }
-        }
+        lastVerifErrorMessage= null;
         return true;
     }
+
+
+
 
     /**
      * Nombre d'ue encore necessaire de cocher pour le semestre
@@ -340,6 +349,14 @@ public class Parcours implements Serializable {
 
     public ParcoursRules getParcoursRules() {
         return parcoursRules;
+    }
+
+    /**
+     * Permet de recuperer le dernier message d'erreur generer par la verification
+     * @return le message d'erreur
+     */
+    public String getLastVerifErrorMessage(){
+        return lastVerifErrorMessage;
     }
 
 }

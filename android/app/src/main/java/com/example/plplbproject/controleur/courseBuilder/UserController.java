@@ -76,6 +76,10 @@ public class UserController {
         };
     }
 
+    /**
+     * Permet de generer un message d'erreur
+     * @return le message d'erreur
+     */
     public String errorMessage(){
 
         // Une erreur dans
@@ -84,7 +88,12 @@ public class UserController {
             return modele.getCourse().getParcoursRules().getCurrentErrorMessage();
         }
         else{
-            return "Une UE libre n'a pas été cochée";
+            String errorMessage = modele.getCourse().getLastVerifErrorMessage();
+            if(errorMessage== null && errorMessage.trim().equals("")) {
+                //si il a pas de message generer on ne connais pas l'erreur
+                return "Votre parcours est incorrect"; //cas normalement improbable
+            }
+            return errorMessage;
         }
     }
 
