@@ -208,10 +208,8 @@ DBManager
 	{
 		Gson gson = new GsonBuilder().create();
 		this.sharedCourseFile = new FileManager("db/sharedCourses/" + code + ".txt");
-		if (this.sharedCourseFile.exists())
-			Debug.log("Overwriting " + "db/sharedCourses/" + code + ".txt ...");
-		else
-			Debug.log("Creating " + "db/sharedCourses/" + code + ".txt ...");
+		if (!this.sharedCourseFile.exists())
+			this.sharedCourseFile.create();
 		this.sharedCourseFile.write(gson.toJson(toSave));
 	}
 
