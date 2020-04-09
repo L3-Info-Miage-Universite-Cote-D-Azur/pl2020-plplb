@@ -57,7 +57,7 @@ DBCourses
         if (!this.directory.exists())
             return null;
         // Represente le contenu du fichier
-        FileManager file = new FileManager(this.getPathTo(courseName));
+        FileManager file = new FileManager(this.directory.getWorkingDirectory().getCurrentDirectory() + "\\" + courseName + ".txt");
         if (!file.exists())
             return null;
         String fcontent = file.getFileContent();

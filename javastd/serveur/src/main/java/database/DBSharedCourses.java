@@ -54,7 +54,7 @@ DBSharedCourses
     loadSharedCourseFile (String sharedCourseCode, Client client, DBCourses privateClientDatabase)
     {
         Gson gson = new GsonBuilder().create();
-        FileManager file = new FileManager(this.directory.getWorkingDirectory().getCurrentDirectory() + sharedCourseCode + ".txt");
+        FileManager file = new FileManager(this.directory.getObject().getAbsolutePath() + "\\" + sharedCourseCode + ".txt");
         Boolean res = false;
         if (file.exists())
         {
