@@ -147,11 +147,13 @@ public class FileManager {
 
     /**
      * Permet de suprimer un fichier
+     * @return true ou false selon la reussite de la suppression
      */
-    public void deleteFile(){
+    public boolean deleteFile(){
         if(exists()) {
-            file.delete();
+            return file.delete();
         }
+        return false;
     }
 
     /**
