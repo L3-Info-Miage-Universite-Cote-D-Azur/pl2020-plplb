@@ -49,8 +49,7 @@ public class CourseDataBase {
 
         if(allStudentSaves != null){//Si il y a des sauvegardes.
             for(File save : allStudentSaves){
-                System.err.println("============="+save.getName()+"="+saveName);
-                if(save.getName() == saveName){//Si le nom de la sauvegarde est trouve
+                if(save.getName().equals(saveName)){//Si le nom de la sauvegarde est trouve
                     return save;//On retourne le fichier de la sauvegarde.
                 }
             }
