@@ -115,6 +115,37 @@ public class Semestre implements Serializable {
     }
 
 
+    /**
+     * Permet de chercher une categorie si elle existe
+     * @param Category le nom de la categorie que l'on cherche
+     * @return la categorie si elle a etait trouver
+     */
+    public Categorie findCategory(String Category){
+        for(Categorie category: listCategorie){
+            if(category.getName().equals(category)){
+                return category;
+            }
+        }
+        return null; //not found
+    }
+
+    /**
+     * permet d'ajouter une ue au semestre
+     * @param ue l'ue que lon veut ajouter
+     */
+    public void addUE(UE ue){
+        Categorie categorie = findCategory(ue.getCategorie());
+        if(categorie==null){ //la categorie existe pas on la crée
+            categorie = new Categorie(ue.getCategorie());
+            listCategorie.add(categorie);
+        }
+        //on ajoute l'ue
+        categorie.addUe(ue);
+
+    }
+
+
+
     public String
     getJson ()
     {
