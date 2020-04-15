@@ -139,7 +139,7 @@ public class Serveur {
         server.addEventListener(LOADCOURSE,String.class, new CourseLoaderListener(allClient,courseDataBase));
         server.addEventListener(COURSESNAMES,String.class, new CourseNameListener(allClient,courseDataBase));
         server.addDisconnectListener(new DeconnectionListener(allClient));
-        server.addEventListener(COURSECODE,String.class,new LoadShareCourseListener(allClient,sharedCourseDataBase));
+        server.addEventListener(COURSECODE,String.class,new LoadShareCourseListener(allClient,sharedCourseDataBase,courseDataBase));
         server.addEventListener(SEMSTERDATA,String.class, new SemesterDataListener(allClient,semesterDataBase));
         server.addEventListener(PREDEFINEDCOURSE,String.class, new SendCoursTypeListener(allClient,courseTypeDataBase));
 

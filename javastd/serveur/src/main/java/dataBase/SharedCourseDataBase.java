@@ -89,7 +89,7 @@ public class SharedCourseDataBase {
     public File findShareCourseFile(String shareCourseName){
         for(File shareCourse : directory.listFiles()){
             //On a trouve un nom qui correspond a un fichier
-            if(shareCourse.getName() == shareCourseName){
+            if(shareCourse.getName().equals(shareCourseName)){
                 return shareCourse;
             }
         }
@@ -116,6 +116,16 @@ public class SharedCourseDataBase {
 
         Debug.log("load content in share file "+shareCourseName);
         return content;
+    }
+
+    /**
+     * verifie si un code est un code existant dans la base de données;
+     * @param code : le code a verifier
+     * @return true ou false, si le code existe.
+     */
+    public boolean verifyCode(String code){
+        ArrayList<String> existingCode = this.getAllSharedCourseName();
+        return existingCode.contains(code);
     }
 
 }
