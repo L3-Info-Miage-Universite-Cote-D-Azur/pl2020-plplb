@@ -72,6 +72,9 @@ public class ClientSocketList extends ArrayList<Client> implements LinkClientSoc
      */
     @Override
     public void addClient(Client client){
+        if(getClient(client.getSock())!=null){
+            removeClient(client.getSock());
+        }
         this.add(client);
     }
 
