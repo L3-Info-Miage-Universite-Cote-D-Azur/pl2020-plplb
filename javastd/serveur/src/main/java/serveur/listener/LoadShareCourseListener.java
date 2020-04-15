@@ -5,23 +5,22 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dataBase.SemesterDataBase;
+import dataBase.SharedCourseDataBase;
 import debug.Debug;
-import metier.semestre.SemesterList;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
-import static constantes.NET.SEMSTERDATA;
+import static constantes.NET.COURSECODE;
 
-public class SemesterDataListener implements DataListener<String> {
+public class LoadShareCourseListener implements DataListener<String> {
 
     private final LinkClientSocket linkClientSocket;
-    private final SemesterDataBase semesterDataBase;
+    private final SharedCourseDataBase sharedCourseDataBase;
     private final Gson gson = new GsonBuilder().create();
 
-    public SemesterDataListener(LinkClientSocket linkClientSocket, SemesterDataBase dataBase){
+    public LoadShareCourseListener(LinkClientSocket linkClientSocket, SharedCourseDataBase sharedCourseDataBase){
         this.linkClientSocket = linkClientSocket;
-        this.semesterDataBase = dataBase;
+        this.sharedCourseDataBase = sharedCourseDataBase;
     }
 
     @Override
@@ -33,12 +32,13 @@ public class SemesterDataListener implements DataListener<String> {
             Debug.error("No such client logged.");
             return;
         }
-        Debug.log("Send Semesters to : " + client.getStudent().getNom());
-        //On charge les semestres.
-        SemesterList semesterList = semesterDataBase.getSemesterList();
-        //On creer le json.
-        String json = gson.toJson(semesterList);
-        //On envoie l'event au client.
-        sock.sendEvent(SEMSTERDATA, json);
+
+        //On recupere le code
+        String code = gson.fromJson(data,String.class);
+        //On recupere le contenu du fichier
+        String content = sharedCourseDataBase.loadShareCourse(code);
+        //On envoie le contenu au client
+        Debug.log("Send share course "+code+" to "+client.getStudent().getNom());
+        sock.sendEvent(COURSECODE,content);
     }
 }

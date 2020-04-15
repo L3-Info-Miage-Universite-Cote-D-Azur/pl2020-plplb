@@ -3,10 +3,42 @@ package serveur.listener;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.DataListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dataBase.CourseDataBase;
+import debug.Debug;
+import serveur.connectionStruct.Client;
+import serveur.connectionStruct.LinkClientSocket;
+
+import java.util.ArrayList;
+
+import static constantes.NET.COURSESNAMES;
 
 public class CourseNameListener implements DataListener<String> {
-    @Override
-    public void onData(SocketIOClient client, String data, AckRequest ackSender) throws Exception {
 
+    private final LinkClientSocket linkClientSocket;
+    private final CourseDataBase courseDataBase;
+    private final Gson gson = new GsonBuilder().create();
+
+    public CourseNameListener(LinkClientSocket linkClientSocket, CourseDataBase courseDataBase){
+        this.linkClientSocket = linkClientSocket;
+        this.courseDataBase = courseDataBase;
+    }
+
+    @Override
+    public void onData(SocketIOClient sock, String data, AckRequest ackSender) throws Exception {
+        Client client = linkClientSocket.getClient(sock);
+
+        //Si le client est null.
+        if(client == null) {
+            Debug.error("No such client logged.");
+            return;
+        }
+        //On charge les noms de sauvegarde du client
+        ArrayList<String> studentSaveName = courseDataBase.getStudentSaveNames(client.getStudent().getNom());
+        //On transforme en json et on envoie l'event.
+        String json = gson.toJson(studentSaveName);
+        Debug.log("Send courses name " + studentSaveName.toString() + " to " + client.getStudent().toString());
+        sock.sendEvent(COURSESNAMES,json);
     }
 }

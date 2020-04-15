@@ -32,10 +32,12 @@ public class SharedCourseDataBase {
 
     /**
      * Renvoie un code (string) unique généré aléatoirement.
-     * @param existingCode :La liste des codes existants (le nom des fichiers)
      * @return le code unique.
      */
-    public String generateSharedCourseCode(ArrayList<String> existingCode){
+    public String generateSharedCourseCode(){
+        //On charge les codes deja existant
+        ArrayList<String> existingCode = this.getAllSharedCourseName();
+
         Random random = new Random();
         String code = "todo";
 
@@ -67,14 +69,8 @@ public class SharedCourseDataBase {
     /**
      * ajoute un parcours partagé dans la DB et renvoie le nom du fichier (le code)
      * @param content : le contenu du parcours partagé.
-     * @return le code, qui est le nom du fichier de parcours partagé.
      */
-    public String addShareCourse(String content){
-        //La liste des code existants
-        ArrayList<String> existingCode = this.getAllSharedCourseName();
-        //on genere un code unique :
-        String code = this.generateSharedCourseCode(existingCode);
-
+    public void addShareCourse(String code, String content){
         //On creer l'objet File
         File shareFile = this.createSharedCourseFile(code);
         FileManager fileManager = new FileManager(shareFile);
@@ -83,7 +79,6 @@ public class SharedCourseDataBase {
         fileManager.write(content);
 
         Debug.log("Create share course :"+code);
-        return code;
     }
 
     /**
