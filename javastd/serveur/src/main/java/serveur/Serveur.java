@@ -60,7 +60,7 @@ public class Serveur {
 
         Debug.log("Server configuration created.");
 
-        Debug.log("Load Database.");
+        Debug.log("Load Database...");
         initCourseDataBase();
         initCourseTypeDataBas();
         initSemesterDataBase();
@@ -68,7 +68,7 @@ public class Serveur {
 
         // creation du serveur
         this.server = new SocketIOServer(configuation);
-        Debug.log("init Listener.");
+        Debug.log("Init Listener...");
         initListener();
         Debug.log("Server ready to start.");
     }

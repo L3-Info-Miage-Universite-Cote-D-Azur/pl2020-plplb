@@ -92,9 +92,7 @@ public class CourseDataBase {
         if(studentDirectory == null){
             //On le creer
             studentDirectory = new File(directory,studentName);
-            boolean cancreate = studentDirectory.mkdir();
-            Debug.log(studentDirectory.getAbsolutePath());
-            Debug.log("Create Directory for "+studentName+"::"+cancreate);
+            Debug.log("Create Directory for "+studentName);
         }
 
         File saveFile = new File(studentDirectory,saveName);//On creer l'objet file.
@@ -134,7 +132,6 @@ public class CourseDataBase {
 
         //Si le directory de l'etudiant n'as pas été trouvé.
         if(studentDirectory == null){
-            Debug.error("No directory for student : "+studentName+" in database.");
             return null;
         }
         else {
