@@ -36,7 +36,7 @@ public class Config {
         isInit = true;
         config = new HashMap<String,String>();
         for(String elt : configArray){
-            if(elt.trim().charAt(0) != '!'&& elt.trim().length()>0) { //si ce n'est pas un commentaire ou ligne vide
+            if(elt.trim().length()>0 && elt.trim().charAt(0) != '!') { //si ce n'est pas un commentaire ou ligne vide
                 Debug.log(elt);
                 List<String> tuple = Arrays.asList(elt.split(":="));
                 if (tuple.size() == 2) {

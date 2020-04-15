@@ -1,5 +1,7 @@
 package serveur;
 
+import com.corundumstudio.socketio.SocketIOClient;
+import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.*;
@@ -9,8 +11,11 @@ import debug.Debug;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
+import serveur.listener.*;
 
 import java.io.File;
+
+import static constantes.NET.*;
 
 public class Serveur {
 
@@ -25,7 +30,7 @@ public class Serveur {
     private final SocketIOServer server;
 
     /** Contient la liste de tous les clients actuellement connectes au serveur */
-    private final LinkClientSocket allClient = new ClientSocketList();
+    private LinkClientSocket allClient = new ClientSocketList();
 
     /*DATA BASE*/
     /** gere les sauvegarde des client*/
@@ -51,12 +56,21 @@ public class Serveur {
         Configuration configuation = new Configuration();
         configuation.setHostname(config.getConfig("ip"));
         configuation.setPort(Integer.parseInt(config.getConfig("port")));
+        allClient = new ClientSocketList();
 
         Debug.log("Server configuration created.");
 
+        Debug.log("Load Database.");
+        initCourseDataBase();
+        initCourseTypeDataBas();
+        initSemesterDataBase();
+        initSharedCourseDataBase();
 
         // creation du serveur
         this.server = new SocketIOServer(configuation);
+        Debug.log("init Listener.");
+        initListener();
+        Debug.log("Server ready to start.");
     }
 
     /**
@@ -100,7 +114,7 @@ public class Serveur {
         if(!directory.exists()){
             directory.mkdir();
         }
-        courseDataBase = new CourseDataBase(directory);
+        sharedCourseDataBase = new SharedCourseDataBase(directory);
     }
 
     /**
@@ -115,6 +129,21 @@ public class Serveur {
     }
 
 
+    /**
+     * Permet d'initialiser tout les listener du serveur
+     */
+    public void initListener(){
+        server.addEventListener(ASKCODE,String.class, new AskCodeListener(allClient,sharedCourseDataBase));
+        server.addEventListener(SENDCLIENTSAVE, String.class, new ClientSaveListener(allClient,courseDataBase));
+        server.addEventListener(STUDENT,String.class, new ConnectionListener(allClient));
+        server.addEventListener(LOADCOURSE,String.class, new CourseLoaderListener(allClient,courseDataBase));
+        server.addEventListener(COURSESNAMES,String.class, new CourseNameListener(allClient,courseDataBase));
+        server.addDisconnectListener(new DeconnectionListener(allClient));
+        server.addEventListener(COURSECODE,String.class,new LoadShareCourseListener(allClient,sharedCourseDataBase));
+        server.addEventListener(SEMSTERDATA,String.class, new SemesterDataListener(allClient,semesterDataBase));
+        server.addEventListener(PREDEFINEDCOURSE,String.class, new SendCoursTypeListener(allClient,courseTypeDataBase));
+
+    }
 
 
 

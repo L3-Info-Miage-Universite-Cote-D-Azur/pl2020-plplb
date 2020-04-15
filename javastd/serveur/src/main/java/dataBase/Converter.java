@@ -43,7 +43,8 @@ Converter
         if(allUeCsv.size()<=0) return null;
 
         ArrayList<UE> ueList =new ArrayList<UE>();
-        for(List<String> stringUe: allUeCsv){
+        for(int i = 1; i<allUeCsv.size() ;i++){ //premiere ligne est reserver au titre des colonne
+            List<String> stringUe = allUeCsv.get(i);
             //si la ligne est bien complete
             if(stringUe.size() >= 4) {
                 ueList.add(new UE(stringUe));

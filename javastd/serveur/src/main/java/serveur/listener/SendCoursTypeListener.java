@@ -6,24 +6,27 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.SemesterDataBase;
+import dataBase.TypeCourseDataBase;
 import debug.Debug;
-import metier.semestre.SemesterList;
-import metier.semestre.Semestre;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
-import static constantes.NET.SEMSTERDATA;
 
-public class SemesterDataListener implements DataListener<String> {
+
+import static constantes.NET.PREDEFINEDCOURSE;
+
+
+public class SendCoursTypeListener  implements DataListener<String> {
 
     private final LinkClientSocket linkClientSocket;
-    private final SemesterDataBase semesterDataBase;
+    private final TypeCourseDataBase typeCourseDataBase;
     private final Gson gson = new GsonBuilder().create();
 
-    public SemesterDataListener(LinkClientSocket linkClientSocket, SemesterDataBase dataBase){
+    public SendCoursTypeListener(LinkClientSocket linkClientSocket, TypeCourseDataBase typeCourseDataBase){
         this.linkClientSocket = linkClientSocket;
-        this.semesterDataBase = dataBase;
+        this.typeCourseDataBase = typeCourseDataBase;
     }
+
 
     @Override
     public void onData(SocketIOClient sock, String data, AckRequest ackSender) throws Exception {
@@ -34,12 +37,11 @@ public class SemesterDataListener implements DataListener<String> {
             Debug.error("No such client logged.");
             return;
         }
-        Debug.log("Send Semesters to : " + client.getStudent().getNom());
-        //On charge les semestres.
-        SemesterList semesterList = semesterDataBase.getSemesterList();
-        //On creer le json.
-        String json = gson.toJson(semesterList);
+        Debug.log("Send Course Type to : " + client.getStudent().getNom());
+
+        //On charge les parcours type.
+        String json = gson.toJson(typeCourseDataBase.loadTypeCourseJson());
         //On envoie l'event au client.
-        sock.sendEvent(SEMSTERDATA, json);
+        sock.sendEvent(PREDEFINEDCOURSE, json);
     }
 }

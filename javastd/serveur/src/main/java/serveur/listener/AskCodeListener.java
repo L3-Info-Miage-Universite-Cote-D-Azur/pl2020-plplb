@@ -29,7 +29,6 @@ public class AskCodeListener implements DataListener<String> {
     @Override
     public void onData(SocketIOClient sock, String data, AckRequest ackSender) throws Exception {
         Client client = linkClientSocket.getClient(sock);
-
         //Si le client est null.
         if(client == null) {
             Debug.error("No such client logged.");

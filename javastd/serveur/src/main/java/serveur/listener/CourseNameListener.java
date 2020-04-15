@@ -36,9 +36,14 @@ public class CourseNameListener implements DataListener<String> {
         }
         //On charge les noms de sauvegarde du client
         ArrayList<String> studentSaveName = courseDataBase.getStudentSaveNames(client.getStudent().getNom());
-        //On transforme en json et on envoie l'event.
-        String json = gson.toJson(studentSaveName);
-        Debug.log("Send courses name " + studentSaveName.toString() + " to " + client.getStudent().toString());
-        sock.sendEvent(COURSESNAMES,json);
+        if(studentSaveName==null){
+            Debug.log("save not found for client : " +client.getStudent().toString());
+        }
+        else {
+            //On transforme en json et on envoie l'event.
+            String json = gson.toJson(studentSaveName);
+            Debug.log("Send courses name " + studentSaveName.toString() + " to " + client.getStudent().toString());
+            sock.sendEvent(COURSESNAMES, json);
+        }
     }
 }

@@ -6,6 +6,9 @@ import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 import debug.Debug;
 
+/**
+ * Listener qui s'occupe de la deconnection
+ */
 public class DeconnectionListener implements DisconnectListener{
 
     private final LinkClientSocket linkClientSocket;

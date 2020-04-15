@@ -49,6 +49,7 @@ public class CourseDataBase {
 
         if(allStudentSaves != null){//Si il y a des sauvegardes.
             for(File save : allStudentSaves){
+                System.err.println("============="+save.getName()+"="+saveName);
                 if(save.getName() == saveName){//Si le nom de la sauvegarde est trouve
                     return save;//On retourne le fichier de la sauvegarde.
                 }
@@ -92,8 +93,9 @@ public class CourseDataBase {
         if(studentDirectory == null){
             //On le creer
             studentDirectory = new File(directory,studentName);
-            studentDirectory.mkdir();
-            Debug.log("Create Directory for "+studentName);
+            boolean cancreate = studentDirectory.mkdir();
+            Debug.log(studentDirectory.getAbsolutePath());
+            Debug.log("Create Directory for "+studentName+"::"+cancreate);
         }
 
         File saveFile = new File(studentDirectory,saveName);//On creer l'objet file.
@@ -178,7 +180,7 @@ public class CourseDataBase {
         //On parcours tout les directory du dossier directory.
         for(File studentDirectory : this.getAllStudentDirectory()) {
             //Si on trouve le dossier de l'etudiant
-            if (studentDirectory.getName() == studentName) {
+            if (studentDirectory.getName().equals(studentName)) {
                 return studentDirectory;
             }
         }
