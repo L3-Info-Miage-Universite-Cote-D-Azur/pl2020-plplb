@@ -1,0 +1,15 @@
+!config serv
+ip:=127.0.0.1
+port:=10101
+
+!data gesture
+semestre_directory:=./semestre
+number_semester:=4
+ue_file_name:=ue
+semestre_rule_file_name1:=s1rule
+semestre_rule_file_name2:=s2rule
+semestre_rule_file_name3:=s3rule
+semestre_rule_file_name4:=s4rule
+
+!client save
+save_directory:=./sauvegarde
