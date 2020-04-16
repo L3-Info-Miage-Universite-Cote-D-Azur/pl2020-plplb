@@ -3,6 +3,7 @@ package serveur;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.*;
+import file.Config;
 import log.Logger;
 import serveur.connectionStruct.ClientSocketList;
 import serveur.connectionStruct.LinkClientSocket;

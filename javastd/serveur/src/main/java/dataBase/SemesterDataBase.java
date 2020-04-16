@@ -1,6 +1,9 @@
 package dataBase;
 
 
+import file.Converter;
+import file.FileManager;
+import file.Parser;
 import log.Logger;
 import metier.UE;
 import metier.semestre.SemesterList;

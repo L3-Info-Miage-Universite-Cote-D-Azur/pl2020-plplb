@@ -1,5 +1,5 @@
 import serveur.Serveur;
-import dataBase.Config;
+import file.Config;
 
 
 import java.io.File;

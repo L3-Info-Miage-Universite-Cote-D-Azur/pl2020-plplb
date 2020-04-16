@@ -2,6 +2,7 @@ package dataBase;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import file.FileManager;
 import log.Logger;
 import metier.semestre.SemestreRules;
 import org.junit.jupiter.api.AfterEach;
