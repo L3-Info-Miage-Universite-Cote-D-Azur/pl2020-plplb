@@ -43,6 +43,25 @@ public class SemesterDataBaseTest {
         ruleS2.write(gson.toJson(new SemestreRules(2,2,null)));
     }
 
+    @Test
+    public void isInitTest(){
+        semesterDataBase = new SemesterDataBase(directory,2);
+        //pas initialiser au debut
+        assertEquals(semesterDataBase.isInit(),false);
+
+        semesterDataBase = new SemesterDataBase(directory,0);
+        //si on a une liste de semestre vide ce n'est pas initialiser non plus
+        semesterDataBase.initSemesterList();
+        assertEquals(semesterDataBase.isInit(),false);
+
+        //on initialise bien
+        semesterDataBase = new SemesterDataBase(directory,2);
+        semesterDataBase.initSemesterList();
+        assertEquals(semesterDataBase.isInit(),true);
+
+
+    }
+
 
     @Test
     public void correctInitSemesterListTest(){
