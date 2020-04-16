@@ -53,6 +53,7 @@ public class MainMenuActivity extends AppCompatActivity{
 
     private RecyclerView clientCourseRecyclerView;
     private ClientCourseAdapter clientCourseAdapter;
+    private Boolean listenerFlag;
 
     private final Gson gson = new GsonBuilder().create();
 
@@ -76,6 +77,8 @@ public class MainMenuActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
+
+        listenerFlag = false;
 
         //le client a reussi a se connecter et n'a pas la liste des semestre on lui envoie
         if(!DataSemester.SEMESTER.hasSemesterList()){
@@ -202,7 +205,10 @@ public class MainMenuActivity extends AppCompatActivity{
                             public void onClick(DialogInterface dialog, int which) {
                                 code = input.getText().toString();
                                 if (code != "") {
-                                    Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
+                                    if(!listenerFlag){
+                                        Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
+                                        listenerFlag = true;
+                                    }
                                     Connexion.CONNEXION.send(COURSECODE,gson.toJson(code));
                                 }
                                 else {
