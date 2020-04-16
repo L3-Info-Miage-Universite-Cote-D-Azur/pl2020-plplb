@@ -40,6 +40,11 @@ public class RenameSaveListener implements DataListener<String> {
         //On recupere l'ancient nom et le nouvea
         String oldName = receiveData.get(0);
         String newName = receiveData.get(1);
+        if(newName==null || newName.trim().equals("")){
+            sock.sendEvent(RENAMECOURSE,gson.toJson(false));
+            Logger.log("Rename file "+oldName+ " can be rename to nothing");
+            return;
+        }
         //On renomme le fichier
         Boolean success = courseDataBase.renameSave(client.getStudent().getNom(),oldName,newName);
 
