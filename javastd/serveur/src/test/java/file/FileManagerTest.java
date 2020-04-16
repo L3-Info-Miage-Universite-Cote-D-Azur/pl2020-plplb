@@ -1,12 +1,9 @@
-package database;
+package file;
 
 
-import debug.Debug;
+import dataBase.FileManager;
 import org.junit.jupiter.api.*;
 
-import database.FileManager;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,36 +49,27 @@ public class FileManagerTest {
     @Test
     public void writeAndGetFileContentTest(){
         String content = "hello world";
-        try {
-            fileManager.getFile().createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        fileManager.create();
         fileManager.write(content);
-
-        assertEquals(content,fileManager.getFileContent());
+        assertEquals(content,fileManager.getRaw());
     }
 
     @Test
     public void clearFileTest(){
-        try {
-            fileManager.getFile().createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        fileManager.create();
         //le fichier est vide par defaut
-        assertEquals(null,fileManager.getFileContent());
+        assertEquals("",fileManager.getRaw());
         fileManager.clearFile();
         //il reste vide si il etait vide
-        assertEquals(null,fileManager.getFileContent());
+        assertEquals("",fileManager.getRaw());
 
         //on ecrit dans le fichier
         fileManager.write("the file is not empty");
-        assertEquals(true,fileManager.getFileContent().length()>0);
+        assertEquals(true,fileManager.getRaw().length()>0);
 
         //on vide le fichier
         fileManager.clearFile();
-        assertEquals(null,fileManager.getFileContent());
+        assertEquals("",fileManager.getRaw());
     }
 
     @Test

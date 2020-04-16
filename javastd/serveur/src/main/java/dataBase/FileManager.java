@@ -165,8 +165,12 @@ public class FileManager {
     }
 
 
-
-
+    /**
+     * Permet de recuperer le File du file manager
+     */
+    public File getFile() {
+        return file;
+    }
 
     /**
      * Permet de vider totalement un fichier
