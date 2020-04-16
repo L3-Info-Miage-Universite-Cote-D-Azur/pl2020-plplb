@@ -162,6 +162,8 @@ public class Serveur {
         server.addEventListener(COURSECODE,String.class,new LoadShareCourseListener(allClient,sharedCourseDataBase,courseDataBase));
         server.addEventListener(SEMSTERDATA,String.class, new SemesterDataListener(allClient,semesterDataBase));
         server.addEventListener(PREDEFINEDCOURSE,String.class, new SendCoursTypeListener(allClient,courseTypeDataBase));
+        server.addEventListener(DELETECOURSE,String.class, new DeleteSaveListener(allClient,courseDataBase));
+        server.addEventListener(RENAMECOURSE,String.class, new RenameSaveListener(allClient,courseDataBase));
 
     }
 
