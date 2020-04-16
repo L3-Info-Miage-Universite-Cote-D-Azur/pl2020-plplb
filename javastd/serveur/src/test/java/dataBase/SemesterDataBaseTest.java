@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SemesterDataBaseTest {
 
-    String path = "/testSemesterDB";
+    String path = "testSemesterDB";
     File directory;
     Gson gson = new GsonBuilder().create();
 

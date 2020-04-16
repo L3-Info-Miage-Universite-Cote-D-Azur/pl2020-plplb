@@ -1,6 +1,7 @@
 package dataBase;
 
 import file.FileManager;
+import log.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TypeCourseDataBaseTest {
 
-    String path = "/testTypeCourseDB";
+    String path = "testTypeCourseDB";
     File directory;
 
     @BeforeEach
     public void init() {
+        Logger.verbose = false;
         this.directory = new File(path);
         this.directory.mkdir();
     }

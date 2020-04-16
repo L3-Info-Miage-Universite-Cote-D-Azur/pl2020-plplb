@@ -1,6 +1,7 @@
 package file;
 
 
+import log.Logger;
 import org.junit.jupiter.api.*;
 
 
@@ -16,6 +17,7 @@ public class FileManagerTest {
 
     @BeforeEach
     public void init(){
+        Logger.verbose = false;
         fileManager = new FileManager(path+"testFile");
         directory.mkdir();
     }

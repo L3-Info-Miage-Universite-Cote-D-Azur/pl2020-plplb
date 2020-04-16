@@ -72,21 +72,36 @@ public class Serveur {
         Logger.log("Server ready to start.");
     }
 
+
+    /**
+     * Constructeur pour les test (aucun init de database)
+     * @param config la config que l'on charge
+     * @param forTest un object lambda pour differentier les constructeur
+     */
+    protected Serveur(Config config,Object forTest){
+        this.config = config;
+        Configuration configuation = new Configuration();
+        configuation.setHostname(config.getConfig("ip"));
+        configuation.setPort(Integer.parseInt(config.getConfig("port")));
+        this.server = new SocketIOServer(configuation);
+    }
+
     /**
      * Permet d'initialiser la base de donner contenant les semestre/ue/rule
      */
-    protected void initSemesterDataBase(){
+    protected boolean initSemesterDataBase(){
         String directoryRelativePath = config.getConfig("semestre_directory");
         int numberSemester = Integer.parseInt(config.getConfig("number_semester"));
 
         File directory = new File(config.getparentPath(),directoryRelativePath);
         if(!directory.exists() || !directory.isDirectory()){
             Logger.error("file not found: "+directory.getAbsolutePath());
+            return false;
         }
 
         semesterDataBase = new SemesterDataBase(directory,numberSemester);
         semesterDataBase.initSemesterList();
-
+        return true;
     }
 
     /**
@@ -119,12 +134,18 @@ public class Serveur {
     /**
      * Permet d'initialiser la base de donner qui gere les parcours type
      */
-    protected  void initCourseTypeDataBas(){
+    protected  boolean initCourseTypeDataBas(){
         String directoryRelativePath = config.getConfig("courseType_directory");
         File directory = new File(config.getparentPath(),directoryRelativePath);
 
+        if(!directory.exists() || !directory.isDirectory()){
+            Logger.error("file not found: "+directory.getAbsolutePath());
+            return false;
+        }
+
         courseTypeDataBase = new TypeCourseDataBase(directory);
         courseTypeDataBase.initParcoursType();
+        return true;
     }
 
 
@@ -165,4 +186,20 @@ public class Serveur {
     }
 
 
+    /*FONCTION POUR LES TEST*/
+    public CourseDataBase getCourseDataBase() {
+        return courseDataBase;
+    }
+
+    public SemesterDataBase getSemesterDataBase() {
+        return semesterDataBase;
+    }
+
+    public SharedCourseDataBase getSharedCourseDataBase() {
+        return sharedCourseDataBase;
+    }
+
+    public TypeCourseDataBase getCourseTypeDataBase() {
+        return courseTypeDataBase;
+    }
 }

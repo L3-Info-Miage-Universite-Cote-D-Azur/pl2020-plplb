@@ -10,7 +10,7 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConfigTest {
-    String path = "/testConfig";
+    String path = "testConfig";
     File directory;
     FileManager configFile;
 
