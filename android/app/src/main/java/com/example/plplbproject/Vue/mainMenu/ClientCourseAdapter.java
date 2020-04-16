@@ -75,12 +75,11 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
     public void onBindViewHolder(@NonNull final ClientCourseViewHolder holder, final int position) {
         holder.parcoursName.setText(coursesNames.get(position));
 
-        actualParcoursName = coursesNames.get(position);
 
         holder.supprButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                actualParcoursName = coursesNames.get(position);
                 mainMenuActivity.askConfirm(actualParcoursName);
             }
         });
@@ -131,9 +130,12 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
             }
         });
 
+
         holder.visualiserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                actualParcoursName = coursesNames.get(position);
                 Intent intent = new Intent(mainMenuActivity, PreviewActivity.class);
                 intent.putExtra("className","MainMenuActivity");
                 intent.putExtra("CourseName",coursesNames.get(position));
@@ -145,6 +147,7 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
         holder.modifButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                actualParcoursName = coursesNames.get(position);
                 Intent intent = new Intent(mainMenuActivity, CourseBuilderActivity.class);
                 intent.putExtra("className","MainMenuActivity");
                 intent.putExtra("CourseName",coursesNames.get(position));
