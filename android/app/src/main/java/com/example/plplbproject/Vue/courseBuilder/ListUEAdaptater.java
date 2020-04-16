@@ -30,6 +30,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
     private int semestreCourant;  // Pour lisibilité
     private ArrayList<Categorie> categorieArrayList = new ArrayList<Categorie>();
     private ArrayList<Categorie> originalcategorieArraylist = new ArrayList<>();
+    private boolean filtered;
 
     /**
      * L'adapteur doit savoir quel est le semestre qu'il doit adapter
@@ -45,6 +46,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
             this.categorieArrayList = DataSemester.SEMESTER.getSemesterList().get(semestreCourant).getListCategorie(); // listDataHeader
             this.originalcategorieArraylist.addAll(categorieArrayList);
         }
+        this.filtered = false;
     }
 
     @Override
@@ -154,12 +156,15 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
 
         int flag = 0;
 
+        System.out.println(originalcategorieArraylist);
+
         query = query.toLowerCase();
         categorieArrayList.clear();
 
         if(query == "" || query.isEmpty()){
             categorieArrayList.addAll(originalcategorieArraylist);
         }
+
         else{
             for (Categorie c: originalcategorieArraylist
                  ) {
@@ -183,7 +188,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
                 }
             }
         }
-
+        filtered = true;
         notifyDataSetChanged();
     }
 
@@ -200,8 +205,28 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
     public void notifyDataSetChanged(){
         this.semestreCourant = modele.getIndexCurrentSemester();
         Semestre tmp = DataSemester.SEMESTER.getSemesterList().get(semestreCourant);
-        if(tmp==null) categorieArrayList = new ArrayList<Categorie>();
-        else categorieArrayList = tmp.getListCategorie();
+
+        if (filtered){
+            filtered = false;
+        }
+
+        // Si notifyDataSetChanged n'est pas appellé après un filtrage
+
+        else
+        {
+            if(tmp==null){
+                categorieArrayList = new ArrayList<Categorie>();
+            }
+            else{
+                categorieArrayList = tmp.getListCategorie();
+                if(categorieArrayList.size() > 1){
+                    originalcategorieArraylist = new ArrayList<>();
+                    originalcategorieArraylist.addAll(tmp.getListCategorie());
+                }
+                System.out.println("######" + categorieArrayList);
+
+            }
+        }
         super.notifyDataSetChanged();
     }
 
