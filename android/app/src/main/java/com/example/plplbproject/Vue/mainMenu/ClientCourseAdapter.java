@@ -44,14 +44,12 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
     private String actualParcoursName;
     private String newParcoursName;
     private InputMethodManager imm;
-    private Boolean listenerFlag; // Pour créer un seul listener et éviter des dédoublements
 
 
     public ClientCourseAdapter(ArrayList<String> coursesNames, MainMenuActivity mainMenuActivity) {
         this.coursesNames = coursesNames;
         this.mainMenuActivity = mainMenuActivity;
         this.actualParcoursName = "";
-        this.listenerFlag = false;
     }
 
     /**
@@ -118,9 +116,9 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
                         nomsAEnvoyer.add(newParcoursName);
 
 
-                        if(!listenerFlag){
+                        if(!Connexion.CONNEXION.isRenameListenerSet()){
                             Connexion.CONNEXION.setEventListener(RENAMECOURSE,rename());
-                            listenerFlag = true;
+                            Connexion.CONNEXION.setRenameListenerSet(true);
                         }
                         Connexion.CONNEXION.send(RENAMECOURSE,gson.toJson(nomsAEnvoyer));
 
