@@ -10,6 +10,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -55,6 +56,8 @@ public class PreviewActivity extends AppCompatActivity {
     private ClipData clipData;
 
     TextView codeText;
+    ImageButton sendMailButton;
+    ImageButton sendGlobalButton;
 
     private String shareCode;
 
@@ -205,6 +208,46 @@ public class PreviewActivity extends AppCompatActivity {
 
             codeText = ((TextView)popupWindow.getContentView().findViewById(R.id.codeText));
             codeText.setText(shareCode);
+
+            sendMailButton = popupWindow.getContentView().findViewById(R.id.sendMailButton);
+            sendMailButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    String subject = "Partage du parcous" + course.getName();
+
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("message/rfc822");
+                    //i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"bonjourMonsieurRenevier@commentAllezVous.com"});
+                    i.putExtra(Intent.EXTRA_SUBJECT, subject);
+                    i.putExtra(Intent.EXTRA_TEXT   , shareCode);
+                    try {
+                        System.out.println("here1");
+                        startActivity(Intent.createChooser(i, "Send code"));
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        System.out.println("here2");
+                        Toast.makeText(getApplicationContext(), "Aucune application supportant des messages rfc822 detectée.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            sendGlobalButton = popupWindow.getContentView().findViewById(R.id.sendGlobalButton);
+            sendGlobalButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_TEXT   , shareCode);
+                    try {
+                        startActivity(Intent.createChooser(i, "Send code"));
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(getApplicationContext(), "Aucune application permettant de partager detectée.", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
 
             // dismiss the popup window when touched
             popupView.setOnTouchListener(new View.OnTouchListener() {

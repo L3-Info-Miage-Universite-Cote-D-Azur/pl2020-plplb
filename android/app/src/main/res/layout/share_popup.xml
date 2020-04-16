@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E2E7F1"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:orientation="vertical">
 
     <TextView
@@ -32,5 +34,61 @@
         android:layout_margin="30dp"
         android:gravity="center"
         android:textSize="22dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="18dp"
+        android:gravity="center"
+        android:text="Partager le code."/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+        />
+
+        <ImageButton
+            android:id="@+id/sendGlobalButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:background="@drawable/ic_people_24px"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:id="@+id/sendMailButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:background="@drawable/ic_mail_24px"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            />
+
+    </LinearLayout>
+
 
 </LinearLayout>
