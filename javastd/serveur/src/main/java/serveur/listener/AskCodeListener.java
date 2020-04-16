@@ -6,7 +6,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.SharedCourseDataBase;
-import log.Debug;
+import log.Logger;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
@@ -30,7 +30,7 @@ public class AskCodeListener implements DataListener<String> {
         Client client = linkClientSocket.getClient(sock);
         //Si le client est null.
         if(client == null) {
-            Debug.error("No such client logged.");
+            Logger.error("No such client logged.");
             return;
         }
 
@@ -44,7 +44,7 @@ public class AskCodeListener implements DataListener<String> {
         String content = gson.toJson(shareCourse);
         sharedCourseDataBase.addShareCourse(code,content);
         //On renvoie un event au client avec le code.
-        Debug.log("Save share course and send code "+code+" to "+client.getStudent().getNom());
+        Logger.log("Save share course and send code "+code+" to "+client.getStudent().getNom());
         sock.sendEvent(ASKCODE,code);
     }
 }

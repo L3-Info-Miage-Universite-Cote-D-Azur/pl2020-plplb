@@ -6,7 +6,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.SemesterDataBase;
-import log.Debug;
+import log.Logger;
 import metier.semestre.SemesterList;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
@@ -30,10 +30,10 @@ public class SemesterDataListener implements DataListener<String> {
 
         //Si le client est null.
         if(client == null) {
-            Debug.error("No such client logged.");
+            Logger.error("No such client logged.");
             return;
         }
-        Debug.log("Send Semesters to : " + client.getStudent().getNom());
+        Logger.log("Send Semesters to : " + client.getStudent().getNom());
         //On charge les semestres.
         SemesterList semesterList = semesterDataBase.getSemesterList();
         //On creer le json.

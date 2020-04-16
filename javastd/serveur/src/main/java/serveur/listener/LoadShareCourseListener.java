@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.CourseDataBase;
 import dataBase.SharedCourseDataBase;
-import log.Debug;
+import log.Logger;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
@@ -35,7 +35,7 @@ public class LoadShareCourseListener implements DataListener<String> {
 
         //Si le client est null.
         if(client == null) {
-            Debug.error("No such client logged.");
+            Logger.error("No such client logged.");
             return;
         }
 
@@ -53,7 +53,7 @@ public class LoadShareCourseListener implements DataListener<String> {
         }
         //On transforme en json et on envoie au client
         String json = gson.toJson(isCorrect);
-        Debug.log("Client "+client.getStudent().getNom()+" send code : "+code+" -> accepted : "+isCorrect);
+        Logger.log("Client "+client.getStudent().getNom()+" send code : "+code+" -> accepted : "+isCorrect);
         sock.sendEvent(COURSECODE,json);
     }
 }

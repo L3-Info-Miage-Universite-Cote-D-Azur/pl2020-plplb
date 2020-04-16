@@ -4,7 +4,7 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
-import log.Debug;
+import log.Logger;
 
 /**
  * Listener qui s'occupe de la deconnection
@@ -24,7 +24,7 @@ public class DeconnectionListener implements DisconnectListener{
         {
             Client client = linkClientSocket.getClient(sock);
             if(client!=null) {
-                Debug.log(client.getStudent().getNom() + " leaved the server.");
+                Logger.log(client.getStudent().getNom() + " leaved the server.");
                 linkClientSocket.removeClient(sock);
             }
         }

@@ -6,7 +6,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.CourseDataBase;
-import log.Debug;
+import log.Logger;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
@@ -31,18 +31,18 @@ public class CourseNameListener implements DataListener<String> {
 
         //Si le client est null.
         if(client == null) {
-            Debug.error("No such client logged.");
+            Logger.error("No such client logged.");
             return;
         }
         //On charge les noms de sauvegarde du client
         ArrayList<String> studentSaveName = courseDataBase.getStudentSaveNames(client.getStudent().getNom());
         if(studentSaveName==null){
-            Debug.log("save not found for client : " +client.getStudent().toString());
+            Logger.log("save not found for client : " +client.getStudent().toString());
         }
         else {
             //On transforme en json et on envoie l'event.
             String json = gson.toJson(studentSaveName);
-            Debug.log("Send courses name " + studentSaveName.toString() + " to " + client.getStudent().toString());
+            Logger.log("Send courses name " + studentSaveName.toString() + " to " + client.getStudent().toString());
             sock.sendEvent(COURSESNAMES, json);
         }
     }
