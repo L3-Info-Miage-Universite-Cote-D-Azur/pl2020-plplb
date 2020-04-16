@@ -2,7 +2,7 @@ package dataBase;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import debug.Debug;
+import log.Logger;
 import metier.semestre.SemestreRules;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ public class SemesterDataBaseTest {
 
     @BeforeEach
     public void init(){
-        Debug.verbose = false;
+        Logger.verbose = false;
         ClassLoader classLoader = SemesterDataBaseTest.class.getClassLoader();
         File directory = new File(classLoader.getResource("").getFile());
         this.directory = new File(directory,path);
