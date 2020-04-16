@@ -33,32 +33,6 @@ public class Semestre implements Serializable {
         this.rules = rules;
     }
 
-    /**
-     * Constructeur de semestre a l'aide d'une liste d'ue les ue permet de créer les categorie
-     * @param allUeInSemester tout les ue du semestre
-     */
-    public Semestre(List<UE> allUeInSemester) {
-        //on recupere le numero du semestre dans la premiere ue
-        this.number = allUeInSemester.get(0).getSemestreNumber();
-        listCategorie = new ArrayList<Categorie>();
-        for(UE ue : allUeInSemester){
-            boolean findCategory = false;
-            for(Categorie category: listCategorie ) {
-                //on regarde si la categorie existe
-                if (category.getName().equals(ue.getCategorie())) {
-                    category.addUe(ue);
-                    findCategory = true; //on a trouver
-                }
-            }
-            //la categorie n'est pas pas encore créer on la crée
-            if(!findCategory){
-                Categorie newCategory = new Categorie(ue.getCategorie());
-                newCategory.addUe(ue);
-                listCategorie.add(newCategory);
-            }
-        }
-    }
-
 
 
     public Semestre() {
@@ -113,6 +87,37 @@ public class Semestre implements Serializable {
         //not find
         return null;
     }
+
+
+    /**
+     * Permet de chercher une categorie si elle existe
+     * @param Category le nom de la categorie que l'on cherche
+     * @return la categorie si elle a etait trouver
+     */
+    public Categorie findCategory(String Category){
+        for(Categorie category: listCategorie){
+            if(category.getName().equals(Category)){
+                return category;
+            }
+        }
+        return null; //not found
+    }
+
+    /**
+     * permet d'ajouter une ue au semestre
+     * @param ue l'ue que lon veut ajouter
+     */
+    public void addUE(UE ue){
+        Categorie categorie = findCategory(ue.getCategorie());
+        if(categorie==null){ //la categorie existe pas on la crée
+            categorie = new Categorie(ue.getCategorie());
+            listCategorie.add(categorie);
+        }
+        //on ajoute l'ue
+        categorie.addUe(ue);
+
+    }
+
 
 
     public String

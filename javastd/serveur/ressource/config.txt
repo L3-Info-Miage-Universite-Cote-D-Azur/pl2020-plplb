@@ -1,0 +1,12 @@
+!config serv
+ip:=0.0.0.0
+port:=10101
+
+!data gesture
+semestre_directory:=semestre
+number_semester:=4
+courseType_directory:=courseType
+
+!client save
+save_directory:=sauvegarde
+share_directory:=share

@@ -1,0 +1,113 @@
+code ue;nom;semestre;Categorie;Description
+SPUGDE10;Decouverte 1;1;GEOGRAPHIE;La première ue découverte de géographie.
+SPUGDC10;Decouverte 2;1;GEOGRAPHIE;La deuxième ue découverte de géographie.
+SPUGDI10;Disciplinaire 1;1;GEOGRAPHIE;L'ue disciplinaire 1 de géographie.
+SPUF10;Bases de l'informatique;1;INFORMATIQUE;Dans cette ue vous apprendrez les bases de l'informatique.
+SPUF11;Introduction a l'informatique par le web;1;INFORMATIQUE;Cette ue offre une introduction à l'informatique pour les étudiants.
+SPUM11;Fondements 1;1;MATHEMATIQUES;La première ue des fondements mathématiques.
+SPUM13;Complements 1;1;MATHEMATIQUES;Cette ue offre des complément sur les mathématiques.
+SPUM12;Methodes - approche continue;1;MATHEMATIQUES;Les mathématiques avec une approche continue.
+SPUV101;Genetique. evolution. origine vie & biodiversite;1;SCIENCES DE LA VIE;Découverte de l'orginie de la vie, de l'évolution et de la biodiversite d'un point de vue génétique.
+SPUV100;Org et mecan. moleculaires - cellules eucaryotes;1;SCIENCES DE LA VIE;Etude des organismes et de la mécanique moléculaires.
+SPUC10;Structure microscopique de la matiere;1;CHIMIE;Etude de la structure microscopique de la matiere.
+SPUE10;Electronique numerique - Bases;1;ELECTRONIQUE;Cette ue enseigne la base de l'electronique numerique.
+SPUA10;Economie-gestion;1;ECONOMIE - GESTION;Première ue d'économie et gestion.
+SPUP10;Mecanique 1;1;PHYSIQUE;Première etude de la physique mécanique.
+SPUT10;Decouverte des sciences de la terre;1;SCIENCES DE LA TERRE;Cette ue permet de découvrir les sciences de la terre.
+SPUS10;Math enjeux 1;1;MATH ENJEUX;Ue obligatoire pour remise à niveaux en mathématiques 1.
+KCTTS1;Competences transversales;1;COMPETENCES TRANSVERSALES;Competences transversales du semestre 1.
+SPUSF100;Fablab S1;1;FABLAB;Ue facultative Fablab s1.
+SPUGDE20;Decouverte 3;2;GEOGRAPHIE;La troisième ue découverte de géographie.
+SPUGDC20;Decouverte 4;2;GEOGRAPHIE;La quatrième ue découverte de géographie.
+SPUGDI20;Disciplinaire 2;2;GEOGRAPHIE;L'ue disciplinaire 2 de géographie.
+SPUF21;Programmation imperative;2;INFORMATIQUE;Cette ue enseigne la programmation imperative (en python).
+SPUF20;Systeme 1 unix et programmation shell;2;INFORMATIQUE;Apprentissage de la programmation shell et des systèmes UNIX.
+SPUM21;Fondements 2;2;MATHEMATIQUES;La deuxième ue des fondements mathématiques.
+SPUM23;Complements 2;2;MATHEMATIQUES;Cette ue offre des complément sur les mathématiques.
+SPUM22;Methodes Maths-Approche discrete;2;MATHEMATIQUES;Les mathématiques avec une approche discrete.
+SPUV201;Diversite du vivant;2;SCIENCES DE LA VIE;Etude de la diversité du vivant.
+SPUV200;Physiologie - neurologie - enzymologie;2;SCIENCES DE LA VIE;Etude de la physiologie , de la neurologie et de l'enzymologie.
+SPUC20;Reactions et reactivites chimiques;2;CHIMIE;Etude des reactivites et reactions chimique.
+SPUC21;Thermodynamique chimique / Options;2;CHIMIE;Etude de la thermodynamique chimique.
+SPUE21;Communication sans fil;2;ELECTRONIQUE;Etude de la communication sans fil de composants éléctroniques.
+SPUE20;Electronique analogique;2;ELECTRONIQUE;Etude de l'éléctroniques analogique.
+SPUA20;Economie-gestion S2;2;ECONOMIE - GESTION;Deuxième ue d'économie et gestion.
+SPUP21;Mecanique - complements;2;PHYSIQUE;Deuxième étude de la physique mécanique.
+SPUP20;Optique;2;PHYSIQUE;Etude de l'optique.
+SPUT22;Atmosphere. ocean. climats;2;SCIENCES DE LA TERRE;Etude de l'atmosphere, des océans et des climats 1.
+SPUT20;Structure et dynamique de la terre;2;SCIENCES DE LA TERRE;Etude de la structure et de la dynamique de la terre.
+SPUS20;Math enjeux 2;2;MATH ENJEUX;Ue obligatoire pour remise à niveaux en mathématiques 2.
+KCTTS2;Competences transversales - S2;2;COMPETENCES TRANSVERSALES;Competences transversales du semestre 2.
+SPOSF200;Fablab S2;2;FABLAB;Ue facultative Fablab s2.
+SPUGDE33;Approfondissement hors geographie 1;3;GEOGRAPHIE;Approfondissement et études hors geographie 1.
+SPUGDI30;Disciplinaire 3;3;GEOGRAPHIE;L'ue disciplinaire 3 de géographie.
+SPUGDI31;Disciplinaire 4;3;GEOGRAPHIE;L'ue disciplinaire 4 de géographie.
+SPUGDI32;Disciplinaire 5;3;GEOGRAPHIE;L'ue disciplinaire 5 de géographie.
+SPUC30;Chimie des solutions;3;CHIMIE;Etude de la chimie des solutions.
+SPUC31;Chimie organique;3;CHIMIE;Etude de la chimie organique.
+SPUC32;Materiaux 1;3;CHIMIE;Etude des matériaux chimiques 1.
+HPULE36;Enseignements fondamentaux 1D;3;ENSEIGNEMENT;Ue des fondamentaux de l'enseignement.
+SPUE30;Automatique - introduction;3;ELECTRONIQUE;Introduction à l'automatisme.
+SPUE32;Physique des capteurs;3;ELECTRONIQUE;Etude de la physique des capteurs.
+SPUE31;Systeme embarque;3;ELECTRONIQUE;Etude des systèmes embarqués.
+SPUF31;Bases de donnees;3;INFORMATIQUE;Etude des bases de données.
+SPUF32;Outils formels de l'informatique;3;INFORMATIQUE;Enseignements des outils formels de l'informatique.
+SPUF30;Structures de donnees et programmation C;3;INFORMATIQUE;Enseignements de la programmation C et des structures de données.
+SPUM32;Complements d'algebre;3;MATHEMATIQUES;Compléments d'algebre.
+SPUM31;Complements d'analyse;3;MATHEMATIQUES;Compléments d'analyse.
+SPUM30;Fondements 3;3;MATHEMATIQUES;La troisième ue des fondements mathématiques.
+SPUM34;Methodes - approche geometrique;3;MATHEMATIQUES;Les mathématiques avec une approche géometrique.
+SPUM33;Methodes - mathematiques et ingenierie;3;MATHEMATIQUES;Le lien entre ingénierie et mathématiques.
+SPUA30;Economie gestion 3;3;ECONOMIE - GESTION;Troisième ue d'économie et gestion.
+SPUA31;Introduction R;3;ECONOMIE - GESTION;Introduction à langage de programmation R.
+SPUP30;Electromagnetisme 1;3;PHYSIQUE;Etude de l'electromagnétisme 1.
+SPUP32;Outils et methodes 1;3;PHYSIQUE;Enseignements 1 des outils et méthodes de la physique.
+SPUP31;Thermodynamique 1;3;PHYSIQUE;Etude 1 de la thermodynamique
+SPUT30;Atmosphere - ocean - climats 2;3;SCIENCES DE LA TERRE;Etude de l'atmosphere , des océans et des climats 2.
+SPUT31;Le temps en geosciences;3;SCIENCES DE LA TERRE;La notion de temps en géosciences.
+SPUT33;Materiaux terrestres;3;SCIENCES DE LA TERRE;Etude des matériaux terrestres.
+SPUT32;Physique de la Terre;3;SCIENCES DE LA TERRE;Etude de la physique de la terre.
+KCTSS3;Competences transversales 3;3;COMPETENCES TRANSVERSALES;Competences transversales du semestre 3.
+SPUSF300;Fablab S3;3;FABLAB;Ue facultative Fablab s3.
+SPUGDE40;Approfondissement hors geographie 2;4;GEOGRAPHIE;Approfondissement et études hors geographie 2.
+SPUGDI40;Disciplinaire 6;4;GEOGRAPHIE;L'ue disciplinaire 6 de géographie.
+SPUGDI41;Disciplinaire 7;4;GEOGRAPHIE;L'ue disciplinaire 7 de géographie.
+SPUGDI42;Disciplinaire 8;4;GEOGRAPHIE;L'ue disciplinaire 8 de géographie.
+SPUF43;Introduction aux systemes intelligents;4;INFORMATIQUE;Introduction des systemes intelligents (IA).
+SPUF44;Technologies du web;4;INFORMATIQUE;Etude des technologies du web.
+SPUF40;Algorithmique 1;4;INFORMATIQUE;Etude de l'algorithmique 1.
+SPUF41;Reseaux et telecommunication;4;INFORMATIQUE;Etude des réseaux et des télécommunications.
+SPUF42;Systemes 2 - mecanismes internes syst. d'expl;4;INFORMATIQUE;Etude des systemes d'exploitation.
+SPUM44;Methodes - approche aleatoire;4;MATHEMATIQUES;Les mathématiques avec une approche aléatoire.
+SPUM41;Probabilites et introduction aux statistiques;4;MATHEMATIQUES;Introduction aux statistiques et aux probabilités.
+SPUM42;Algebre;4;MATHEMATIQUES;Etude de l'algèbre en mathématiques.
+SPUM40;Analyse;4;MATHEMATIQUES;Etude de l'analyse en mathématiques.
+SPUM43;Resolution numerique des systemes d'equations;4;MATHEMATIQUES;Enseignements des résolutions numérique des systèmes d'équation.
+SPUC43;Bloc de chimie experimentale;4;CHIMIE;Etude de la chimie expérimentale.
+SPUC42;Chimie organique fonctionnelle II;4;CHIMIE;Etude de la chimie organique fonctionnelle.
+SPUC41;Materiaux 2;4;CHIMIE;Etude des matériaux chimiques 2.
+SPUC40;Vision macroscopique des molecules;4;CHIMIE;Etude des molécules d'un point de vue macroscopique.
+SPUE42;Architecture des processeurs;4;ELECTRONIQUE;Etude de l'architécture des processeurs.
+SPUE41;Electronique analogique avancee;4;ELECTRONIQUE;Etude de l'éléctronique analogique avancée.
+SPUE40;Systeme optimise en energie;4;ELECTRONIQUE;Etude des systèmes optimisé en énergie.
+SPUE43;Systemes embarques II;4;ELECTRONIQUE;Etude des systèmes embarqués 2.
+VPUC1D4;Enseignements fondamentaux a l'ecole primaire 2;4;ENSEIGNEMENT;Fondamentaux de l'enseignement à l'ecole primaire 2
+SPUA40;Economie-gestion 4;4;ECONOMIE - GESTION;Quatrième ue d'économie et gestion.
+SPUA41;Mathematiques pour la finance;4;ECONOMIE - GESTION;Enseignements des mathématiques pour la finance.
+SPUP40;Electromagnetisme 2;4;PHYSIQUE;Etude de l'éléctromagnétisme 2.
+SPUP42;Mecanique 3;4;PHYSIQUE;Etude de la mécanique 3.
+SPUP41;Ondes;4;PHYSIQUE;Etude des ondes en physique.
+SPUP43;Outils et methodes 2;4;PHYSIQUE;Enseignements 2 des outils et méthodes de la physique.
+SPUP44;Outils et methodes 2D;4;PHYSIQUE;Enseignements des outils et méthodes de la physique en 2D.
+SPUS44;Management de projet;4;UE PROFESSIONNALISANTE S4;Enseignements du management de projet.
+SPUT43;Du paysage a la carte;4;SCIENCES DE LA TERRE;Etude des paysage en sciences de la terre.
+SPUT41;Formation et evolution bassins sedimentaires;4;SCIENCES DE LA TERRE;Etude de la formation des bassins sedimentaires et de leur évolution.
+SPUT40;Geologie structurale et tectonique;4;SCIENCES DE LA TERRE;Etude de la géologie structurale et tectonique.
+SPUT42;Geomecanique;4;SCIENCES DE LA TERRE;Etude de la géomécanique
+VPUG2D4;Methodologie et didactique - Geometrie;4;CLE2D;Enseignements de la méthodologie et de la didactique en géometrie.
+VPUP2D4;Methodologie et didactique Physique Chimie;4;CLE2D;Enseignements de la méthodologie et de la didactique en physique et chimie.
+KCTSS4;Competences transversales 4;4;COMPETENCES TRANSVERSALES;Competences transversales du semestre 4.
+SPUSF400;Fablab S4;4;FABLAB;Ue facultative Fablab s4.
+
+
+

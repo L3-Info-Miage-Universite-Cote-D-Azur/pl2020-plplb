@@ -50,11 +50,10 @@ public class Categorie implements Serializable {
     }
 
     /**
-     * Ajout une UE a la liste d'ue et rattache la categorie a l'ue.
+     * Ajout une UE a la liste
      * @param ue : l'ue a ajouter.
      */
     public void addUe(UE ue){
-        ue.setCategorie(this.name);
         this.listUE.add(ue);
     }
 

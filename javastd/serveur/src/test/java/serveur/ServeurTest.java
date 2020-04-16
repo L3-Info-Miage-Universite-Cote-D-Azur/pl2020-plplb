@@ -1,207 +1,165 @@
 package serveur;
 
-import com.corundumstudio.socketio.*;
-
-import database.DBManager;
-import database.FileManager;
-import debug.Debug;
-import metier.Categorie;
-import metier.Student;
-import metier.UE;
-import metier.semestre.Semestre;
-import metier.semestre.SemestreRules;
-import metiermanager.semesters.SemestreConsts;
-
+import file.Config;
+import file.FileManager;
+import log.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.verification.Times;
 
 import java.io.File;
-import java.net.SocketAddress;
-import java.util.ArrayList;
 
-import static constantes.NET.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
-
-/**
- * test de la class Serveur
- */
 public class ServeurTest {
+    @Mock
+    Config config;
+
+    String path = "testServeur";
+    File directory;
 
     Serveur serveur;
 
-    @Mock
-    SocketIOClient sockClient;
-    @Mock
-    SocketAddress socketAddress;
-    @Mock
-    Client c;
-    @Mock
-    Student etudiant;
-    
     @BeforeEach
     public void init(){
-        Debug.verbose = false;
-        serveur = new Serveur("127.0.0.1",10113);
-        sockClient = Mockito.mock(SocketIOClient.class);
-        socketAddress = Mockito.mock(SocketAddress.class);
-        etudiant = Mockito.spy(new Student("test"));
-        c = Mockito.spy(new Client(etudiant, sockClient));
-        
-    }
-    
-    @Test
-    public void clientOnConnectSendPredefinedCourse(){
-        Mockito.when(c.getSock()).thenReturn(sockClient);
-        Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
-        Mockito.when(socketAddress.toString()).thenReturn("test");
+        Logger.verbose=false;
+        directory = new File(path);
+        directory.mkdir();
 
-        serveur.clientOnConnectSendPredefinedCourse(c);
-        //quand un client ce connecte on lui envoie un message
-        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(PREDEFINEDCOURSE),any(String.class));
-    }
+        config = Mockito.mock(Config.class);
+        when(config.getConfig("ip")).thenReturn("0.0.0.0");
+        when(config.getConfig("port")).thenReturn("12345");
+        when(config.getConfig("semestre_directory")).thenReturn("semestre");
+        when(config.getConfig("courseType_directory")).thenReturn("courseType");
+        when(config.getConfig("save_directory")).thenReturn("sauvegarde");
+        when(config.getConfig("share_directory")).thenReturn("share");
+        when(config.getConfig("number_semester")).thenReturn("0");
 
+        when(config.getparentPath()).thenReturn(directory.getAbsolutePath());
+        serveur = new Serveur(config,null);
+
+    }
 
     @Test
-    public void clientOnConnectEventSendSemestersTest(){
-        Mockito.when(c.getSock()).thenReturn(sockClient);
-        Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
-        Mockito.when(socketAddress.toString()).thenReturn("test");
+    public void initSemesterListTest(){
+        assertEquals(serveur.getSemesterDataBase(),null);
+        //le fichier existe pas l'initialisation vas donc echouer
+        assertFalse(serveur.initSemesterDataBase());
+        assertEquals(serveur.getSemesterDataBase(),null);
+        //on crée le fichier
+        File semestreDirectory = new File(directory,"semestre");
+        semestreDirectory.mkdir();
 
-        serveur.clientOnConnectEventSendSemesters(c);
-        //quand un client ce connecte on lui envoie bien les donner
-        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(SEMSTERDATA),any(String.class));
+        //maintenant on peut l'initialiser et il est bien intialiser
+        assertTrue(serveur.initSemesterDataBase());
+
+        assertEquals(serveur.getSemesterDataBase()!=null,true);
+
+
     }
-    
+
     @Test
-    public void 
-    clientOnConnectSendCourses ()
-    {
-        Mockito.when(c.getSock()).thenReturn(sockClient);
-        Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
-        Mockito.when(socketAddress.toString()).thenReturn("test");
+    public void initTypeCourseDBTest(){
+        assertEquals(serveur.getCourseTypeDataBase(),null);
+        //le fichier existe pas l'initialisation vas donc echouer
+        assertFalse(serveur.initSemesterDataBase());
+        assertEquals(serveur.getCourseTypeDataBase(),null);
+        //on crée le fichier
+        File semestreDirectory = new File(directory,"courseType");
+        semestreDirectory.mkdir();
 
-        serveur.clientOnConnectSendCourses(c);
-        //quand un client ce connecte on lui envoie bien les donner
-        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(COURSESNAMES),any(String.class));
+        //maintenant on peut l'initialiser et il est bien intialiser
+        assertTrue(serveur.initCourseTypeDataBas());
+
+        assertEquals(serveur.getCourseTypeDataBase()!=null,true);
     }
-/*
+
     @Test
-    public void clientOnConnectSendSaveTest(){
-        Mockito.when(c.getSock()).thenReturn(sockClient);
-        Mockito.when(sockClient.getRemoteAddress()).thenReturn(socketAddress);
-        Mockito.when(socketAddress.toString()).thenReturn("test");
+    public void intCourseDBTest(){
+        assertEquals(serveur.getCourseDataBase(),null);
+        File dbDirectory = new File(directory,"sauvegarde");
+        //le dossier existe pas
+        assertFalse(dbDirectory.exists());
 
-        serveur.clientOnConnectSendSave(c, "aaa");
-        //quand un client ce connecte on lui envoie bien les donner
-        Mockito.verify(sockClient,new Times(0)).sendEvent(ArgumentMatchers.eq(SENDCLIENTSAVE),any(String.class));
+        //on init
+        serveur.initCourseDataBase();
 
-        DBManager dbManager = new DBManager(etudiant.toString(), "parcours");
-        new File("db/").mkdir();
-        dbManager.getDir().getFile().mkdir();
-        dbManager.getCourse().create();
-        dbManager.getCourse().write("[\"TypeParcours\",\"UE1\",\"UE2\"]");
+        //il est bien intialiser
+        assertEquals(serveur.getCourseDataBase()!=null,true);
 
-        serveur.clientOnConnectSendSave(c, "parcours");
-        Mockito.verify(sockClient,new Times(1)).sendEvent(ArgumentMatchers.eq(LOADCOURSE),any(String.class));
+        //le repertoire est créer
+        assertTrue(dbDirectory.exists());
+
+        //on a le repertoire et un fichier créer avec des donner a l'interrieur
+        FileManager file = new FileManager(new File(dbDirectory,"unfichier"));
+        file.write("hello");
+        serveur = new Serveur(config,null);
+        //n'est plus initialiser
+        assertEquals(serveur.getCourseDataBase(),null);
+
+        //on init
+        serveur.initCourseDataBase();
+
+        //on a bien garder les donner a l'interrieur
+        //elle n'on pas etait ecraser
+        assertEquals(file.getRaw(),"hello");
+
+        //il est bien intialiser
+        assertEquals(serveur.getCourseDataBase()!=null,true);
+
     }
-    */
-    /* ----------------------------------- */
-    
-	private String[] _fnames;
-	private String _fdir;
-	private long[] _fold;
-	
-	public void
-	__start ()
-	{
-		/* Old objects saving */
-		_fnames = SemestreConsts.filenames;
-		_fdir = SemestreConsts.dir;
-		_fold = SemestreConsts.lastUpdate;
-		
-		SemestreConsts.dir = "testServeur/";
-		SemestreConsts.filenames = new String[] {"s1.txt","s1.txt","s1.txt","s1.txt"};
-		SemestreConsts.lastUpdate = new long[] {0L, 0L, 0L, 0L};
-	}
-	
-	/**
-	 * Fonction qui permet la creation du semestre utile
-	 * aux UTs.
-	 * Le semestre se presente comme ceci:
-	 * [num, cats:[UEs1, UEs2]]
-	 * 
-	 * @param num Numero du semestre
-	 * @return un nouveau Semestre
-	 */
-	public Semestre
-	createSemestre4UT (int num)
-	{
-		ArrayList<UE> UEs1 = new ArrayList<UE>();
-		UEs1.add(new UE("UE1", "CODE1"));
-		UEs1.add(new UE("UE2", "CODE2"));
-		
-		ArrayList<UE> UEs2 = new ArrayList<UE>();
-		UEs2.add(new UE("UE3", "CODE3"));
-		UEs2.add(new UE("UE4", "CODE4"));
-		
-		ArrayList<Categorie> cats = new ArrayList<Categorie>();
-		cats.add(new Categorie("CAT1", UEs1));
-		cats.add(new Categorie("CAT2", UEs2));
-		
-		SemestreRules sr = new SemestreRules(-1, -1, new ArrayList<String>());
-		
-		return new Semestre(num, cats, sr);
-	}
 
-	/*
     @Test
-    public void
-    testUpdateSemestersOfClients ()
-    {
-    	//-- Start --
-    	this.__start();
-    	Debug.verbose = false;
-    	Semestre sem = this.createSemestre4UT(42);
-    	FileManager fm = new FileManager(SemestreConsts.dir + SemestreConsts.filenames[0]);
-    	new File(SemestreConsts.dir).mkdir();
-    	fm.create();
-    	fm.write(sem.getJson());
-    	
-    	// Ajout de 1 client
-    	serveur.getClients().add(c);
-    	
-    	// -- Traitement --
-    	serveur.updateSemestersOfClients();
-    	Mockito.verify(sockClient,new Times(serveur.getClients().size())).sendEvent(ArgumentMatchers.eq(CLIENTUPDATE),any(String.class));
+    public void intShareDBTest(){
+        assertEquals(serveur.getSharedCourseDataBase(),null);
+        File dbDirectory = new File(directory,"share");
+        //le dossier existe pas
+        assertFalse(dbDirectory.exists());
 
-    	//-- End --
-    	SemestreConsts.dir = _fdir;
-		SemestreConsts.filenames = _fnames;
-		SemestreConsts.lastUpdate = _fold;
-		fm.getFile().delete();
-		new File(SemestreConsts.dir).delete();
+        //on init
+        serveur.initSharedCourseDataBase();
+
+        //il est bien intialiser
+        assertEquals(serveur.getSharedCourseDataBase()!=null,true);
+
+        //le repertoire est créer
+        assertTrue(dbDirectory.exists());
+
+        //on a le repertoire et un fichier créer avec des donner a l'interrieur
+        FileManager file = new FileManager(new File(dbDirectory,"unfichier"));
+        file.write("hello");
+        serveur = new Serveur(config,null);
+        //n'est plus initialiser
+        assertEquals(serveur.getSharedCourseDataBase(),null);
+
+        //on init
+        serveur.initSharedCourseDataBase();
+
+        //on a bien garder les donner a l'interrieur
+        //elle n'on pas etait ecraser
+        assertEquals(file.getRaw(),"hello");
+
+        //il est bien intialiser
+        assertEquals(serveur.getSharedCourseDataBase()!=null,true);
+
     }
-    */
-
 
 
     @AfterEach
-    public void del(){
-        File directory = new File("db");
-        if(directory.exists()){
-            File[] files = directory.listFiles();
+    public void clearAllFile(){
+        clearFile(directory);
+    }
 
-            for(int i = 0; i < files.length; i++) {
-                files[i].delete();
+    public void clearFile(File directory){
+        for(File file :directory.listFiles()){
+            if(file.isDirectory()){
+                clearFile(file); //on clear en profondeur
             }
-            directory.delete();
+            file.delete();
         }
+        directory.delete();
     }
 }

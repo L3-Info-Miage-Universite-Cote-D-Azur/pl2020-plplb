@@ -1,297 +1,205 @@
 package serveur;
 
-
-import com.corundumstudio.socketio.AckRequest;
-import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.SocketIOServer;
-import com.corundumstudio.socketio.listener.DataListener;
-import com.corundumstudio.socketio.listener.DisconnectListener;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dataBase.*;
+import file.Config;
+import log.Logger;
+import serveur.connectionStruct.ClientSocketList;
+import serveur.connectionStruct.LinkClientSocket;
 
-import constantes.NET;
-import database.DBManager;
-import debug.Debug;
-import metier.Student;
-import metier.parcours.Parcours;
-import metiermanager.courses.ParcoursSample;
-import metiermanager.semesters.SemesterThread;
-import metiermanager.semesters.SemestersSample;
+import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.SocketIOServer;
+import serveur.listener.*;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import static constantes.NET.*;
 
-/**
- * La class representant le serveur.<br>
- * Elle permet de gerer l'application en communiquant 
- * avec tous les clients.
- */
-public class 
-Serveur 
-{
+public class Serveur {
+
+    /*CONFIG*/
+    private Config config;
+
     /* FIELDS */
-	/** Est l'objet qui permet de traduire du JSON */
-    private final Gson gson;
+    /** Est l'objet qui permet de traduire du JSON */
+    private final Gson gson = new GsonBuilder().create();
+
     /** Est l'objet qui represente la socket du serveur, c'est a elle que les clients communiquent */
     private final SocketIOServer server;
-    /** Est l'objet qui permet de gerer la base de donnee du serveur avec les clients */
-    private DBManager dbManager;
+
     /** Contient la liste de tous les clients actuellement connectes au serveur */
-    private ArrayList<Client> listOfClients;
+    private LinkClientSocket allClient = new ClientSocketList();
 
-    /* CONSTRUCTOR */
-    /**
-     * Constructeur de Serveur
-     * @param ip Une ip de la forme IPv4, exemple: 42.13.37.69
-     * @param port Le port sur lequel les clients vont se connecter
-     */
-    public 
-    Serveur (String ip, int port) 
-    {
-        Debug.log("Creating server..");
-        this.gson = new GsonBuilder().create();
-        // config  com.corundumstudio.socketio.Configuration;
-        Debug.log("Creating server configuration..");
-        Configuration config = new Configuration();
-        config.setHostname(ip);
-        config.setPort(port);
-        Debug.log("Server configuration created.");
-        
-        this.listOfClients = new ArrayList<Client>();
-        this.dbManager = new DBManager("db");
-        
+    /*DATA BASE*/
+    /** gere les sauvegarde des client*/
+    private CourseDataBase courseDataBase;
+
+    /** gere les donner des semestre*/
+    private SemesterDataBase semesterDataBase;
+
+    /** gere les donner partager*/
+    private SharedCourseDataBase sharedCourseDataBase;
+
+    /** gere les parcours type*/
+    private TypeCourseDataBase courseTypeDataBase;
+
+    /*DATA BASE*/
+
+
+    public Serveur(Config config){
+        this.config = config;
+        Logger.log("Creating server..");
+
+        Logger.log("Creating server configuration..");
+        Configuration configuation = new Configuration();
+        configuation.setHostname(config.getConfig("ip"));
+        configuation.setPort(Integer.parseInt(config.getConfig("port")));
+        allClient = new ClientSocketList();
+
+        Logger.log("Server configuration created.");
+
+        Logger.log("Load Database...");
+        initCourseDataBase();
+        initCourseTypeDataBas();
+        initSemesterDataBase();
+        initSharedCourseDataBase();
+
         // creation du serveur
-        this.server = new SocketIOServer(config);
-        Debug.log("Server created.");
-        initEventListener();
+        this.server = new SocketIOServer(configuation);
+        Logger.log("Init Listener...");
+        initListener();
+        Logger.log("Server ready to start.");
+    }
+
+
+    /**
+     * Constructeur pour les test (aucun init de database)
+     * @param config la config que l'on charge
+     * @param forTest un object lambda pour differentier les constructeur
+     */
+    protected Serveur(Config config,Object forTest){
+        this.config = config;
+        Configuration configuation = new Configuration();
+        configuation.setHostname(config.getConfig("ip"));
+        configuation.setPort(Integer.parseInt(config.getConfig("port")));
+        this.server = new SocketIOServer(configuation);
     }
 
     /**
-     * Initialisation des listeners
+     * Permet d'initialiser la base de donner contenant les semestre/ue/rule
      */
-    protected void 
-    initEventListener ()
-    {
-        //le client envoie ces donner
-        this.server.addEventListener(STUDENT,String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Client c = new Client(gson.fromJson(json,Student.class), socketIOClient);
-                ServerUtility.addClientToList(listOfClients, c);
-                Debug.log("New client connected : " + c.getStudent().getNom());
-            }
-        });
+    protected boolean initSemesterDataBase(){
+        String directoryRelativePath = config.getConfig("semestre_directory");
+        int numberSemester = Integer.parseInt(config.getConfig("number_semester"));
 
-        //le client demande les donnees de connexion
-        this.server.addEventListener(SEMSTERDATA,String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
-                clientOnConnectEventSendSemesters(client);
-            }
-        });
+        File directory = new File(config.getparentPath(),directoryRelativePath);
+        if(!directory.exists() || !directory.isDirectory()){
+            Logger.error("file not found: "+directory.getAbsolutePath());
+            return false;
+        }
 
-        //Le client demande la liste des parcours predefinis
-        this.server.addEventListener(PREDEFINEDCOURSE, String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
-                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
-                clientOnConnectSendPredefinedCourse(client);
-            }
-        });
-        
-        /*  */
-        this.server.addEventListener(COURSESNAMES,String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
-                clientOnConnectSendCourses(client);
-            }
-        });
-        
-        /* Le client envoie un parcours a charger */
-        this.server.addEventListener(LOADCOURSE,String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
-                String fname = gson.fromJson(json, String.class);
-                clientOnConnectSendSave(client, fname);
-            }
-        });
-
-        //le client envoie une sauvegarde
-        this.server.addEventListener(SENDCLIENTSAVE, String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                @SuppressWarnings("unchecked")
-				ArrayList<String> data = gson.fromJson(json, ArrayList.class);
-                Client currentClient = ServerUtility.getClientFromSocketOnList(socketIOClient, listOfClients);
-                dbManager.getDBCourse().setCurrentDir(currentClient.getStudent().toString());
-                dbManager.getDBCourse().save(data, currentClient.getStudent().getNom());
-                Debug.log("Save data for " + currentClient.getStudent().getNom());
-            }
-        });
-
-        //le client ce deconnecte
-        this.server.addDisconnectListener(new DisconnectListener() {
-			@Override
-			public void onDisconnect(SocketIOClient client) {
-				if (listOfClients.size() > 0)
-                {
-                    Debug.log(ServerUtility.getClientFromSocketOnList(client, listOfClients).getStudent().getNom() + " leaved the server.");
-                    listOfClients.remove(ServerUtility.getClientFromSocketOnList(client, listOfClients));
-                }
-			}
-		});
-
-        //Le client veut partager son parcours.
-        this.server.addEventListener(ASKCODE, String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                ArrayList<String> shareCourse = gson.fromJson(json, ArrayList.class);
-                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
-                clientCreateShareCourse(shareCourse,client);
-            }
-        });
-
-
-        //Le client veut charger un parcours partage, le serveur lui envoie.
-        this.server.addEventListener(COURSECODE, String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String json, AckRequest ackRequest) throws Exception {
-                Client client = ServerUtility.getClientFromSocketOnList(socketIOClient,listOfClients);
-                //On recupere le code du parcours partage.
-                String code = gson.fromJson(json, String.class);
-
-                client.getSock().sendEvent(COURSECODE,gson.toJson(dbManager.getDbSharedCourses().loadSharedCourseFile(code, client, dbManager.getDBCourse())));
-            }
-        });
+        semesterDataBase = new SemesterDataBase(directory,numberSemester);
+        semesterDataBase.initSemesterList();
+        return true;
     }
+
+    /**
+     * Permet d'initialiser la base de donner qui gere les sauvergarde des parcours
+     */
+    protected void initCourseDataBase(){
+        String directoryRelativePath = config.getConfig("save_directory");
+        File directory = new File(config.getparentPath(),directoryRelativePath);
+
+        //le fichier n'existe pas on le crée
+        if(!directory.exists()){
+            directory.mkdir();
+        }
+        courseDataBase = new CourseDataBase(directory);
+    }
+
+    /**
+     * Permet d'initialiser la base de donner qui gere les partage
+     */
+    protected void initSharedCourseDataBase(){
+        String directoryRelativePath = config.getConfig("share_directory");
+        File directory = new File(config.getparentPath(),directoryRelativePath);
+        //le fichier n'existe pas on le crée
+        if(!directory.exists()){
+            directory.mkdir();
+        }
+        sharedCourseDataBase = new SharedCourseDataBase(directory);
+    }
+
+    /**
+     * Permet d'initialiser la base de donner qui gere les parcours type
+     */
+    protected  boolean initCourseTypeDataBas(){
+        String directoryRelativePath = config.getConfig("courseType_directory");
+        File directory = new File(config.getparentPath(),directoryRelativePath);
+
+        if(!directory.exists() || !directory.isDirectory()){
+            Logger.error("file not found: "+directory.getAbsolutePath());
+            return false;
+        }
+
+        courseTypeDataBase = new TypeCourseDataBase(directory);
+        courseTypeDataBase.initParcoursType();
+        return true;
+    }
+
+
+    /**
+     * Permet d'initialiser tout les listener du serveur
+     */
+    public void initListener(){
+        server.addEventListener(ASKCODE,String.class, new AskCodeListener(allClient,sharedCourseDataBase));
+        server.addEventListener(SENDCLIENTSAVE, String.class, new ClientSaveListener(allClient,courseDataBase));
+        server.addEventListener(STUDENT,String.class, new ConnectionListener(allClient));
+        server.addEventListener(LOADCOURSE,String.class, new CourseLoaderListener(allClient,courseDataBase));
+        server.addEventListener(COURSESNAMES,String.class, new CourseNameListener(allClient,courseDataBase));
+        server.addDisconnectListener(new DeconnectionListener(allClient));
+        server.addEventListener(COURSECODE,String.class,new LoadShareCourseListener(allClient,sharedCourseDataBase,courseDataBase));
+        server.addEventListener(SEMSTERDATA,String.class, new SemesterDataListener(allClient,semesterDataBase));
+        server.addEventListener(PREDEFINEDCOURSE,String.class, new SendCoursTypeListener(allClient,courseTypeDataBase));
+
+    }
+
+
+
 
     /**
      * Permet au serveur de commencer a listen des clients
      */
-    public void
-    startServer () 
-    {
-    	Thread daemonThread = new Thread(new SemesterThread(this));
-    	daemonThread.setDaemon(true);
-    	daemonThread.start();
-    	
+    public void startServer () {
         server.start();
-        Debug.log("Server listening.");
+        Logger.log("Server listening.");
     }
 
     /**
      * Permet au serveur d'arreter de listen et de se fermer
      */
-    public void 
-    stopServeur ()
-    {
-    	Debug.log("The application is about to shutdown..");
+    public void stopServeur () {
+        Logger.log("The application is about to shutdown..");
         server.stop();
-        Debug.log("Shutdown.");
+        Logger.log("Shutdown.");
     }
 
-    /**
-     * Gestion des donner du client qui vient de se connecter
-     * @param c La representation du Client
-     */
-    protected void 
-    clientOnConnectEventSendSemesters (Client c)
-    {
-        Debug.log("Send Semesters to : " + c.getStudent().getNom());
 
-        String semesterList = ServerUtility.getListOfSemestersJSONed();
-
-        c.getSock().sendEvent(SEMSTERDATA, semesterList);
+    /*FONCTION POUR LES TEST*/
+    public CourseDataBase getCourseDataBase() {
+        return courseDataBase;
     }
 
-    protected void
-    clientOnConnectSendPredefinedCourse(Client c)
-    {
-        Debug.log("Send predefined course to : "+c.getStudent().getNom());
-        c.getSock().sendEvent(PREDEFINEDCOURSE, ServerUtility.getListOfCourseTypeJSONed());
+    public SemesterDataBase getSemesterDataBase() {
+        return semesterDataBase;
     }
 
-    protected void
-    clientOnConnectSendCourses (Client c)
-    {
-    	dbManager.getDBCourse().setCurrentDir(c.getStudent().toString());
-    	ArrayList<String> filenames = dbManager.getDBCourse().getAllCourses();
-    	Debug.log("Sending course\'s list " + filenames.toString() + " to " + c.getStudent().toString());
-    	c.getSock().sendEvent(COURSESNAMES, gson.toJson(filenames));
+    public SharedCourseDataBase getSharedCourseDataBase() {
+        return sharedCourseDataBase;
     }
 
-    /**
-     * Permet d'envoyer au client sa derniere sauvegarde
-     * @param c La representation du Client
-     */
-    protected void
-    clientOnConnectSendSave (Client c, String filename)
-    {
-        dbManager.getDBCourse().setCurrentDir(c.getStudent().toString());
-        dbManager.getDBCourse().setCourseFile(filename);
-        if (new File(System.getProperty("user.dir") + "\\serveur\\db\\" + c.getStudent().getNom() + "\\" + filename + ".txt").exists())
-        {
-            if (dbManager.getDBCourse().getAllCourses().contains(filename))
-            {
-                Debug.log("Send data to : " + c.getStudent().getNom());
-                c.getSock().sendEvent(LOADCOURSE, gson.toJson(dbManager.getDBCourse().load(c.getStudent().getNom() + "\\" + filename)));
-            }
-            else
-            {
-            	Debug.error(c.getStudent().toString() + " sent an impossible course: " + filename);
-            	Debug.error(filename + " not in " + dbManager.getDBCourse().getAllCourses().toString());
-            }
-        } else {
-            Debug.error("File " + System.getProperty("user.dir") + "\\serveur\\db\\" + c.getStudent().getNom() + "\\" + filename + ".txt" + " doesnt exist");
-        }
+    public TypeCourseDataBase getCourseTypeDataBase() {
+        return courseTypeDataBase;
     }
-
-    /**
-     * Enregistre shareCourse puis renvoie le code généré.
-     * @param shareCourse : le parcours partage a enregistrer
-     * @return le Code généré.
-     */
-    protected void clientCreateShareCourse(ArrayList<String> shareCourse, Client client){
-        //La liste des codes existant deja (le nom des fichiers sont les codes)
-        ArrayList<String> existingName = dbManager.getDbSharedCourses().loadSharedCourseNames();
-        //On genere le code
-        String code = ServerUtility.generateCourseCode(existingName);
-
-        dbManager.getDbSharedCourses().saveSharedCourse(code, shareCourse);
-        Debug.log("Save share course and send code "+code+" to "+client.getStudent().getNom());
-        client.getSock().sendEvent(ASKCODE,gson.toJson(code));
-    }
-
-    /**
-     * Permet de mettre a jour les semestres et de les envoyer aux clients
-     */
-    public void
-    updateSemestersOfClients ()
-    {
-    	SemestersSample.init();
-    	if (this.listOfClients.size() == 0)
-    		return;
-    	Debug.log("--- Sending new semesters to clients... ---");
-    	// Creation du message
-    	String msg = ServerUtility.getListOfSemestersJSONed();
-        // Pour chaque client, on lui envoie le message
-    	for (Client c : this.listOfClients)
-    	{
-    		Debug.log("Sending to " + c.getStudent().getNom());
-    		c.getSock().sendEvent(NET.CLIENTUPDATE, msg);
-    	}
-    	Debug.log("--- New Semesters sended. ---");
-    }
-
-    /** Retourne la liste des clients */
-    public ArrayList<Client>
-    getClients ()
-    {return this.listOfClients;}
 }
