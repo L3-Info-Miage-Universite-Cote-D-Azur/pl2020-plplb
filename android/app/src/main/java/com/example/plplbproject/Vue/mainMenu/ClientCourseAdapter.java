@@ -44,12 +44,14 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
     private String actualParcoursName;
     private String newParcoursName;
     private InputMethodManager imm;
+    private Boolean listenerFlag; // Pour créer un seul listener et éviter des dédoublements
 
 
     public ClientCourseAdapter(ArrayList<String> coursesNames, MainMenuActivity mainMenuActivity) {
         this.coursesNames = coursesNames;
         this.mainMenuActivity = mainMenuActivity;
         this.actualParcoursName = "";
+        this.listenerFlag = false;
     }
 
     /**
@@ -98,6 +100,9 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
                     @Override
                     public void onClick(View view) {
 
+
+                        actualParcoursName = coursesNames.get(position);
+
                         if (holder.parcoursName.getText() != null) {
                             newParcoursName = holder.parcoursName.getText().toString();
                         }
@@ -113,7 +118,11 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
                         nomsAEnvoyer.add(actualParcoursName);
                         nomsAEnvoyer.add(newParcoursName);
 
-                        Connexion.CONNEXION.setEventListener(RENAMECOURSE,rename());
+
+                        if(!listenerFlag){
+                            Connexion.CONNEXION.setEventListener(RENAMECOURSE,rename());
+                            listenerFlag = true;
+                        }
                         Connexion.CONNEXION.send(RENAMECOURSE,gson.toJson(nomsAEnvoyer));
 
                     }
@@ -162,6 +171,7 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
             }
         };
     }
+
 
 
 }
