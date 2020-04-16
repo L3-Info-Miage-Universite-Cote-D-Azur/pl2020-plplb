@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.CourseDataBase;
 import dataBase.SharedCourseDataBase;
-import debug.Debug;
+import log.Debug;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 

@@ -5,12 +5,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import metier.UE;
 import metier.parcours.ParcoursType;
-import metier.semestre.SemesterList;
-import metier.semestre.Semestre;
 import metier.semestre.SemestreRules;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

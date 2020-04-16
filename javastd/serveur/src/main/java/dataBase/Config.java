@@ -1,7 +1,6 @@
 package dataBase;
 
-import debug.Debug;
-import metier.parcours.Parcours;
+import log.Logger;
 
 import java.io.File;
 import java.util.Arrays;
@@ -30,7 +29,7 @@ public class Config {
 
         List<String> configArray = new Parser().parseLine(configFile.getRaw());
         if(configArray.size()==0){
-            Debug.error("Impossible de charger le fichier config");
+            Logger.error("Impossible de charger le fichier config");
             return;
         }
         isInit = true;

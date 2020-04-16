@@ -5,7 +5,7 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import debug.Debug;
+import log.Debug;
 import metier.Student;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;

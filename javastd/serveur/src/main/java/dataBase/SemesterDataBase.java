@@ -1,6 +1,6 @@
 package dataBase;
 
-import debug.Debug;
+import log.Logger;
 import metier.UE;
 import metier.semestre.SemesterList;
 import metier.semestre.SemestreRules;
@@ -57,7 +57,7 @@ public class SemesterDataBase {
         //on charge le fichier des ue
         FileManager ueFileManager = new FileManager(new File(directory,"ue.csv"));
         if(!ueFileManager.exists()){
-            Debug.error("can't find file ue.csv in :"+directory.getAbsolutePath());
+            Logger.error("can't find file ue.csv in :"+directory.getAbsolutePath());
             return;
         }
         List<List<String>> allUeString = parser.parseCsv(ueFileManager.getRaw());
@@ -69,12 +69,12 @@ public class SemesterDataBase {
         for(int i = 0; i<numberSemester; i++){
             FileManager semesterRule = new FileManager(new File(directory,"s"+(i+1)+"rule"));
             if(!semesterRule.exists()){
-                Debug.error("can't find file "+"s"+(i+1)+"rule"+" in directory :"+directory.getAbsolutePath());
+                Logger.error("can't find file "+"s"+(i+1)+"rule"+" in directory :"+directory.getAbsolutePath());
                 return;
             }
             SemestreRules semestreRules =  converter.stringToSemestreRule(semesterRule.getRaw());
             if(semestreRules==null){
-                Debug.error("can't initilise semester, s"+(i+1)+"rule is not completed");
+                Logger.error("can't initilise semester, s"+(i+1)+"rule is not completed");
             }
             else {
                 semesterList.get(i).setRules(semestreRules);

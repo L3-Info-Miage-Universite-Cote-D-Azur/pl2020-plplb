@@ -1,12 +1,11 @@
 package dataBase;
 
-import debug.Debug;
+import log.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +20,7 @@ public class CourseDataBaseTest {
     @BeforeEach
     public void init(){
         //On mute l'envoie du serveur
-        Debug.verbose = false;
+        Logger.verbose = false;
 
         //Creation du dossier principal
         directory = new File("TestDirectory");

@@ -1,6 +1,6 @@
 package dataBase;
 
-import debug.Debug;
+import log.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class FileManager {
             return true;
         } catch (IOException e) {
             e.printStackTrace();
-            Debug.error(this.file.getName()+ "can\'t be create");
+            Logger.error(this.file.getName()+ "can\'t be create");
         }
         return false;
     }
@@ -89,11 +89,11 @@ public class FileManager {
                 pw.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Debug.error("File " + this.file.getName() + " does not exist !");
+                Logger.error("File " + this.file.getName() + " does not exist !");
             }
 
         } else {
-            Debug.error(this.file.getName() + " isn\'t writable !");
+            Logger.error(this.file.getName() + " isn\'t writable !");
         }
 
     }
@@ -137,10 +137,10 @@ public class FileManager {
                 return resultString.toString();
             } catch (Exception e) {
                 e.printStackTrace();
-                Debug.error(this.file.getName() + " doesn\'t exist !");
+                Logger.error(this.file.getName() + " doesn\'t exist !");
             }
         } else {
-            Debug.error(this.file.getName() + " isn\'t readable !");
+            Logger.error(this.file.getName() + " isn\'t readable !");
         }
         return "";
     }

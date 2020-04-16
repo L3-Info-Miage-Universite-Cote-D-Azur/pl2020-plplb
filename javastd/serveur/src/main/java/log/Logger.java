@@ -1,22 +1,22 @@
-package debug;
+package log;
 
 /**
- * Debug gere l'affichage des messages du serveur
+ * Logger gere l'affichage des messages du serveur
  */
-public class Debug
+public class Logger
 {
     /* Set this value to true if you want to get verbose mode */
     public static boolean verbose = true;
-    private Debug () {}
+    private Logger () {}
 
     /**
      * affiche un message de facon standard.
      * @param msg le message a afficher
      */
     public static void
-    debug (String msg)
+    info (String msg)
     {
-        if (Debug.verbose)
+        if (Logger.verbose)
             System.out.println(msg);
     }
 
@@ -26,9 +26,7 @@ public class Debug
      */
     public static void
     log (String msg)
-    {
-        Debug.debug("[*] " + msg);
-    }
+    {Logger.info("[*] " + msg);}
 
     /**
      * error affiche un message d'erreur
@@ -36,7 +34,5 @@ public class Debug
      */
     public static void
     error (String msg)
-    {
-        Debug.debug("[E] " + msg);
-    }
+    {Logger.info("[E] " + msg);}
 }

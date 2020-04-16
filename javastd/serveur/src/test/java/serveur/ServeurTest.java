@@ -4,7 +4,7 @@ import com.corundumstudio.socketio.*;
 
 import database.DBManager;
 import database.FileManager;
-import debug.Debug;
+import log.Debug;
 import metier.Categorie;
 import metier.Student;
 import metier.UE;

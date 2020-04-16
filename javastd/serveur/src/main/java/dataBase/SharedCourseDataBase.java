@@ -1,6 +1,7 @@
 package dataBase;
 
-import debug.Debug;
+
+import log.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class SharedCourseDataBase {
         //On ecrit dans le fichier. (fileManager s'occupe de le creer)
         fileManager.write(content);
 
-        Debug.log("Create share course :"+code);
+        Logger.log("Create share course :"+code);
     }
 
     /**
@@ -108,13 +109,13 @@ public class SharedCourseDataBase {
 
         //Si rien n'a été trouvé.
         if(shareCourse == null){
-            Debug.error("Can't find the share file "+shareCourseName+ " : No such file in DB.");
+            Logger.error("Can't find the share file "+shareCourseName+ " : No such file in DB.");
             return null;
         }
         FileManager fileManager = new FileManager(shareCourse);
         String content = fileManager.getRaw();
 
-        Debug.log("load content in share file "+shareCourseName);
+        Logger.log("load content in share file "+shareCourseName);
         return content;
     }
 

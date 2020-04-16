@@ -6,8 +6,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.CourseDataBase;
-import dataBase.SemesterDataBase;
-import debug.Debug;
+import log.Debug;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 

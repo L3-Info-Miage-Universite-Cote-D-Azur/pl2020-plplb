@@ -1,4 +1,4 @@
-package debug;
+package log;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,8 +8,8 @@ import java.io.PrintStream;
 
 import org.junit.jupiter.api.*;
 
-public class 
-DebugTest 
+public class
+LoggerTest
 {
 	/**
 	 * -- UT Tests --
@@ -29,7 +29,7 @@ DebugTest
 		ps = new PrintStream(output);
 		old = System.out;
 		System.setOut(ps);
-		Debug.verbose = true;
+		Logger.verbose = true;
 	}
 	
 	@AfterEach
@@ -41,7 +41,7 @@ DebugTest
 	public void
 	testError ()
 	{
-		Debug.error("Test");
+		Logger.error("Test");
 		assertTrue(output.toString().equals("[E] Test" + System.lineSeparator()));
 	}
 	
@@ -49,7 +49,7 @@ DebugTest
 	public void
 	testLog ()
 	{
-		Debug.log("Test");
+		Logger.log("Test");
 		assertTrue(output.toString().equals("[*] Test" + System.lineSeparator()));
 	}
 	
@@ -58,14 +58,14 @@ DebugTest
 	testDebug ()
 	{
 		/* test valide de debug */
-		Debug.verbose = true;
-		Debug.debug("Test");
+		Logger.verbose = true;
+		Logger.info("Test");
 		assertTrue(output.toString().equals("Test\r\n"));
 		System.out.flush();
 		
 		/* flusher System.out ne flush par l'output */
-		Debug.verbose = false;
-		Debug.debug("Test");
+		Logger.verbose = false;
+		Logger.info("Test");
 		assertTrue(output.toString().equals("Test\r\n"));
 		
 		/* flush de l'output, ca ne vide pas le buffer */

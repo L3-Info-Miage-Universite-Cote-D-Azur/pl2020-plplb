@@ -1,6 +1,6 @@
 package dataBase;
 
-import debug.Debug;
+import log.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class CourseDataBase {
             FileManager fileManager = new FileManager(saveFile);
             String content = fileManager.getRaw();//On recupere le contenue du fichier.
 
-            Debug.log("Load save "+saveName+" for "+studentName);
+            Logger.log("Load save "+saveName+" for "+studentName);
             //On renvoie le contenu du fichier
             return  content;
         }
@@ -93,7 +93,7 @@ public class CourseDataBase {
         if(studentDirectory == null){
             //On le creer
             studentDirectory = new File(directory,studentName);
-            Debug.log("Create Directory for "+studentName);
+            Logger.log("Create Directory for "+studentName);
             //On le creer aussi rééellement
             studentDirectory.mkdir();
         }
@@ -120,7 +120,7 @@ public class CourseDataBase {
         //Le fileManager s'occupe de géréer la creation eventuelle
         //du fichier, des erreurs du au droit d'ecriture, ect....
         fileManager.write(save);//On ecrit le contenue save dans le fichier.
-        Debug.log("Write save "+saveName+" for "+studentName);
+        Logger.log("Write save "+saveName+" for "+studentName);
     }
 
     /**
@@ -148,7 +148,7 @@ public class CourseDataBase {
 
         //Si il n'y a pas de sauvegardes.
         if(allStudentSaves.size() == 0){
-            Debug.error("No saves for student : "+studentName+" in database.");
+            Logger.error("No saves for student : "+studentName+" in database.");
             return null;
         }
 
@@ -196,7 +196,7 @@ public class CourseDataBase {
         File saveFile = this.getStudentSave(studentName,saveName);
 
         if(saveFile == null){//Si le fichier n'existe pas, on ne peut pas le delete.
-            Debug.error("Can't delete "+saveName+" for "+studentName+" : No such file.");
+            Logger.error("Can't delete "+saveName+" for "+studentName+" : No such file.");
             return false;
         }
 
@@ -220,7 +220,7 @@ public class CourseDataBase {
         File oldSave = this.getStudentSave(studentName,saveName);
 
         if(oldSave == null){//Si l'ancien fichier n'existe pas.
-            Debug.error("Can't rename "+saveName+" for "+studentName+" : No such file.");
+            Logger.error("Can't rename "+saveName+" for "+studentName+" : No such file.");
             return false;
         }
         //On recupere le contenue du fichier

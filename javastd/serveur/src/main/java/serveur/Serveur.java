@@ -1,13 +1,11 @@
 package serveur;
 
-import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.*;
+import log.Logger;
 import serveur.connectionStruct.ClientSocketList;
 import serveur.connectionStruct.LinkClientSocket;
-import debug.Debug;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
@@ -50,17 +48,17 @@ public class Serveur {
 
     public Serveur(Config config){
         this.config = config;
-        Debug.log("Creating server..");
+        Logger.log("Creating server..");
 
-        Debug.log("Creating server configuration..");
+        Logger.log("Creating server configuration..");
         Configuration configuation = new Configuration();
         configuation.setHostname(config.getConfig("ip"));
         configuation.setPort(Integer.parseInt(config.getConfig("port")));
         allClient = new ClientSocketList();
 
-        Debug.log("Server configuration created.");
+        Logger.log("Server configuration created.");
 
-        Debug.log("Load Database...");
+        Logger.log("Load Database...");
         initCourseDataBase();
         initCourseTypeDataBas();
         initSemesterDataBase();
@@ -68,9 +66,9 @@ public class Serveur {
 
         // creation du serveur
         this.server = new SocketIOServer(configuation);
-        Debug.log("Init Listener...");
+        Logger.log("Init Listener...");
         initListener();
-        Debug.log("Server ready to start.");
+        Logger.log("Server ready to start.");
     }
 
     /**
@@ -82,7 +80,7 @@ public class Serveur {
 
         File directory = new File(config.getparentPath(),directoryRelativePath);
         if(!directory.exists() || !directory.isDirectory()){
-            Debug.error("file not found: "+directory.getAbsolutePath());
+            Logger.error("file not found: "+directory.getAbsolutePath());
         }
 
         semesterDataBase = new SemesterDataBase(directory,numberSemester);
@@ -153,16 +151,16 @@ public class Serveur {
      */
     public void startServer () {
         server.start();
-        Debug.log("Server listening.");
+        Logger.log("Server listening.");
     }
 
     /**
      * Permet au serveur d'arreter de listen et de se fermer
      */
     public void stopServeur () {
-        Debug.log("The application is about to shutdown..");
+        Logger.log("The application is about to shutdown..");
         server.stop();
-        Debug.log("Shutdown.");
+        Logger.log("Shutdown.");
     }
 
 

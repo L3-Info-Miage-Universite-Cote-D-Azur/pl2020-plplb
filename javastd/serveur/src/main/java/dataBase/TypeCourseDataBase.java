@@ -1,9 +1,8 @@
 package dataBase;
 
-import debug.Debug;
+import log.Logger;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TypeCourseDataBase {
@@ -26,7 +25,7 @@ public class TypeCourseDataBase {
      */
     public void initParcoursType(){
         if(!directory.exists() || ! directory.isDirectory()){
-            Debug.error("can load Course Type directory");
+            Logger.error("can load Course Type directory");
             return;
         }
 

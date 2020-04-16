@@ -3,16 +3,12 @@ package serveur;
 import static java.lang.Character.isDigit;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
 import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
-import metier.semestre.Semestre;
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import com.corundumstudio.socketio.AckCallback;
 import com.corundumstudio.socketio.HandshakeData;
@@ -22,7 +18,7 @@ import com.corundumstudio.socketio.Transport;
 import com.corundumstudio.socketio.protocol.Packet;
 
 import database.FileManager;
-import debug.Debug;
+import log.Debug;
 import metier.Student;
 import metiermanager.semesters.SemestersSample;
 import metiermanager.semesters.SemestreConsts;

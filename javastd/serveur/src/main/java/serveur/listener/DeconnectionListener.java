@@ -4,7 +4,7 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
-import debug.Debug;
+import log.Debug;
 
 /**
  * Listener qui s'occupe de la deconnection
