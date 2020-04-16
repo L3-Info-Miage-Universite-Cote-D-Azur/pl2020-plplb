@@ -214,7 +214,7 @@ public class PreviewActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    String subject = "Partage du parcous" + course.getName();
+                    String subject = "Partage du parcous \"" + course.getName() + " \"";
 
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("message/rfc822");
