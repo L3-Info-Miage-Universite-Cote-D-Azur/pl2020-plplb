@@ -19,7 +19,6 @@ public class UpdateSemesterTest {
 
     SemesterList semesterList;
     UpdateSemester updateSemester;
-    ArrayList<String> toSend;
     Gson gson = new GsonBuilder().create();
 
     @Before
@@ -99,17 +98,13 @@ public class UpdateSemesterTest {
         //------init du semestre list
         semesterList = new SemesterList();
         updateSemester = new UpdateSemester();
-        toSend = new ArrayList<String>();
 
         semesterList.add(semestre1);
         semesterList.add(semestre2);
         semesterList.add(semestre3);
         semesterList.add(semestre4);
 
-        toSend.add(gson.toJson(semestre1));
-        toSend.add(gson.toJson(semestre2));
-        toSend.add(gson.toJson(semestre3));
-        toSend.add(gson.toJson(semestre4));
+
 
         //On remet a zero le singleton.
         DataSemester.SEMESTER.setSemesterList(null);
@@ -121,7 +116,7 @@ public class UpdateSemesterTest {
         assertEquals(false,DataSemester.SEMESTER.hasSemesterList());
 
         //On envoie des données
-        updateSemester.call(gson.toJson(toSend));
+        updateSemester.call(gson.toJson(semesterList));
 
         //On a recu quelque chose
         assertEquals(true,DataSemester.SEMESTER.hasSemesterList());
