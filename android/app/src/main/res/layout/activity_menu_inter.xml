@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_weight="0"
-        android:text="Deconnexion"
+        android:text="Retour"
         android:layout_gravity="center_horizontal|center"
         android:visibility="visible" />
 
