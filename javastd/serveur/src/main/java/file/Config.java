@@ -26,7 +26,10 @@ public class Config {
      * cela permet d'acceder au different element qui le compose
      */
     public void initConfig(){
-
+        if(!configFile.exists()){
+            Logger.error("Impossible de trouver le fichier config");
+            return;
+        }
         List<String> configArray = new Parser().parseLine(configFile.getRaw());
         if(configArray.size()==0){
             Logger.error("Impossible de charger le fichier config");
@@ -58,11 +61,23 @@ public class Config {
     }
 
     /**
+     * Permet de recuperer la hashmap generer a l'aide du fichier (pour les test)
+     * @return la hashmap
+     */
+    protected  HashMap<String,String> getConfig(){
+        return config;
+    }
+
+    /**
      * Permet de recuperer le chemin du directory
      * @return le chemin du directory
      */
     public String getparentPath(){
         return configFile.getParentPath();
+    }
+
+    protected boolean getIsInit(){
+        return  isInit;
     }
 
 }
