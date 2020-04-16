@@ -14,6 +14,7 @@ public class CourseDataBase {
         this.directory = directory;
     }
 
+
     /* METHODS */
 
     /**
@@ -93,6 +94,8 @@ public class CourseDataBase {
             //On le creer
             studentDirectory = new File(directory,studentName);
             Debug.log("Create Directory for "+studentName);
+            //On le creer aussi rééellement
+            studentDirectory.mkdir();
         }
 
         File saveFile = new File(studentDirectory,saveName);//On creer l'objet file.
