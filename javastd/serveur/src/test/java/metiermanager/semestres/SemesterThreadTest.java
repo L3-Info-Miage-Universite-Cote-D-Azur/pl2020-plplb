@@ -1,18 +1,12 @@
 package metiermanager.semestres;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.verification.Times;
 
 import database.FileManager;
-import debug.Debug;
+import log.Debug;
 import metiermanager.semesters.SemesterManager;
 import metiermanager.semesters.SemesterThread;
 import metiermanager.semesters.SemestersSample;

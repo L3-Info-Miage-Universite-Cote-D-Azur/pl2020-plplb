@@ -14,7 +14,7 @@ public class NET {
     //requete/envoie de la liste des nom de parcours
     public static final String COURSESNAMES = "Courses names";
 
-    //le client envoie un nom de parcour, le serveur lui envoie le parcour
+    //le client envoie un nom de parcour, le serveur lui envoie le parcours
     public static final String LOADCOURSE = "Load/Send course";
 
     //le client envoie sa sauvegarde

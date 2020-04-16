@@ -16,6 +16,8 @@ public class UpdateSemester implements Emitter.Listener {
     @Override
     public void call(Object... args) {
         Gson gson = new Gson();
+        DataSemester.SEMESTER.setSemesterList(gson.fromJson((String) args[0], SemesterList.class));
+        /*
         ArrayList<String> semesters = gson.fromJson((String) args[0], ArrayList.class);
 
         SemesterList semeterList = new SemesterList();
@@ -25,5 +27,8 @@ public class UpdateSemester implements Emitter.Listener {
         }
 
         DataSemester.SEMESTER.setSemesterList(semeterList);
+
+
+         */
     }
 }

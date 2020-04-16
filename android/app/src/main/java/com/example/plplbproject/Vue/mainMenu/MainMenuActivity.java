@@ -246,7 +246,12 @@ public class MainMenuActivity extends AppCompatActivity{
                     });
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         };
