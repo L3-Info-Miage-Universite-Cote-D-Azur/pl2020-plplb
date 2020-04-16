@@ -108,15 +108,16 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
                         mainMenuActivity.reSetNewCourse();
                         holder.parcoursName.setFocusable(false);
                         holder.parcoursName.setFocusableInTouchMode(false);
+
+                        ArrayList<String> nomsAEnvoyer = new ArrayList<>();
+                        nomsAEnvoyer.add(actualParcoursName);
+                        nomsAEnvoyer.add(newParcoursName);
+
+                        Connexion.CONNEXION.setEventListener(RENAMECOURSE,rename());
+                        Connexion.CONNEXION.send(RENAMECOURSE,gson.toJson(nomsAEnvoyer));
+
                     }
                 });
-
-                ArrayList<String> nomsAEnvoyer = new ArrayList<>();
-                nomsAEnvoyer.add(actualParcoursName);
-                nomsAEnvoyer.add(newParcoursName);
-
-                Connexion.CONNEXION.setEventListener(RENAMECOURSE,rename());
-                Connexion.CONNEXION.send(RENAMECOURSE,gson.toJson(nomsAEnvoyer));
 
             }
         });
