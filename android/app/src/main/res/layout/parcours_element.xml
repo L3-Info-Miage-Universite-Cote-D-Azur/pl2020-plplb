@@ -5,42 +5,98 @@ android:layout_height="wrap_content">
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="40dp">
 
-    <TextView
+    <EditText
         android:id="@+id/parcoursName"
         android:text="ParcoursName"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="5"
         android:textSize="20dp"
+        android:background="@null"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:gravity="center">
-    </TextView>
+    </EditText>
 
-    <Button
-        android:id="@+id/visualiser"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="visualiser"
-        android:padding="10dp"
-        ></Button>
+        android:padding="5dp">
 
-    <Button
-        android:id="@+id/modifier"
+        <ImageButton
+            android:id="@+id/supprParcours"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_delete_forever_24px"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="modifier"
-        android:padding="10dp"
-        ></Button>
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/renomParcours"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="@drawable/ic_text_rotation_none_24px"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/visualiser"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ic_visual_24px"
+            android:padding="10dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/modifier"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ic_rename_24px"
+            android:padding="10dp"
+            />
+    </LinearLayout>
+
 
 </LinearLayout>
 
-<View
-    android:id="@+id/divider"
-    android:layout_width="match_parent"
-    android:layout_height="11dp"
-    android:background="?android:attr/listDivider" />
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="11dp"
+        android:background="?android:attr/listDivider" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
 </LinearLayout>

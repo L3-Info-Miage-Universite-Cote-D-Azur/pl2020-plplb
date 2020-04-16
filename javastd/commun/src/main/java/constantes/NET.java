@@ -32,5 +32,11 @@ public class NET {
     //Le client veut charger un parcours partage depuis un code.
     public static final String COURSECODE = "share course code";
 
+    //Le client veut supprimer un parcours.
+    public static final String DELETECOURSE = "delete course";
+
+    // Le client veut renommer un parcours.
+    public static final String RENAMECOURSE = "rename course";
+
 
 }

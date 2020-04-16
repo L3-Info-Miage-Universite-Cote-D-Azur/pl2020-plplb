@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.plplbproject.R;
@@ -34,6 +36,7 @@ import metier.parcours.Parcours;
 import static constantes.NET.ASKCODE;
 import static constantes.NET.COURSECODE;
 import static constantes.NET.COURSESNAMES;
+import static constantes.NET.DELETECOURSE;
 import static constantes.NET.PREDEFINEDCOURSE;
 import static constantes.NET.SEMSTERDATA;
 
@@ -54,6 +57,7 @@ public class MainMenuActivity extends AppCompatActivity{
     private final Gson gson = new GsonBuilder().create();
 
     String code;
+    String actualParcoursName;
     private ImageButton addButton;
 
     @Override
@@ -244,6 +248,120 @@ public class MainMenuActivity extends AppCompatActivity{
                 else{
                     Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
                 }
+            }
+        };
+    }
+
+
+    public void delete(Boolean deleted, String s){
+
+        final String courseName = s;
+
+        if(deleted){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    clientCourses.remove(courseName);
+                    clientCourseAdapter.notifyDataSetChanged();
+                    Toast.makeText(getApplicationContext(), "Parcours supprimé", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "Le parcours n'a pas pu être supprimé auprès du serveur", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+
+    public void rename(Boolean renamed, String s, String news){
+
+        final String courseName = s;
+
+
+        final String newCourseName = news;
+
+        if(renamed){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    clientCourses.remove(courseName);
+                    clientCourses.add(newCourseName);
+                    clientCourseAdapter.notifyDataSetChanged();
+                    Toast.makeText(getApplicationContext(), "Parcours renommé", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "Le parcours n'a pas pu être renommé auprès du serveur", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    public Button getNewCourse() {
+        return newCourse;
+    }
+
+    public void reSetNewCourse(){
+
+        newCourse.setText("Nouveau Parcours");
+        newCourse.setOnClickListener(createNewCourse());
+
+    }
+
+    public void askConfirm(String parcoursName){
+
+        this.actualParcoursName = parcoursName;
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainMenuActivity.this);
+
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.delete_confirmation_dialog, null);
+
+        alertDialog.setView(dialogView);
+        alertDialog.setIcon(R.drawable.ic_delete_forever_24px);
+
+        final AlertDialog dialog = alertDialog.create();
+
+        Button oui = dialogView.findViewById(R.id.ouiBoutton);
+        Button non = dialogView.findViewById(R.id.nonBoutton);
+
+        oui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Connexion.CONNEXION.setEventListener(DELETECOURSE,delete());
+                Connexion.CONNEXION.send(DELETECOURSE,actualParcoursName);
+                dialog.dismiss();
+            }
+        });
+        non.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    /**
+     * Supprime le parcours voulu en appellant la méthode delete de mainMenuActivity
+     */
+    public Emitter.Listener delete(){
+        return new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Boolean deleted = gson.fromJson((String) args[0], Boolean.class);
+                delete(deleted,actualParcoursName);
             }
         };
     }
