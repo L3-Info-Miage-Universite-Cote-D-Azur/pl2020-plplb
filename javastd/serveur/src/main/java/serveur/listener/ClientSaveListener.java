@@ -6,7 +6,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.CourseDataBase;
-import log.Debug;
+import log.Logger;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
@@ -29,7 +29,7 @@ public class ClientSaveListener implements DataListener<String> {
 
         //Si le client est null.
         if(client == null) {
-            Debug.error("No such client logged.");
+            Logger.error("No such client logged.");
             return;
         }
         //On reçoit les données

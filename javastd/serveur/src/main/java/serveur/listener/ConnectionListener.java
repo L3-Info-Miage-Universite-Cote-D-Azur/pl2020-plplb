@@ -5,7 +5,7 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import log.Debug;
+import log.Logger;
 import metier.Student;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
@@ -31,7 +31,7 @@ public class ConnectionListener implements DataListener<String> {
      * @param client le client qui sait identifier
      */
     private void acceptLogin(Client client){
-        Debug.log("New client connected : " + client.toString());
+        Logger.log("New client connected : " + client.toString());
         linkClientSocket.addClient(client);
     }
 }

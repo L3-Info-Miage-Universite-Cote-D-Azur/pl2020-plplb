@@ -6,7 +6,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.TypeCourseDataBase;
-import log.Debug;
+import log.Logger;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
@@ -33,10 +33,10 @@ public class SendCoursTypeListener  implements DataListener<String> {
 
         //Si le client est null.
         if(client == null) {
-            Debug.error("No such client logged.");
+            Logger.error("No such client logged.");
             return;
         }
-        Debug.log("Send Course Type to : " + client.getStudent().getNom());
+        Logger.log("Send Course Type to : " + client.getStudent().getNom());
 
         //On charge les parcours type.
         String json = gson.toJson(typeCourseDataBase.loadTypeCourseJson());
