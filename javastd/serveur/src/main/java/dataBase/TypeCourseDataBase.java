@@ -22,19 +22,26 @@ public class TypeCourseDataBase {
 
     /**
      * Permet de charger le contenue des fichier des parcours type
+     * @return si l'initialisation c'est fait correctement
      */
-    public void initParcoursType(){
+    public boolean initParcoursType(){
         if(!directory.exists() || ! directory.isDirectory()){
             Logger.error("can load Course Type directory");
-            return;
+            return false;
         }
 
-        allParcoursType = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<String>();
         for(File courseType : directory.listFiles()){
             FileManager current = new FileManager(courseType);
             String content = current.getRaw();
-            allParcoursType.add(current.getRaw());
+            result.add(current.getRaw());
         }
+        if(result.size()==0){
+            return false;
+        }
+
+        allParcoursType = result;
+        return true;
     }
 
     /**
@@ -42,7 +49,7 @@ public class TypeCourseDataBase {
      * @return true -> initialiser; false -> non initialiser
      */
     public boolean isInit(){
-        return allParcoursType!=null || allParcoursType.size()!=0;
+        return allParcoursType!=null && allParcoursType.size()!=0;
     }
 
 

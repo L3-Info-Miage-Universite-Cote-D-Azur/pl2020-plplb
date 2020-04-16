@@ -26,12 +26,10 @@ public class SemesterDataBaseTest {
     @BeforeEach
     public void init(){
         Logger.verbose = false;
-        ClassLoader classLoader = SemesterDataBaseTest.class.getClassLoader();
-        File directory = new File(classLoader.getResource("").getFile());
-        this.directory = new File(directory,path);
+
+        this.directory = new File(path);
         this.directory.mkdir();
 
-        directory.mkdir();
         FileManager ueFileManager = new FileManager(new File(this.directory,"ue.csv"));
         ueFileManager.create();
 
