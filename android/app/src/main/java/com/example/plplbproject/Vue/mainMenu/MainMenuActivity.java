@@ -77,6 +77,7 @@ public class MainMenuActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
 
+
         //le client a reussi a se connecter et n'a pas la liste des semestre on lui envoie
         if(!DataSemester.SEMESTER.hasSemesterList()){
             Connexion.CONNEXION.setEventListener(SEMSTERDATA, new UpdateSemester());
@@ -202,7 +203,10 @@ public class MainMenuActivity extends AppCompatActivity{
                             public void onClick(DialogInterface dialog, int which) {
                                 code = input.getText().toString();
                                 if (code != "") {
-                                    Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
+                                    if(!Connexion.CONNEXION.isCodeListenerSet()){
+                                        Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
+                                        Connexion.CONNEXION.setCodeListenerSet(true);
+                                    }
                                     Connexion.CONNEXION.send(COURSECODE,gson.toJson(code));
                                 }
                                 else {

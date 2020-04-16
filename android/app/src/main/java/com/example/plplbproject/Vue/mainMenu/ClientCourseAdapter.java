@@ -44,14 +44,12 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
     private String actualParcoursName;
     private String newParcoursName;
     private InputMethodManager imm;
-    private Boolean listenerFlag; // Pour créer un seul listener et éviter des dédoublements
 
 
     public ClientCourseAdapter(ArrayList<String> coursesNames, MainMenuActivity mainMenuActivity) {
         this.coursesNames = coursesNames;
         this.mainMenuActivity = mainMenuActivity;
         this.actualParcoursName = "";
-        this.listenerFlag = false;
     }
 
     /**
@@ -75,12 +73,11 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
     public void onBindViewHolder(@NonNull final ClientCourseViewHolder holder, final int position) {
         holder.parcoursName.setText(coursesNames.get(position));
 
-        actualParcoursName = coursesNames.get(position);
 
         holder.supprButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                actualParcoursName = coursesNames.get(position);
                 mainMenuActivity.askConfirm(actualParcoursName);
             }
         });
@@ -119,9 +116,9 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
                         nomsAEnvoyer.add(newParcoursName);
 
 
-                        if(!listenerFlag){
+                        if(!Connexion.CONNEXION.isRenameListenerSet()){
                             Connexion.CONNEXION.setEventListener(RENAMECOURSE,rename());
-                            listenerFlag = true;
+                            Connexion.CONNEXION.setRenameListenerSet(true);
                         }
                         Connexion.CONNEXION.send(RENAMECOURSE,gson.toJson(nomsAEnvoyer));
 
@@ -131,9 +128,12 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
             }
         });
 
+
         holder.visualiserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                actualParcoursName = coursesNames.get(position);
                 Intent intent = new Intent(mainMenuActivity, PreviewActivity.class);
                 intent.putExtra("className","MainMenuActivity");
                 intent.putExtra("CourseName",coursesNames.get(position));
@@ -145,6 +145,7 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
         holder.modifButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                actualParcoursName = coursesNames.get(position);
                 Intent intent = new Intent(mainMenuActivity, CourseBuilderActivity.class);
                 intent.putExtra("className","MainMenuActivity");
                 intent.putExtra("CourseName",coursesNames.get(position));
