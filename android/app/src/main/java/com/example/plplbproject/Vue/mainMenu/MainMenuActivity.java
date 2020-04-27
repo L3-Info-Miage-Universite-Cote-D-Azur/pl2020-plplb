@@ -203,11 +203,17 @@ public class MainMenuActivity extends AppCompatActivity{
                             public void onClick(DialogInterface dialog, int which) {
                                 code = input.getText().toString();
                                 if (code != "") {
-                                    if(!Connexion.CONNEXION.isCodeListenerSet()){
-                                        Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
-                                        Connexion.CONNEXION.setCodeListenerSet(true);
+                                    if(!alreadyInList(code)){
+                                        if(!Connexion.CONNEXION.isCodeListenerSet()){
+                                            Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
+                                            Connexion.CONNEXION.setCodeListenerSet(true);
+                                        }
+                                        Connexion.CONNEXION.send(COURSECODE,gson.toJson(code));
                                     }
-                                    Connexion.CONNEXION.send(COURSECODE,gson.toJson(code));
+                                    else {
+                                        Toast.makeText(getApplicationContext(), "Ce parcours est déjà dans vos sauvegardes", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
                                 else {
                                     Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
@@ -227,6 +233,12 @@ public class MainMenuActivity extends AppCompatActivity{
         };
     }
 
+    public boolean alreadyInList(String code){
+        for(String parcoursName : clientCourses){
+            if(parcoursName.equals(code)) return true;
+        }
+        return false;
+    }
 
     /**
      * Controller qui permet de gerer la reception du parcours
