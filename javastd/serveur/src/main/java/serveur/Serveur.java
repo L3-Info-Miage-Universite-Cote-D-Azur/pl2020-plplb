@@ -109,11 +109,14 @@ public class Serveur {
      */
     protected void initCourseDataBase(){
         String directoryRelativePath = config.getConfig("save_directory");
-        File directory = new File(config.getparentPath(),directoryRelativePath);
+        File directory = new File(directoryRelativePath);
 
         //le fichier n'existe pas on le crée
         if(!directory.exists()){
             directory.mkdir();
+            if(!directory.exists()){
+                Logger.error("cant find directory :"+directory.getAbsolutePath());
+            }
         }
         courseDataBase = new CourseDataBase(directory);
     }
@@ -123,10 +126,13 @@ public class Serveur {
      */
     protected void initSharedCourseDataBase(){
         String directoryRelativePath = config.getConfig("share_directory");
-        File directory = new File(config.getparentPath(),directoryRelativePath);
+        File directory = new File(directoryRelativePath);
         //le fichier n'existe pas on le crée
         if(!directory.exists()){
             directory.mkdir();
+            if(!directory.exists()){
+                Logger.error("cant find directory :"+directory.getParent());
+            }
         }
         sharedCourseDataBase = new SharedCourseDataBase(directory);
     }

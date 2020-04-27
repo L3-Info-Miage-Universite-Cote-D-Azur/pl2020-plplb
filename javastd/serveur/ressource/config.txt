@@ -8,5 +8,6 @@ number_semester:=4
 courseType_directory:=courseType
 
 !client save
+!relative par rapport a l'endroit d'execution
 save_directory:=sauvegarde
 share_directory:=share

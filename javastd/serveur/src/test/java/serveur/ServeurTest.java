@@ -34,8 +34,9 @@ public class ServeurTest {
         when(config.getConfig("port")).thenReturn("12345");
         when(config.getConfig("semestre_directory")).thenReturn("semestre");
         when(config.getConfig("courseType_directory")).thenReturn("courseType");
-        when(config.getConfig("save_directory")).thenReturn("sauvegarde");
-        when(config.getConfig("share_directory")).thenReturn("share");
+        //on creer les fichier par rapport a directory
+        when(config.getConfig("save_directory")).thenReturn(directory.getAbsolutePath()+"/sauvegarde");
+        when(config.getConfig("share_directory")).thenReturn(directory.getAbsolutePath()+"/share");
         when(config.getConfig("number_semester")).thenReturn("0");
 
         when(config.getparentPath()).thenReturn(directory.getAbsolutePath());
@@ -110,10 +111,13 @@ public class ServeurTest {
         //il est bien intialiser
         assertEquals(serveur.getCourseDataBase()!=null,true);
 
+
+
     }
 
     @Test
     public void intShareDBTest(){
+
         assertEquals(serveur.getSharedCourseDataBase(),null);
         File dbDirectory = new File(directory,"share");
         //le dossier existe pas
@@ -144,6 +148,8 @@ public class ServeurTest {
 
         //il est bien intialiser
         assertEquals(serveur.getSharedCourseDataBase()!=null,true);
+
+
 
     }
 
