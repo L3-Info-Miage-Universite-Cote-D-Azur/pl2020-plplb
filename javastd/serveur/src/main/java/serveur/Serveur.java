@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dataBase.*;
 import file.Config;
 import log.Logger;
+import serveur.connectionStruct.Client;
 import serveur.connectionStruct.ClientSocketList;
 import serveur.connectionStruct.LinkClientSocket;
 
@@ -45,8 +46,6 @@ public class Serveur {
     private TypeCourseDataBase courseTypeDataBase;
 
     /*DATA BASE*/
-
-
     public Serveur(Config config){
         this.config = config;
         Logger.log("Creating server..");
@@ -71,7 +70,6 @@ public class Serveur {
         initListener();
         Logger.log("Server ready to start.");
     }
-
 
     /**
      * Constructeur pour les test (aucun init de database)
@@ -154,7 +152,6 @@ public class Serveur {
         return true;
     }
 
-
     /**
      * Permet d'initialiser tout les listener du serveur
      */
@@ -170,16 +167,17 @@ public class Serveur {
         server.addEventListener(PREDEFINEDCOURSE,String.class, new SendCoursTypeListener(allClient,courseTypeDataBase));
         server.addEventListener(DELETECOURSE,String.class, new DeleteSaveListener(allClient,courseDataBase));
         server.addEventListener(RENAMECOURSE,String.class, new RenameSaveListener(allClient,courseDataBase));
-
     }
-
-
-
 
     /**
      * Permet au serveur de commencer a listen des clients
      */
     public void startServer () {
+        // Daemon sur la MAJ automatique des semestres
+        Thread daemonThread = new Thread(new Updater(this));
+        daemonThread.setDaemon(true);
+        daemonThread.start();
+
         server.start();
         Logger.log("Server listening.");
     }
@@ -193,6 +191,29 @@ public class Serveur {
         Logger.log("Shutdown.");
     }
 
+    /**
+     * Permet de mettre a jour les semestres et de les envoyer aux clients
+     */
+    public void
+    updateSemestersOfClients ()
+    {
+        if (!this.semesterDataBase.initSemesterList())
+            return;
+        if (this.allClient.numberClient() == 0)
+            return;
+        Logger.log("--- Sending new semesters to clients... ---");
+        // Creation du message
+        String msg = this.gson.toJson(semesterDataBase.getSemesterList());
+        // Pour chaque client, on lui envoie le message
+        for (Client c : this.allClient.getAll())
+        {
+            Logger.log("Sending to " + c.getStudent().getNom());
+            c.getSock().sendEvent(SERVERUPDATE, msg);
+        }
+        Logger.log("--- New Semesters sended. ---");
+    }
+
+    public Config getServConfig () {return this.config;}
 
     /*FONCTION POUR LES TEST*/
     public CourseDataBase getCourseDataBase() {

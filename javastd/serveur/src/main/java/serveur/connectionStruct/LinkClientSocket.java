@@ -3,11 +3,16 @@ package serveur.connectionStruct;
 import com.corundumstudio.socketio.SocketIOClient;
 import metier.Student;
 
+import java.util.List;
+
 /**
  * Interface qui permet de faire le lien entre client et socket
  * la structure interne n'a pas d'importance et peut donc etre changer
  */
 public interface LinkClientSocket {
+
+    /** Renvoie une List&ltClient&gt */
+    public List<Client> getAll();
 
     /**
      * Permet de recuperer un Client
