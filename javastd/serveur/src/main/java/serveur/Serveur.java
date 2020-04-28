@@ -30,7 +30,7 @@ public class Serveur {
     private final SocketIOServer server;
 
     /** Contient la liste de tous les clients actuellement connectes au serveur */
-    private LinkClientSocket allClient = new ClientSocketList();
+    private ClientSocketList allClient = new ClientSocketList();
 
     /*DATA BASE*/
     /** gere les sauvegarde des client*/
@@ -196,16 +196,23 @@ public class Serveur {
      */
     public void
     updateSemestersOfClients ()
+    {this.updateSemestersOfClients(this.semesterDataBase, this.allClient, this.gson);}
+
+    /**
+     * Permet de mettre a jour les semestres et de les envoyer aux clients
+     */
+    public void
+    updateSemestersOfClients (SemesterDataBase semesterDataBase, ClientSocketList allClient, Gson gson)
     {
-        if (!this.semesterDataBase.initSemesterList())
+        if (!semesterDataBase.initSemesterList())
             return;
-        if (this.allClient.numberClient() == 0)
+        if (allClient.numberClient() == 0)
             return;
         Logger.log("--- Sending new semesters to clients... ---");
         // Creation du message
-        String msg = this.gson.toJson(semesterDataBase.getSemesterList());
+        String msg = gson.toJson(semesterDataBase.getSemesterList());
         // Pour chaque client, on lui envoie le message
-        for (Client c : this.allClient.getAll())
+        for (Client c : allClient)
         {
             Logger.log("Sending to " + c.getStudent().getNom());
             c.getSock().sendEvent(SERVERUPDATE, msg);

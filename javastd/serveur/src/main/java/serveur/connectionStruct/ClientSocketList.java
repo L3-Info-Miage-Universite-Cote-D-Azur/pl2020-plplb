@@ -12,11 +12,6 @@ import java.util.List;
  */
 public class ClientSocketList extends ArrayList<Client> implements LinkClientSocket{
 
-    /** Renvoie une List&ltClient&gt */
-    public List<Client>
-    getAll ()
-    {return this.getAll();}
-
     /**
      * Permet de recuperer un Client
      * @param student La student que l'on veut trouver

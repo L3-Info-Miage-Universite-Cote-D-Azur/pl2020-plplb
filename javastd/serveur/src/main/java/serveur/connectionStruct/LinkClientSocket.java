@@ -11,9 +11,6 @@ import java.util.List;
  */
 public interface LinkClientSocket {
 
-    /** Renvoie une List&ltClient&gt */
-    public List<Client> getAll();
-
     /**
      * Permet de recuperer un Client
      * @param student La student que l'on veut trouver

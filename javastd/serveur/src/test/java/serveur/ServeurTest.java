@@ -1,16 +1,29 @@
 package serveur;
 
+import com.corundumstudio.socketio.SocketIOClient;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dataBase.SemesterDataBase;
 import file.Config;
 import file.FileManager;
 import log.Logger;
+import metier.Student;
+import metier.semestre.SemesterList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import serveur.connectionStruct.Client;
+import serveur.connectionStruct.ClientSocketList;
+import serveur.connectionStruct.LinkClientSocket;
 
 import java.io.File;
+import java.net.Socket;
 
+import static constantes.NET.SERVERUPDATE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -168,4 +181,41 @@ public class ServeurTest {
         }
         directory.delete();
     }
+
+
+
+    @Mock
+    SemesterDataBase sdb = Mockito.mock(SemesterDataBase.class);
+
+
+    @Mock
+    SocketIOClient csock = Mockito.mock(SocketIOClient.class);
+
+    @Test
+    public void
+    testUpdateSemestersOfClients(){
+        Gson gson = new GsonBuilder().create();
+        ClientSocketList allClient = new ClientSocketList();
+        allClient.addClient(new Client(new Student("name"), csock));
+        Logger.verbose = false;
+        SemesterList sl = new SemesterList();
+
+        when(sdb.initSemesterList()).thenReturn(true);
+        when(sdb.getSemesterList()).thenReturn(sl);
+
+
+        this.serveur.updateSemestersOfClients(sdb, allClient, gson);
+
+
+        Mockito.verify(csock, Mockito.times(1)).sendEvent(SERVERUPDATE, gson.toJson(sl));
+
+
+
+
+    }
+
+
+
+
+
 }
