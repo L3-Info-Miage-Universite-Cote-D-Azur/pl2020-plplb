@@ -18,8 +18,6 @@ Updater implements Runnable
     private Serveur serv;
     /** Directory */
     private File dir;
-    /** Booleen de sortie de thread */
-    private boolean __UT;
 
     /**
      * Constructeur de SemesterThread
@@ -27,10 +25,18 @@ Updater implements Runnable
      */
     public
     Updater (Serveur s)
+    {this(s, new File(s.getServConfig().getparentPath(), s.getServConfig().getConfig("semestre_directory")));}
+
+    /**
+     * Constructeur de SemesterThread
+     * @param s Le serveur
+     * @param f le fichier
+     */
+    public
+    Updater (Serveur s, File f)
     {
         this.serv = s;
-        this.dir = new File(this.serv.getServConfig().getparentPath(), this.serv.getServConfig().getConfig("semestre_directory"));
-        this.__UT = true;
+        this.dir = f;
     }
 
     @Override
@@ -39,29 +45,27 @@ Updater implements Runnable
     {
         long lastModified = FileUtility.getLastModified(this.dir);
         try {
-            while (this.__UT)
+            while (true)
             {
                 TimeUnit.SECONDS.sleep(10);
-                if (FileUtility.getLastModified(this.dir) != lastModified)
-                {
-                    lastModified = FileUtility.getLastModified(this.dir);
-                    this.serv.updateSemestersOfClients();
-                    Logger.log("Semesters updated !");
-                }
+                lastModified = this.body(lastModified);
             }
         } catch (Exception E) {
-            Logger.error("An error in SemesterThread has occured");
+            Logger.error("An error in Updater has occured");
             E.printStackTrace();
             return;
         }
     }
 
-    public void
-    swapBool ()
+    public long
+    body (long lastModified)
     {
-        if (this.__UT == true)
-            this.__UT = false;
-        else
-            this.__UT = true;
+        if (FileUtility.getLastModified(this.dir) != lastModified)
+        {
+            lastModified = FileUtility.getLastModified(this.dir);
+            this.serv.updateSemestersOfClients();
+            Logger.log("Semesters updated !");
+        }
+        return lastModified;
     }
 }
