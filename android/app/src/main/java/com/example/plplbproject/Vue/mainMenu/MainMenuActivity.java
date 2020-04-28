@@ -157,7 +157,7 @@ public class MainMenuActivity extends AppCompatActivity{
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        clientCourseAdapter.setParcoursNames(coursesNames);
+                        clientCourseAdapter.updateCourses(coursesNames);
                         clientCourseAdapter.notifyDataSetChanged();
                     }
                 });
@@ -204,10 +204,9 @@ public class MainMenuActivity extends AppCompatActivity{
                                 code = input.getText().toString();
                                 if (code != "") {
                                     if(!alreadyInList(code)){
-                                        if(!Connexion.CONNEXION.isCodeListenerSet()){
-                                            Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
-                                            Connexion.CONNEXION.setCodeListenerSet(true);
-                                        }
+
+                                        Connexion.CONNEXION.removeEventListener(COURSECODE);
+                                        Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
                                         Connexion.CONNEXION.send(COURSECODE,gson.toJson(code));
                                     }
                                     else {
@@ -257,7 +256,7 @@ public class MainMenuActivity extends AppCompatActivity{
                             Toast.makeText(getApplicationContext(), "Parcours ajouté", Toast.LENGTH_SHORT).show();
 
                             clientCourses.add(code);
-                            clientCourseAdapter.notifyDataSetChanged();
+                            clientCourseAdapter.updateCourses(clientCourses);
                         }
                     });
                 }
@@ -312,7 +311,7 @@ public class MainMenuActivity extends AppCompatActivity{
                 public void run() {
                     clientCourses.remove(courseName);
                     clientCourses.add(newCourseName);
-                    clientCourseAdapter.notifyDataSetChanged();
+                    clientCourseAdapter.updateCourses(clientCourses);
                     Toast.makeText(getApplicationContext(), "Parcours renommé", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -321,6 +320,7 @@ public class MainMenuActivity extends AppCompatActivity{
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    clientCourseAdapter.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(), "Le parcours n'a pas pu être renommé auprès du serveur", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -358,6 +358,7 @@ public class MainMenuActivity extends AppCompatActivity{
         oui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Connexion.CONNEXION.removeEventListener(DELETECOURSE);
                 Connexion.CONNEXION.setEventListener(DELETECOURSE,delete());
                 Connexion.CONNEXION.send(DELETECOURSE,actualParcoursName);
                 dialog.dismiss();

@@ -45,6 +45,12 @@ public enum Connexion {
         mSocket.on(event, listener);
     }
 
+    public void removeEventListener(String event){
+        if(mSocket.hasListeners(event)){
+            mSocket.off(event);
+        }
+    }
+
     /**
      * connect permet de se connecter au serveur.
      */

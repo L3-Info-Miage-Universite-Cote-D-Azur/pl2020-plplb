@@ -112,14 +112,15 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
                         holder.parcoursName.setFocusableInTouchMode(false);
 
                         ArrayList<String> nomsAEnvoyer = new ArrayList<>();
+
                         nomsAEnvoyer.add(actualParcoursName);
                         nomsAEnvoyer.add(newParcoursName);
 
 
-                        if(!Connexion.CONNEXION.isRenameListenerSet()){
-                            Connexion.CONNEXION.setEventListener(RENAMECOURSE,rename());
-                            Connexion.CONNEXION.setRenameListenerSet(true);
-                        }
+                        Connexion.CONNEXION.removeEventListener(RENAMECOURSE);
+                        Connexion.CONNEXION.setEventListener(RENAMECOURSE,rename());
+                        Connexion.CONNEXION.setRenameListenerSet(true);
+
                         Connexion.CONNEXION.send(RENAMECOURSE,gson.toJson(nomsAEnvoyer));
 
                     }
@@ -171,6 +172,11 @@ public class ClientCourseAdapter extends RecyclerView.Adapter<ClientCourseViewHo
                 mainMenuActivity.rename(renamed,actualParcoursName,newParcoursName);
             }
         };
+    }
+
+    public void updateCourses(ArrayList<String> newCourseName){
+        coursesNames = newCourseName;
+        notifyDataSetChanged();
     }
 
 
