@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.plplbproject.R;
 import com.example.plplbproject.Vue.creationMenu.CreationMenuActivity;
+import com.example.plplbproject.controleur.mainMenu.CourseNamesList;
 import com.example.plplbproject.data.DataPredefinedCourse;
 import com.example.plplbproject.data.DataSemester;
 import com.example.plplbproject.data.UpdatePredefinedCourse;
@@ -49,7 +50,7 @@ public class MainMenuActivity extends AppCompatActivity{
     private Button deconnexion;//Le bouton de deconnexion.
     private Button newCourse;//Le button pour creer un nouveau parcours
 
-    private ArrayList<String> clientCourses;//La liste de nom des parcours du client.
+    private CourseNamesList courseNamesList;//La liste de nom des parcours du client.
 
     private RecyclerView clientCourseRecyclerView;
     private ClientCourseAdapter clientCourseAdapter;
@@ -65,6 +66,7 @@ public class MainMenuActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_princ);
         this.context = getApplicationContext();
+        courseNamesList = new CourseNamesList();
 
     }
 
@@ -95,15 +97,10 @@ public class MainMenuActivity extends AppCompatActivity{
         addButton = findViewById(R.id.addImageButton);
 
 
-
-        if(clientCourses == null){
-            clientCourses = new ArrayList<String>();
-        }
-
         // #################### Mise en place de l'adapter de parcours ################################"
 
         clientCourseRecyclerView = findViewById(R.id.parcoursList);
-        clientCourseAdapter = new ClientCourseAdapter(clientCourses,this);
+        clientCourseAdapter = new ClientCourseAdapter(courseNamesList,this);
         clientCourseRecyclerView.setAdapter(clientCourseAdapter);
         clientCourseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -129,6 +126,33 @@ public class MainMenuActivity extends AppCompatActivity{
     }
 
     /**
+     * Affiche un message dans un toast sur la vue actuelle.
+     * @param msg message a afficher.
+     */
+    public void toastMessage(final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String receivedMessage = msg;
+
+                // add the message to view
+                //just show the message in a toast
+                Toast.makeText(getApplicationContext(), receivedMessage,Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    public void notifyCourseListChange(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                clientCourseAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
      * setup et appel les event necessaire pour cette activity
      */
     public void setupCoursesList(){
@@ -137,7 +161,7 @@ public class MainMenuActivity extends AppCompatActivity{
     }
 
     public void setClientCourses(ArrayList<String> clientCourses){
-        this.clientCourses = clientCourses;
+        this.courseNamesList.addAll(clientCourses);
     }
 
 
@@ -153,14 +177,11 @@ public class MainMenuActivity extends AppCompatActivity{
                 Gson gson = new GsonBuilder().create();
 
                 final ArrayList<String> coursesNames = gson.fromJson((String) args[0], ArrayList.class);
-                setClientCourses(coursesNames);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        clientCourseAdapter.updateCourses(coursesNames);
-                        clientCourseAdapter.notifyDataSetChanged();
-                    }
-                });
+
+                if(coursesNames != null) {
+                    setClientCourses(coursesNames);
+                    notifyCourseListChange();
+                }
             }
         };
     }
@@ -175,7 +196,7 @@ public class MainMenuActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainMenuActivity.this , CreationMenuActivity.class);
-                intent.putExtra("clientCourses",clientCourses);
+                intent.putExtra("clientCourses",courseNamesList.getList());
                 startActivity(intent);
             }
         };
@@ -203,7 +224,7 @@ public class MainMenuActivity extends AppCompatActivity{
                             public void onClick(DialogInterface dialog, int which) {
                                 code = input.getText().toString();
                                 if (code != "") {
-                                    if(!alreadyInList(code)){
+                                    if(!courseNamesList.isInList(code)){
 
                                         Connexion.CONNEXION.removeEventListener(COURSECODE);
                                         Connexion.CONNEXION.setEventListener(COURSECODE,receiveCourseWithCode());
@@ -232,12 +253,6 @@ public class MainMenuActivity extends AppCompatActivity{
         };
     }
 
-    public boolean alreadyInList(String code){
-        for(String parcoursName : clientCourses){
-            if(parcoursName.equals(code)) return true;
-        }
-        return false;
-    }
 
     /**
      * Controller qui permet de gerer la reception du parcours
@@ -249,143 +264,15 @@ public class MainMenuActivity extends AppCompatActivity{
             public void call(Object... args) {
                 final Boolean parcoursFound = gson.fromJson((String) args[0], Boolean.class);
                 if(parcoursFound == true){
-                    
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "Parcours ajouté", Toast.LENGTH_SHORT).show();
 
-                            clientCourses.add(code);
-                            clientCourseAdapter.updateCourses(clientCourses);
-                        }
-                    });
+                    toastMessage("Parcours ajouté");
+                    courseNamesList.addCourse(code);
+                    notifyCourseListChange();
                 }
                 else{
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "Veuillez entrer un code valide", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    toastMessage("Veuillez entrer un code valide");
                 }
             }
         };
     }
-
-
-    public void delete(Boolean deleted, String s){
-
-        final String courseName = s;
-
-        if(deleted){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    clientCourses.remove(courseName);
-                    clientCourseAdapter.notifyDataSetChanged();
-                    Toast.makeText(getApplicationContext(), "Parcours supprimé", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        else{
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "Le parcours n'a pas pu être supprimé auprès du serveur", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
-
-    public void rename(Boolean renamed, String s, String news){
-
-        final String courseName = s;
-
-
-        final String newCourseName = news;
-
-        if(renamed){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    clientCourses.remove(courseName);
-                    clientCourses.add(newCourseName);
-                    clientCourseAdapter.updateCourses(clientCourses);
-                    Toast.makeText(getApplicationContext(), "Parcours renommé", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        else{
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    clientCourseAdapter.notifyDataSetChanged();
-                    Toast.makeText(getApplicationContext(), "Le parcours n'a pas pu être renommé auprès du serveur", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
-    public Button getNewCourse() {
-        return newCourse;
-    }
-
-    public void reSetNewCourse(){
-
-        newCourse.setText("Nouveau Parcours");
-        newCourse.setOnClickListener(createNewCourse());
-
-    }
-
-    public void askConfirm(String parcoursName){
-
-        this.actualParcoursName = parcoursName;
-
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainMenuActivity.this);
-
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View dialogView = inflater.inflate(R.layout.delete_confirmation_dialog, null);
-
-        alertDialog.setView(dialogView);
-        alertDialog.setIcon(R.drawable.ic_delete_forever_24px);
-
-        final AlertDialog dialog = alertDialog.create();
-
-        Button oui = dialogView.findViewById(R.id.ouiBoutton);
-        Button non = dialogView.findViewById(R.id.nonBoutton);
-
-        oui.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Connexion.CONNEXION.removeEventListener(DELETECOURSE);
-                Connexion.CONNEXION.setEventListener(DELETECOURSE,delete());
-                Connexion.CONNEXION.send(DELETECOURSE,actualParcoursName);
-                dialog.dismiss();
-            }
-        });
-        non.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-
-    }
-
-    /**
-     * Supprime le parcours voulu en appellant la méthode delete de mainMenuActivity
-     */
-    public Emitter.Listener delete(){
-        return new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                Boolean deleted = gson.fromJson((String) args[0], Boolean.class);
-                delete(deleted,actualParcoursName);
-            }
-        };
-    }
-
 }

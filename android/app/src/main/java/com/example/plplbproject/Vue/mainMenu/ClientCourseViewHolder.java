@@ -16,7 +16,7 @@ import com.example.plplbproject.R;
  */
 public class ClientCourseViewHolder extends RecyclerView.ViewHolder {
 
-    protected EditText parcoursName;
+    protected TextView parcoursName;
     protected ImageButton renomButton;
     protected ImageButton supprButton;
     protected ImageButton modifButton;

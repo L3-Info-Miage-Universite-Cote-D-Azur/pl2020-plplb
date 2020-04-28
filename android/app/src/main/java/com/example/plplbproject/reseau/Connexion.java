@@ -17,10 +17,6 @@ public enum Connexion {
     private final String ip = "10.0.2.2";
     private final String port = "10101";
 
-    private Boolean isCodeListenerSet = false;
-    private Boolean isRenameListenerSet = false;
-
-
     /**
      * setup permet de preparer la connection au serveur avec l'ip et le port.
      * Met en place la reception des events.
@@ -96,19 +92,4 @@ public enum Connexion {
         this.mSocket =socket;
     }
 
-    public void setCodeListenerSet(Boolean codeListenerSet) {
-        isCodeListenerSet = codeListenerSet;
-    }
-
-    public void setRenameListenerSet(Boolean renameListenerSet) {
-        isRenameListenerSet = renameListenerSet;
-    }
-
-    public Boolean isCodeListenerSet(){
-        return this.isCodeListenerSet;
-    }
-
-    public Boolean isRenameListenerSet(){
-        return this.isRenameListenerSet;
-    }
 }
