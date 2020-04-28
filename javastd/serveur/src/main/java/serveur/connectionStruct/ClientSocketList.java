@@ -4,6 +4,7 @@ import com.corundumstudio.socketio.SocketIOClient;
 import metier.Student;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Une structure de donner permetant de stocker les different
@@ -11,7 +12,10 @@ import java.util.ArrayList;
  */
 public class ClientSocketList extends ArrayList<Client> implements LinkClientSocket{
 
-
+    /** Renvoie une List&ltClient&gt */
+    public List<Client>
+    getAll ()
+    {return this.getAll();}
 
     /**
      * Permet de recuperer un Client

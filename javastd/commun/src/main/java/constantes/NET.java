@@ -38,5 +38,5 @@ public class NET {
     // Le client veut renommer un parcours.
     public static final String RENAMECOURSE = "rename course";
 
-
+    public static final String SERVERUPDATE = "server update";
 }
