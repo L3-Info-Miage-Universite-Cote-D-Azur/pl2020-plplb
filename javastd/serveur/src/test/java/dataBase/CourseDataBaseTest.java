@@ -1,5 +1,7 @@
 package dataBase;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import file.FileManager;
 import log.Logger;
 import org.junit.jupiter.api.AfterEach;
@@ -17,9 +19,12 @@ public class CourseDataBaseTest {
     private CourseDataBase courseDataBase;
     private File directory;
     private FileManager fileManager;
+    private Gson gson;
 
     @BeforeEach
     public void init(){
+        gson = new GsonBuilder().create();
+
         //On mute l'envoie du serveur
         Logger.verbose = false;
 
@@ -34,10 +39,15 @@ public class CourseDataBaseTest {
         //Creation de save
         File save1 = new File(studentDirectory1,"save1");
         fileManager = new FileManager(save1);
-        fileManager.write("content1");
+        ArrayList<String> content1 = new ArrayList<>();
+        content1.add("content1");
+        fileManager.write(gson.toJson(content1));
+
         File save2 = new File(studentDirectory1,"save2");
         fileManager = new FileManager(save2);
-        fileManager.write("content2");
+        ArrayList<String> content2 = new ArrayList<>();
+        content2.add("content2");
+        fileManager.write(gson.toJson(content2));
 
         //Creation des dossiers etudiants
         File studentDirectory2 = new File(directory,"bb123456");
@@ -45,13 +55,21 @@ public class CourseDataBaseTest {
         //Creation de save
         File save3 = new File(studentDirectory2,"save3");
         fileManager = new FileManager(save3);
-        fileManager.write("content3");
+        ArrayList<String> content3 = new ArrayList<>();
+        content3.add("content3");
+        fileManager.write(gson.toJson(content3));
+
         File save4 = new File(studentDirectory2,"save4");
         fileManager = new FileManager(save4);
-        fileManager.write("content4");
+        ArrayList<String> content4 = new ArrayList<>();
+        content3.add("content4");
+        fileManager.write(gson.toJson(content4));
+
         File save5 = new File(studentDirectory2,"save5");
         fileManager = new FileManager(save5);
-        fileManager.write("content5");
+        ArrayList<String> content5 = new ArrayList<>();
+        content3.add("content5");
+        fileManager.write(gson.toJson(content5));
 
         //Init
         courseDataBase = new CourseDataBase(directory);
@@ -224,7 +242,7 @@ public class CourseDataBaseTest {
         //Le fichier existe
         assertEquals(true,file.exists());
         //Le contenu fichier est correcte
-        assertEquals("content1",courseDataBase.loadStudentSave("aa123456","save1"));
+        assertEquals("[\"content1\"]",courseDataBase.loadStudentSave("aa123456","save1"));
 
         //On ecrit dans un fichier existant
         courseDataBase.writeStudentSave("aa123456","save1","toto");
@@ -393,7 +411,7 @@ public class CourseDataBaseTest {
         File save = courseDataBase.getStudentSave("aa123456","save1");
         //Le fichier existe et son contenu est correct
         assertEquals(true, courseDataBase.getStudentSaveNames("aa123456").contains(save.getName()));
-        assertEquals("content1",courseDataBase.loadStudentSave("aa123456","save1"));
+        assertEquals("[\"content1\"]",courseDataBase.loadStudentSave("aa123456","save1"));
 
         //on renomme
         boolean rename = courseDataBase.renameSave("aa123456","save1","newSave1");
@@ -404,7 +422,7 @@ public class CourseDataBaseTest {
         //le nouveau existe et son contenu est correct.
         File newSave = courseDataBase.getStudentSave("aa123456","newSave1");
         assertEquals(true, courseDataBase.getStudentSaveNames("aa123456").contains(newSave.getName()));
-        assertEquals("content1",courseDataBase.loadStudentSave("aa123456","newSave1"));
+        assertEquals("[\"newSave1\"]",courseDataBase.loadStudentSave("aa123456","newSave1"));
 
 
         //On renomme un fichier qui n'existe pas
