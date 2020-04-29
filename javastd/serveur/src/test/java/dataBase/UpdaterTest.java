@@ -1,5 +1,4 @@
-package database;
-import dataBase.Updater;
+package dataBase;
 import file.FileUtility;
 import log.Logger;
 import org.junit.jupiter.api.*;

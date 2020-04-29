@@ -77,6 +77,7 @@ public class Serveur {
      * @param forTest un object lambda pour differentier les constructeur
      */
     protected Serveur(Config config,Object forTest){
+        this.config = config;
         Configuration configuation = new Configuration();
         configuation.setHostname(config.getConfig("ip"));
         configuation.setPort(Integer.parseInt(config.getConfig("port")));

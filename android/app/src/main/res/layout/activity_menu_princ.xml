@@ -56,7 +56,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="120dp"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -73,31 +74,38 @@
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/nouveauParcours"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#63AC63"
-        android:text="Nouveau Parcours"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="-120dp"
+        android:orientation="vertical">
+        
+        <Button
+            android:id="@+id/nouveauParcours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#63AC63"
+            android:text="Nouveau Parcours"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
 
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
-        />
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            />
 
 
-    <Button
-        android:id="@+id/deconnexion"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0"
-        android:text="Deconnexion"
-        android:layout_gravity="center_horizontal|center"
-        android:visibility="visible" />
+        <Button
+            android:id="@+id/deconnexion"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="50dp"
+            android:text="Deconnexion"
+            android:layout_gravity="center_horizontal|center"
+            android:visibility="visible" />
+    </LinearLayout>
 
 
 </LinearLayout>
