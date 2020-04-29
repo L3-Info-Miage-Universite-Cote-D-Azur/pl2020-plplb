@@ -84,16 +84,11 @@ public class UserController {
 
         // Une erreur dans
         if(modele.getCourse().getParcoursRules()!=null &&
-                modele.getCourse().getParcoursRules().getCurrentErrorMessage() != ""){
-            return modele.getCourse().getParcoursRules().getCurrentErrorMessage();
+                modele.getCourse().getLastVerifErrorMessage().trim() !=""){
+            return modele.getCourse().getLastVerifErrorMessage();
         }
         else{
-            String errorMessage = modele.getCourse().getLastVerifErrorMessage();
-            if(errorMessage == null || errorMessage.trim().equals("")) {
-                //si il a pas de message generer on ne connais pas l'erreur
-                return "Votre parcours est incorrect"; //cas normalement improbable
-            }
-            return errorMessage;
+            return "Votre parcours est incorrect"; //cas normalement improbable
         }
     }
 

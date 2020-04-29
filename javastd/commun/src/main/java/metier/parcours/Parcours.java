@@ -326,6 +326,7 @@ public class Parcours implements Serializable {
 
         //Si le parcours ne repond pas aux critères du parcours type on renvoie faux.
         if(!parcoursRules.acceptParcours(listHasmap,this.createListCodeUE())){
+            lastVerifErrorMessage = parcoursRules.getCurrentErrorMessage();
             return false;
         }
 
