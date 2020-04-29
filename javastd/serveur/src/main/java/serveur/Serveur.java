@@ -222,6 +222,7 @@ public class Serveur {
     }
 
     public Config getServConfig () {return this.config;}
+    public ClientSocketList getClients () {return this.allClient;}
 
     /*FONCTION POUR LES TEST*/
     public CourseDataBase getCourseDataBase() {

@@ -1,7 +1,8 @@
 import serveur.Serveur;
+import window.GUI;
 import file.Config;
 
-
+import java.awt.EventQueue;
 import java.io.File;
 
 /**
@@ -17,10 +18,15 @@ public class App {
         Config config = new Config(configFile);
         config.initConfig();
 
-
-        //on lance le serveur
-        Serveur serv = new Serveur(config);
-        serv.startServer();
-
+        EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI window = new GUI(config);
+					window.getFrame().setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
     }
 }
