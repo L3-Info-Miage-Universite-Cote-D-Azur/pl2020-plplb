@@ -10,11 +10,20 @@ import metier.Student;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
+/**
+ * ConnectionListener est une classe qui permet
+ * l'acceptation du login du client par le serveur.
+ */
 public class ConnectionListener implements DataListener<String> {
-
+    /** Le convertisseur de JSON */
     private final Gson gson = new GsonBuilder().create();
+    /** La liste des clients */
     private final LinkClientSocket linkClientSocket;
 
+    /**
+     * Constructeur de base
+     * @param linkClientSocket | La liste des clients
+     */
     public ConnectionListener(LinkClientSocket linkClientSocket){
         this.linkClientSocket = linkClientSocket;
     }

@@ -14,12 +14,24 @@ import java.util.ArrayList;
 
 import static constantes.NET.ASKCODE;
 
+/**
+ * AskCodeListener est un ecouteur qui attend de la part du client
+ * le nom du fichier d'un parcours partage.
+ */
 public class AskCodeListener implements DataListener<String> {
 
+    /** La liste des clients */
     private final LinkClientSocket linkClientSocket;
+    /** La base de donnees des parcours partages */
     private final SharedCourseDataBase sharedCourseDataBase;
+    /** Le convertisseur de JSON */
     private final Gson gson = new GsonBuilder().create();
 
+    /**
+     * Constructeur de base
+     * @param linkClientSocket | La liste des clients
+     * @param sharedCourseDataBase | La base de donnees
+     */
     public AskCodeListener(LinkClientSocket linkClientSocket, SharedCourseDataBase sharedCourseDataBase){
         this.linkClientSocket = linkClientSocket;
         this.sharedCourseDataBase = sharedCourseDataBase;

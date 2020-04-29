@@ -7,16 +7,21 @@ import serveur.connectionStruct.LinkClientSocket;
 import log.Logger;
 
 /**
- * Listener qui s'occupe de la deconnection
+ * DeconnectionListener est la classe qui permet
+ * de s'occuper de la deconnexion
  */
 public class DeconnectionListener implements DisconnectListener{
 
+    /** La liste des clients */
     private final LinkClientSocket linkClientSocket;
 
+    /**
+     * Constructeur de base
+     * @param linkClientSocket | La liste des clients
+     */
     public DeconnectionListener(LinkClientSocket linkClientSocket){
         this.linkClientSocket = linkClientSocket;
     }
-
 
     @Override
     public void onDisconnect(SocketIOClient sock) {

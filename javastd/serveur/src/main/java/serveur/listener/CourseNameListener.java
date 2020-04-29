@@ -14,12 +14,24 @@ import java.util.ArrayList;
 
 import static constantes.NET.COURSESNAMES;
 
+/**
+ * CourseNameListener est la classe qui permet
+ * d'envoyer au client sa liste de parcours
+ * sauvegardes
+ */
 public class CourseNameListener implements DataListener<String> {
-
-    private final LinkClientSocket linkClientSocket;
-    private final CourseDataBase courseDataBase;
+    /** Le convertisseur de JSON */
     private final Gson gson = new GsonBuilder().create();
+    /** La liste des clients */
+    private final LinkClientSocket linkClientSocket;
+    /** La base de donnees qui gere les parcours */
+    private final CourseDataBase courseDataBase;
 
+    /**
+     * Constructeur de base
+     * @param linkClientSocket | La liste des clients
+     * @param courseDataBase | La base de donnees pour les parcours
+     */
     public CourseNameListener(LinkClientSocket linkClientSocket, CourseDataBase courseDataBase){
         this.linkClientSocket = linkClientSocket;
         this.courseDataBase = courseDataBase;

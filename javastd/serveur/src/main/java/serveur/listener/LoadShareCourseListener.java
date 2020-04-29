@@ -13,13 +13,28 @@ import serveur.connectionStruct.LinkClientSocket;
 
 import static constantes.NET.COURSECODE;
 
+/**
+ * LoadShareCourseListener est la classe qui permet
+ * de charger un parcours partage, ce qui a pour effet
+ * de sauvegarder ce parcours dans la sauvegarde des parcours
+ * du client.
+ */
 public class LoadShareCourseListener implements DataListener<String> {
-
-    private final LinkClientSocket linkClientSocket;
+    /** La base de donnees qui gere les parcours partages */
     private final SharedCourseDataBase sharedCourseDataBase;
-    private final CourseDataBase courseDataBase;
+    /** Le convertisseur de JSON */
     private final Gson gson = new GsonBuilder().create();
+    /** La liste des clients */
+    private final LinkClientSocket linkClientSocket;
+    /** La base de donnees qui gere les parcours */
+    private final CourseDataBase courseDataBase;
 
+    /**
+     * Constructeur de base
+     * @param linkClientSocket | La liste des clients
+     * @param sharedCourseDataBase | La base de donnees qui gere les parcours partages
+     * @param courseDataBase | La base de donnees pour les parcours
+     */
     public LoadShareCourseListener(LinkClientSocket linkClientSocket,
                                    SharedCourseDataBase sharedCourseDataBase,
                                    CourseDataBase courseDataBase){

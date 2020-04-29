@@ -14,8 +14,6 @@ public class Logger
 {
     /** Verbose mode: Permet d'activer ou non les messages de debogugages */
     public static boolean verbose = true;
-    /** Represente le repertoire, est initialise dans le serveur */
-    public static String dir = "";
     /** Represente la totalite des messages de deboguages */
     public static String logs = "";
 

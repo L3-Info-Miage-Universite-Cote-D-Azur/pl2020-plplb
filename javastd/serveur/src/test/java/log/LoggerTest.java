@@ -76,6 +76,13 @@ LoggerTest
 		}
 		assertTrue(output.toString().equals("Test\r\n"));
 	}
+
+	@Test
+	public void
+	testSaveLogs ()
+	{
+
+	}
 	
 	@AfterEach
 	public void

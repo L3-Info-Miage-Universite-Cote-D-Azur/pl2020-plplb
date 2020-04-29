@@ -12,12 +12,23 @@ import serveur.connectionStruct.LinkClientSocket;
 
 import java.util.ArrayList;
 
+/**
+ * ClientSaveListener est une classe qui permet de
+ * sauvegarder le parcours d'un client.
+ */
 public class ClientSaveListener implements DataListener<String> {
-
+    /** La liste des clients */
     private final LinkClientSocket linkClientSocket;
+    /** La base de donnees qui gere les parcours */
     private final CourseDataBase courseDataBase;
+    /** Le convertisseur de JSON */
     private final Gson gson = new GsonBuilder().create();
 
+    /**
+     * Constructeur de base
+     * @param linkClientSocket | La liste des clients
+     * @param courseDataBase | La base de donnees pour les parcours
+     */
     public ClientSaveListener(LinkClientSocket linkClientSocket, CourseDataBase courseDataBase){
         this.linkClientSocket = linkClientSocket;
         this.courseDataBase = courseDataBase;

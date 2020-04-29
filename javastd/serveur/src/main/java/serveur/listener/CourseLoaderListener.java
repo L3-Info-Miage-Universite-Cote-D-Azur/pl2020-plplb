@@ -12,12 +12,23 @@ import serveur.connectionStruct.LinkClientSocket;
 
 import static constantes.NET.LOADCOURSE;
 
+/**
+ * CourseLoaderListener est la classe qui permet
+ * de charger et d'envoyer au client sa sauvegarde
+ */
 public class CourseLoaderListener implements DataListener<String> {
-
-    private final LinkClientSocket linkClientSocket;
-    private final CourseDataBase courseDataBase;
+    /** Le convertisseur de JSON */
     private final Gson gson = new GsonBuilder().create();
+    /** La liste des clients */
+    private final LinkClientSocket linkClientSocket;
+    /** La base de donnees qui gere les parcours */
+    private final CourseDataBase courseDataBase;
 
+    /**
+     * Constructeur de base
+     * @param linkClientSocket | La liste des clients
+     * @param courseDataBase | La base de donnees pour les parcours
+     */
     public CourseLoaderListener(LinkClientSocket linkClientSocket, CourseDataBase courseDataBase){
         this.linkClientSocket = linkClientSocket;
         this.courseDataBase = courseDataBase;
