@@ -27,7 +27,7 @@ public class LoginClickListener implements View.OnClickListener {
                 vue.switchIntent();
             }
             else{
-                vue.setTextError("Il est impossible de ce connecter au serveur");
+                vue.setTextError("Il est impossible de se connecter au serveur");
             }
 
         }else{

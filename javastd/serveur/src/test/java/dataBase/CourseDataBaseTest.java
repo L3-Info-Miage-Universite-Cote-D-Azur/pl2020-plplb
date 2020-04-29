@@ -40,12 +40,14 @@ public class CourseDataBaseTest {
         File save1 = new File(studentDirectory1,"save1");
         fileManager = new FileManager(save1);
         ArrayList<String> content1 = new ArrayList<>();
+        content1.add("save1");
         content1.add("content1");
         fileManager.write(gson.toJson(content1));
 
         File save2 = new File(studentDirectory1,"save2");
         fileManager = new FileManager(save2);
         ArrayList<String> content2 = new ArrayList<>();
+        content2.add("save2");
         content2.add("content2");
         fileManager.write(gson.toJson(content2));
 
@@ -56,19 +58,22 @@ public class CourseDataBaseTest {
         File save3 = new File(studentDirectory2,"save3");
         fileManager = new FileManager(save3);
         ArrayList<String> content3 = new ArrayList<>();
+        content3.add("save3");
         content3.add("content3");
         fileManager.write(gson.toJson(content3));
 
         File save4 = new File(studentDirectory2,"save4");
         fileManager = new FileManager(save4);
         ArrayList<String> content4 = new ArrayList<>();
-        content3.add("content4");
+        content4.add("save4");
+        content4.add("content4");
         fileManager.write(gson.toJson(content4));
 
         File save5 = new File(studentDirectory2,"save5");
         fileManager = new FileManager(save5);
         ArrayList<String> content5 = new ArrayList<>();
-        content3.add("content5");
+        content5.add("save5");
+        content5.add("content5");
         fileManager.write(gson.toJson(content5));
 
         //Init
@@ -242,7 +247,7 @@ public class CourseDataBaseTest {
         //Le fichier existe
         assertEquals(true,file.exists());
         //Le contenu fichier est correcte
-        assertEquals("[\"content1\"]",courseDataBase.loadStudentSave("aa123456","save1"));
+        assertEquals("[\"save1\",\"content1\"]",courseDataBase.loadStudentSave("aa123456","save1"));
 
         //On ecrit dans un fichier existant
         courseDataBase.writeStudentSave("aa123456","save1","toto");
@@ -411,7 +416,7 @@ public class CourseDataBaseTest {
         File save = courseDataBase.getStudentSave("aa123456","save1");
         //Le fichier existe et son contenu est correct
         assertEquals(true, courseDataBase.getStudentSaveNames("aa123456").contains(save.getName()));
-        assertEquals("[\"content1\"]",courseDataBase.loadStudentSave("aa123456","save1"));
+        assertEquals("[\"save1\",\"content1\"]",courseDataBase.loadStudentSave("aa123456","save1"));
 
         //on renomme
         boolean rename = courseDataBase.renameSave("aa123456","save1","newSave1");
@@ -422,7 +427,7 @@ public class CourseDataBaseTest {
         //le nouveau existe et son contenu est correct.
         File newSave = courseDataBase.getStudentSave("aa123456","newSave1");
         assertEquals(true, courseDataBase.getStudentSaveNames("aa123456").contains(newSave.getName()));
-        assertEquals("[\"newSave1\"]",courseDataBase.loadStudentSave("aa123456","newSave1"));
+        assertEquals("[\"newSave1\",\"content1\"]",courseDataBase.loadStudentSave("aa123456","newSave1"));
 
 
         //On renomme un fichier qui n'existe pas

@@ -240,8 +240,9 @@ public class CourseDataBase {
         String content = this.loadStudentSave(studentName,saveName);
         ArrayList<String> contentConvert = gson.fromJson(content,ArrayList.class);
 
-        if(contentConvert.get(0).equals(saveName)){//Si le nom dans les données n'est pas celui du fichier.
+        if(!contentConvert.get(0).equals(saveName)){//Si le nom dans les données n'est pas celui du fichier.
             Logger.error("Problem in data : name is "+contentConvert.get(0)+" and file name is "+saveName+".");
+            return false; //On ne peut pas renommer. Le fichier est corrompu
         }
         contentConvert.set(0,newSaveName);//On change le nom dans les données
         content = gson.toJson(contentConvert);//On reconvertir en json

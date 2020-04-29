@@ -65,10 +65,10 @@ public class RenameListener implements View.OnClickListener {
             public void onClick(View view) {
                 newParcourName = inputField.getText().toString();
 
-                if(newParcourName.trim().equals("") && courseNamesList.canBeChoosed(newParcourName)){//Si il ne remplit rien et est valide.
+                if(newParcourName.trim().equals("") || !courseNamesList.canBeChoosed(newParcourName)){//Si il ne remplit rien ou est valide.
                     mainMenuActivity.toastMessage("Nom invalide.");
                 }
-                else{
+                else {
                     confirm();
                 }
                 dialog.dismiss();
