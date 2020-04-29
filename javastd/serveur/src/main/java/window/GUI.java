@@ -23,6 +23,15 @@ import serveur.Serveur;
 import java.awt.Color;
 import java.awt.Desktop;
 
+/**
+ * GUI est la classe qui permet l'affichage de l'interface graphique
+ * de l'application.
+ * Dans la GUI, nous avons acces à:
+ * 	-Aux logs
+ * 	-Aux clients connectes
+ * 	-A l'etat du serveur
+ * 	-Aux dossiers de sauvegarde
+ */
 public class GUI {
 
 	private JFrame frmServeurPlplb;
@@ -32,7 +41,7 @@ public class GUI {
 	private DefaultTableModel model;
 	private JTable table;
 	private JScrollPane scrollTable;
-
+	/** Configuration */
 	private Config config;
 
 	/**
@@ -144,7 +153,7 @@ public class GUI {
 			{
 				if (e.getButton() == MouseEvent.BUTTON1)
 				{
-					File[] list = new File("logs/").listFiles();
+					File[] list = new File(config.getparentPath(),config.getConfig("log_directory")).listFiles();
 					if (list.length == 0)
 						return;
 					File x = list[0];
@@ -172,7 +181,7 @@ public class GUI {
 				if (e.getButton() == MouseEvent.BUTTON1)
 				{
 					try {
-						Desktop.getDesktop().open(new File("db/"));
+						Desktop.getDesktop().open(new File(config.getparentPath()));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

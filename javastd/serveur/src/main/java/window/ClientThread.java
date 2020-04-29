@@ -9,11 +9,20 @@ import log.Logger;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.ClientSocketList;
 
+/**
+ * ClientThread permet d'ajouter et de supprimer dynamiquement
+ * les clients sur l'UI du serveur
+ */
 public class 
 ClientThread implements Runnable 
 {
+	/** Interface graphique */
 	private GUI gui;
-	
+
+	/**
+	 * Constructeur de base
+	 * @param gui | L'interface graphique
+	 */
 	public
 	ClientThread (GUI gui)
 	{this.gui = gui;}
@@ -41,7 +50,12 @@ ClientThread implements Runnable
 			}
 		}
 	}
-	
+
+	/**
+	 * Permet de renvoyer un tableau de 3 objets: [nomEtudiant, IPv4Etudiant, portEtudiant]
+	 * @param c | Client
+	 * @return [nomEtudiant, IPv4Etudiant, portEtudiant]
+	 */
 	private Object[]
 	row (Client c)
 	{
