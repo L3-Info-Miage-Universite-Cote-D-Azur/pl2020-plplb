@@ -179,7 +179,6 @@ public class Serveur {
 
         server.start();
         Logger.log("Server listening.");
-        this.stopServeur();
     }
 
     /**
