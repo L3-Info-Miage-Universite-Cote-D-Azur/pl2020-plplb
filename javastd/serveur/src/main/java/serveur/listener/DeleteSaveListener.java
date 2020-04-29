@@ -12,12 +12,24 @@ import serveur.connectionStruct.LinkClientSocket;
 
 import static constantes.NET.DELETECOURSE;
 
+/**
+ * DeleteSaveListener est la classe qui permet
+ * la suppression d'une sauvegarde sur le serveur
+ * sur demande du client
+ */
 public class DeleteSaveListener implements DataListener<String> {
-
-    private final LinkClientSocket linkClientSocket;
-    private final CourseDataBase courseDataBase;
+    /** Le convertisseur de JSON */
     private final Gson gson = new GsonBuilder().create();
+    /** La liste des clients */
+    private final LinkClientSocket linkClientSocket;
+    /** La base de donnees qui gere les parcours */
+    private final CourseDataBase courseDataBase;
 
+    /**
+     * Constructeur de base
+     * @param linkClientSocket | La liste des clients
+     * @param courseDataBase | La base de donnees pour les parcours
+     */
     public DeleteSaveListener(LinkClientSocket linkClientSocket, CourseDataBase courseDataBase){
         this.linkClientSocket = linkClientSocket;
         this.courseDataBase = courseDataBase;
