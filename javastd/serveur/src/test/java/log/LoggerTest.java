@@ -55,17 +55,17 @@ LoggerTest
 	
 	@Test
 	public void
-	testDebug ()
+	testPut ()
 	{
 		/* test valide de debug */
 		Logger.verbose = true;
-		Logger.info("Test");
+		Logger.put("Test");
 		assertTrue(output.toString().equals("Test\r\n"));
 		System.out.flush();
 		
 		/* flusher System.out ne flush par l'output */
 		Logger.verbose = false;
-		Logger.info("Test");
+		Logger.put("Test");
 		assertTrue(output.toString().equals("Test\r\n"));
 		
 		/* flush de l'output, ca ne vide pas le buffer */
