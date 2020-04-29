@@ -3,9 +3,12 @@ package com.example.plplbproject.Vue.mainMenu;
 import android.content.Intent;
 
 import androidx.test.espresso.Espresso;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.plplbproject.Vue.previewCourse.PreviewActivity;
+import com.example.plplbproject.MyViewAction;
+import com.example.plplbproject.R;
+
 import com.example.plplbproject.data.DataSemester;
 import com.example.plplbproject.reseau.Connexion;
 import com.google.gson.Gson;
@@ -17,30 +20,40 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 import io.socket.client.Socket;
-import metier.UE;
-import metier.parcours.Parcours;
-import metier.semestre.SemesterList;
-import metier.semestre.Semestre;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.example.plplbproject.Vue.previewCourse.PreviewActivity.AUTOINIT;
+
+import static constantes.NET.COURSECODE;
 import static constantes.NET.COURSESNAMES;
+import static constantes.NET.DELETECOURSE;
+import static constantes.NET.RENAMECOURSE;
 import static constantes.NET.SEMSTERDATA;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+
+
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
+
+
 
 public class MainMenuActivityTest {
 
@@ -66,6 +79,7 @@ public class MainMenuActivityTest {
 
         Intent startIntent = new Intent();
         mActivityRule.launchActivity(startIntent);
+
 
     }
 
@@ -133,4 +147,127 @@ public class MainMenuActivityTest {
         //l'activiter c'est bien finit
         assertTrue(mActivityRule.getActivity().isDestroyed());
     }
+
+
+
+    @Test
+    public void testSuppButtonOfParcours(){
+
+        // on recois la liste qui est demander par le client
+        mActivityRule.getActivity().receiveParcoursName().call(gson.toJson(listParcour));
+
+        onView(withId(R.id.parcoursList)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.supprParcours)));
+
+        //on a bien la popup qui est visible
+        onView(withText("OUI")).check(matches(isDisplayed()));
+        onView(withText("Etes vous sur de vouloir supprimer le parcours?")).check(matches(isDisplayed()));
+        onView(withText("NON")).check(matches(isDisplayed()));
+
+        //on supprime pas
+        onView(withText("NON")).perform(click());
+
+
+        //on a pas fait de suppresion
+        verify(socket,never()).emit(eq(DELETECOURSE),anyString());
+
+        //on ouvre de nouveau la popup
+        onView(withId(R.id.parcoursList)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.supprParcours)));
+
+        //on a bien la popup qui est visible
+        onView(withText("OUI")).check(matches(isDisplayed()));
+        onView(withText("Etes vous sur de vouloir supprimer le parcours?")).check(matches(isDisplayed()));
+        onView(withText("NON")).check(matches(isDisplayed()));
+
+        //on supprime
+        onView(withText("OUI")).perform(click());
+
+        //on demande au serveur si la suppression est valide
+        verify(socket,times(1)).emit(eq(DELETECOURSE),eq("aaa")); //on envoie la suppresion au serveur
+
+    }
+
+
+
+    @Test
+    public void testRenameButtonOfParcours(){
+
+        // on recois la liste qui est demander par le client
+        mActivityRule.getActivity().receiveParcoursName().call(gson.toJson(listParcour));
+
+        onView(withId(R.id.parcoursList)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.renomParcours)));
+
+        //on a bien la popup qui est visible
+        onView(withText("CONFIRMER")).check(matches(isDisplayed()));
+        onView(withText("aaa")).check(matches(isDisplayed())); //on a bien l'ancien nom d'afficher
+        onView(withText("ANNULER")).check(matches(isDisplayed()));
+
+        //on supprime pas
+        onView(withText("ANNULER")).perform(click());
+
+
+        //on a pas fait de renomage
+        verify(socket,never()).emit(eq(RENAMECOURSE),anyString());
+
+        //on ouvre de nouveau la popup
+        onView(withId(R.id.parcoursList)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.renomParcours)));
+
+        //on a bien la popup qui est visible
+        onView(withText("CONFIRMER")).check(matches(isDisplayed()));
+        onView(withText("aaa")).check(matches(isDisplayed())); //on a bien l'ancien nom d'afficher
+        onView(withText("ANNULER")).check(matches(isDisplayed()));
+
+        //on rentre un nom
+        onView(withId(R.id.newNameInput)).perform(typeText("newName"),closeSoftKeyboard());
+
+        //on supprime
+        onView(withText("CONFIRMER")).perform(click());
+
+        //on demande au serveur si la suppression est valide
+        verify(socket,times(1)).emit(eq(RENAMECOURSE),eq("[\"aaa\",\"newName\"]")); //on envoie la suppresion au serveur
+
+    }
+
+
+    @Test
+    public void testShareButton(){
+        // on recois la liste qui est demander par le client
+        mActivityRule.getActivity().receiveParcoursName().call(gson.toJson(listParcour));
+
+        onView(withId(R.id.addImageButton)).perform(click());
+
+        //on a bien la popup d'ouvert
+        onView(withText("Ajout par code")).check(matches(isDisplayed()));
+        onView(withText("Entrer un code")).check(matches(isDisplayed()));
+        onView(withText("ANNULER")).check(matches(isDisplayed()));
+        onView(withText("AJOUTER")).check(matches(isDisplayed()));
+
+        //on appuis sur annuler il ce passe rien
+        onView(withText("ANNULER")).perform(click());
+
+        //rien ne ce passe
+        verify(socket,never()).emit(eq(COURSECODE),anyString());
+
+
+        onView(withId(R.id.addImageButton)).perform(click());
+
+        //on a bien la popup ouvert de nouveau
+        onView(withText("Ajout par code")).check(matches(isDisplayed()));
+        onView(withText("Entrer un code")).check(matches(isDisplayed()));
+        onView(withText("ANNULER")).check(matches(isDisplayed()));
+        onView(withText("AJOUTER")).check(matches(isDisplayed()));
+
+        onView(withId(R.id.codeInput)).perform(typeText("12345"),closeSoftKeyboard());
+
+        //on confirme
+        onView(withText("AJOUTER")).perform(click());
+
+        //une requete est envoyer au serveur pour le partage
+        verify(socket,times(1)).emit(eq(COURSECODE),eq("\"12345\""));
+    }
+    
+
 }
