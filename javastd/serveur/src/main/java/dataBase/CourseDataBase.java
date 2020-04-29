@@ -1,5 +1,7 @@
 package dataBase;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import file.FileManager;
 import log.Logger;
 
@@ -227,6 +229,7 @@ public class CourseDataBase {
      * @return
      */
     public boolean renameSave(String studentName, String saveName, String newSaveName){
+        Gson gson = new GsonBuilder().create();
         File oldSave = this.getStudentSave(studentName,saveName);
 
         if(oldSave == null){//Si l'ancien fichier n'existe pas.
@@ -235,6 +238,14 @@ public class CourseDataBase {
         }
         //On recupere le contenue du fichier
         String content = this.loadStudentSave(studentName,saveName);
+        ArrayList<String> contentConvert = gson.fromJson(content,ArrayList.class);
+
+        if(contentConvert.get(0).equals(saveName)){//Si le nom dans les données n'est pas celui du fichier.
+            Logger.error("Problem in data : name is "+contentConvert.get(0)+" and file name is "+saveName+".");
+        }
+        contentConvert.set(0,newSaveName);//On change le nom dans les données
+        content = gson.toJson(contentConvert);//On reconvertir en json
+
         //On supprime l'ancien fichier.
         boolean isDelete = this.deleteSave(studentName,saveName);
 
