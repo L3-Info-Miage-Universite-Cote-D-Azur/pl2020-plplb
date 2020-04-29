@@ -16,11 +16,11 @@ Updater implements Runnable
 {
     /** Objet qui represente le serveur */
     private Serveur serv;
-    /** Directory */
+    /** Repertoire ou se trouvent les semestres */
     private File dir;
 
     /**
-     * Constructeur de SemesterThread
+     * Constructeur de base
      * @param s Le serveur
      */
     public
@@ -57,6 +57,13 @@ Updater implements Runnable
         }
     }
 
+    /**
+     * La fonction body est le corps principal de la fonction run.
+     * Elle permet s'executer une fois la boucle principale sans passer par celle-ci.
+     * Cette fonction est utile pour les tests unitaires.
+     * @param lastModified | Represente la date de la derniere modification des fichiers
+     * @return La derniere modification des fichiers
+     */
     public long
     body (long lastModified)
     {

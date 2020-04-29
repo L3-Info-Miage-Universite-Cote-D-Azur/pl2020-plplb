@@ -5,11 +5,9 @@ import file.Config;
 import java.io.File;
 
 /**
- * Classe principale du serveur
+ * Classe principale de l'application
  */
 public class App {
-
-
     public static final void main(String[] args) {
 
         ClassLoader classLoader = App.class.getClassLoader();

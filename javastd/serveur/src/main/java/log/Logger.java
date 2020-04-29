@@ -1,38 +1,75 @@
 package log;
 
+import file.Config;
+import file.FileManager;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Logger gere l'affichage des messages du serveur
  */
 public class Logger
 {
-    /* Set this value to true if you want to get verbose mode */
+    /** Verbose mode: Permet d'activer ou non les messages de debogugages */
     public static boolean verbose = true;
+    /** Represente le repertoire, est initialise dans le serveur */
+    public static String dir = "";
+    /** Represente la totalite des messages de deboguages */
+    public static String logs = "";
+
+    /** Aucune instanciation possible */
     private Logger () {}
 
     /**
-     * affiche un message de facon standard.
-     * @param msg le message a afficher
+     * Permet de sauvegarder Logger.logs dans
+     * un fichier conçu pour les logs
      */
     public static void
-    info (String msg)
+    saveLogs (Config config)
     {
-        if (Logger.verbose)
-            System.out.println(msg);
+        File dir = new File(config.getparentPath(),config.getConfig("log_directory"));
+        dir.mkdir();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        FileManager fm = new FileManager(dir.getAbsolutePath() + "\\" + dtf.format(now) + ".txt");
+        fm.create();
+        fm.write(Logger.logs);
+        Logger.logs = "";
     }
 
     /**
-     * log affiche un message de log
+     * Affiche un message de facon standard.
+     * @param msg le message a afficher
+     */
+    public static void
+    put (String msg)
+    {
+        if (Logger.verbose)
+        {
+            System.out.println(msg);
+            Logger.logs += msg + System.getProperty("line.separator");
+        }
+    }
+
+    /**
+     * Log affiche un message de log
      * @param msg le message a afficher
      */
     public static void
     log (String msg)
-    {Logger.info("[*] " + msg);}
+    {
+        Logger.put("[*] " + msg);
+    }
 
     /**
-     * error affiche un message d'erreur
+     * Error affiche un message d'erreur
      * @param msg le message a afficher
      */
     public static void
     error (String msg)
-    {Logger.info("[E] " + msg);}
+    {
+        Logger.put("[E] " + msg);
+    }
 }

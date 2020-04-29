@@ -8,22 +8,29 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Class qui permet de gerer le fichier config
+ * Class qui permet de gerer le fichier config.
+ * Le fichier config est un fichier de configuration qui permet
+ * la gestion de differents parametres persistant de l'application
  */
 public class Config {
-
+    /** Represente le fichier de configuration de l'application */
     private FileManager configFile;
+    /** Boolean qui represente si oui ou non le fichier a deja ete initialise */
     private boolean isInit = false;
+    /** Representation de la configuration de l'application sous une table de hachage */
     private HashMap<String,String> config;
 
-
+    /**
+     * Constructeur de base
+     * @param configFile | Le fichier de configuration
+     */
     public Config(File configFile){
         this.configFile = new FileManager(configFile);
     }
 
     /**
-     * Permet de charger le fichier confi
-     * cela permet d'acceder au different element qui le compose
+     * Permet de charger le fichier config,
+     * cela permet d'acceder aux differents elements qui le compose
      */
     public void initConfig(){
         if(!configFile.exists()){
@@ -76,6 +83,7 @@ public class Config {
         return configFile.getParentPath();
     }
 
+    /** Getter de isInit */
     protected boolean getIsInit(){
         return  isInit;
     }

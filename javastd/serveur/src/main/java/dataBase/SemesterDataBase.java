@@ -14,17 +14,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Permet de gerer la list des semestre
+ * SemesterDataBase permet la gestion des semestres de l'application.
+ * Cette class gere les semestres grace a un repertoire ou vont se
+ * trouver les semestres, et un objet SemesterList representant
+ * la liste des semestres du repertoire.
  */
 public class SemesterDataBase {
 
+    /** Repertoire ou se trouvent les fichiers contenant les semestres */
     private final File directory;
+    /** Entier qui represente le nombre de semestres */
     private final int numberSemester;
-
+    /** Represente la liste des semestres de l'application */
     private SemesterList semesterList;
+    /** Parseur */
     private final Parser parser = new Parser();
 
-
+    /**
+     * Constructeur de base de la classe.
+     * @param directory | Repertoire ou se trouvent les fichiers representant les semestres
+     * @param numberSemester | Le nombre de semestres
+     */
     public SemesterDataBase(File directory, int numberSemester){
         this.numberSemester = numberSemester;
         this.directory = directory;

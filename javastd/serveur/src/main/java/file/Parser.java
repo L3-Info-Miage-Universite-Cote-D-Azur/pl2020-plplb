@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Parser est une class qui permet le parsage
+ * de differentes configurations
+ */
 public class Parser {
 
     /**
-     * Permet a l'aide d'un text brut d'un fichier de renvoyer
+     * Permet a l'aide d'un texte brut d'un fichier de renvoyer
      * un tableau qui represente chaque liste
      * @param text le text que l'on veut separer par ligne
-     * @return une list qui continent toutes les ligne
+     * @return une list qui continent toutes les lignes
      */
     public List<String> parseLine(String text){
         List<String> splitText;
@@ -21,9 +25,9 @@ public class Parser {
     }
 
     /**
-     * Permet a l'aide d'un text brut d'un fichier de csv
-     * de crée une matrice avec tout les element du fichier csv
-     * @param text le text csv que l'on veut parse
+     * Permet a l'aide d'un texte brut d'un fichier de csv
+     * de creer une matrice avec tous les elements du fichier csv
+     * @param text le texte csv que l'on veut parser
      * @return la matrice du fichier csv
      */
     public List<List<String>> parseCsv(String text){
@@ -36,10 +40,10 @@ public class Parser {
     }
 
     /**
-     * permet d'enlever les espace en trop au debut et en fin de string
+     * Permet d'enlever les espaces en trop au debut et en fin de string
      * pour l'integralité d'un tableau de string
      * @param listText la list de string que l'on veut trim
-     * @returnune list de string sans les espace a la fin
+     * @returnune list de string sans les espaces a la fin
      */
     private List<String> trimList(List<String> listText){
         List<String> result = new ArrayList<String>();
@@ -48,5 +52,4 @@ public class Parser {
         }
         return result;
     }
-
 }

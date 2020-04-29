@@ -6,17 +6,24 @@ import log.Logger;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * TypeCourseDataBase est la classe qui permet la gestion des parcours types.
+ * Un parcours type est un parcours pregenere que le client a le droit de charger
+ * pour creer un nouveau parcours.
+ */
 public class TypeCourseDataBase {
 
-    private File directory;//Le repertoire des sauvegardes.
+    /** Le repertoire des parcours types. */
+    private File directory;
 
-    //la liste des parcours type sous JSON
+    /** la liste des parcours type sous JSON */
     public ArrayList<String> allParcoursType;
 
-
-
-
     /* CONSTRUCTOR */
+    /**
+     * Constructeur de base
+     * @param directory | Repertoire des parcours types
+     */
     public TypeCourseDataBase(File directory){
         this.directory = directory;
     }
@@ -53,7 +60,6 @@ public class TypeCourseDataBase {
         return allParcoursType!=null && allParcoursType.size()!=0;
     }
 
-
     /**
      * Permet de charger les list des parcours type
      * @return la list des parcours type en Json
@@ -64,7 +70,4 @@ public class TypeCourseDataBase {
         }
         return allParcoursType;
     }
-
-
-
 }

@@ -8,17 +8,28 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * SharedCourseDataBase permet la gestion des parcours partages de l'application.
+ * Les parcours partages sont des parcours que des clients ont voulu rendre accessible
+ * aux autres clients. Ces parcours sont des fichiers qui sont generes automatiquement.
+ * Chaque fichier est compose de 10 chiffres aleatoire.
+ */
 public class SharedCourseDataBase {
 
-    private File directory;//Le repertoire des sauvegardes de parcours partage.
+    /** Le repertoire des sauvegardes des parcours partages. */
+    private File directory;
 
     /* CONSTRUCTOR */
+    /**
+     * Constructeur de base
+     * @param directory | Repertoire des fichiers des parcours partages
+     */
     public SharedCourseDataBase(File directory){
         this.directory = directory;
     }
 
     /**
-     * renvoie le nom de tout les parcours partagés.
+     * Renvoie le nom de tout les parcours partages.
      * @return une arrayList de String (qui sont les noms).
      */
     public ArrayList<String> getAllSharedCourseName(){
@@ -33,7 +44,7 @@ public class SharedCourseDataBase {
     }
 
     /**
-     * Renvoie un code (string) unique généré aléatoirement.
+     * Renvoie un code (string) unique genere aleatoirement.
      * @return le code unique.
      */
     public String generateSharedCourseCode(){
@@ -58,8 +69,8 @@ public class SharedCourseDataBase {
     }
 
     /**
-     * creer l'objet file du parcours partagé.
-     * @param fileName : le nom du parcours partagé
+     * Creer l'objet file du parcours partage.
+     * @param fileName : le nom du parcours partage
      * @return l'objet File.
      */
     public File createSharedCourseFile(String fileName){
@@ -69,8 +80,8 @@ public class SharedCourseDataBase {
     }
 
     /**
-     * ajoute un parcours partagé dans la DB et renvoie le nom du fichier (le code)
-     * @param content : le contenu du parcours partagé.
+     * Ajoute un parcours partage dans la DB et renvoie le nom du fichier (le code)
+     * @param content : le contenu du parcours partage.
      */
     public void addShareCourse(String code, String content){
         //On creer l'objet File
@@ -84,9 +95,9 @@ public class SharedCourseDataBase {
     }
 
     /**
-     * renvoie le fichier du nom donné en parametre, ou null si il n'est pas trouvé
+     * Renvoie le fichier du nom donne en parametre, ou null si il n'est pas trouve
      * @param shareCourseName : le nom du fichier
-     * @return File : le fichier, null si il n'est pas trouvé
+     * @return File : le fichier, null si il n'est pas trouve
      */
     public File findShareCourseFile(String shareCourseName){
         for(File shareCourse : directory.listFiles()){
@@ -100,8 +111,8 @@ public class SharedCourseDataBase {
     }
 
     /**
-     * charge le contenu d'un fichier partagé
-     * @param shareCourseName : le nom du fichier partagé
+     * Charge le contenu d'un fichier partage
+     * @param shareCourseName : le nom du fichier partage
      * @return le contenu du fichier sous forme de string.
      */
     public String loadShareCourse(String shareCourseName){
@@ -121,7 +132,7 @@ public class SharedCourseDataBase {
     }
 
     /**
-     * verifie si un code est un code existant dans la base de données;
+     * verifie si un code est un code existant dans la base de donnees;
      * @param code : le code a verifier
      * @return true ou false, si le code existe.
      */

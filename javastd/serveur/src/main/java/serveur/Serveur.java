@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dataBase.*;
 import file.Config;
-import log.Logger;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.ClientSocketList;
 import serveur.connectionStruct.LinkClientSocket;
+import log.Logger;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
@@ -77,7 +77,6 @@ public class Serveur {
      * @param forTest un object lambda pour differentier les constructeur
      */
     protected Serveur(Config config,Object forTest){
-        this.config = config;
         Configuration configuation = new Configuration();
         configuation.setHostname(config.getConfig("ip"));
         configuation.setPort(Integer.parseInt(config.getConfig("port")));
@@ -180,6 +179,7 @@ public class Serveur {
 
         server.start();
         Logger.log("Server listening.");
+        this.stopServeur();
     }
 
     /**
@@ -189,6 +189,7 @@ public class Serveur {
         Logger.log("The application is about to shutdown..");
         server.stop();
         Logger.log("Shutdown.");
+        Logger.saveLogs(this.config);
     }
 
     /**

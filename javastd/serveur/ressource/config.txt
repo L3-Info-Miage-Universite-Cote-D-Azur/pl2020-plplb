@@ -6,6 +6,7 @@ port:=10101
 semestre_directory:=semestre
 number_semester:=4
 courseType_directory:=courseType
+log_directory:=logs
 
 !client save
 !relative par rapport a l'endroit d'execution

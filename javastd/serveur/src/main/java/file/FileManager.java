@@ -6,11 +6,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * FileManager est une class qui permet une gestion simplifiee
+ * des fichiers en Java.
+ */
 public class FileManager {
     /* FIELDS */
-    /**
-     * file represente un fichier que le fileManager s'occupe
-     */
+    /** file represente un fichier que le fileManager s'occupe */
     private File file;
 
     /**
@@ -29,11 +31,11 @@ public class FileManager {
 
 
     /**
-     * Permet de créer plusieur plusieur fileManager a
+     * Permet de creer plusieurs FileManager a
      * l'aide d'un chemin de de nom de fichier
-     * @param path le repertoir a partir du quel sont stocker/créer les fichiers
+     * @param path le repertoire a partir duquel sont stockes/creees les fichiers
      * @param filesName la liste des nom de fichier
-     * @return une list de fileManager
+     * @return une list de FileManager
      */
     public static List<FileManager> ListToFileManager(String path , List<String> filesName) {
         ArrayList<FileManager> filesManager = new ArrayList<FileManager>();
@@ -43,10 +45,7 @@ public class FileManager {
         return filesManager;
     }
 
-
-    /**
-     * Permet de creer le fichier
-     */
+    /** Permet de creer le fichier */
     public boolean create()
     {
         try {
@@ -54,7 +53,7 @@ public class FileManager {
             return true;
         } catch (IOException e) {
             e.printStackTrace();
-            Logger.error(this.file.getName()+ "can\'t be create");
+            Logger.error(this.file.getName()+ " can\'t be create at path " + this.file.getAbsolutePath());
         }
         return false;
     }
@@ -164,17 +163,12 @@ public class FileManager {
         return file.getParent();
     }
 
-
-    /**
-     * Permet de recuperer le File du file manager
-     */
+    /** Permet de recuperer le File du file manager */
     public File getFile() {
         return file;
     }
 
-    /**
-     * Permet de vider totalement un fichier
-     */
+    /** Permet de vider totalement un fichier */
     public void clearFile ()
     {write("");}
 }

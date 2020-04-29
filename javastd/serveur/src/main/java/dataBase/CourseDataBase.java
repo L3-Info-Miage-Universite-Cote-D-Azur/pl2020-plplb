@@ -6,11 +6,20 @@ import log.Logger;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * CourseDataBase est une class qui permet la gestion
+ * des parcours dans la base de donnees de l'application.
+ */
 public class CourseDataBase {
 
-    private File directory;//Le repertoire des sauvegardes.
+    /** directory represente le repertoire ou se trouvent les sauvegardes des parcours de l'application*/
+    private File directory;
 
     /* CONSTRUCTOR */
+    /**
+     * Constructeur de base, initialise simplement les parametres avec les attributs
+     * @param directory | le repertoire des sauvegardes des parcours
+     */
     public CourseDataBase(File directory){
         this.directory = directory;
     }
@@ -19,7 +28,7 @@ public class CourseDataBase {
     /* METHODS */
 
     /**
-     * renvoie la liste des noms de sauvegardes de l'etudiant.
+     * Renvoie la liste des noms de sauvegardes de l'etudiant.
      * @param studentName : l'etudiant
      * @return une arraylist de string qui contient le nom des fichiers de sauvegardes.
      */
@@ -41,7 +50,7 @@ public class CourseDataBase {
     }
 
     /**
-     * retourn le fichier de la sauvegarde de l'etudiant
+     * Renvoie le fichier de la sauvegarde de l'etudiant
      * @param studentName : le nom de l'etudiant
      * @param saveName : le nom de la sauvegarde
      * @return un objet File du fichier de la sauvegarde.
@@ -60,7 +69,7 @@ public class CourseDataBase {
     }
 
     /**
-     * renvoie le contenu de la sauvegarde de l'etudiant.
+     * Renvoie le contenu de la sauvegarde de l'etudiant.
      * @param studentName : le nom de l'etudiant.
      * @param saveName : le nom de la sauvegarde.
      * @return null si rien trouve, le contenu du fichier sinon.
@@ -81,7 +90,7 @@ public class CourseDataBase {
     }
 
     /**
-     * creer un objet File de sauvegarde pour l'etudiant.
+     * Creer un objet File de sauvegarde pour l'etudiant.
      * @param studentName : le nom de l'etudiant
      * @param saveName : le nom de sa sauvegarde
      * @return un objet File qui represente le fichier de sauvegarde.
@@ -105,7 +114,7 @@ public class CourseDataBase {
     }
 
     /**
-     * ecrit la sauvegarde dans le fichier de sauvegarde de l'etudiant
+     * Ecrit la sauvegarde dans le fichier de sauvegarde de l'etudiant
      * @param studentName : le nom de l'etudiant.
      * @param saveName : le nom de la sauvegarde.
      * @param save : le contenu de la sauvegarde.
@@ -125,7 +134,7 @@ public class CourseDataBase {
     }
 
     /**
-     * renvoie toute les sauvegardes d'un etudiant
+     * Renvoie toute les sauvegardes d'un etudiant
      * @param studentName : le nom de l'etudiant
      * @return une arraylist de files qui sont les sauvegardes du client.
      */
@@ -158,7 +167,7 @@ public class CourseDataBase {
 
 
     /**
-     * renvoie la liste des dossiers de chaque étudiant
+     * Renvoie la liste des dossiers de chaque étudiant
      * @return une arrayList de file (qui sont des directory).
      */
     public ArrayList<File> getAllStudentDirectory(){
@@ -172,7 +181,7 @@ public class CourseDataBase {
     }
 
     /**
-     * retourne le directory de l'etudiant
+     * Retourne le directory de l'etudiant
      * @param studentName : le nom de l'etudiant.
      * @return un objet File, qui est un directory.
      */
@@ -188,7 +197,7 @@ public class CourseDataBase {
     }
 
     /**
-     * supprimer un fichier de sauvegarde de l'etudiant
+     * Supprime le fichier de nom saveName de l'etudiant studentName
      * @param studentName : le nom de l'etudiant
      * @param saveName : le nom de la sauvegarde
      * @return true ou false selon la reussite de la suppression.
@@ -211,7 +220,7 @@ public class CourseDataBase {
     }
 
     /**
-     * renomme le fichier de sauvegarde de l'etudiant.
+     * Renomme le fichier de sauvegarde de l'etudiant.
      * @param studentName : le nom de l'etudiant
      * @param saveName : l'ancien nom du fichier
      * @param newSaveName : le nouveau nom du fichier.

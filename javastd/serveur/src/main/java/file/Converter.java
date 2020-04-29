@@ -16,24 +16,18 @@ import java.util.List;
  */
 public class
 Converter {
-    /**
-     * Objet qui traite la conversion
-     */
+    /** Objet qui traite la conversion */
     private Gson gson;
 
-    /**
-     * Constructeur de Converter
-     */
+    /** Constructeur de Converter */
     public Converter() {
         this.gson = new GsonBuilder().create();
     }
 
-
     /**
-     * Convertie le fichier csv en list d'ue
-     *
+     * Convertit le fichier csv en list d'objets UE
      * @param allUeCsv le tableau de csv
-     * @return l'array list d'ue des ue du semestre
+     * @return ArrayList&ltUE&gt des UEs du Semestre
      */
     public ArrayList<UE> csvToUe(List<List<String>> allUeCsv) {
 
@@ -50,11 +44,9 @@ Converter {
         return ueList;
     }
 
-
     /**
      * Permet de renvoyer un semestreRules a partir
      * d'une String sous format JSON
-     *
      * @param s la String sous format JSON
      * @return le semestreRules lie a la String
      */
