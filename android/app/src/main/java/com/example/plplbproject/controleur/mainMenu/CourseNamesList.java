@@ -47,4 +47,15 @@ public class CourseNamesList {
     }
 
     public ArrayList<String> getList(){return listCoursesNames;}
+
+    public boolean canBeChoosed(String name){
+        for(int i =0; i < name.length();i++){
+            //Pour eviter qu'il creer son fichier dans un dossier exterieur avec un nom comme "../../Oups"
+            if(name.charAt(i) == '/' || name.charAt(i) == '\\'
+                    || name.charAt(i) == '.' || name.charAt(i) == '%'){
+                return false;
+            }
+        }
+        return true;
+    }
 }
