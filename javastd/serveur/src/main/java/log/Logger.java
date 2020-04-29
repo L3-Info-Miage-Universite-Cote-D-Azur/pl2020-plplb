@@ -23,6 +23,7 @@ public class Logger
     /**
      * Permet de sauvegarder Logger.logs dans
      * un fichier conçu pour les logs
+     * @param config | La configuration
      */
     public static void
     saveLogs (Config config)

@@ -201,6 +201,9 @@ public class Serveur {
 
     /**
      * Permet de mettre a jour les semestres et de les envoyer aux clients
+     * @param semesterDataBase | Base de donnees des semestres
+     * @param allClient | La liste des clients
+     * @param gson | Convertisseur JSON
      */
     public void
     updateSemestersOfClients (SemesterDataBase semesterDataBase, ClientSocketList allClient, Gson gson)

@@ -3,10 +3,17 @@ package log;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import file.Config;
+import file.FileManager;
 import org.junit.jupiter.api.*;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 public class
 LoggerTest
@@ -77,11 +84,30 @@ LoggerTest
 		assertTrue(output.toString().equals("Test\r\n"));
 	}
 
+	@Mock
+	Config config = Mockito.mock(Config.class);
+
 	@Test
 	public void
 	testSaveLogs ()
 	{
+		// To except at the end
+		Logger.logs = "Test";
+		Mockito.when(config.getparentPath()).thenReturn(".");
+		Mockito.when(config.getConfig("log_directory")).thenReturn("\\");
+		/* Fichier */
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+		LocalDateTime now = LocalDateTime.now();
+		FileManager fm = new FileManager("." + "\\" + dtf.format(now) + ".txt");
 
+		/* Le nom du fichier n'est pas a tester puisqu'il est genere par des fonctions tiers */
+
+		Logger.saveLogs(config);
+		assertEquals(Logger.logs, "");
+		assertEquals(fm.exists(), true);
+		assertEquals(fm.getRaw(), "Test");
+
+		fm.deleteFile();
 	}
 	
 	@AfterEach
