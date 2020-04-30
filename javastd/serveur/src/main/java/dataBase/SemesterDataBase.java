@@ -116,6 +116,14 @@ public class SemesterDataBase {
         return ueFileManager;
     }
 
+    /**
+     * Permet de get le directory de la database
+     * @return le directory
+     */
+    public File getDirectory(){
+        return directory;
+    }
+
 
 
 }

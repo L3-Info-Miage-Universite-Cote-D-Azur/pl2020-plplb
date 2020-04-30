@@ -89,10 +89,13 @@ public class Serveur {
      * @return true si il a bien pue etre initialiser false si non
      */
     protected boolean initSemesterDataBase(){
-        String directoryRelativePath = config.getConfig("semestre_directory");
+        String directoryPath = config.getConfig("semestre_directory");
         int numberSemester = Integer.parseInt(config.getConfig("number_semester"));
+        File directory = new File(directoryPath);
+        if(!directory.isAbsolute()){
+            directory = new File(config.getparentPath(),directoryPath);
+        }
 
-        File directory = new File(config.getparentPath(),directoryRelativePath);
         if(!directory.exists() || !directory.isDirectory()){
             Logger.error("file not found: "+directory.getAbsolutePath());
             return false;
@@ -141,8 +144,13 @@ public class Serveur {
      * @return true si il a bien pue etre initialiser false si non
      */
     protected  boolean initCourseTypeDataBas(){
-        String directoryRelativePath = config.getConfig("courseType_directory");
-        File directory = new File(config.getparentPath(),directoryRelativePath);
+        String directoryPath = config.getConfig("courseType_directory");
+
+        File directory = new File(directoryPath);
+        if(!directory.isAbsolute()){
+            directory = new File(config.getparentPath(),directoryPath);
+        }
+
 
         if(!directory.exists() || !directory.isDirectory()){
             Logger.error("file not found: "+directory.getAbsolutePath());

@@ -24,8 +24,9 @@ Updater implements Runnable
      * @param s Le serveur
      */
     public
-    Updater (Serveur s)
-    {this(s, new File(s.getServConfig().getparentPath(), s.getServConfig().getConfig("semestre_directory")));}
+    Updater (Serveur s) {
+        this(s, s.getSemesterDataBase().getDirectory());
+    }
 
     /**
      * Constructeur de SemesterThread
