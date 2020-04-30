@@ -43,7 +43,7 @@ public class Parser {
      * Permet d'enlever les espaces en trop au debut et en fin de string
      * pour l'integralité d'un tableau de string
      * @param listText la list de string que l'on veut trim
-     * @returnune list de string sans les espaces a la fin
+     * @return une list de string sans les espaces a la fin
      */
     private List<String> trimList(List<String> listText){
         List<String> result = new ArrayList<String>();

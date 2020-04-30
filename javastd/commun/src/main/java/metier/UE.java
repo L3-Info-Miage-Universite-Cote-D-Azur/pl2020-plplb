@@ -24,7 +24,7 @@ public class UE implements Serializable {
 
     /**
      * Constructeur utile pour convertir un tableau issue d'un tableau csv
-     * @param stringUe
+     * @param stringUe l'ue en list de string
      */
     public UE(List<String> stringUe){
         this.code = stringUe.get(0);

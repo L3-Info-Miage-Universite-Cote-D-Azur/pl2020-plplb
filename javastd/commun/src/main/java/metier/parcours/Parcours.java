@@ -30,6 +30,7 @@ public class Parcours implements Serializable {
      * constructeur avec une liste valide d'ue (utiliser pour charger les donnée)
      * @param semestreList la liste de semestre.
      * @param allCodeUESelected une liste valide d'ue
+     * @param listparcoursType list des parcours type
      */
     public Parcours(SemesterList semestreList, List<String> allCodeUESelected ,ArrayList<ParcoursType> listparcoursType) {
         this.semestreList =  semestreList;
@@ -42,6 +43,8 @@ public class Parcours implements Serializable {
     /**
      * Constructeur pour un nouveau parcours
      * @param semestreList la liste de semestre.
+     * @param parcoursType le parcour type
+     * @param name le nom
      */
     public Parcours(SemesterList semestreList,ParcoursType parcoursType,String name){
         this.setName(name);
@@ -54,11 +57,11 @@ public class Parcours implements Serializable {
 
     /**
      * Constructeur pour test
-     * @param parcoursRules
-     * @param name
-     * @param semestreList
-     * @param semestresManager
-     * @param parcoursSelect
+     * @param parcoursRules regle de parcour
+     * @param name le nom
+     * @param semestreList list des semestre
+     * @param semestresManager le semestre manager
+     * @param parcoursSelect la map des ue selectionner
      */
     public Parcours(ParcoursRules parcoursRules, String name, SemesterList semestreList, ArrayList<SemestreManager> semestresManager, HashMap<String, UE> parcoursSelect) {
         this.parcoursRules = parcoursRules;
@@ -127,6 +130,7 @@ public class Parcours implements Serializable {
     /**
      * Initialisation des ue avec une liste de code d'ue
      * @param allCodeUESelected tout les ue de la liste
+     * @param listparcoursType list des parcour type
      */
     private void initParcours(List<String> allCodeUESelected, ArrayList<ParcoursType> listparcoursType){
         parcoursSelect = new HashMap<String, UE>();

@@ -41,7 +41,6 @@ public class ClientSocketList extends ArrayList<Client> implements LinkClientSoc
     /**
      * Permet de supprimer un Client
      * @param student La student que l'on veut supprimer
-     * @return le client voulu
      */
     @Override
     public void removeClient(Student student) {
@@ -54,7 +53,6 @@ public class ClientSocketList extends ArrayList<Client> implements LinkClientSoc
     /**
      * Permet de supprimer un Client
      * @param sock La sock que l'on veut supprimer
-     * @return le client voulu
      */
     @Override
     public void removeClient(SocketIOClient sock) {

@@ -83,7 +83,9 @@ public class Config {
         return configFile.getParentPath();
     }
 
-    /** Getter de isInit */
+    /** Getter de isInit
+     * @return si il est init
+     */
     protected boolean getIsInit(){
         return  isInit;
     }

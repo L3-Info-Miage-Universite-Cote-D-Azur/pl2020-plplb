@@ -28,14 +28,12 @@ public interface LinkClientSocket {
     /**
      * Permet de supprimer un Client
      * @param student La student que l'on veut supprimer
-     * @return le client voulu
      */
     public void removeClient(Student student);
 
     /**
      * Permet de supprimer un Client
      * @param sock La sock que l'on veut supprimer
-     * @return le client voulu
      */
     public void removeClient(SocketIOClient sock);
 

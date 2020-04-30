@@ -42,7 +42,7 @@ public class SemesterDataBase {
 
     /**
      * Renvoie si la liste des semestre a etait charger depuis les fichier
-     * @return true -> initialiser; false -> non initialiser
+     * @return true: initialiser; false: non initialiser
      */
     public boolean isInit(){
         return semesterList!=null && semesterList.size()!=0;

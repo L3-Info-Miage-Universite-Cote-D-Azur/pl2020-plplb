@@ -86,6 +86,7 @@ public class Serveur {
 
     /**
      * Permet d'initialiser la base de donner contenant les semestre/ue/rule
+     * @return true si il a bien pue etre initialiser false si non
      */
     protected boolean initSemesterDataBase(){
         String directoryRelativePath = config.getConfig("semestre_directory");
@@ -137,6 +138,7 @@ public class Serveur {
 
     /**
      * Permet d'initialiser la base de donner qui gere les parcours type
+     * @return true si il a bien pue etre initialiser false si non
      */
     protected  boolean initCourseTypeDataBas(){
         String directoryRelativePath = config.getConfig("courseType_directory");
