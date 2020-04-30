@@ -93,7 +93,7 @@ public class CreationMenuActivityTest {
         //le message d'erreur devien visible
         assertEquals(mActivityRule.getActivity().findViewById(R.id.errorMessage).getVisibility(), 0);
         //le message d'erreur correspond a la premiere erreur
-        assertEquals(((TextView) mActivityRule.getActivity().findViewById(R.id.errorMessage)).getText(), "Ce nom de parcours existe déjà");
+        assertEquals(((TextView) mActivityRule.getActivity().findViewById(R.id.errorMessage)).getText(), "Ce nom de parcours existe déjà / nom invalide");
         viderText();
 
         //on rentre un nouveau nom qui n'est pas existant

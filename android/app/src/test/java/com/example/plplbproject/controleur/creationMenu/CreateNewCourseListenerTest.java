@@ -143,7 +143,7 @@ public class CreateNewCourseListenerTest {
         createNewCourseListener.onClick(view);
 
         //On verifie que les fonctions sont appelées.
-        Mockito.verify(vue,times(1)).setTextError("Ce nom de parcours existe déjà");
+        Mockito.verify(vue,times(1)).setTextError("Ce nom de parcours existe déjà / nom invalide");
         //Le reste n'as pas bouger
         Mockito.verify(vue,never()).setTextError("Veuillez selectionner une parcours prédéfini.");
         Mockito.verify(modele,never()).getPredefinedCourseName();
@@ -161,7 +161,7 @@ public class CreateNewCourseListenerTest {
         //On verifie que les fonctions sont appelées.
         Mockito.verify(vue,times(1)).setTextError("Veuillez selectionner une parcours prédéfini.");
         //Le reste n'as pas bouger
-        Mockito.verify(vue,times(1)).setTextError("Ce nom de parcours existe déjà");
+        Mockito.verify(vue,times(1)).setTextError("Ce nom de parcours existe déjà / nom invalide");
         Mockito.verify(modele,never()).getPredefinedCourseName();
         Mockito.verify(modele,never()).setCourseName(anyString());
         Mockito.verify(vue,never()).switchIntent();

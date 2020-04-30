@@ -90,7 +90,7 @@ public class LoginActivityTest {
         assertEquals(textError.getVisibility(),View.VISIBLE);
 
         //le message d'erreur est "Il est impossible de ce connecter au serveur"
-        assertEquals(textError.getText().toString(),"Il est impossible de ce connecter au serveur");
+        assertEquals(textError.getText().toString(),"Il est impossible de se connecter au serveur");
 
     }
 

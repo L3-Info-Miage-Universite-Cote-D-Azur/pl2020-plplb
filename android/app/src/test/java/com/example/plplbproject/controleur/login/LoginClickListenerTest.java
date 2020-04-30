@@ -73,7 +73,7 @@ public class LoginClickListenerTest {
         Mockito.verify(student,times(1)).setNom(anyString());
 
         Mockito.verify(vue,times(1)).switchIntent();
-        Mockito.verify(vue,times(1)).setTextError("Il est impossible de ce connecter au serveur");
+        Mockito.verify(vue,times(1)).setTextError("Il est impossible de se connecter au serveur");
 
         //L'ine n'est plus accepter
         Mockito.when(student.acceptINE(anyString())).thenReturn(false);
@@ -87,6 +87,6 @@ public class LoginClickListenerTest {
 
         Mockito.verify(student,times(1)).setNom(anyString());
         Mockito.verify(vue,times(1)).switchIntent();
-        Mockito.verify(vue,times(1)).setTextError("Il est impossible de ce connecter au serveur");
+        Mockito.verify(vue,times(1)).setTextError("Il est impossible de se connecter au serveur");
     }
 }
