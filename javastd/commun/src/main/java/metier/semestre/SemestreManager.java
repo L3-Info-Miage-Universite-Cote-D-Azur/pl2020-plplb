@@ -121,7 +121,7 @@ public class SemestreManager implements Serializable {
 
     /**
      * revoie le nombre d'ue necessaire pour complete le parcours
-     * @return
+     * @return nombre d'ue necessaire pour completer le semestre
      */
     public int ueNeedToCompleteSemester(){
 

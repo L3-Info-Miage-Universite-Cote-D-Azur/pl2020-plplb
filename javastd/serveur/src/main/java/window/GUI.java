@@ -46,6 +46,7 @@ public class GUI {
 
 	/**
 	 * Create the application.
+	 * @param config le config du serveur
 	 */
 	public GUI(Config config) {
 		this.config = config;

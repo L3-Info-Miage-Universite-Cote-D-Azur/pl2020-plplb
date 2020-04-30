@@ -27,7 +27,7 @@ Converter {
     /**
      * Convertit le fichier csv en list d'objets UE
      * @param allUeCsv le tableau de csv
-     * @return ArrayList&ltUE&gt des UEs du Semestre
+     * @return ArrayList des UEs du Semestre
      */
     public ArrayList<UE> csvToUe(List<List<String>> allUeCsv) {
 

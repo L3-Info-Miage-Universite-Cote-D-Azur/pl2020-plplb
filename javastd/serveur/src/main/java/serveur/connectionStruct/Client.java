@@ -38,11 +38,16 @@ public class Client {
         return sb.toString();
     }
 
-    /** Getter de Etudiant */
+    /** Getter de Etudiant *
+     * @return le student
+     */
+    
     public Student getStudent ()
     {return this.student;}
 
-    /** Getter de SocketIOCLient */
+    /** Getter de SocketIOCLient
+     * @return le socket
+     */
     public SocketIOClient getSock ()
     {return this.sock;}
 

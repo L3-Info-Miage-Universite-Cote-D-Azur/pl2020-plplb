@@ -226,7 +226,7 @@ public class CourseDataBase {
      * @param studentName : le nom de l'etudiant
      * @param saveName : l'ancien nom du fichier
      * @param newSaveName : le nouveau nom du fichier.
-     * @return
+     * @return si le fichier a etait renomer
      */
     public boolean renameSave(String studentName, String saveName, String newSaveName){
         Gson gson = new GsonBuilder().create();

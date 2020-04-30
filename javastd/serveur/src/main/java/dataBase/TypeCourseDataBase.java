@@ -54,7 +54,7 @@ public class TypeCourseDataBase {
 
     /**
      * Renvoie si la liste des semestre a etait charger depuis les fichier
-     * @return true -> initialiser; false -> non initialiser
+     * @return true: initialiser; false: non initialiser
      */
     public boolean isInit(){
         return allParcoursType!=null && allParcoursType.size()!=0;

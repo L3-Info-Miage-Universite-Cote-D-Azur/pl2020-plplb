@@ -66,7 +66,8 @@ public class SemestreRules implements Serializable {
     /**
      * Regarde si il est possible de cocher les ue libre
      * @param ue l'ue libre que l'on veut cocher
-     * @return tru:e il est possible de cocher; false: il n'est pas possible
+     * @param parcoursManager le parcour manager
+     * @return true: il est possible de cocher; false: il n'est pas possible
      */
     public boolean canBeCheckLibreUE(UE ue, SemestreManager parcoursManager) {
         if (parcoursManager.getUeLibreSelected() < maxUELibre //si il reste de la place
@@ -81,7 +82,8 @@ public class SemestreRules implements Serializable {
     /**
      * Regarde si il est possible de cocher l'ue
      * @param ue l'ue que l'on veut cocher
-     * @return tru:e il est possible de cocher; false: il n'est pas possible
+     * @param parcoursManager le parcour manager
+     * @return true: il est possible de cocher; false: il n'est pas possible
      */
     public boolean canBeCheck(UE ue, SemestreManager parcoursManager) {
         if (isObligatoryUE(ue.getUeCode())) return true; //une UE obligatoire est normalement tout le temps check mais si elle ne l'ai pas on peut la check
@@ -98,7 +100,8 @@ public class SemestreRules implements Serializable {
     /**
      * Regarde si il est possible de decocher l'ue
      * @param ue l'ue que l'on veut decocher
-     * @return tru:e il est possible de decocher; false: il n'est pas possible
+     * @param parcoursManager le parcour manager
+     * @return true: il est possible de decocher; false: il n'est pas possible
      */
     public boolean canBeUncheck(UE ue, SemestreManager parcoursManager) {
         if(isObligatoryUE(ue.getUeCode())) return false; //on peut pas uncheck une ue obligatoire

@@ -81,6 +81,7 @@ public class SharedCourseDataBase {
 
     /**
      * Ajoute un parcours partage dans la DB et renvoie le nom du fichier (le code)
+     * @param code : le code que l'on veut ajouter
      * @param content : le contenu du parcours partage.
      */
     public void addShareCourse(String code, String content){

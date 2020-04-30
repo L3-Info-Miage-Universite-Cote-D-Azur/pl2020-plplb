@@ -45,7 +45,9 @@ public class FileManager {
         return filesManager;
     }
 
-    /** Permet de creer le fichier */
+    /** Permet de creer le fichier
+     * @return true : créer; false non créer
+     */
     public boolean create()
     {
         try {
@@ -163,7 +165,9 @@ public class FileManager {
         return file.getParent();
     }
 
-    /** Permet de recuperer le File du file manager */
+    /** Permet de recuperer le File du file manager
+     * @return le file
+     */
     public File getFile() {
         return file;
     }
