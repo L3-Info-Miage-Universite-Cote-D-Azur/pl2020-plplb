@@ -22,6 +22,15 @@ public class CreationMenuModele {
      */
     public boolean canBeChooseName(String name){
         if(name.trim().equals("")) return false;
+
+        for(int i =0; i < name.length();i++){
+            //Pour eviter qu'il creer son fichier dans un dossier exterieur avec un nom comme "../../Oups"
+            if(name.charAt(i) == '/' || name.charAt(i) == '\\'
+                    || name.charAt(i) == '.' || name.charAt(i) == '%'){
+                return false;
+            }
+        }
+
         if(listCourseName.contains(name)){//Le nom est déjà pris.
             return false;
         }

@@ -56,11 +56,34 @@ public class RenameSaveListener implements DataListener<String> {
             Logger.log("Rename file "+oldName+ " can be rename to nothing");
             return;
         }
+
+        if(!canBeChoosed(newName)){
+            sock.sendEvent(RENAMECOURSE,gson.toJson(false));
+            Logger.log("Illegal character in "+oldName+ ".");
+            return;
+        }
+
         //On renomme le fichier
         Boolean success = courseDataBase.renameSave(client.getStudent().getNom(),oldName,newName);
 
         //On envoie l'event au fichier
         Logger.log("Rename file "+oldName+ " to "+newName+" for student : "+client.getStudent().getNom()+" result : "+success);
         sock.sendEvent(RENAMECOURSE,gson.toJson(success));
+    }
+
+    /**
+     * renvoie true ou false selon si le nom peut etre choisi
+     * @param name : le nom à verifier
+     * @return true ou false.
+     */
+    public boolean canBeChoosed(String name){
+        for(int i =0; i < name.length();i++){
+            //Pour eviter qu'il creer son fichier dans un dossier exterieur avec un nom comme "../../Oups"
+            if(name.charAt(i) == '/' || name.charAt(i) == '\\'
+                    || name.charAt(i) == '.' || name.charAt(i) == '%'){
+                return false;
+            }
+        }
+        return true;
     }
 }

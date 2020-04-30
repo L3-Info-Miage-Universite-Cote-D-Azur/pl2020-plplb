@@ -13,6 +13,7 @@ import serveur.connectionStruct.LinkClientSocket;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
@@ -51,5 +52,25 @@ public class RenameSaveListenerTest {
         Mockito.verify(linkClientSocket,times(1)).getClient(any(SocketIOClient.class));
         Mockito.verify(socketIOClient,times(1)).sendEvent(anyString(),anyString());
         Mockito.verify(courseDataBase,times(1)).renameSave(anyString(),anyString(),anyString());
+    }
+
+    @Test
+    public void canBeChoosedTest(){
+        //Nos test
+        String true1 = "un nom classique";
+        String true2 = "test";
+        String true3 = "un_n@m_m4rr4nt";
+
+        String false1 = "%appdata%";
+        String false2 = "../../oups";
+        String false3 = "..........";
+
+        assertEquals(true, renameSaveListener.canBeChoosed(true1));
+        assertEquals(true, renameSaveListener.canBeChoosed(true2));
+        assertEquals(true, renameSaveListener.canBeChoosed(true3));
+
+        assertEquals(false, renameSaveListener.canBeChoosed(false1));
+        assertEquals(false, renameSaveListener.canBeChoosed(false2));
+        assertEquals(false, renameSaveListener.canBeChoosed(false3));
     }
 }

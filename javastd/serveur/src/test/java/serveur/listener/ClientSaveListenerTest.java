@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import serveur.connectionStruct.Client;
 import serveur.connectionStruct.LinkClientSocket;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
@@ -48,5 +49,25 @@ public class ClientSaveListenerTest {
 
         //On verifie que tout est appeler
         Mockito.verify(courseDataBase,times(1)).writeStudentSave(anyString(),anyString(),anyString());
+    }
+
+    @Test
+    public void canBeChoosedTest(){
+        //Nos test
+        String true1 = "un nom classique";
+        String true2 = "test";
+        String true3 = "un_n@m_m4rr4nt";
+
+        String false1 = "%appdata%";
+        String false2 = "../../oups";
+        String false3 = "..........";
+
+        assertEquals(true, clientSaveListener.canBeChoosed(true1));
+        assertEquals(true, clientSaveListener.canBeChoosed(true2));
+        assertEquals(true, clientSaveListener.canBeChoosed(true3));
+
+        assertEquals(false, clientSaveListener.canBeChoosed(false1));
+        assertEquals(false, clientSaveListener.canBeChoosed(false2));
+        assertEquals(false, clientSaveListener.canBeChoosed(false3));
     }
 }

@@ -73,7 +73,7 @@ public class CreateNewCourseListener implements View.OnClickListener {
             }
         }
         else{//Sinon on affiche l'erreur
-            vue.setTextError("Ce nom de parcours existe déjà");
+            vue.setTextError("Ce nom de parcours existe déjà / nom invalide");
         }
     }
 
