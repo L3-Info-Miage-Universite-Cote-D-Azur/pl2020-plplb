@@ -9,6 +9,7 @@ import androidx.test.espresso.Espresso;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.plplbproject.R;
+import com.example.plplbproject.reseau.Connexion;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -45,10 +46,11 @@ public class LoginActivityTest {
     public void init() {
         socket = Mockito.mock(Socket.class);
         when(socket.connected()).thenReturn(true);
-
         Intent startIntent = new Intent();
 
+
         mActivityRule.launchActivity(startIntent);
+        Connexion.CONNEXION.setSocket(socket);
 
         //setup de bouton
         loginInput = mActivityRule.getActivity().findViewById(R.id.loginInput);
@@ -85,6 +87,7 @@ public class LoginActivityTest {
         when(socket.connected()).thenReturn(false);
         onView(withId(R.id.loginInput)).perform(typeText("ab123456"), closeSoftKeyboard());
         onView(withId(R.id.connexionButton)).perform(click());
+        when(socket.connected()).thenReturn(false);
 
         //on  voit  le message d'erreur
         assertEquals(textError.getVisibility(),View.VISIBLE);
