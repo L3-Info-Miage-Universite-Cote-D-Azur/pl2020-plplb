@@ -154,7 +154,7 @@ public class GUI {
 				if (e.getButton() == MouseEvent.BUTTON1)
 				{
 					File[] list = new File(config.getparentPath(),config.getConfig("log_directory")).listFiles();
-					if (list.length == 0)
+					if (list==null || list.length == 0)
 						return;
 					File x = list[0];
 					// Prendre le dernier logfile

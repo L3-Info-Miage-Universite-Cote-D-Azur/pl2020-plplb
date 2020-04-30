@@ -1,4 +1,4 @@
-code ue;nom;semestre;Categorie;Description
+﻿code ue;nom;semestre;Categorie;Description
 SPUGDE10;Decouverte 1;1;GEOGRAPHIE;La première ue découverte de géographie.
 SPUGDC10;Decouverte 2;1;GEOGRAPHIE;La deuxième ue découverte de géographie.
 SPUGDI10;Disciplinaire 1;1;GEOGRAPHIE;L'ue disciplinaire 1 de géographie.
@@ -108,6 +108,3 @@ VPUG2D4;Methodologie et didactique - Geometrie;4;CLE2D;Enseignements de la méth
 VPUP2D4;Methodologie et didactique Physique Chimie;4;CLE2D;Enseignements de la méthodologie et de la didactique en physique et chimie.
 KCTSS4;Competences transversales 4;4;COMPETENCES TRANSVERSALES;Competences transversales du semestre 4.
 SPUSF400;Fablab S4;4;FABLAB;Ue facultative Fablab s4.
-
-
-
