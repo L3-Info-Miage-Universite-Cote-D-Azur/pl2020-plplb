@@ -36,6 +36,9 @@ public class DeleteListener implements View.OnClickListener {
         askConfirm();
     }
 
+    /**
+     * Creation de la popup demandant la confirmation.
+     */
     public void askConfirm(){
 
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mainMenuActivity);
@@ -68,6 +71,9 @@ public class DeleteListener implements View.OnClickListener {
         dialog.show();
     }
 
+    /**
+     * action a faire si l'on confirme la suppression
+     */
     public void confirm(){
         Connexion.CONNEXION.setEventListener(DELETECOURSE, new Emitter.Listener() {
             @Override

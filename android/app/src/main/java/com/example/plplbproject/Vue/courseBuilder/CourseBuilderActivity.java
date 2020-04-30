@@ -112,7 +112,6 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
         Connexion.CONNEXION.send(LOADCOURSE,courseName);
     }
 
-
     protected CourseBuilderModele getModele(){
         return modele;
     }
@@ -120,7 +119,7 @@ public class CourseBuilderActivity extends AppCompatActivity implements SearchVi
     /**
      * Gère le menu pour passer d'un semestre à l'autre
      * @param menu
-     * @return
+     * @return true
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

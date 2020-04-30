@@ -77,6 +77,11 @@ public class CreateNewCourseListener implements View.OnClickListener {
         }
     }
 
+    /**
+     * Renvoie une arraylist qui contient le message a afficher lignes par lignes
+     * @param parcoursName : le nom du parcours.
+     * @return l'arraylist qui contient le message a afficher.
+     */
     public ArrayList<String> dialogMessageBuilder(String parcoursName){
 
         ParcoursType parcoursType = DataPredefinedCourse.PREDEFINEDCOURSE.getPredefinedCourse(parcoursName);

@@ -24,7 +24,6 @@ public class UserController {
 
     /**
      * Gere l'appui sur le bouton de sauvegarde
-     * @return traitement a effectuer (sur le modele et la vue)
      */
     public void saveButton(){
         if(modele.getCourse().verifiParcours()){

@@ -41,6 +41,10 @@ public enum Connexion {
         mSocket.on(event, listener);
     }
 
+    /**
+     * retire un event en vérifiant au préalable si il existe
+     * @param event : l'event a retirer
+     */
     public void removeEventListener(String event){
         if(mSocket.hasListeners(event)){
             mSocket.off(event);
@@ -79,10 +83,18 @@ public enum Connexion {
     }
 
 
+    /**
+     * lie l'etudiant au login.
+     * @param etudiant : l'etudiant a lié
+     */
     public void setStudentLogin(Student etudiant){
         this.studentLogin = etudiant;
     }
 
+    /**
+     * renvoie l'etudiant lié au login.
+     * @return la classe student
+     */
     public Student getStudentLogin(){
         return  this.studentLogin;
     }

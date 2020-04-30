@@ -12,6 +12,7 @@ public class LoginClickListener implements View.OnClickListener {
     LoginActivity vue;
     Student student;
 
+    /* CONSTRUCTOR  */
     public LoginClickListener(Student student, LoginActivity vue){
         this.vue = vue;
         this.student = student;

@@ -90,7 +90,7 @@ public class ListUEAdaptater extends BaseExpandableListAdapter {
      * @param isExpanded
      * @param convertView
      * @param parent
-     * @return
+     * @return la vue.
      */
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {

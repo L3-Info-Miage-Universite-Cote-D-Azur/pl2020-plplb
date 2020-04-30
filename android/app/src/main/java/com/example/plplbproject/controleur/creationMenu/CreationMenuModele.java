@@ -9,6 +9,7 @@ public class CreationMenuModele {
     private String predefinedCourseName;//Le nom du parcours prédéfini selectionner.
     private String courseName;//Le nom du parcours.
 
+    /* CONSTRUCTOR */
     public CreationMenuModele(ArrayList<String> listPredefinedCourse,ArrayList<String> listCourseName){
         this.listPredefinedCourse = listPredefinedCourse;
         this.listCourseName = listCourseName;

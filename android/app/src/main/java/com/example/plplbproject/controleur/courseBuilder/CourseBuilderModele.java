@@ -24,8 +24,8 @@ public class CourseBuilderModele implements Serializable {
 
 
     /**
-     * Permet de recupere le parcours courrant
-     * @return le parcours courrant
+     * Permet de recupere le parcours courant
+     * @return le parcours courant
      */
     public Parcours getCourse() {
         return course;
@@ -42,7 +42,7 @@ public class CourseBuilderModele implements Serializable {
 
     /**
      * Renvoie le semestre courant à afficher sur le MainActivity
-     * @return
+     * @return l'index du semestre courant
      */
     public int getIndexCurrentSemester() {
         return indexCurrentSemester;
