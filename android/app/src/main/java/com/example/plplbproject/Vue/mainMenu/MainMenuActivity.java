@@ -11,11 +11,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.plplbproject.R;
@@ -142,7 +140,9 @@ public class MainMenuActivity extends AppCompatActivity{
         });
     }
 
-
+    /**
+     * notifie l'adapteur de changements.
+     */
     public void notifyCourseListChange(){
         runOnUiThread(new Runnable() {
             @Override
@@ -202,6 +202,10 @@ public class MainMenuActivity extends AppCompatActivity{
         };
     }
 
+    /**
+     * listener du bouton d'ajout de parcours par code.
+     * @return le clickListener
+     */
     public View.OnClickListener addButtonListener(){
         return new View.OnClickListener() {
             @Override

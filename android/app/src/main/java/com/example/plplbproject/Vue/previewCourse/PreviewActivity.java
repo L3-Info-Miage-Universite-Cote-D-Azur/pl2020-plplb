@@ -150,8 +150,9 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * le click listener du bouton de sauvegarde.
+     */
     private View.OnClickListener saveButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -165,6 +166,10 @@ public class PreviewActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * listener pour la reception d'un code
+     * @return le listener
+     */
     public Emitter.Listener receiveCode(){
         return new Emitter.Listener() {
             @Override

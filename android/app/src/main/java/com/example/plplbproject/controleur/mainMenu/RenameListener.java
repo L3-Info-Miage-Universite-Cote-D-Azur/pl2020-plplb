@@ -15,11 +15,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 import io.socket.emitter.Emitter;
 
-import static constantes.NET.DELETECOURSE;
 import static constantes.NET.RENAMECOURSE;
 
 public class RenameListener implements View.OnClickListener {
@@ -84,6 +82,9 @@ public class RenameListener implements View.OnClickListener {
         dialog.show();
     }
 
+    /**
+     * Action à effectuer si on confirme le renommage.
+     */
     public void confirm(){
         final Gson gson = new GsonBuilder().create();
         Connexion.CONNEXION.setEventListener(RENAMECOURSE, new Emitter.Listener() {

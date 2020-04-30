@@ -17,7 +17,10 @@ public enum  DataPredefinedCourse {
         return predefinedCourseList;
     }
 
-
+    /**
+     * renvoie true ou false selon que l'instance a une liste.
+     * @return true ou false.
+     */
     public boolean hasPredefinedCourseList(){
         if(predefinedCourseList==null) return false;
         return true;
