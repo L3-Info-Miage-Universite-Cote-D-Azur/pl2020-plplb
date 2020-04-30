@@ -1,6 +1,6 @@
 ## Bilan de l'iteration Finale : 
 
-	- Correction de certain bugs et disfonctionnement.
+	- Correction de certain bugs et dysfonctionnement.
 	- Ajout de gestion de cas d'erreurs ou cas causant des problèmes (nom de fichier du genre ../../wrongpath).
 	- Ajout de toute la javadoc.
 	- Correction de la duplication des parcours coté client (refactoring de mainMenu).
